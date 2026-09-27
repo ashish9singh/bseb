@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BSEB Portal Hub — Bihar Board Links</title>
+<meta name="description" content="A fast, searchable directory of official Bihar Board (BSEB) portals, exam forms, syllabus PDFs and scholarship links.">
+
+<!-- Google Fonts: Lora for headings (institutional/serious), Inter for body/UI (clean, readable) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS — edit colors/fonts/spacing here in one place
+   ============================================================ */
+:root{
+  /* -- Light theme palette (bright, saturated, playful) -- */
+  --bg:            #FDF6FF;   /* soft lavender-white page background */
+  --surface:       #FFFFFF;   /* card background */
+  --surface-2:     #F4EBFF;   /* subtle lilac band */
+  --border:        #E7D9F7;
+  --text:          #241A38;   /* deep plum text, better contrast than pure black */
+  --text-muted:    #6B5C82;
+  --primary:       #7B2FF7;   /* vivid violet */
+  --primary-hover: #6420D9;
+  --accent:        #FF6B9D;   /* hot pink accent */
+  --accent-soft:   #FFE1EC;
+  --danger:        #E4572E;
+  --radius:        14px;
+  --radius-lg:     20px;
+  --shadow:        0 2px 6px rgba(123,47,247,.08), 0 10px 26px rgba(123,47,247,.12);
+  --font-head:     'Lora', Georgia, serif;
+  --font-body:     'Inter', system-ui, -apple-system, sans-serif;
+  --header-h:      64px;
+  color-scheme: light;
+
+  /* -- Per-category accent colors (each section/chip picks one up) -- */
+  --c-secondary:   #2E9BFF;  /* bright blue */
+  --c-senior:      #21C08B;  /* emerald green */
+  --c-scholarship: #FFB020;  /* amber/gold */
+  --c-admin:       #FF6B9D;  /* pink */
+  --c-udise:       #7B2FF7;  /* violet */
+  --c-docs:        #FF7A45;  /* orange */
+}
+/* -- Dark theme palette (toggled via [data-theme="dark"] on <html>) -- */
+:root[data-theme="dark"]{
+  --bg:            #15101F;
+  --surface:       #1F1830;
+  --surface-2:     #261D3A;
+  --border:        #382A54;
+  --text:          #F1ECFA;
+  --text-muted:    #B4A6CC;
+  --primary:       #B98CFF;
+  --primary-hover: #CBA6FF;
+  --accent:        #FF9EC1;
+  --accent-soft:   #3A2038;
+  --danger:        #FF8A65;
+  --shadow:        0 2px 6px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
+  color-scheme: dark;
+
+  --c-secondary:   #5CB3FF;
+  --c-senior:      #4CD9A6;
+  --c-scholarship: #FFC94D;
+  --c-admin:       #FF9EC1;
+  --c-udise:       #B98CFF;
+  --c-docs:        #FF9A6B;
+}
+/* Respect system preference automatically unless user has chosen explicitly */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-theme="dark"]){
+    --bg:#15101F;--surface:#1F1830;--surface-2:#261D3A;--border:#382A54;
+    --text:#F1ECFA;--text-muted:#B4A6CC;--primary:#B98CFF;--primary-hover:#CBA6FF;
+    --accent:#FF9EC1;--accent-soft:#3A2038;--danger:#FF8A65;
+    --shadow:0 2px 6px rgba(0,0,0,.35),0 12px 28px rgba(0,0,0,.4);
+    color-scheme: dark;
+    --c-secondary:#5CB3FF;--c-senior:#4CD9A6;--c-scholarship:#FFC94D;
+    --c-admin:#FF9EC1;--c-udise:#B98CFF;--c-docs:#FF9A6B;
+  }
+}
+
+/* ============================================================
+   2. RESET + BASE
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top,0px) + 12px);
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:var(--font-head); margin:0; line-height:1.2; }
+a{ color:inherit; }
+button{ font-family:inherit; }
+img{ max-width:100%; display:block; }
+.wrap{ max-width:1100px; margin:0 auto; padding:0 20px; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+/* ============================================================
+   3. HEADER — sticky, holds title + search + theme toggle
+   ============================================================ */
+header.site{
+  position:sticky; top:0; z-index:50;
+  padding-top: env(safe-area-inset-top,0px);
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  display:flex; align-items:center; gap:16px;
+  height:var(--header-h);
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--font-head); font-weight:600; font-size:1.05rem;
+  white-space:nowrap;
+}
+.brand .mark{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-body); font-weight:700; font-size:.85rem;
+  box-shadow:0 4px 10px rgba(123,47,247,.35);
+}
+.search-box{
+  flex:1; position:relative; max-width:420px;
+}
+.search-box input{
+  width:100%; padding:10px 14px 10px 38px;
+  border-radius:999px; border:1px solid var(--border);
+  background:var(--surface); color:var(--text);
+  font-size:.95rem;
+}
+.search-box svg{
+  position:absolute; left:12px; top:50%; transform:translateY(-50%);
+  width:16px; height:16px; color:var(--text-muted);
+}
+.icon-btn{
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--text); width:40px; height:40px; border-radius:999px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; flex:none; transition:background .15s ease;
+}
+.icon-btn:hover{ background:var(--surface-2); }
+
+/* ============================================================
+   4. HERO
+   ============================================================ */
+.hero{
+  padding:48px 0 28px;
+  display:grid; grid-template-columns:1.4fr 1fr; gap:32px; align-items:center;
+}
+.hero h1{
+  font-size:clamp(1.9rem,4.6vw,2.9rem); font-weight:700; max-width:16ch;
+  letter-spacing:-.01em;
+  background:linear-gradient(100deg, var(--primary) 15%, var(--accent) 60%, var(--c-senior) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p{ color:var(--text-muted); margin-top:12px; max-width:48ch; font-size:1.03rem; }
+
+/* Single focal stat panel — the one bold, "dashing" element of the hero */
+.hero-panel{
+  position:relative; border-radius:var(--radius-lg); padding:2px;
+  background:conic-gradient(from 180deg, var(--primary), var(--accent), var(--c-senior), var(--primary));
+}
+.hero-panel-inner{
+  background:var(--surface); border-radius:calc(var(--radius-lg) - 2px);
+  padding:26px 24px; display:flex; flex-direction:column; gap:14px;
+}
+.hero-panel .big-num{
+  font-family:var(--font-head); font-size:2.6rem; font-weight:700; line-height:1;
+  color:var(--text);
+}
+.hero-panel .big-label{ font-size:.85rem; color:var(--text-muted); margin-top:2px; }
+.hero-panel .mini-row{ display:flex; gap:18px; padding-top:6px; border-top:1px solid var(--border); }
+.hero-panel .mini-row div{ font-size:.78rem; color:var(--text-muted); }
+.hero-panel .mini-row strong{ display:block; font-size:1.1rem; color:var(--text); font-family:var(--font-head); }
+
+@media (max-width:760px){
+  .hero{ grid-template-columns:1fr; padding-top:32px; }
+}
+
+/* ============================================================
+   5. CATEGORY FILTER CHIPS
+   ============================================================ */
+.filters{
+  display:flex; gap:8px; overflow-x:auto; padding:4px 0 18px;
+  -ms-overflow-style:none; scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{ display:none; }
+.chip{
+  flex:none; padding:9px 18px; border-radius:999px;
+  border:2px solid var(--chip-color, var(--border)); background:var(--surface);
+  color:var(--chip-color, var(--text-muted)); font-size:.85rem; font-weight:600;
+  cursor:pointer; white-space:nowrap; transition:.15s ease;
+}
+.chip:hover{ transform:translateY(-1px); box-shadow:var(--shadow); }
+.chip.active{
+  background:var(--chip-color, var(--primary));
+  border-color:var(--chip-color, var(--primary)); color:#fff;
+}
+/* Each chip is tinted to match its category color, defined via CSS vars */
+.chip[data-filter="all"]{ --chip-color:var(--primary); }
+.chip[data-filter="secondary"]{ --chip-color:var(--c-secondary); }
+.chip[data-filter="senior"]{ --chip-color:var(--c-senior); }
+.chip[data-filter="scholarship"]{ --chip-color:var(--c-scholarship); }
+.chip[data-filter="admin"]{ --chip-color:var(--c-admin); }
+.chip[data-filter="udise"]{ --chip-color:var(--c-udise); }
+.chip[data-filter="docs"]{ --chip-color:var(--c-docs); }
+
+/* ============================================================
+   6. LINK SECTIONS + CARDS
+   ============================================================ */
+main{ padding-bottom:60px; }
+.section{ margin-top:34px; }
+/* One deliberate reveal moment per section as it scrolls into view (not per-card) */
+.section{ opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease; }
+.section.in-view{ opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){
+  .section{ opacity:1; transform:none; transition:none; }
+}
+.section-head{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:12px; margin-bottom:14px; border-bottom:3px solid var(--sec-color, var(--border));
+  padding-bottom:10px;
+}
+.section-head h2{ font-size:1.2rem; font-weight:700; display:flex; align-items:center; gap:9px; }
+.section-head h2::before{
+  content:''; width:11px; height:11px; border-radius:50%;
+  background:var(--sec-color, var(--primary)); flex:none;
+}
+.section-head span{
+  font-size:.75rem; font-weight:600; color:var(--sec-color, var(--text-muted));
+  background:color-mix(in srgb, var(--sec-color, var(--primary)) 14%, transparent);
+  padding:4px 10px; border-radius:999px;
+}
+/* Assign each section's color variable — used by heading dot, underline & cards */
+.section[data-category="secondary"]{   --sec-color:var(--c-secondary); }
+.section[data-category="senior"]{      --sec-color:var(--c-senior); }
+.section[data-category="scholarship"]{ --sec-color:var(--c-scholarship); }
+.section[data-category="admin"]{       --sec-color:var(--c-admin); }
+.section[data-category="udise"]{       --sec-color:var(--c-udise); }
+.section[data-category="docs"]{        --sec-color:var(--c-docs); }
+
+.grid{
+  display:grid; gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+}
+.card{
+  position:relative;
+  display:flex; flex-direction:column; gap:6px;
+  padding:15px 16px 14px 18px; border-radius:var(--radius);
+  border:1px solid var(--border); background:var(--surface);
+  text-decoration:none; color:var(--text); overflow:hidden;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+/* Clean left-edge accent stripe, inherited from the parent section's --sec-color */
+.card::before{
+  content:''; position:absolute; top:0; bottom:0; left:0; width:3px;
+  background:var(--sec-color, var(--primary));
+}
+.card:hover{
+  box-shadow:0 8px 18px color-mix(in srgb, var(--sec-color, var(--primary)) 22%, transparent);
+  border-color:var(--sec-color, var(--primary));
+  transform:translateY(-2px);
+}
+.card .top-row{ display:flex; align-items:center; gap:9px; }
+.card .emoji{ font-size:1.15rem; line-height:1; flex:none; }
+.card .title{ font-weight:700; font-size:.94rem; }
+.card .desc{ font-size:.81rem; color:var(--text-muted); }
+.card .pin{
+  position:absolute; top:10px; right:10px;
+  background:none; border:none; cursor:pointer;
+  color:var(--text-muted); font-size:1rem; padding:2px;
+  opacity:.55; transition:opacity .15s ease, color .15s ease;
+}
+.card .pin:hover{ opacity:1; }
+.card .pin.pinned{ color:var(--accent); opacity:1; }
+.card.hidden{ display:none; }
+.section.hidden{ display:none; }
+
+/* Empty state when search matches nothing */
+.empty-state{
+  text-align:center; padding:60px 20px; color:var(--text-muted); display:none;
+}
+.empty-state.show{ display:block; }
+
+/* ============================================================
+   7. PINNED / FAVORITES BAR
+   ============================================================ */
+.pinned-bar{
+  background:linear-gradient(120deg, var(--accent-soft), color-mix(in srgb, var(--c-scholarship) 18%, var(--accent-soft)));
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:16px 18px; margin-top:26px;
+  display:none;
+}
+.pinned-bar.show{ display:block; }
+.pinned-bar h3{ font-size:.95rem; margin-bottom:10px; }
+.pinned-bar .grid{ grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); }
+
+/* ============================================================
+   8. FOOTER
+   ============================================================ */
+footer{
+  border-top:1px solid var(--border); padding:26px 0;
+  padding-bottom:calc(26px + env(safe-area-inset-bottom,0px));
+  color:var(--text-muted); font-size:.82rem; text-align:center;
+}
+
+/* ============================================================
+   9. RESPONSIVE TWEAKS
+   ============================================================ */
+@media (max-width:640px){
+  .brand span.full{ display:none; } /* shorten brand text on small screens */
+  .search-box{ max-width:none; }
+  .hero .stats{ gap:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- =================== HEADER =================== -->
+<header class="site">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <div class="mark">BB</div>
+      <span class="full">BSEB Portal Hub</span>
+    </div>
+
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Search links… (e.g. syllabus, exam form)" autocomplete="off">
+    </div>
+
+    <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- =================== HERO =================== -->
+  <section class="hero">
+    <div>
+      <h1>Every Bihar Board link, in one fast page</h1>
+      <p>A single directory of official BSEB portals, exam forms, syllabus PDFs and scholarship links — searchable, pinnable, and quick to load on any device.</p>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-panel-inner">
+        <div>
+          <div class="big-num" id="statTotal">--</div>
+          <div class="big-label">links indexed right now</div>
+        </div>
+        <div class="mini-row">
+          <div><strong id="statCats">--</strong>categories</div>
+          <div><strong id="statPins">0</strong>pinned by you</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CATEGORY FILTERS =================== -->
+  <!-- data-filter values must match each .section's data-category -->
+  <div class="filters" id="filterRow">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="secondary">Secondary (9–10)</button>
+    <button class="chip" data-filter="senior">Senior Secondary (11–12)</button>
+    <button class="chip" data-filter="scholarship">Scholarships</button>
+    <button class="chip" data-filter="admin">Admin & HR</button>
+    <button class="chip" data-filter="udise">UDISE+</button>
+    <button class="chip" data-filter="docs">Docs & Forms</button>
+  </div>
+
+  <!-- =================== PINNED BAR (built by JS from localStorage) =================== -->
+  <div class="pinned-bar" id="pinnedBar">
+    <h3>📌 Your pinned links</h3>
+    <div class="grid" id="pinnedGrid"></div>
+  </div>
+
+  <!-- =================== LINK DATA =================== -->
+  <!-- Each .card needs: href, data-title (for search), emoji, title text, description -->
+
+  <section class="section" data-category="docs">
+    <div class="section-head"><h2>Student & Academic Services</h2><span>Forms & syllabus</span></div>
+    <div class="grid">
+      <a class="card" href="https://script.google.com/macros/s/AKfycbx9rAvIAvf02EmrIw840ozASjcGdUYLRV_YbDFRdKsHTHTomcgzFb-cve1N2JivhPvg9A/exec" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🎓</span><span class="title">Bonafide Application Form</span></div>
+        <span class="desc">Generate a student bonafide certificate form</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/05/cyber-safety-hindi.pdf" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">💻</span><span class="title">Cyber Safety Manual</span></div>
+        <span class="desc">Study material, Hindi — PDF</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/11-12-cs-syllabus.pdf" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">💻</span><span class="title">CS Syllabus 11–12</span></div>
+        <span class="desc">Official PDF</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/cs-syllabus-9-10-hin-eng.pdf" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🖥️</span><span class="title">CS Syllabus 9–10</span></div>
+        <span class="desc">Unofficial PDF (Hindi/English)</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/01/asset-declaration-format-bihar.docx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📂</span><span class="title">Asset Declaration Format</span></div>
+        <span class="desc">DOCX — Bihar format</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/tds.pdf" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📄</span><span class="title">TDS Sample Guide</span></div>
+        <span class="desc">PDF guide</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/03/absentee-format.xlsx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📝</span><span class="title">Absentee Format</span></div>
+        <span class="desc">Excel sheet</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/sentup-result-std-10-2025-format.xlsx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📊</span><span class="title">Std 10 Sentup Result</span></div>
+        <span class="desc">Excel • 2025–26</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/sentup-result-std-12-format.xlsx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📈</span><span class="title">Std 12 Sentup Result</span></div>
+        <span class="desc">Excel • 2026</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" data-category="secondary">
+    <div class="section-head"><h2>Secondary Section (Class 9–10)</h2><span>BSEB portal</span></div>
+    <div class="grid">
+      <a class="card" href="https://secondary.biharboardonline.org/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🌐</span><span class="title">Official Secondary Portal</span></div>
+        <span class="desc">Primary gateway for all BSEB secondary services</span>
+      </a>
+      <a class="card" href="https://exam.biharboardonline.org/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">✍️</span><span class="title">Exam Form</span></div>
+        <span class="desc">Secondary examination form</span>
+      </a>
+      <a class="card" href="https://reg28.biharboardonline.org/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📋</span><span class="title">Registration</span></div>
+        <span class="desc">Secondary registration portal</span>
+      </a>
+      <a class="card" href="https://bstbpc.bihar.gov.in/Class9.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📘</span><span class="title">Class 9 e-Books</span></div>
+        <span class="desc">Official textbook portal</span>
+      </a>
+      <a class="card" href="https://bstbpc.bihar.gov.in/Class10.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📗</span><span class="title">Class 10 e-Books</span></div>
+        <span class="desc">Official textbook portal</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/class-9_10_syllabus_bseb.pdf" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📖</span><span class="title">Class 9–10 Syllabus</span></div>
+        <span class="desc">Full PDF</span>
+      </a>
+      <a class="card" href="https://biharboardonline.com/modelpapermatric.html" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📄</span><span class="title">Official Model Papers</span></div>
+        <span class="desc">Matric model question papers</span>
+      </a>
+      <a class="card" href="https://teach.biharboardonline.com/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">👨‍🏫</span><span class="title">Teacher Directory</span></div>
+        <span class="desc">Secondary section</span>
+      </a>
+      <a class="card" href="https://secondaryletter.biharboardonline.com/Letterdefault.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📩</span><span class="title">Examiner Letter Portal</span></div>
+        <span class="desc">Download examiner letters</span>
+      </a>
+      <a class="card" href="https://secondaryletter.biharboardonline.com/mppletter.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">💼</span><span class="title">MPP Letter Access</span></div>
+        <span class="desc">MPP administration letters</span>
+      </a>
+      <a class="card" href="https://www.biharboardonline.org/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🗄️</span><span class="title">Archive Registration</span></div>
+        <span class="desc">Older registration records</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" data-category="senior">
+    <div class="section-head"><h2>Senior Secondary Section (Class 11–12)</h2><span>BSEB portal</span></div>
+    <div class="grid">
+      <a class="card" href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🏛️</span><span class="title">Official Intermediate Portal</span></div>
+        <span class="desc">Centralized gateway for senior secondary</span>
+      </a>
+      <a class="card" href="https://intermediate.biharboardonline.com/2025-27/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">✍️</span><span class="title">2027 Examination Form</span></div>
+        <span class="desc">Intermediate exam form</span>
+      </a>
+      <a class="card" href="https://intermediate.biharboardonline.com/2026-28/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📑</span><span class="title">Registration</span></div>
+        <span class="desc">2026–28 batch registration</span>
+      </a>
+      <a class="card" href="https://bstbpc.bihar.gov.in/Class11.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📘</span><span class="title">Class 11 e-Books</span></div>
+        <span class="desc">Official textbook portal</span>
+      </a>
+      <a class="card" href="https://bstbpc.bihar.gov.in/Class12.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📗</span><span class="title">Class 12 e-Books</span></div>
+        <span class="desc">Official textbook portal</span>
+      </a>
+      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/class-11_12_syllabus_bseb.pdf" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📖</span><span class="title">Class 11–12 Syllabus</span></div>
+        <span class="desc">All subjects — PDF</span>
+      </a>
+      <a class="card" href="https://biharboardonline.com/modelpaperinter.html" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📊</span><span class="title">Official Model Papers</span></div>
+        <span class="desc">Intermediate model question papers</span>
+      </a>
+      <a class="card" href="https://ofssbihar.net/Higher-Education/index.html" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📑</span><span class="title">OFSS</span></div>
+        <span class="desc">Online admission facilitation</span>
+      </a>
+      <a class="card" href="http://teachdirinter.biharboardonline.com/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">👩‍🏫</span><span class="title">Teacher Directory</span></div>
+        <span class="desc">Senior secondary section</span>
+      </a>
+      <a class="card" href="http://letter12.biharboardonline.com/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">✉️</span><span class="title">Examiner & MPP Letters</span></div>
+        <span class="desc">Intermediate letters portal</span>
+      </a>
+      <a class="card" href="http://seniorsecondary.biharboardonline.com/inter26/#/login" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🗄️</span><span class="title">Archive Login</span></div>
+        <span class="desc">Old registration portal</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" data-category="scholarship">
+    <div class="section-head"><h2>Scholarships & Student Welfare</h2><span>Apply & track</span></div>
+    <div class="grid">
+      <a class="card" href="https://nmmssbihar.co.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🎖️</span><span class="title">NMMSS Portal</span></div>
+        <span class="desc">Merit-cum-Means scholarship</span>
+      </a>
+      <a class="card" href="https://medhasoft.bihar.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">💳</span><span class="title">Medhasoft</span></div>
+        <span class="desc">DBT & student records</span>
+      </a>
+      <a class="card" href="https://pmsonline.bihar.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🎓</span><span class="title">Post Matric Scholarship</span></div>
+        <span class="desc">Apply online (PMS)</span>
+      </a>
+      <a class="card" href="https://nccindia.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🇮🇳</span><span class="title">NCC India</span></div>
+        <span class="desc">National Cadet Corps portal</span>
+      </a>
+      <a class="card" href="https://www.7nishchay-yuvaupmission.bihar.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">💰</span><span class="title">Student Credit Card</span></div>
+        <span class="desc">Apply for student loan</span>
+      </a>
+      <a class="card" href="https://scholarships.gov.in/otrapplication/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📄</span><span class="title">NSP OTR</span></div>
+        <span class="desc">National Scholarship Portal — one-time registration</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" data-category="admin">
+    <div class="section-head"><h2>Academic Resources & Administration</h2><span>Learning & HR</span></div>
+    <div class="grid">
+      <a class="card" href="https://gyandeep-rte.bihar.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🏫</span><span class="title">Gyandeep RTE</span></div>
+        <span class="desc">Admission portal</span>
+      </a>
+      <a class="card" href="https://bepclots.bihar.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📚</span><span class="title">e-LOTS</span></div>
+        <span class="desc">Digital library for teachers</span>
+      </a>
+      <a class="card" href="https://play.google.com/store/apps/details?id=com.mintbook.bsdl.bsdl_mobile" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📱</span><span class="title">Vidyabodh App</span></div>
+        <span class="desc">Install learning app</span>
+      </a>
+      <a class="card" href="https://ecoclubs.education.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🌱</span><span class="title">Eco Club Portal</span></div>
+        <span class="desc">Environment education</span>
+      </a>
+      <a class="card" href="https://eshikshakosh.bihar.gov.in/login" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🔑</span><span class="title">Eshikshakosh</span></div>
+        <span class="desc">Teacher & staff login</span>
+      </a>
+      <a class="card" href="https://hrms.bihar.gov.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🧑‍💼</span><span class="title">HRMS Bihar</span></div>
+        <span class="desc">Employee portal</span>
+      </a>
+      <a class="card" href="https://bepc.entrolabs.com/admin/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🕒</span><span class="title">Bihar FRS</span></div>
+        <span class="desc">Attendance management</span>
+      </a>
+      <a class="card" href="https://sahyog.bihar.gov.in/Sahyog/ComplaintRegistration.aspx" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">📢</span><span class="title">Sahyog Portal</span></div>
+        <span class="desc">Public grievance redressal</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" data-category="udise">
+    <div class="section-head"><h2>UDISE+ Management Modules</h2><span>School data systems</span></div>
+    <div class="grid">
+      <a class="card" href="https://udiseplus.gov.in/ud/home?loginId=1" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🏫</span><span class="title">School Directory</span></div>
+        <span class="desc">UDISE+ school records</span>
+      </a>
+      <a class="card" href="https://udiseplus.gov.in/moe_udise/#/login" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🧱</span><span class="title">Facilities</span></div>
+        <span class="desc">School facilities module</span>
+      </a>
+      <a class="card" href="https://udiseplus.gov.in/udiseteacher/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">👨‍🏫</span><span class="title">Teacher Module</span></div>
+        <span class="desc">Teacher records</span>
+      </a>
+      <a class="card" href="https://sdms.udiseplus.gov.in/p0/v1/login?state-id=110" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🧑‍🎓</span><span class="title">Students Module</span></div>
+        <span class="desc">Student data management</span>
+      </a>
+      <a class="card" href="https://kys.udiseplus.gov.in/#/home" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🔍</span><span class="title">Know Your School</span></div>
+        <span class="desc">Public school lookup</span>
+      </a>
+      <a class="card" href="https://schoolgis.nic.in/" target="_blank" rel="noopener">
+        <button class="pin" aria-label="Pin this link">☆</button>
+        <div class="top-row"><span class="emoji">🗺️</span><span class="title">School Geo Portal</span></div>
+        <span class="desc">Map-based school locator</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Shown only when a search matches zero cards -->
+  <div class="empty-state" id="emptyState">
+    <p>No links match your search. Try a different keyword.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Independent resource directory of publicly available Bihar Board (BSEB) links · Not an official government site
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   ALL JAVASCRIPT — organized into clearly labeled blocks so you
+   can find and edit each feature independently.
+   ============================================================ */
+
+/* ---------- 1. THEME TOGGLE (persists choice in localStorage) ---------- */
+(function themeModule(){
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const STORAGE_KEY = 'bseb-hub-theme';
+
+  function apply(theme){
+    if (theme === 'dark' || theme === 'light'){
+      root.setAttribute('data-theme', theme);
+    } else {
+      root.removeAttribute('data-theme'); // follow system preference
+    }
+    btn.textContent = (root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches))
+      ? '☀️' : '🌙';
+  }
+
+  let saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){ /* storage unavailable, ignore */ }
+  apply(saved);
+
+  btn.addEventListener('click', function(){
+    const current = root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try { localStorage.setItem(STORAGE_KEY, next); } catch(e){ /* ignore */ }
+  });
+})();
+
+/* ---------- 2. CATEGORY FILTER CHIPS ---------- */
+(function filterModule(){
+  const chips = document.querySelectorAll('.chip');
+  const sections = document.querySelectorAll('.section');
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', function(){
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+
+      sections.forEach(section => {
+        const match = (filter === 'all' || section.dataset.category === filter);
+        section.classList.toggle('hidden', !match);
+      });
+
+      // Re-run search so filter + search combine correctly
+      runSearch();
+    });
+  });
+})();
+
+/* ---------- 3. LIVE SEARCH ---------- */
+const searchInput = document.getElementById('searchInput');
+const emptyState = document.getElementById('emptyState');
+
+function runSearch(){
+  const query = searchInput.value.trim().toLowerCase();
+  let anyVisible = false;
+
+  document.querySelectorAll('.section:not(.hidden)').forEach(section => {
+    let sectionHasMatch = false;
+    section.querySelectorAll('.card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const matches = text.includes(query);
+      card.classList.toggle('hidden', !matches);
+      if (matches) sectionHasMatch = true;
+    });
+    // Hide whole section only for search purposes, without permanently
+    // overriding the category filter's hidden state
+    if (!section.classList.contains('hidden')) {
+      section.style.display = sectionHasMatch ? '' : 'none';
+      if (sectionHasMatch) anyVisible = true;
+    }
+  });
+
+  emptyState.classList.toggle('show', !anyVisible);
+}
+searchInput.addEventListener('input', runSearch);
+
+/* ---------- 4. PIN / FAVORITES (saved per-browser via localStorage) ---------- */
+(function pinModule(){
+  const STORAGE_KEY = 'bseb-hub-pins';
+  const pinnedBar = document.getElementById('pinnedBar');
+  const pinnedGrid = document.getElementById('pinnedGrid');
+
+  function getPins(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function savePins(pins){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(pins)); }
+    catch(e){ /* storage unavailable, ignore silently */ }
+  }
+
+  function refreshPinnedBar(){
+    const pins = getPins();
+    pinnedGrid.innerHTML = '';
+    pinnedBar.classList.toggle('show', pins.length > 0);
+
+    pins.forEach(pin => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = pin.href;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML =
+        '<div class="top-row"><span class="emoji">' + pin.emoji + '</span>' +
+        '<span class="title">' + pin.title + '</span></div>';
+      pinnedGrid.appendChild(a);
+    });
+  }
+
+  function syncButtonStates(){
+    const pins = getPins();
+    document.querySelectorAll('.card .pin').forEach(btn => {
+      const card = btn.closest('.card');
+      const isPinned = pins.some(p => p.href === card.href);
+      btn.textContent = isPinned ? '★' : '☆';
+      btn.classList.toggle('pinned', isPinned);
+    });
+  }
+
+  document.querySelectorAll('.card .pin').forEach(btn => {
+    btn.addEventListener('click', function(e){
+      e.preventDefault();   // don't follow the link when pinning
+      e.stopPropagation();
+      const card = btn.closest('.card');
+      let pins = getPins();
+      const exists = pins.some(p => p.href === card.href);
+
+      if (exists){
+        pins = pins.filter(p => p.href !== card.href);
+      } else {
+        pins.push({
+          href: card.href,
+          title: card.querySelector('.title').textContent,
+          emoji: card.querySelector('.emoji').textContent
+        });
+      }
+      savePins(pins);
+      refreshPinnedBar();
+      syncButtonStates();
+      refreshStats();
+    });
+  });
+
+  refreshPinnedBar();
+  syncButtonStates();
+})();
+
+/* ---------- 5. LIVE STATS (fills the hero panel; pin count kept in sync by pin module) ---------- */
+function refreshStats(){
+  document.getElementById('statTotal').textContent = document.querySelectorAll('.card').length;
+  document.getElementById('statCats').textContent = document.querySelectorAll('.section').length;
+  let pinCount = 0;
+  try { pinCount = (JSON.parse(localStorage.getItem('bseb-hub-pins')) || []).length; } catch(e){}
+  document.getElementById('statPins').textContent = pinCount;
+}
+refreshStats();
+
+/* ---------- 6. ONE-TIME SCROLL REVEAL (single deliberate motion per section) ---------- */
+(function revealModule(){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target); // only ever animate once per section
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section').forEach(section => io.observe(section));
+})();
+
+</script>
+</body>
+</html>
