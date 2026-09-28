@@ -1101,7 +1101,7 @@ refreshStats();
 
    /* ---------- 8. VISIT LOGGER (IP, total fetches, last fetch time → Google Sheet) ---------- */
 (function visitLogger(){
-  const LOG_URL = 'https://script.google.com/macros/s/AKfycbxodED_cRd7FGWY-cAMKu_RyS1xRwXij4FiU9o2E2yLo7mGEgRowgrXn_J4izh9geT_TA/exec';
+  const LOG_URL = 'https://script.google.com/macros/s/AKfycbxS5MNYlktRkIZq9pt7X9r8wJt-3GInYjtDNL4qEBymaMGE9rTjUXej7YlUmkC94QdPcw/exec';
   if (!LOG_URL || LOG_URL.indexOf('PASTE_') === 0) return;
 
   fetch('https://api.ipify.org?format=json')
