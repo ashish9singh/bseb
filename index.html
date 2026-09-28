@@ -1099,6 +1099,25 @@ refreshStats();
   document.querySelectorAll('.section').forEach(section => io.observe(section));
 })();
 
+   /* ---------- 8. VISIT LOGGER (IP, total fetches, last fetch time → Google Sheet) ---------- */
+(function visitLogger(){
+  const LOG_URL = 'https://script.google.com/macros/s/AKfycbxodED_cRd7FGWY-cAMKu_RyS1xRwXij4FiU9o2E2yLo7mGEgRowgrXn_J4izh9geT_TA/exec';
+  if (!LOG_URL || LOG_URL.indexOf('PASTE_') === 0) return;
+
+  fetch('https://api.ipify.org?format=json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (!d || !d.ip) return;
+      // no-cors + form-encoded body = simple request, works with Apps Script without CORS errors
+      return fetch(LOG_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams({ ip: d.ip })
+      });
+    })
+    .catch(function(){ /* logging must never break the page */ });
+})();
+   
 </script>
 </body>
 </html>
