@@ -122,6 +122,10 @@
             background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
             -webkit-background-clip: text; background-clip: text; color: transparent;
             margin-bottom: 10px;
+            /* Added to fix the top clipping */
+    line-height: 1.4;
+    padding-top: 0.15em; 
+    padding-bottom: 0.1em;
         }
         .page-header p { color: var(--text-muted); font-size: 1.05rem; }
 
