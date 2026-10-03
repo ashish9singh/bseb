@@ -147,6 +147,25 @@ header.site{
   font-family:var(--font-body); font-weight:700; font-size:.85rem;
   box-shadow:0 4px 10px rgba(123,47,247,.35);
 }
+
+/* Nav Menu */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: 10px;
+}
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.15s ease;
+}
+.main-nav a:hover {
+  color: var(--primary);
+}
+
 .search-box{
   flex:1; position:relative; max-width:420px;
 }
@@ -360,6 +379,27 @@ footer{
 /* ============================================================
    9. RESPONSIVE TWEAKS
    ============================================================ */
+@media (max-width: 860px) {
+  .header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 12px;
+    padding-bottom: 8px;
+  }
+  /* Push main-nav below the logo/search box on mobile without breaking layout */
+  .main-nav {
+    order: 4;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .main-nav::-webkit-scrollbar { display: none; }
+}
+
 @media (max-width:640px){
   .brand span.full{ display:none; } /* shorten brand text on small screens */
   .search-box{ max-width:none; }
@@ -418,7 +458,7 @@ footer{
 </style>
 
  </head>
-<body>
+<body id="home">
 
 <!-- =================== HEADER =================== -->
 <header class="site">
@@ -427,6 +467,16 @@ footer{
       <div class="mark">BB</div>
       <span class="full">BSEB Portal Hub</span>
     </div>
+
+    <!-- NEW NAVIGATION MENU -->
+    <nav class="main-nav">
+      <a href="#home">Home</a>
+      <a href="#home">Letter</a>
+      <a href="#home">Fee</a>
+      <a href="#home">News</a>
+      <a href="#home">About</a>
+      <a href="#home">Contact</a>
+    </nav>
 
     <div class="search-box">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -602,7 +652,7 @@ footer{
       </a>
       <a class="card" href="https://www.biharboardonline.org/" target="_blank" rel="noopener" data-tags="old registration archive पुराना रजिस्ट्रेशन">
         <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🗄️</span><span class="title">Archive Registration</span></div>
+        <div class="top-row"><span class="emoji">🗄️️</span><span class="title">Archive Registration</span></div>
         <span class="desc">Older Matric registration records</span>
       </a>
     </div>
