@@ -92,7 +92,7 @@
             font-size: 0.9rem; font-weight: 600; color: var(--primary);
         }
         
-        /* Language Toggle Button */
+        /* Language & Action Buttons */
         .lang-btn {
             background: var(--surface-2);
             color: var(--primary);
@@ -188,6 +188,11 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .last-updated { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 40px; font-weight: 500; }
+        
+        #load-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
@@ -218,6 +223,10 @@
                 <h2 id="ui-loading">नवीनतम समाचार लोड हो रहा है...</h2>
             </div>
         </div>
+        
+        <!-- Container for Load More Button -->
+        <div id="load-more-container"></div>
+        
         <div id="last-updated-text" class="last-updated"></div>
     </main>
 
@@ -225,8 +234,9 @@
         // ========================================================
         // 1. STATE & DICTIONARIES
         // ========================================================
-        let currentLang = 'hi'; // Set default language to Hindi
-        let currentArticles = []; // Stores fetched news globally
+        let currentLang = 'hi'; // Hindi is the default language
+        let allArticles = []; // Stores all fetched news globally
+        let showOlder = false; // Tracks if >30 days news is visible
         
         // Static UI Dictionary
         const UI = {
@@ -234,52 +244,52 @@
                 title: "लाइव अपडेट और समाचार",
                 subtitle: "बिहार बोर्ड के छात्रों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।",
                 loading: "नवीनतम समाचार लोड हो रहा है...",
-                offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं।",
+                offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं। कृपया पुनः लोड करें।",
                 empty: "अभी कोई हालिया समाचार नहीं मिला।",
                 readMore: "पूरी खबर पढ़ें →",
                 btnText: "Read in English",
-                refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:"
+                refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:",
+                loadMore: "पुराने समाचार लोड करें (+30 दिन)"
             },
             en: {
                 title: "Live Updates & News",
                 subtitle: "The latest filtered announcements, results, and notices strictly for Bihar Board students.",
                 loading: "Loading latest news...",
-                offline: "Displaying cached offline news due to network lag.",
+                offline: "Displaying cached offline news due to network lag. Please reload.",
                 empty: "No recent matching news found.",
                 readMore: "Read Full Article →",
                 btnText: "हिंदी में पढ़ें",
-                refresh: "News feed auto-refreshed at"
+                refresh: "News feed auto-refreshed at",
+                loadMore: "Load Older News (> 30 Days)"
             }
         };
 
-        // Offline Fallback Stories (Pre-translated to avoid API calls when offline)
+        // Offline Fallback Stories
         const FALLBACK_STORIES = [
             {
                 title: "BSEB 2027 Matric & Inter Exam Registration Deadline Extended",
                 hi_title: "BSEB 2027 मैट्रिक और इंटर परीक्षा पंजीकरण की अंतिम तिथि बढ़ी",
                 summary: "The Bihar School Examination Board (BSEB) has officially extended the online application and registration deadline for Class 10 and 12 examinations.",
                 hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने कक्षा 10 और 12 की परीक्षाओं के लिए ऑनलाइन आवेदन और पंजीकरण की अंतिम तिथि आधिकारिक तौर पर बढ़ा दी है।",
-                date: "Oct 2, 2026",
+                date: new Date().toISOString(), // Use current date so it shows up in <30 days filter
                 sourceName: "BSEB Official",
                 hi_source: "BSEB आधिकारिक",
                 url: "https://secondary.biharboardonline.com"
-            },
-            {
-                title: "BSEB Class 10 & 12 Marksheets and Certificates Live on DigiLocker",
-                hi_title: "BSEB कक्षा 10 और 12 की मार्कशीट और सर्टिफिकेट डिजीलॉकर पर लाइव",
-                summary: "Students can now access and download digitally verified BSEB secondary and senior secondary passing certificates and marksheets directly via DigiLocker.",
-                hi_summary: "छात्र अब डिजीलॉकर के माध्यम से सीधे डिजिटल रूप से सत्यापित BSEB माध्यमिक और वरिष्ठ माध्यमिक उत्तीर्ण प्रमाण पत्र और मार्कशीट तक पहुंच और डाउनलोड कर सकते हैं।",
-                date: "Sep 29, 2026",
-                sourceName: "DigiLocker Portal",
-                hi_source: "डिजीलॉकर पोर्टल",
-                url: "https://www.digilocker.gov.in"
             }
         ];
 
         // ========================================================
-        // 2. TRANSLATION ENGINE & UTILITIES
+        // 2. TEXT PARSING & TRANSLATION
         // ========================================================
         
+        // FIX: Decodes HTML entities (like &nbsp;) before they get saved and double-encoded
+        function decodeHTML(html) {
+            if (!html) return "";
+            const txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
+
         // Native Translation using Google's Free API
         async function translateText(text) {
             if (!text) return "";
@@ -302,8 +312,8 @@
             document.getElementById('ui-subtitle').innerText = UI[currentLang].subtitle;
             document.getElementById('langToggleBtn').innerText = UI[currentLang].btnText;
             
-            // Re-render the articles with the new language
-            renderArticles(currentArticles, false); 
+            // Re-render UI with current state
+            renderNewsUI(false); 
         }
 
         function escapeHTML(str) {
@@ -321,24 +331,59 @@
         }
 
         // ========================================================
-        // 3. CORE FETCH & RENDER LOGIC
+        // 3. CORE RENDERING LOGIC & FILTERING
         // ========================================================
+        
+        // Expose function for the Load More button
+        window.loadOlderNews = function() {
+            showOlder = true;
+            renderNewsUI(false);
+        };
 
-        async function renderArticles(articles, isOffline = false) {
+        // Filter articles based on 30-day window
+        async function renderNewsUI(isOffline = false) {
+            const now = new Date();
+            const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+            
+            let filteredArticles = [];
+            let hasOlder = false;
+
+            if (showOlder) {
+                // Show everything if button was clicked
+                filteredArticles = allArticles;
+            } else {
+                // Filter items newer than 30 days
+                filteredArticles = allArticles.filter(a => {
+                    const articleDate = new Date(a.date);
+                    if (isNaN(articleDate)) return true; // Keep items with invalid dates
+                    return (now - articleDate) <= thirtyDaysMs;
+                });
+                
+                // Check if there are articles left over that were filtered out
+                if (allArticles.length > filteredArticles.length) {
+                    hasOlder = true;
+                }
+            }
+
+            await renderArticles(filteredArticles, isOffline, hasOlder);
+        }
+
+        async function renderArticles(articles, isOffline = false, hasOlder = false) {
             const newsContainer = document.getElementById("news-container");
+            const loadMoreContainer = document.getElementById("load-more-container");
             const updatedText = document.getElementById("last-updated-text");
 
             if (!articles || articles.length === 0) {
                 newsContainer.innerHTML = `<div class="status-container"><h2>${UI[currentLang].empty}</h2></div>`;
+                loadMoreContainer.innerHTML = '';
                 return;
             }
 
             // If we are currently in Hindi, batch translate the fetched articles
             if (currentLang === 'hi') {
-                // Show a loading text while translating
                 newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2>अनुवाद किया जा रहा है... (Translating)</h2></div>`;
+                loadMoreContainer.innerHTML = '';
                 
-                // Translate only the articles that haven't been translated yet
                 await Promise.all(articles.map(async (article) => {
                     if (!article.hi_title) article.hi_title = await translateText(article.title);
                     if (!article.hi_summary) article.hi_summary = await translateText(article.summary);
@@ -349,7 +394,6 @@
             // Render the HTML
             let htmlContent = "";
             articles.forEach(article => {
-                // Select the correct string based on the language toggle
                 const displayTitle = currentLang === 'hi' ? article.hi_title : article.title;
                 const displaySummary = currentLang === 'hi' ? article.hi_summary : article.summary;
                 const displaySource = currentLang === 'hi' ? article.hi_source : article.sourceName;
@@ -374,6 +418,13 @@
 
             newsContainer.innerHTML = htmlContent;
 
+            // Handle Load More Button UI
+            if (hasOlder) {
+                loadMoreContainer.innerHTML = `<button class="lang-btn" style="padding: 10px 24px; font-size: 1rem;" onclick="loadOlderNews()">${UI[currentLang].loadMore}</button>`;
+            } else {
+                loadMoreContainer.innerHTML = '';
+            }
+
             // Update bottom timestamp text
             if (isOffline) {
                 updatedText.innerText = UI[currentLang].offline;
@@ -386,13 +437,11 @@
         async function loadNews() {
             const newsContainer = document.getElementById("news-container");
             
-            // Set initial loading text in the correct language
-            if (currentArticles.length === 0) {
+            if (allArticles.length === 0) {
                 newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2 id="ui-loading">${UI[currentLang].loading}</h2></div>`;
             }
 
             try {
-                // 5-second hard timeout for the API call
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 5000);
 
@@ -400,28 +449,27 @@
                 clearTimeout(timeoutId);
 
                 if (!response.ok) throw new Error("HTTP error " + response.status);
-                
                 const data = await response.json();
 
                 if (data.articles && data.articles.length > 0) {
-                    // Map API data into our format
-                    currentArticles = data.articles.map(article => ({
-                        title: article.title || "News Update",
-                        summary: article.description || "Click the link to read more.",
-                        sourceName: article.source || "News Source",
+                    // Map API data and apply decodeHTML immediately to fix &amp;nbsp; bugs
+                    allArticles = data.articles.map(article => ({
+                        title: decodeHTML(article.title || "News Update"),
+                        summary: decodeHTML(article.description || "Click the link to read more."),
+                        sourceName: decodeHTML(article.source || "News Source"),
                         url: article.url || "#",
                         date: article.publishedAt || article.updatedAt
                     }));
                     
-                    await renderArticles(currentArticles, false);
+                    await renderNewsUI(false);
                 } else {
                     throw new Error("Empty articles array");
                 }
 
             } catch (error) {
                 console.warn("API Error. Falling back to offline stories.", error);
-                currentArticles = FALLBACK_STORIES;
-                await renderArticles(currentArticles, true);
+                allArticles = FALLBACK_STORIES;
+                await renderNewsUI(true);
             }
         }
 
