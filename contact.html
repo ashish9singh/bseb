@@ -336,42 +336,47 @@
                     <p>Fill out the details below. Messages are recorded securely in our database.</p>
                 </div>
 
-                <form id="contactForm" class="query-form" onsubmit="handleFormSubmit(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Your Name *</label>
-                            <input type="text" id="name" name="name" placeholder="e.g., Ashish Singh" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobile">Mobile Number *</label>
-                            <input type="tel" id="mobile" name="mobile" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
-                        </div>
-                    </div>
+<form id="contactForm" class="query-form" onsubmit="handleFormSubmit(event)" novalidate>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Ashish Kumar Singh" required>
+            <span class="field-hint">Letters and spaces only</span>
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile Number *</label>
+            <input type="tel" id="mobile" name="mobile" placeholder="e.g., +91 9876543210 or +1 4155552671" required>
+            <span class="field-hint">7 to 15 digits, international codes allowed</span>
+        </div>
+    </div>
 
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" placeholder="you@domain.com" required>
-                    </div>
+    <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" placeholder="you@domain.com" required>
+        <span class="field-hint">Strict format (username@domain.tld)</span>
+    </div>
 
-                    <div class="form-group">
-                        <label for="address">Address / City</label>
-                        <input type="text" id="address" name="address" placeholder="e.g., Patna, Bihar">
-                    </div>
+    <div class="form-group">
+        <label for="address">Address *</label>
+        <input type="text" id="address" name="address" placeholder="e.g., Patna, Bihar, India" required>
+        <span class="field-hint">At least 2 words (City, State, Country)</span>
+    </div>
 
-                    <div class="form-group">
-                        <label for="question">Your Question / Message *</label>
-                        <textarea id="question" name="question" placeholder="Describe your query, template requirement, or partnership idea..." required></textarea>
-                    </div>
+    <div class="form-group">
+        <label for="question">Your Question / Message *</label>
+        <textarea id="question" name="question" placeholder="Describe your query or requirement..." required></textarea>
+        <span class="field-hint">Minimum 4 to 6 words required</span>
+    </div>
 
-                    <button type="submit" id="submitBtn" class="btn-submit">
-                        <span>Send Message</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                        </svg>
-                    </button>
+    <button type="submit" id="submitBtn" class="btn-submit">
+        <span>Send Message</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </button>
 
-                    <div id="formStatus" class="form-status"></div>
-                </form>
+    <div id="formStatus" class="form-status"></div>
+</form>
             </section>
 
             <!-- RIGHT: CONTACT DETAILS & CROWDFUNDING -->
@@ -447,71 +452,120 @@
     </main>
 
     <script>
-        // Deployed Google Apps Script Web App URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec";
 
-        async function handleFormSubmit(event) {
-            event.preventDefault();
-            const btn = document.getElementById("submitBtn");
-            const status = document.getElementById("formStatus");
+    function showError(message, inputId) {
+        const status = document.getElementById("formStatus");
+        status.innerText = message;
+        status.className = "form-status error";
+        if (inputId) {
+            document.getElementById(inputId).focus();
+        }
+    }
 
-            const formData = {
-                name: document.getElementById("name").value.trim(),
-                mobile: document.getElementById("mobile").value.trim(),
-                email: document.getElementById("email").value.trim(),
-                address: document.getElementById("address").value.trim(),
-                question: document.getElementById("question").value.trim()
-            };
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        const btn = document.getElementById("submitBtn");
+        const status = document.getElementById("formStatus");
 
-            btn.disabled = true;
-            btn.querySelector("span").innerText = "Submitting...";
-            status.className = "form-status";
-            status.style.display = "none";
+        status.className = "form-status";
+        status.style.display = "none";
 
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify(formData),
-                    headers: {
-                        "Content-Type": "text/plain;charset=utf-8" // Avoids CORS pre-flight blockage in Google Apps Script
-                    }
-                });
+        const name = document.getElementById("name").value.trim();
+        const mobile = document.getElementById("mobile").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const question = document.getElementById("question").value.trim();
 
-                const result = await response.json();
+        // 1. Name Check: Letters and spaces only, at least 1 word, no numbers, symbols, or special characters
+        const namePattern = /^[A-Za-z]+(\s+[A-Za-z]+)*$/;
+        if (!namePattern.test(name)) {
+            showError("Please enter a valid name using only letters and spaces (no numbers or special characters).", "name");
+            return;
+        }
 
-                if (result.result === "success") {
-                    status.innerText = "Thanks for submitting your query, we will revert you soon — Ashish";
-                    status.className = "form-status success";
-                    document.getElementById("contactForm").reset();
-                } else {
-                    throw new Error(result.error || "Submission failed");
+        // 2. Mobile Check: Optional '+' followed by 7 to 15 digits (allows spaces, dashes, or parentheses in input)
+        const cleanMobile = mobile.replace(/[\s\-\(\)]/g, "");
+        const mobilePattern = /^\+?[0-9]{7,15}$/;
+        if (!mobilePattern.test(cleanMobile)) {
+            showError("Please enter a valid mobile number (7 to 15 digits, international codes allowed).", "mobile");
+            return;
+        }
+
+        // 3. Email Check: Strict email format (username@domain.tld)
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email)) {
+            showError("Please enter a valid email address (e.g., username@domain.com).", "email");
+            return;
+        }
+
+        // 4. Address Check: Required, at least 2 words (e.g., City, State or City, Country)
+        const addressWords = address.split(/[\s,]+/).filter(w => w.length > 0);
+        if (addressWords.length < 2) {
+            showError("Please enter a complete address with at least 2 words (e.g., City, State, Country).", "address");
+            return;
+        }
+
+        // 5. Query / Message Check: At least 4 words minimum
+        const queryWords = question.split(/\s+/).filter(w => w.length > 0);
+        if (queryWords.length < 4) {
+            showError(`Your message is too short (${queryWords.length} word${queryWords.length === 1 ? "" : "s"}). Please write at least 4 to 6 words.`, "question");
+            return;
+        }
+
+        const formData = {
+            name: name,
+            mobile: cleanMobile,
+            email: email,
+            address: address,
+            question: question
+        };
+
+        btn.disabled = true;
+        btn.querySelector("span").innerText = "Submitting...";
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
                 }
-            } catch (err) {
-                console.error("Submission error:", err);
-                status.innerText = "Something went wrong. Please try again or reach out via email.";
-                status.className = "form-status error";
-            } finally {
-                btn.disabled = false;
-                btn.querySelector("span").innerText = "Send Message";
-            }
-        }
-
-        // 1-Click UPI Copy function
-        function copyUpi() {
-            const upi = document.getElementById("contactUpiId").innerText;
-            const btn = document.getElementById("copyBtn");
-            navigator.clipboard.writeText(upi).then(() => {
-                const prev = btn.innerText;
-                btn.innerText = "Copied!";
-                btn.style.background = "var(--success)";
-                btn.style.color = "#fff";
-                setTimeout(() => {
-                    btn.innerText = prev;
-                    btn.style.background = "var(--surface)";
-                    btn.style.color = "var(--text)";
-                }, 2000);
             });
+
+            const result = await response.json();
+
+            if (result.result === "success") {
+                status.innerText = "Thanks for submitting your query, we will revert you soon — Ashish";
+                status.className = "form-status success";
+                document.getElementById("contactForm").reset();
+            } else {
+                throw new Error(result.error || "Submission failed");
+            }
+        } catch (err) {
+            console.error("Submission error:", err);
+            showError("Something went wrong. Please try again or reach out via email directly.");
+        } finally {
+            btn.disabled = false;
+            btn.querySelector("span").innerText = "Send Message";
         }
-    </script>
-</body>
+    }
+
+    // 1-Click UPI Copy Function
+    function copyUpi() {
+        const upi = document.getElementById("contactUpiId").innerText;
+        const btn = document.getElementById("copyBtn");
+        navigator.clipboard.writeText(upi).then(() => {
+            const prev = btn.innerText;
+            btn.innerText = "Copied!";
+            btn.style.background = "var(--success)";
+            btn.style.color = "#fff";
+            setTimeout(() => {
+                btn.innerText = prev;
+                btn.style.background = "var(--surface)";
+                btn.style.color = "var(--text)";
+            }, 2000);
+        });
+    }
+</script></body>
 </html>
