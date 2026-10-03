@@ -176,6 +176,10 @@
         }
         .form-group textarea { resize: vertical; min-height: 110px; }
 
+        .field-hint {
+            font-size: 0.78rem; color: var(--text-muted);
+        }
+
         .btn-submit {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -196,12 +200,6 @@
             padding: 12px 16px; border-radius: var(--radius-sm);
             display: none; line-height: 1.5;
         }
-        .form-status.success {
-            background: rgba(16, 185, 129, 0.12);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            display: block;
-        }
         .form-status.error {
             background: rgba(239, 68, 68, 0.12);
             color: #EF4444;
@@ -214,7 +212,6 @@
            ============================================================ */
         .right-col { display: flex; flex-direction: column; gap: 28px; }
 
-        /* Address & Contact Info */
         .info-card {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow);
@@ -238,7 +235,6 @@
         }
         .info-text a:hover { color: var(--primary); }
 
-        /* Crowdfunding Card */
         .crowdfund-card {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow);
@@ -303,6 +299,72 @@
             cursor: pointer; transition: all 0.2s; flex-shrink: 0;
         }
         .btn-copy-upi:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        /* ============================================================
+           6. SUCCESS DIALOG / MODAL
+           ============================================================ */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 999;
+            background: rgba(18, 13, 27, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active {
+            opacity: 1; pointer-events: auto;
+        }
+        .modal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px 30px;
+            max-width: 440px; width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            transform: scale(0.92) translateY(10px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .modal-overlay.active .modal-card {
+            transform: scale(1) translateY(0);
+        }
+        .modal-icon-ring {
+            width: 68px; height: 68px; border-radius: 50%;
+            background: rgba(16, 185, 129, 0.12);
+            border: 2px solid var(--success);
+            color: var(--success);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .modal-icon-ring svg {
+            width: 34px; height: 34px;
+        }
+        .modal-title {
+            font-size: 1.5rem; color: var(--text); margin-bottom: 12px;
+        }
+        .modal-msg {
+            color: var(--text-muted); font-size: 1rem; line-height: 1.6;
+            margin-bottom: 26px;
+        }
+        .modal-msg strong {
+            color: var(--primary);
+        }
+        .btn-modal-close {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 100%; padding: 13px 24px; border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; font-weight: 700; font-size: 0.98rem;
+            border: none; cursor: pointer;
+            box-shadow: 0 6px 18px var(--accent-glow);
+            transition: all 0.2s ease;
+        }
+        .btn-modal-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
     </style>
 </head>
 <body>
@@ -336,47 +398,47 @@
                     <p>Fill out the details below. Messages are recorded securely in our database.</p>
                 </div>
 
-<form id="contactForm" class="query-form" onsubmit="handleFormSubmit(event)" novalidate>
-    <div class="form-row">
-        <div class="form-group">
-            <label for="name">Your Name *</label>
-            <input type="text" id="name" name="name" placeholder="e.g., Ashish Singh" required>
-            <span class="field-hint"></span>
-        </div>
-        <div class="form-group">
-            <label for="mobile">Mobile Number *</label>
-            <input type="tel" id="mobile" name="mobile" placeholder="e.g., +91 9876543210 or +1 4155552671" required>
-            <span class="field-hint"></span>
-        </div>
-    </div>
+                <form id="contactForm" class="query-form" onsubmit="handleFormSubmit(event)" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="e.g., Ashish Singh" required>
+                            <span class="field-hint">Letters and spaces only</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile Number *</label>
+                            <input type="tel" id="mobile" name="mobile" placeholder="e.g., +91 9876543210" required>
+                            <span class="field-hint">Any country format allowed</span>
+                        </div>
+                    </div>
 
-    <div class="form-group">
-        <label for="email">Email Address *</label>
-        <input type="email" id="email" name="email" placeholder="you@domain.com" required>
-        <span class="field-hint"></span>
-    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="you@domain.com" required>
+                        <span class="field-hint">Strict format (username@domain.tld)</span>
+                    </div>
 
-    <div class="form-group">
-        <label for="address">Address *</label>
-        <input type="text" id="address" name="address" placeholder="e.g. Bihar, India" required>
-        <span class="field-hint"></span>
-    </div>
+                    <div class="form-group">
+                        <label for="address">Address *</label>
+                        <input type="text" id="address" name="address" placeholder="e.g., Patna, Bihar, India" required>
+                        <span class="field-hint">At least 2 words (City, State, Country)</span>
+                    </div>
 
-    <div class="form-group">
-        <label for="question">Your Question / Message *</label>
-        <textarea id="question" name="question" placeholder="Describe your query or requirement..." required></textarea>
-        <span class="field-hint"></span>
-    </div>
+                    <div class="form-group">
+                        <label for="question">Your Question / Message *</label>
+                        <textarea id="question" name="question" placeholder="Describe your query or requirement..." required></textarea>
+                        <span class="field-hint">Minimum 4 to 6 words required</span>
+                    </div>
 
-    <button type="submit" id="submitBtn" class="btn-submit">
-        <span>Send Message</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-    </button>
+                    <button type="submit" id="submitBtn" class="btn-submit">
+                        <span>Send Message</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
 
-    <div id="formStatus" class="form-status"></div>
-</form>
+                    <div id="formStatus" class="form-status"></div>
+                </form>
             </section>
 
             <!-- RIGHT: CONTACT DETAILS & CROWDFUNDING -->
@@ -451,121 +513,162 @@
 
     </main>
 
+    <!-- Success Modal Dialog -->
+    <div id="successModal" class="modal-overlay" onclick="handleBackdropClick(event)">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+            <div class="modal-icon-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 id="modalHeading" class="modal-title">Query Received!</h3>
+            <p class="modal-msg">
+                Thanks for submitting your query, we will revert you soon.<br>
+                <strong>— Ashish</strong>
+            </p>
+            <button type="button" class="btn-modal-close" onclick="closeSuccessModal()">Okay</button>
+        </div>
+    </div>
+
     <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec";
 
-    function showError(message, inputId) {
-        const status = document.getElementById("formStatus");
-        status.innerText = message;
-        status.className = "form-status error";
-        if (inputId) {
-            document.getElementById(inputId).focus();
-        }
-    }
-
-    async function handleFormSubmit(event) {
-        event.preventDefault();
-        const btn = document.getElementById("submitBtn");
-        const status = document.getElementById("formStatus");
-
-        status.className = "form-status";
-        status.style.display = "none";
-
-        const name = document.getElementById("name").value.trim();
-        const mobile = document.getElementById("mobile").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const address = document.getElementById("address").value.trim();
-        const question = document.getElementById("question").value.trim();
-
-        // 1. Name Check: Letters and spaces only, at least 1 word, no numbers, symbols, or special characters
-        const namePattern = /^[A-Za-z]+(\s+[A-Za-z]+)*$/;
-        if (!namePattern.test(name)) {
-            showError("Please enter a valid name using only letters and spaces (no numbers or special characters).", "name");
-            return;
-        }
-
-        // 2. Mobile Check: Optional '+' followed by 7 to 15 digits (allows spaces, dashes, or parentheses in input)
-        const cleanMobile = mobile.replace(/[\s\-\(\)]/g, "");
-        const mobilePattern = /^\+?[0-9]{7,15}$/;
-        if (!mobilePattern.test(cleanMobile)) {
-            showError("Please enter a valid mobile number (7 to 15 digits, international codes allowed).", "mobile");
-            return;
-        }
-
-        // 3. Email Check: Strict email format (username@domain.tld)
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailPattern.test(email)) {
-            showError("Please enter a valid email address (e.g., username@domain.com).", "email");
-            return;
-        }
-
-        // 4. Address Check: Required, at least 2 words (e.g., City, State or City, Country)
-        const addressWords = address.split(/[\s,]+/).filter(w => w.length > 0);
-        if (addressWords.length < 2) {
-            showError("Please enter a complete address with at least 2 words (e.g., City, State, Country).", "address");
-            return;
-        }
-
-        // 5. Query / Message Check: At least 4 words minimum
-        const queryWords = question.split(/\s+/).filter(w => w.length > 0);
-        if (queryWords.length < 4) {
-            showError(`Your message is too short (${queryWords.length} word${queryWords.length === 1 ? "" : "s"}). Please write at least 4 to 6 words.`, "question");
-            return;
-        }
-
-        const formData = {
-            name: name,
-            mobile: cleanMobile,
-            email: email,
-            address: address,
-            question: question
-        };
-
-        btn.disabled = true;
-        btn.querySelector("span").innerText = "Submitting...";
-
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                }
-            });
-
-            const result = await response.json();
-
-            if (result.result === "success") {
-                status.innerText = "Thanks for submitting your query, we will revert you soon — Ashish";
-                status.className = "form-status success";
-                document.getElementById("contactForm").reset();
-            } else {
-                throw new Error(result.error || "Submission failed");
+        function showError(message, inputId) {
+            const status = document.getElementById("formStatus");
+            status.innerText = message;
+            status.className = "form-status error";
+            if (inputId) {
+                document.getElementById(inputId).focus();
             }
-        } catch (err) {
-            console.error("Submission error:", err);
-            showError("Something went wrong. Please try again or reach out via email directly.");
-        } finally {
-            btn.disabled = false;
-            btn.querySelector("span").innerText = "Send Message";
         }
-    }
 
-    // 1-Click UPI Copy Function
-    function copyUpi() {
-        const upi = document.getElementById("contactUpiId").innerText;
-        const btn = document.getElementById("copyBtn");
-        navigator.clipboard.writeText(upi).then(() => {
-            const prev = btn.innerText;
-            btn.innerText = "Copied!";
-            btn.style.background = "var(--success)";
-            btn.style.color = "#fff";
-            setTimeout(() => {
-                btn.innerText = prev;
-                btn.style.background = "var(--surface)";
-                btn.style.color = "var(--text)";
-            }, 2000);
+        function openSuccessModal() {
+            const modal = document.getElementById("successModal");
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById("successModal");
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        function handleBackdropClick(e) {
+            if (e.target.id === "successModal") {
+                closeSuccessModal();
+            }
+        }
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") {
+                closeSuccessModal();
+            }
         });
-    }
-</script></body>
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const status = document.getElementById("formStatus");
+
+            status.className = "form-status";
+            status.style.display = "none";
+
+            const name = document.getElementById("name").value.trim();
+            const mobile = document.getElementById("mobile").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const question = document.getElementById("question").value.trim();
+
+            // 1. Name Check: Letters and spaces only, at least 1 word
+            const namePattern = /^[A-Za-z]+(\s+[A-Za-z]+)*$/;
+            if (!namePattern.test(name)) {
+                showError("Please enter a valid name using only letters and spaces (no numbers or special characters).", "name");
+                return;
+            }
+
+            // 2. Mobile Check: Optional '+' followed by 7 to 15 digits
+            const cleanMobile = mobile.replace(/[\s\-\(\)]/g, "");
+            const mobilePattern = /^\+?[0-9]{7,15}$/;
+            if (!mobilePattern.test(cleanMobile)) {
+                showError("Please enter a valid mobile number (7 to 15 digits, international codes allowed).", "mobile");
+                return;
+            }
+
+            // 3. Email Check: Strict format (username@domain.tld)
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                showError("Please enter a valid email address (e.g., username@domain.com).", "email");
+                return;
+            }
+
+            // 4. Address Check: Required, at least 2 words
+            const addressWords = address.split(/[\s,]+/).filter(w => w.length > 0);
+            if (addressWords.length < 2) {
+                showError("Please enter a complete address with at least 2 words (e.g., City, State, Country).", "address");
+                return;
+            }
+
+            // 5. Query Check: At least 4 words minimum
+            const queryWords = question.split(/\s+/).filter(w => w.length > 0);
+            if (queryWords.length < 4) {
+                showError(`Your message is too short (${queryWords.length} word${queryWords.length === 1 ? "" : "s"}). Please write at least 4 to 6 words.`, "question");
+                return;
+            }
+
+            const formData = {
+                name: name,
+                mobile: cleanMobile,
+                email: email,
+                address: address,
+                question: question
+            };
+
+            btn.disabled = true;
+            btn.querySelector("span").innerText = "Submitting...";
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify(formData),
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.result === "success") {
+                    document.getElementById("contactForm").reset();
+                    openSuccessModal();
+                } else {
+                    throw new Error(result.error || "Submission failed");
+                }
+            } catch (err) {
+                console.error("Submission error:", err);
+                showError("Something went wrong. Please try again or reach out via email directly.");
+            } finally {
+                btn.disabled = false;
+                btn.querySelector("span").innerText = "Send Message";
+            }
+        }
+
+        // 1-Click UPI Copy Function
+        function copyUpi() {
+            const upi = document.getElementById("contactUpiId").innerText;
+            const btn = document.getElementById("copyBtn");
+            navigator.clipboard.writeText(upi).then(() => {
+                const prev = btn.innerText;
+                btn.innerText = "Copied!";
+                btn.style.background = "var(--success)";
+                btn.style.color = "#fff";
+                setTimeout(() => {
+                    btn.innerText = prev;
+                    btn.style.background = "var(--surface)";
+                    btn.style.color = "var(--text)";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
 </html>
