@@ -1180,43 +1180,6 @@ refreshStats();
     .catch(function(){ /* logging must never break the page */ });
 })();
 
-   /* ============================================================
-           COMING SOON TOOLTIP
-           ============================================================ */
-        .coming-soon-tooltip {
-            position: absolute;
-            background: var(--text);
-            color: var(--bg);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            pointer-events: none; /* Prevents it from blocking clicks */
-            opacity: 0;
-            z-index: 1000;
-            white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            /* Centering trick & animation */
-            transform: translate(-50%, 10px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .coming-soon-tooltip.show {
-            opacity: 1;
-            transform: translate(-50%, 0);
-        }
-
-        /* Tiny triangle pointing up */
-        .coming-soon-tooltip::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 5px 5px 5px;
-            border-style: solid;
-            border-color: transparent transparent var(--text) transparent;
-        }
 </script>
 </body>
 </html>
