@@ -122,7 +122,6 @@
             background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
             -webkit-background-clip: text; background-clip: text; color: transparent;
             margin-bottom: 10px;
-            /* Prevents top matras clipping in Hindi */
             line-height: 1.4;
             padding-top: 0.15em; 
             padding-bottom: 0.1em;
@@ -238,11 +237,11 @@
         // ========================================================
         // 1. STATE & DICTIONARIES
         // ========================================================
-        let currentLang = 'en'; // English is now the default language
-        let allArticles = []; // Stores all fetched news globally
-        let showOlder = false; // Tracks if >30 days news is visible
+        let currentLang = 'en'; 
+        let allArticles = []; 
+        let showOlder = false; 
         
-        // Static UI Dictionary for instantaneous UI swaps
+        // Static UI Dictionary
         const UI = {
             hi: {
                 title: "लाइव अपडेट और समाचार",
@@ -251,7 +250,7 @@
                 offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं। कृपया पुनः लोड करें।",
                 empty: "अभी कोई हालिया समाचार नहीं मिला।",
                 readMore: "पूरी खबर पढ़ें →",
-                btnText: "Read in English", // Button text when currently in Hindi
+                btnText: "Read in English",
                 refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:",
                 loadMore: "पुराने समाचार लोड करें (+30 दिन)"
             },
@@ -262,7 +261,7 @@
                 offline: "Displaying cached offline news due to network lag. Please reload.",
                 empty: "No recent matching news found.",
                 readMore: "Read Full Article →",
-                btnText: "हिंदी में पढ़ें", // Button text when currently in English
+                btnText: "हिंदी में पढ़ें",
                 refresh: "News feed auto-refreshed at",
                 loadMore: "Load Older News (> 30 Days)"
             }
@@ -283,18 +282,47 @@
         ];
 
         // ========================================================
-        // 2. TEXT PARSING & TRANSLATION
+        // 2. TEXT PARSING, ENTITY CLEANING & TRANSLATION
         // ========================================================
         
-        // Decodes HTML entities (like &nbsp;) before they get saved and double-encoded
+        // Robust Multi-pass entity decoder that eliminates literal &nbsp; and duplicate spaces
         function decodeHTML(html) {
             if (!html) return "";
-            const txt = document.createElement("textarea");
-            txt.innerHTML = html;
-            return txt.value;
+            try {
+                // First pass using DOMParser
+                const parser = new DOMParser();
+                let doc = parser.parseFromString(html, "text/html");
+                let text = doc.body.textContent || "";
+                
+                // Second pass if entities like &amp;nbsp; left lingering &
+                if (text.includes("&")) {
+                    doc = parser.parseFromString(text, "text/html");
+                    text = doc.body.textContent || text;
+                }
+
+                // Strip literal '&nbsp;', non-breaking space unicode \u00a0, and collapse spaces
+                return text
+                    .replace(/&nbsp;/gi, " ")
+                    .replace(/\u00a0/g, " ")
+                    .replace(/\s+/g, " ")
+                    .trim();
+            } catch (e) {
+                return html.replace(/&nbsp;/gi, " ").trim();
+            }
         }
 
-        // Native Translation using Google's Free API
+        // Strips redundant publication name if feed tacked it on at the end of the title
+        function cleanNewsTitle(title, sourceName) {
+            let cleaned = decodeHTML(title);
+            if (sourceName) {
+                const escapedSource = sourceName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(\\s*[-–|]\\s*|\\s+)${escapedSource}$`, "i");
+                cleaned = cleaned.replace(regex, "").trim();
+            }
+            return cleaned;
+        }
+
+        // Native Translation using Google API
         async function translateText(text) {
             if (!text) return "";
             try {
@@ -303,20 +331,17 @@
                 const data = await res.json();
                 return data[0].map(x => x[0]).join('');
             } catch(e) {
-                return text; // Fallback to English if translation fails
+                return text;
             }
         }
 
-        // Toggle Language Button
         function toggleLanguage() {
             currentLang = currentLang === 'hi' ? 'en' : 'hi';
             
-            // Update static UI Elements
             document.getElementById('ui-title').innerText = UI[currentLang].title;
             document.getElementById('ui-subtitle').innerText = UI[currentLang].subtitle;
             document.getElementById('langToggleBtn').innerText = UI[currentLang].btnText;
             
-            // Re-render UI with current state
             renderNewsUI(false); 
         }
 
@@ -330,21 +355,28 @@
         function formatDate(dateString) {
             if (!dateString) return currentLang === 'hi' ? "हाल ही में" : "Recent";
             const date = new Date(dateString);
-            if (isNaN(date)) return dateString;
+            if (isNaN(date.getTime())) return dateString;
             return date.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Sort helper: Newest at top (descending order)
+        function sortArticlesByDate(articles) {
+            return articles.sort((a, b) => {
+                const timeA = a.date ? new Date(a.date).getTime() : 0;
+                const timeB = b.date ? new Date(b.date).getTime() : 0;
+                return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
+            });
         }
 
         // ========================================================
         // 3. CORE RENDERING LOGIC & FILTERING
         // ========================================================
         
-        // Expose function for the Load More button
         window.loadOlderNews = function() {
             showOlder = true;
             renderNewsUI(false);
         };
 
-        // Filter articles based on 30-day window
         async function renderNewsUI(isOffline = false) {
             const now = new Date();
             const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
@@ -353,17 +385,14 @@
             let hasOlder = false;
 
             if (showOlder) {
-                // Show everything if button was clicked
                 filteredArticles = allArticles;
             } else {
-                // Filter items newer than 30 days
                 filteredArticles = allArticles.filter(a => {
                     const articleDate = new Date(a.date);
-                    if (isNaN(articleDate)) return true; // Keep items with invalid dates
+                    if (isNaN(articleDate.getTime())) return true;
                     return (now - articleDate) <= thirtyDaysMs;
                 });
                 
-                // Check if there are articles left over that were filtered out
                 if (allArticles.length > filteredArticles.length) {
                     hasOlder = true;
                 }
@@ -383,7 +412,6 @@
                 return;
             }
 
-            // If we are currently in Hindi, batch translate any fetched articles that haven't been translated yet
             if (currentLang === 'hi') {
                 newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2>अनुवाद किया जा रहा है... (Translating)</h2></div>`;
                 loadMoreContainer.innerHTML = '';
@@ -395,7 +423,6 @@
                 }));
             }
 
-            // Render the HTML
             let htmlContent = "";
             articles.forEach(article => {
                 const displayTitle = currentLang === 'hi' ? article.hi_title : article.title;
@@ -422,14 +449,12 @@
 
             newsContainer.innerHTML = htmlContent;
 
-            // Handle Load More Button UI
             if (hasOlder) {
                 loadMoreContainer.innerHTML = `<button class="lang-btn" style="padding: 10px 24px; font-size: 1rem;" onclick="loadOlderNews()">${UI[currentLang].loadMore}</button>`;
             } else {
                 loadMoreContainer.innerHTML = '';
             }
 
-            // Update bottom timestamp text
             if (isOffline) {
                 updatedText.innerText = UI[currentLang].offline;
             } else {
@@ -456,15 +481,19 @@
                 const data = await response.json();
 
                 if (data.articles && data.articles.length > 0) {
-                    // Map API data and apply decodeHTML immediately to fix &amp;nbsp; bugs
-                    allArticles = data.articles.map(article => ({
-                        title: decodeHTML(article.title || "News Update"),
-                        summary: decodeHTML(article.description || "Click the link to read more."),
-                        sourceName: decodeHTML(article.source || "News Source"),
-                        url: article.url || "#",
-                        date: article.publishedAt || article.updatedAt
-                    }));
+                    const parsedArticles = data.articles.map(article => {
+                        const rawSource = decodeHTML(article.source || "News Source");
+                        return {
+                            title: cleanNewsTitle(article.title || "News Update", rawSource),
+                            summary: decodeHTML(article.description || "Click the link to read more."),
+                            sourceName: rawSource,
+                            url: article.url || "#",
+                            date: article.publishedAt || article.updatedAt || article.date
+                        };
+                    });
                     
+                    // Sort descending (latest news first)
+                    allArticles = sortArticlesByDate(parsedArticles);
                     await renderNewsUI(false);
                 } else {
                     throw new Error("Empty articles array");
@@ -472,7 +501,7 @@
 
             } catch (error) {
                 console.warn("API Error. Falling back to offline stories.", error);
-                allArticles = FALLBACK_STORIES;
+                allArticles = sortArticlesByDate(FALLBACK_STORIES);
                 await renderNewsUI(true);
             }
         }
