@@ -107,19 +107,29 @@
         }
 
         /* ============================================================
-           4. FEATURES GRID
+           4. 2x2 FEATURES GRID
            ============================================================ */
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px; margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on small mobile screens */
+            gap: 24px;
+            margin-bottom: 60px;
         }
+
+        @media (min-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr); /* 2x2 Grid layout */
+            }
+        }
+
         .card {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 32px;
             box-shadow: var(--shadow); transition: transform 0.2s;
+            display: flex; flex-direction: column;
         }
         .card:hover { transform: translateY(-4px); border-color: var(--primary); }
-        .card h3 { color: var(--primary); margin-bottom: 16px; font-size: 1.4rem; }
+        .card h3 { color: var(--primary); margin-bottom: 16px; font-size: 1.35rem; }
         .card p { color: var(--text-muted); font-size: 1rem; margin: 0; }
 
         /* ============================================================
@@ -195,7 +205,7 @@
             </div>
         </section>
 
-        <!-- 4-GRID FEATURES -->
+        <!-- 2x2 GRID FEATURES -->
         <section class="grid">
             <div class="card">
                 <h3>Strategic AI & EdTech Innovation</h3>
