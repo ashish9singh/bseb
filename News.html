@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Latest News — BSEBwala</title>
+    <meta name="description" content="Latest live news, updates, and announcements strictly for Bihar Board (BSEB), OFSS, BBOSE, and Bihar Education.">
+
+    <!-- Google Fonts: Lora for headings, Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           1. DESIGN TOKENS
+           ============================================================ */
+        :root {
+            --bg:            #FDF6FF;   
+            --surface:       #FFFFFF;   
+            --surface-2:     #F4EBFF;   
+            --border:        #E7D9F7;
+            --text:          #241A38;   
+            --text-muted:    #6B5C82;
+            --primary:       #7B2FF7;   
+            --primary-hover: #6420D9;
+            --accent:        #FF6B9D;   
+            --radius:        14px;
+            --radius-lg:     20px;
+            --shadow:        0 4px 12px rgba(123,47,247,.08);
+            --font-head:     'Lora', Georgia, serif;
+            --font-body:     'Inter', system-ui, sans-serif;
+            --header-h:      64px;
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg:            #15101F;
+                --surface:       #1F1830;
+                --surface-2:     #261D3A;
+                --border:        #382A54;
+                --text:          #F1ECFA;
+                --text-muted:    #B4A6CC;
+                --primary:       #B98CFF;
+                --accent:        #FF9EC1;
+                --shadow:        0 4px 12px rgba(0,0,0,.4);
+                color-scheme: dark;
+            }
+        }
+
+        /* ============================================================
+           2. BASE STYLES
+           ============================================================ */
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: var(--font-body); line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3 { font-family: var(--font-head); margin: 0; line-height: 1.2; }
+        a { text-decoration: none; color: inherit; }
+        .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* ============================================================
+           3. HEADER & BUTTONS
+           ============================================================ */
+        header.site {
+            position: sticky; top: 0; z-index: 50;
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: saturate(180%) blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            height: var(--header-h);
+        }
+        .brand {
+            display: flex; align-items: center; gap: 10px;
+            font-family: var(--font-head); font-weight: 600; font-size: 1.1rem;
+        }
+        .brand .mark {
+            width: 34px; height: 34px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-body); font-weight: 700; font-size: .85rem;
+            box-shadow: 0 4px 10px rgba(123,47,247,.35);
+        }
+        .header-actions {
+            display: flex; align-items: center; gap: 16px;
+        }
+        .back-link {
+            font-size: 0.9rem; font-weight: 600; color: var(--primary);
+        }
+        
+        /* Language Toggle Button */
+        .lang-btn {
+            background: var(--surface-2);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-body);
+        }
+        .lang-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ============================================================
+           4. PAGE LAYOUT & HERO
+           ============================================================ */
+        main { padding: 40px 0 80px; }
+        .page-header { margin-bottom: 40px; text-align: center; }
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            margin-bottom: 10px;
+        }
+        .page-header p { color: var(--text-muted); font-size: 1.05rem; }
+
+        /* ============================================================
+           5. NEWS GRID & CARDS
+           ============================================================ */
+        .news-grid {
+            display: grid; gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        .news-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow); display: flex; flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            position: relative; overflow: hidden;
+        }
+
+        .news-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0.8;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px); box-shadow: 0 12px 24px rgba(123,47,247,.15);
+            border-color: var(--primary);
+        }
+
+        .news-card h2 { font-size: 1.15rem; color: var(--text); margin-bottom: 12px; }
+        .news-card p {
+            font-size: 0.92rem; color: var(--text-muted);
+            margin: 0 0 20px 0; flex-grow: 1; 
+            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
+            margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+        }
+        .source-tag {
+            background: var(--surface-2); color: var(--primary); padding: 4px 10px;
+            border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.7rem;
+        }
+
+        .read-more {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-weight: 700; font-size: 0.95rem; color: var(--primary);
+            transition: color 0.2s;
+        }
+        .read-more:hover { color: var(--accent); }
+
+        /* ============================================================
+           6. STATUS / LOADING / EMPTY
+           ============================================================ */
+        .status-container {
+            text-align: center; padding: 60px 20px; grid-column: 1 / -1; color: var(--text-muted);
+        }
+        .spinner {
+            display: inline-block; width: 40px; height: 40px;
+            border: 4px solid var(--surface-2); border-top-color: var(--primary);
+            border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .last-updated { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 40px; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <header class="site">
+        <div class="wrap header-inner">
+            <div class="brand">
+                <div class="mark">BB</div>
+                <span class="full">BSEB Portal Hub</span>
+            </div>
+            <div class="header-actions">
+                <!-- Translation Toggle Button -->
+                <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">Read in English</button>
+                <a href="index.html" class="back-link">← Back</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <div class="page-header">
+            <h1 id="ui-title">लाइव अपडेट और समाचार</h1>
+            <p id="ui-subtitle">बिहार बोर्ड के छात्रों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।</p>
+        </div>
+
+        <div id="news-container" class="news-grid">
+            <div class="status-container">
+                <div class="spinner"></div>
+                <h2 id="ui-loading">नवीनतम समाचार लोड हो रहा है...</h2>
+            </div>
+        </div>
+        <div id="last-updated-text" class="last-updated"></div>
+    </main>
+
+    <script>
+        // ========================================================
+        // 1. STATE & DICTIONARIES
+        // ========================================================
+        let currentLang = 'hi'; // Set default language to Hindi
+        let currentArticles = []; // Stores fetched news globally
+        
+        // Static UI Dictionary
+        const UI = {
+            hi: {
+                title: "लाइव अपडेट और समाचार",
+                subtitle: "बिहार बोर्ड के छात्रों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।",
+                loading: "नवीनतम समाचार लोड हो रहा है...",
+                offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं।",
+                empty: "अभी कोई हालिया समाचार नहीं मिला।",
+                readMore: "पूरी खबर पढ़ें →",
+                btnText: "Read in English",
+                refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:"
+            },
+            en: {
+                title: "Live Updates & News",
+                subtitle: "The latest filtered announcements, results, and notices strictly for Bihar Board students.",
+                loading: "Loading latest news...",
+                offline: "Displaying cached offline news due to network lag.",
+                empty: "No recent matching news found.",
+                readMore: "Read Full Article →",
+                btnText: "हिंदी में पढ़ें",
+                refresh: "News feed auto-refreshed at"
+            }
+        };
+
+        // Offline Fallback Stories (Pre-translated to avoid API calls when offline)
+        const FALLBACK_STORIES = [
+            {
+                title: "BSEB 2027 Matric & Inter Exam Registration Deadline Extended",
+                hi_title: "BSEB 2027 मैट्रिक और इंटर परीक्षा पंजीकरण की अंतिम तिथि बढ़ी",
+                summary: "The Bihar School Examination Board (BSEB) has officially extended the online application and registration deadline for Class 10 and 12 examinations.",
+                hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने कक्षा 10 और 12 की परीक्षाओं के लिए ऑनलाइन आवेदन और पंजीकरण की अंतिम तिथि आधिकारिक तौर पर बढ़ा दी है।",
+                date: "Oct 2, 2026",
+                sourceName: "BSEB Official",
+                hi_source: "BSEB आधिकारिक",
+                url: "https://secondary.biharboardonline.com"
+            },
+            {
+                title: "BSEB Class 10 & 12 Marksheets and Certificates Live on DigiLocker",
+                hi_title: "BSEB कक्षा 10 और 12 की मार्कशीट और सर्टिफिकेट डिजीलॉकर पर लाइव",
+                summary: "Students can now access and download digitally verified BSEB secondary and senior secondary passing certificates and marksheets directly via DigiLocker.",
+                hi_summary: "छात्र अब डिजीलॉकर के माध्यम से सीधे डिजिटल रूप से सत्यापित BSEB माध्यमिक और वरिष्ठ माध्यमिक उत्तीर्ण प्रमाण पत्र और मार्कशीट तक पहुंच और डाउनलोड कर सकते हैं।",
+                date: "Sep 29, 2026",
+                sourceName: "DigiLocker Portal",
+                hi_source: "डिजीलॉकर पोर्टल",
+                url: "https://www.digilocker.gov.in"
+            }
+        ];
+
+        // ========================================================
+        // 2. TRANSLATION ENGINE & UTILITIES
+        // ========================================================
+        
+        // Native Translation using Google's Free API
+        async function translateText(text) {
+            if (!text) return "";
+            try {
+                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(text)}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                return data[0].map(x => x[0]).join('');
+            } catch(e) {
+                return text; // Fallback to English if translation fails
+            }
+        }
+
+        // Toggle Language Button
+        function toggleLanguage() {
+            currentLang = currentLang === 'hi' ? 'en' : 'hi';
+            
+            // Update static UI Elements
+            document.getElementById('ui-title').innerText = UI[currentLang].title;
+            document.getElementById('ui-subtitle').innerText = UI[currentLang].subtitle;
+            document.getElementById('langToggleBtn').innerText = UI[currentLang].btnText;
+            
+            // Re-render the articles with the new language
+            renderArticles(currentArticles, false); 
+        }
+
+        function escapeHTML(str) {
+            if (!str) return "";
+            return str.toString().replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            }[tag] || tag));
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return currentLang === 'hi' ? "हाल ही में" : "Recent";
+            const date = new Date(dateString);
+            if (isNaN(date)) return dateString;
+            return date.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // ========================================================
+        // 3. CORE FETCH & RENDER LOGIC
+        // ========================================================
+
+        async function renderArticles(articles, isOffline = false) {
+            const newsContainer = document.getElementById("news-container");
+            const updatedText = document.getElementById("last-updated-text");
+
+            if (!articles || articles.length === 0) {
+                newsContainer.innerHTML = `<div class="status-container"><h2>${UI[currentLang].empty}</h2></div>`;
+                return;
+            }
+
+            // If we are currently in Hindi, batch translate the fetched articles
+            if (currentLang === 'hi') {
+                // Show a loading text while translating
+                newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2>अनुवाद किया जा रहा है... (Translating)</h2></div>`;
+                
+                // Translate only the articles that haven't been translated yet
+                await Promise.all(articles.map(async (article) => {
+                    if (!article.hi_title) article.hi_title = await translateText(article.title);
+                    if (!article.hi_summary) article.hi_summary = await translateText(article.summary);
+                    if (!article.hi_source) article.hi_source = await translateText(article.sourceName);
+                }));
+            }
+
+            // Render the HTML
+            let htmlContent = "";
+            articles.forEach(article => {
+                // Select the correct string based on the language toggle
+                const displayTitle = currentLang === 'hi' ? article.hi_title : article.title;
+                const displaySummary = currentLang === 'hi' ? article.hi_summary : article.summary;
+                const displaySource = currentLang === 'hi' ? article.hi_source : article.sourceName;
+                const displayDate = formatDate(article.date);
+
+                htmlContent += `
+                    <article class="news-card">
+                        <h2>${escapeHTML(displayTitle)}</h2>
+                        <p>${escapeHTML(displaySummary)}</p>
+                        
+                        <div class="card-meta">
+                            <span class="source-tag">${escapeHTML(displaySource)}</span>
+                            <span>${displayDate}</span>
+                        </div>
+                        
+                        <a href="${encodeURI(article.url || '#')}" class="read-more" target="_blank" rel="noopener">
+                            ${UI[currentLang].readMore}
+                        </a>
+                    </article>
+                `;
+            });
+
+            newsContainer.innerHTML = htmlContent;
+
+            // Update bottom timestamp text
+            if (isOffline) {
+                updatedText.innerText = UI[currentLang].offline;
+            } else {
+                const time = new Date().toLocaleTimeString(currentLang === 'hi' ? 'hi-IN' : 'en-US');
+                updatedText.innerText = `${UI[currentLang].refresh} ${time}`;
+            }
+        }
+
+        async function loadNews() {
+            const newsContainer = document.getElementById("news-container");
+            
+            // Set initial loading text in the correct language
+            if (currentArticles.length === 0) {
+                newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2 id="ui-loading">${UI[currentLang].loading}</h2></div>`;
+            }
+
+            try {
+                // 5-second hard timeout for the API call
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const response = await fetch("https://bsebwala-news-api2.vercel.app/api/news", { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (!response.ok) throw new Error("HTTP error " + response.status);
+                
+                const data = await response.json();
+
+                if (data.articles && data.articles.length > 0) {
+                    // Map API data into our format
+                    currentArticles = data.articles.map(article => ({
+                        title: article.title || "News Update",
+                        summary: article.description || "Click the link to read more.",
+                        sourceName: article.source || "News Source",
+                        url: article.url || "#",
+                        date: article.publishedAt || article.updatedAt
+                    }));
+                    
+                    await renderArticles(currentArticles, false);
+                } else {
+                    throw new Error("Empty articles array");
+                }
+
+            } catch (error) {
+                console.warn("API Error. Falling back to offline stories.", error);
+                currentArticles = FALLBACK_STORIES;
+                await renderArticles(currentArticles, true);
+            }
+        }
+
+        // Initialize immediately
+        loadNews();
+
+        // Auto-refresh seamlessly in the background every 5 minutes
+        setInterval(loadNews, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
