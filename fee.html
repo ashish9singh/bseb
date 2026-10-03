@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JNFE9PSTH3');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>विद्यालय शुल्क संरचना (वर्ग 9-12) — BSEB Portal Hub</title>
+  <meta name="description" content="बिहार सरकार शिक्षा विभाग आदेश ज्ञापांक 720 के अनुसार वर्ग 9वीं से 12वीं तक का आधिकारिक एवं पुनरीक्षित शुल्क विवरण, स्मार्ट गणक तथा नियम।">
+
+  <!-- Google Fonts: Lora for headings, Inter for UI/Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       1. DESIGN TOKENS (bsebwala.in Palette)
+       ============================================================ */
+    :root {
+      --bg:             #FDF6FF;
+      --surface:        #FFFFFF;
+      --surface-2:      #F4EBFF;
+      --border:         #E7D9F7;
+      --text:           #241A38;
+      --text-muted:     #6B5C82;
+      --primary:        #7B2FF7;
+      --primary-hover:  #6420D9;
+      --accent:         #FF6B9D;
+      --accent-soft:    #FFE1EC;
+      --danger:         #E4572E;
+      --radius:         14px;
+      --radius-lg:      20px;
+      --shadow:         0 2px 6px rgba(123,47,247,.08), 0 10px 26px rgba(123,47,247,.12);
+      --font-head:      'Lora', Georgia, serif;
+      --font-body:      'Inter', system-ui, -apple-system, sans-serif;
+      --header-h:       64px;
+      color-scheme: light;
+
+      --c-secondary:    #2E9BFF;
+      --c-senior:       #21C08B;
+      --c-scholarship:  #FFB020;
+    }
+
+    :root[data-theme="dark"] {
+      --bg:             #15101F;
+      --surface:        #1F1830;
+      --surface-2:      #261D3A;
+      --border:         #382A54;
+      --text:           #F1ECFA;
+      --text-muted:     #B4A6CC;
+      --primary:        #B98CFF;
+      --primary-hover:  #CBA6FF;
+      --accent:         #FF9EC1;
+      --accent-soft:    #3A2038;
+      --danger:         #FF8A65;
+      --shadow:         0 2px 6px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
+      color-scheme: dark;
+
+      --c-secondary:    #5CB3FF;
+      --c-senior:       #4CD9A6;
+      --c-scholarship:  #FFC94D;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) {
+        --bg:             #15101F;
+        --surface:        #1F1830;
+        --surface-2:      #261D3A;
+        --border:         #382A54;
+        --text:           #F1ECFA;
+        --text-muted:     #B4A6CC;
+        --primary:        #B98CFF;
+        --primary-hover:  #CBA6FF;
+        --accent:         #FF9EC1;
+        --accent-soft:    #3A2038;
+        --danger:         #FF8A65;
+        --shadow:         0 2px 6px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
+        color-scheme: dark;
+
+        --c-secondary:    #5CB3FF;
+        --c-senior:       #4CD9A6;
+        --c-scholarship:  #FFC94D;
+      }
+    }
+
+    /* ============================================================
+       2. RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top,0px) + 12px);
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: var(--font-head); margin: 0; line-height: 1.25; }
+    a { color: inherit; }
+    button { font-family: inherit; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* ============================================================
+       3. HEADER (ONLY LOGO, BACK BUTTON, AND THEME TOGGLE)
+       ============================================================ */
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      padding-top: env(safe-area-inset-top, 0px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: saturate(180%) blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: var(--header-h);
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-head); font-weight: 600; font-size: 1.05rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand .mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-body); font-weight: 700; font-size: .85rem;
+      box-shadow: 0 4px 10px rgba(123,47,247,.35);
+    }
+
+    .header-actions {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .btn-back-home {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); color: var(--primary);
+      border: 1px solid var(--border); padding: 8px 16px;
+      border-radius: 999px; font-size: 0.88rem; font-weight: 700;
+      text-decoration: none; transition: all 0.15s ease;
+      box-shadow: var(--shadow);
+    }
+    .btn-back-home:hover {
+      background: var(--primary); color: #fff;
+      transform: translateY(-1px);
+    }
+    .icon-btn {
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text); width: 40px; height: 40px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex: none; transition: background .15s ease;
+    }
+    .icon-btn:hover { background: var(--surface-2); }
+
+    /* ============================================================
+       4. HERO SECTION
+       ============================================================ */
+    .hero {
+      padding: 38px 0 20px;
+      display: grid; grid-template-columns: 1.35fr 1fr; gap: 28px; align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4.2vw, 2.7rem); font-weight: 700;
+      background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 60%, var(--c-senior) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p {
+      color: var(--text-muted); margin-top: 10px; font-size: 1rem;
+    }
+    .hero-panel {
+      position: relative; border-radius: var(--radius-lg); padding: 2px;
+      background: conic-gradient(from 180deg, var(--primary), var(--accent), var(--c-senior), var(--primary));
+    }
+    .hero-panel-inner {
+      background: var(--surface); border-radius: calc(var(--radius-lg) - 2px);
+      padding: 22px 20px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .hero-panel .big-num {
+      font-family: var(--font-head); font-size: 2.2rem; font-weight: 700; line-height: 1;
+      color: var(--primary);
+    }
+    .hero-panel .big-label { font-size: .85rem; color: var(--text-muted); margin-top: 2px; }
+    .hero-panel .mini-row {
+      display: flex; gap: 16px; padding-top: 8px; border-top: 1px solid var(--border);
+    }
+    .hero-panel .mini-row div { font-size: .78rem; color: var(--text-muted); }
+    .hero-panel .mini-row strong { display: block; font-size: 1.05rem; color: var(--text); font-family: var(--font-head); }
+
+    .notice-bar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 10px 14px; margin-bottom: 24px;
+      font-size: .84rem; color: var(--text);
+    }
+    .notice-pill {
+      background: var(--primary); color: #fff; font-weight: 700; font-size: .7rem;
+      padding: 2px 8px; border-radius: 999px; letter-spacing: .03em; text-transform: uppercase;
+    }
+
+    /* ============================================================
+       5. INTERACTIVE CALCULATOR CARD
+       ============================================================ */
+    .calculator-wrapper {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow);
+      position: relative; overflow: hidden; margin-bottom: 32px;
+    }
+    .calculator-wrapper::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background: linear-gradient(90deg, var(--c-secondary), var(--primary), var(--accent));
+    }
+    .calc-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+    }
+    .calc-head h2 { font-size: 1.35rem; color: var(--text); }
+    .calc-badge {
+      font-size: .75rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+      background: var(--surface-2); color: var(--primary);
+    }
+
+    .calc-grid {
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px;
+    }
+    .calc-controls {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .form-group label {
+      display: block; font-size: .88rem; font-weight: 600; margin-bottom: 6px; color: var(--text);
+    }
+    .form-select {
+      width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); font-family: var(--font-body);
+      font-size: .92rem; outline: none; transition: border-color .15s;
+    }
+    .form-select:focus { border-color: var(--primary); }
+
+    .check-card {
+      display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); cursor: pointer; transition: background .15s;
+    }
+    .check-card:hover {
+      background: color-mix(in srgb, var(--surface-2) 75%, var(--primary) 25%);
+    }
+    .check-card input[type="checkbox"] {
+      margin-top: 3px; accent-color: var(--primary); width: 17px; height: 17px; cursor: pointer;
+    }
+    .check-card-text { font-size: .83rem; line-height: 1.4; color: var(--text-muted); }
+    .check-card-text strong { display: block; color: var(--text); font-size: .88rem; }
+
+    .calc-slip {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; display: flex;
+      flex-direction: column; justify-content: space-between; gap: 14px;
+    }
+    .slip-total-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; text-align: center;
+      box-shadow: 0 4px 12px rgba(123,47,247,.08);
+    }
+    .slip-total-card .lbl { font-size: .78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .slip-total-card .val {
+      font-family: var(--font-head); font-size: 2.4rem; font-weight: 700;
+      color: var(--primary); margin: 4px 0;
+    }
+    .slip-total-card .tag {
+      font-size: .75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent); display: inline-block;
+    }
+
+    .funds-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .fund-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px; text-align: center;
+    }
+    .fund-box span { font-size: .75rem; color: var(--text-muted); font-weight: 600; display: block; }
+    .fund-box strong { font-size: 1.15rem; font-family: var(--font-head); color: var(--text); }
+
+    .slip-breakdown {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px 14px; max-height: 220px; overflow-y: auto;
+      font-size: .82rem;
+    }
+    .slip-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 5px 0; border-bottom: 1px dashed var(--border);
+    }
+    .slip-item:last-child { border-bottom: none; }
+    .slip-item.waived { color: var(--text-muted); text-decoration: line-through; }
+    .slip-item.waived .fee-n { text-decoration: none; color: var(--c-senior); font-weight: 700; }
+
+    /* ============================================================
+       6. ABOLISHED CHARGES CARD
+       ============================================================ */
+    .danger-alert-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 22px; position: relative;
+      overflow: hidden; margin-bottom: 32px; box-shadow: var(--shadow);
+    }
+    .danger-alert-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background: var(--danger);
+    }
+    .danger-alert-card h3 {
+      color: var(--danger); font-size: 1.15rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .danger-alert-card p {
+      color: var(--text-muted); font-size: .88rem; margin-bottom: 12px;
+    }
+    .pill-list {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .strike-pill {
+      background: color-mix(in srgb, var(--danger) 12%, transparent);
+      color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 25%, transparent);
+      font-size: .78rem; font-weight: 700; padding: 5px 12px; border-radius: 999px;
+    }
+
+    /* ============================================================
+       7. OFFICIAL TABLE STYLING
+       ============================================================ */
+    .section-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 12px; margin-bottom: 16px; border-bottom: 3px solid var(--primary);
+      padding-bottom: 10px;
+    }
+    .section-head h2 { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 9px; }
+    .section-head h2::before {
+      content: ''; width: 11px; height: 11px; border-radius: 50%;
+      background: var(--primary); flex: none;
+    }
+    .section-head span {
+      font-size: .75rem; font-weight: 600; color: var(--primary);
+      background: var(--surface-2); padding: 4px 10px; border-radius: 999px;
+    }
+
+    .table-container {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
+      margin-bottom: 36px;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: .88rem; text-align: left;
+    }
+    .styled-table th {
+      background: var(--surface-2); color: var(--text); padding: 14px 16px;
+      font-weight: 700; border-bottom: 1px solid var(--border);
+    }
+    .styled-table td {
+      padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text);
+    }
+    .styled-table tr:last-child td { border-bottom: none; }
+    .styled-table tr:hover { background: color-mix(in srgb, var(--surface-2) 40%, transparent); }
+    .badge-tag {
+      font-size: .72rem; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+    }
+    .tag-vikas { background: color-mix(in srgb, var(--c-secondary) 15%, transparent); color: var(--c-secondary); }
+    .tag-chhatra { background: color-mix(in srgb, var(--c-scholarship) 20%, transparent); color: #c47d00; }
+    .tag-abolished { background: color-mix(in srgb, var(--danger) 15%, transparent); color: var(--danger); text-decoration: line-through; }
+
+    /* ============================================================
+       8. GUIDELINE CARDS
+       ============================================================ */
+    .rules-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px; margin-bottom: 40px;
+    }
+    .rule-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px; position: relative; overflow: hidden;
+      display: flex; flex-direction: column; gap: 8px; transition: transform .15s ease;
+    }
+    .rule-card::before {
+      content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 3px;
+      background: var(--primary);
+    }
+    .rule-card:hover { transform: translateY(-2px); }
+    .rule-card .r-icon { font-size: 1.25rem; }
+    .rule-card .r-title { font-weight: 700; font-size: .95rem; color: var(--text); }
+    .rule-card .r-desc { font-size: .82rem; color: var(--text-muted); line-height: 1.45; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border); padding: 26px 0;
+      color: var(--text-muted); font-size: .82rem; text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; padding-top: 24px; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .header-inner { height: var(--header-h); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =================== HEADER (CLEAN: LOGO + BACK TO HOME + THEME) =================== -->
+  <header class="site">
+    <div class="wrap header-inner">
+      <a href="https://bsebwala.in/" class="brand">
+        <div class="mark">BB</div>
+        <span>BSEB Portal Hub</span>
+      </a>
+
+      <div class="header-actions">
+        <!-- Back to Home Link -->
+        <a href="https://bsebwala.in/" class="btn-back-home" title="Back to BSEB Portal Hub">
+          <span>← Back to Home</span>
+        </a>
+        <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- =================== HERO =================== -->
+    <section class="hero">
+      <div>
+        <h1>विद्यालय शुल्क संरचना (वर्ग 9 से 12)</h1>
+        <p>शिक्षा विभाग, बिहार सरकार द्वारा जारी पुनरीक्षित विद्यालय शुल्क आदेश (ज्ञापांक 720) का पूर्ण, स्पष्ट एवं द्विभाषी विवरण।</p>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-panel-inner">
+          <div>
+            <div class="big-num">₹0 Penalties</div>
+            <div class="big-label">सभी अनुपस्थिति एवं विलंब शुल्क समाप्त</div>
+          </div>
+          <div class="mini-row">
+            <div><strong>100% Free</strong>SC/ST शिक्षण एवं विकास शुल्क[cite: 2]</div>
+            <div><strong>2 Funds</strong>विकास कोष एवं छात्र कोष[cite: 3]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== LIVE UPDATES BAR =================== -->
+    <div class="notice-bar">
+      <span class="notice-pill">Official Order</span>
+      <span>संशोधित आदेश संचिका संख्या: <strong>09/विविध (शुल्क)-41/2021-720</strong>[cite: 1, 4] · राजकीय/राजकीयकृत/उत्क्रमित/अल्पसंख्यक माध्यमिक व उच्च माध्यमिक विद्यालयों हेतु लागू[cite: 1]।</span>
+    </div>
+
+    <!-- =================== INTERACTIVE SMART CALCULATOR =================== -->
+    <div class="calculator-wrapper">
+      <div class="calc-head">
+        <h2>⚡ सटीक शुल्क गणक (Dynamic Fee Calculator)</h2>
+        <span class="calc-badge">Bilingual &amp; Rule-Engine</span>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-controls">
+          <div class="form-group">
+            <label for="calcClass">कक्षा चुनें (Select Class):</label>
+            <select id="calcClass" class="form-select" onchange="updateCalc()">
+              <option value="9">वर्ग 9वीं (Class 9 - New Admission)</option>
+              <option value="10">वर्ग 10वीं (Class 10 - Annual Session)</option>
+              <option value="11">वर्ग 11वीं (Class 11 - Intermediate 1st Year)</option>
+              <option value="12">वर्ग 12वीं (Class 12 - Intermediate 2nd Year)</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="streamContainer" style="display: none;">
+            <label for="calcStream">संकाय चुनें (Select Stream for +2):</label>
+            <select id="calcStream" class="form-select" onchange="updateCalc()">
+              <option value="arts_comm">कला / वाणिज्य (Arts / Commerce)</option>
+              <option value="sci_agri">विज्ञान / कृषि / व्यावसायिक (Science / Agriculture / Vocational)</option>
+            </select>
+          </div>
+
+          <label class="check-card">
+            <input type="checkbox" id="calcScSt" onchange="updateCalc()">
+            <div class="check-card-text">
+              <strong>अनुसूचित जाति / जनजाति (SC / ST Exemption)</strong>
+              कंडिका 4 के अनुसार शिक्षण शुल्क और विकास शुल्क पूरी तरह निःशुल्क है[cite: 2]।
+            </div>
+          </label>
+
+          <label class="check-card" id="sameSchoolContainer" style="display: none;">
+            <input type="checkbox" id="calcSameSchool" onchange="updateCalc()">
+            <div class="check-card-text">
+              <strong>उसी विद्यालय से 9वीं उत्तीर्ण (Same School Student)</strong>
+              कंडिका 3 के तहत 11वीं में नामांकन लेने पर ₹50 प्रवेश शुल्क नहीं लगेगा[cite: 2]।
+            </div>
+          </label>
+        </div>
+
+        <div class="calc-slip">
+          <div class="slip-total-card">
+            <div class="lbl">कुल देय शुल्क (Total Payable)</div>
+            <div class="val" id="totalAmountDisplay">₹360</div>
+            <div class="tag" id="classBadgeDisplay">वर्ग 9वीं (नया नामांकन)</div>
+          </div>
+
+          <div class="funds-row">
+            <div class="fund-box">
+              <span>विकास कोष (Vikas)[cite: 3]</span>
+              <strong id="vikasTotalDisplay">₹110</strong>
+            </div>
+            <div class="fund-box">
+              <span>छात्र कोष (Chhatra)[cite: 3]</span>
+              <strong id="chhatraTotalDisplay">₹250</strong>
+            </div>
+          </div>
+
+          <div class="slip-breakdown" id="feeItemsBreakdown">
+            <!-- Populated via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== ABOLISHED CHARGES BANNER =================== -->
+    <div class="danger-alert-card">
+      <h3>🚫 पूरी तरह समाप्त किए गए शुल्क एवं जुर्माने (Abolished Charges)[cite: 1, 2, 3]</h3>
+      <p>शिक्षा विभाग के स्पष्ट आदेशानुसार किसी भी विद्यालय प्रधान द्वारा निम्नलिखित मदों में कोई शुल्क नहीं वसूला जा सकता[cite: 1, 2]:</p>
+      <div class="pill-list">
+        <span class="strike-pill">✕ अनुपस्थिति दण्ड (Absence Fine) — समाप्त[cite: 1]</span>
+        <span class="strike-pill">✕ विलम्ब शुल्क (Late Fee ₹1) — समाप्त[cite: 1]</span>
+        <span class="strike-pill">✕ मध्याह्न पलायन शुल्क (Escape Fine) — समाप्त[cite: 1]</span>
+        <span class="strike-pill">✕ पुनः प्रवेश शुल्क (Re-admission Fee) — समाप्त[cite: 1]</span>
+        <span class="strike-pill">✕ फार्म / प्रोस्पेक्टस शुल्क — समाप्त[cite: 2, 3]</span>
+      </div>
+    </div>
+
+    <!-- =================== DETAILED COMPARISON TABLE =================== -->
+    <div class="section-head">
+      <h2>आधिकारिक शुल्क तालिका (Itemized Fee Head Table)[cite: 1, 2]</h2>
+      <span>ज्ञापांक 720[cite: 1, 4]</span>
+    </div>
+
+    <div class="table-container">
+      <div style="overflow-x: auto;">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>क्र०</th>
+              <th>मद का विवरण (Fee Particulars)[cite: 1]</th>
+              <th>माध्यमिक (9-10)[cite: 1]</th>
+              <th>उच्च माध्यमिक (11-12)[cite: 1]</th>
+              <th>कोष (Fund Head)[cite: 3]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><strong>प्रवेश शुल्क (Admission Fee)[cite: 1]</strong></td>
+              <td>₹50 (केवल 9वीं नामांकन)[cite: 1, 3]</td>
+              <td>₹50 (11वीं, यदि दूसरे स्कूल से हों)[cite: 1, 2]</td>
+              <td><span class="badge-tag tag-vikas">विकास कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>शिक्षण शुल्क (Tuition Fee)[cite: 1]</strong></td>
+              <td>लागू नहीं (शून्य)[cite: 1]</td>
+              <td>₹180/वर्ष (कला/वाणिज्य)<br>₹240/वर्ष (विज्ञान/कृषि/व्या०)[cite: 1]</td>
+              <td><span class="badge-tag tag-vikas">विकास कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>विकास शुल्क (Development Fee)[cite: 1]</strong></td>
+              <td>₹60[cite: 1]</td>
+              <td>₹200[cite: 1]</td>
+              <td><span class="badge-tag tag-vikas">विकास कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>स्थानान्तरण शुल्क (TC / SLC Fee)[cite: 1]</strong></td>
+              <td>₹10 (आवश्यकता पर)[cite: 1]</td>
+              <td>₹20 (आवश्यकता पर)[cite: 1]</td>
+              <td><span class="badge-tag tag-vikas">विकास कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>प्रयोगशाला शुल्क (Laboratory Fee)[cite: 1]</strong></td>
+              <td>₹10[cite: 1]</td>
+              <td>₹200 (केवल विज्ञान/कृषि/व्या०)[cite: 1]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>6–9</td>
+              <td><strong>अनुपस्थिति / विलम्ब / पलायन / री-एडमिशन[cite: 1]</strong></td>
+              <td><span class="tag-abolished">विलोपित[cite: 1]</span></td>
+              <td><span class="tag-abolished">विलोपित[cite: 1]</span></td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td><strong>क्रीड़ा एवं खेल-कूद सामग्री (Sports)[cite: 2]</strong></td>
+              <td>₹20[cite: 2]</td>
+              <td>₹30[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td><strong>मनोरंजन / सांस्कृतिक कार्यक्रम (Cultural)[cite: 2]</strong></td>
+              <td>₹20[cite: 2]</td>
+              <td>₹60[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td><strong>निर्धन छात्र कोष (Poor Students Fund)[cite: 2]</strong></td>
+              <td>₹10[cite: 2]</td>
+              <td>₹10[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td><strong>विद्युत शुल्क (Electricity &amp; Maintenance)[cite: 2]</strong></td>
+              <td>₹20[cite: 2]</td>
+              <td>₹80[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td><strong>पुस्तकालय शुल्क (Library Fee)[cite: 2]</strong></td>
+              <td>लागू नहीं[cite: 2]</td>
+              <td>₹20[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td><strong>विद्यालय रख-रखाव एवं साफ-सफाई[cite: 2]</strong></td>
+              <td>₹50[cite: 2]</td>
+              <td>₹150[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td><strong>परिचय पत्र (Identity Card)[cite: 2]</strong></td>
+              <td>₹20 (केवल 9वीं नामांकन)[cite: 2, 3]</td>
+              <td>₹20 (केवल 11वीं नामांकन)[cite: 2, 3]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td><strong>बालचर शुल्क (Scout &amp; Guide)[cite: 2]</strong></td>
+              <td>₹10[cite: 2]</td>
+              <td>लागू नहीं[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+            <tr>
+              <td>18–19</td>
+              <td><strong>फार्म / प्रोस्पेक्टस शुल्क[cite: 2]</strong></td>
+              <td>लागू नहीं[cite: 2]</td>
+              <td><span class="tag-abolished">विलोपित[cite: 2, 3]</span></td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>20</td>
+              <td><strong>परीक्षा शुल्क (3 सावधिक/त्रैमासिक परीक्षाएं)[cite: 2]</strong></td>
+              <td>₹120 (₹40 प्रति परीक्षा)[cite: 2]</td>
+              <td>₹120 (सभी संकाय)[cite: 2]</td>
+              <td><span class="badge-tag tag-chhatra">छात्र कोष[cite: 3]</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- =================== OFFICIAL GUIDELINES =================== -->
+    <div class="section-head">
+      <h2>महत्वपूर्ण विभागीय निर्देश (Key Directives)[cite: 2, 3]</h2>
+      <span>विभागीय नियम[cite: 2, 3]</span>
+    </div>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="r-icon">🎓</div>
+        <div class="r-title">SC/ST छात्र छूट (कंडिका 4)[cite: 2]</div>
+        <div class="r-desc">अनुसूचित जाति एवं अनुसूचित जनजाति के छात्रों से शिक्षण शुल्क एवं विकास शुल्क बिल्कुल नहीं लिया जाएगा[cite: 2]।</div>
+      </div>
+      <div class="rule-card">
+        <div class="r-icon">🏫</div>
+        <div class="r-title">उसी विद्यालय में नामांकन (कंडिका 3)[cite: 2]</div>
+        <div class="r-desc">कक्षा 9 में नामांकित विद्यार्थी का उसी विद्यालय में कक्षा 11 में नामांकन होने पर ₹50 प्रवेश शुल्क देय नहीं होगा[cite: 2]।</div>
+      </div>
+      <div class="rule-card">
+        <div class="r-icon">🪪</div>
+        <div class="r-title">परिचय पत्र शुल्क (कंडिका 5.ii)[cite: 3]</div>
+        <div class="r-desc">क्रमांक 16 पर अंकित ₹20 परिचय पत्र शुल्क केवल वर्ग 9वीं एवं 11वीं में नामांकन के समय ही लिया जाएगा[cite: 3]।</div>
+      </div>
+      <div class="rule-card">
+        <div class="r-icon">🧾</div>
+        <div class="r-title">पक्की रसीद अनिवार्य (कंडिका 11.i)[cite: 3]</div>
+        <div class="r-desc">विकास कोष एवं छात्र कोष की ली गई राशि की स्पष्ट प्राप्ति रसीद छात्र को दी जाएगी तथा अंकेक्षण हेतु संधारित होगी[cite: 3]।</div>
+      </div>
+      <div class="rule-card">
+        <div class="r-icon">🏦</div>
+        <div class="r-title">राष्ट्रीयकृत बैंक में खाता (कंडिका 12)[cite: 3]</div>
+        <div class="r-desc">विकास कोष एवं छात्र कोष की राशि अनिवार्य रूप से राष्ट्रीयकृत बैंक के विद्यालय खाते में रखी जाएगी[cite: 3]।</div>
+      </div>
+      <div class="rule-card">
+        <div class="r-icon">👥</div>
+        <div class="r-title">छात्र कोष प्रबंधन समिति (कंडिका 11.iii)[cite: 3]</div>
+        <div class="r-desc">छात्र कोष के व्यय हेतु प्रधानाध्यापक एवं दो वरीय शिक्षकों की एक अधिकृत समिति होगी[cite: 3]।</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      बिहार सरकार शिक्षा विभाग आदेश ज्ञापांक: 09/विविध (शुल्क)-41/2021-720[cite: 1, 4] · BSEB Portal Hub (bsebwala.in)
+    </div>
+  </footer>
+
+  <!-- =================== SCRIPTS =================== -->
+  <script>
+    /* Theme Toggle */
+    (function themeModule(){
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const STORAGE_KEY = 'bseb-hub-theme';
+
+      function apply(theme){
+        if (theme === 'dark' || theme === 'light'){
+          root.setAttribute('data-theme', theme);
+        } else {
+          root.removeAttribute('data-theme');
+        }
+        btn.textContent = (root.getAttribute('data-theme') === 'dark' ||
+          (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches))
+          ? '☀️️' : '🌙';
+      }
+
+      let saved = null;
+      try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
+      apply(saved);
+
+      btn.addEventListener('click', function(){
+        const current = root.getAttribute('data-theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
+      });
+    })();
+
+    /* Interactive Fee Calculator */
+    function updateCalc() {
+      const cls = document.getElementById('calcClass').value;
+      const streamContainer = document.getElementById('streamContainer');
+      const sameSchoolContainer = document.getElementById('sameSchoolContainer');
+      const isScSt = document.getElementById('calcScSt').checked;
+      const isSameSchool = document.getElementById('calcSameSchool').checked;
+      const stream = document.getElementById('calcStream').value;
+
+      if (cls === '11' || cls === '12') {
+        streamContainer.style.display = 'block';
+      } else {
+        streamContainer.style.display = 'none';
+      }
+
+      if (cls === '11') {
+        sameSchoolContainer.style.display = 'flex';
+      } else {
+        sameSchoolContainer.style.display = 'none';
+        document.getElementById('calcSameSchool').checked = false;
+      }
+
+      let items = [];
+      let labelText = '';
+
+      if (cls === '9') {
+        labelText = 'वर्ग 9वीं (नया नामांकन)';
+        items.push({ name: 'प्रवेश शुल्क (Admission Fee)', amt: 50, fund: 'vikas', waived: false });
+        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 60, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+        items.push({ name: 'विज्ञान प्रयोगशाला शुल्क', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'क्रीड़ा एवं खेल-कूद सामग्री', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'मनोरंजन व सांस्कृतिक कार्यक्रम', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 50, fund: 'chhatra', waived: false });
+        items.push({ name: 'परिचय पत्र (ID Card Fee)', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'बालचर शुल्क (Scout & Guide)', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'परीक्षा शुल्क (3 त्रैमासिक परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+      } 
+      else if (cls === '10') {
+        labelText = 'वर्ग 10वीं (सत्रारंभ शुल्क)';
+        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 60, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+        items.push({ name: 'विज्ञान प्रयोगशाला शुल्क', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'क्रीड़ा एवं खेल-कूद सामग्री', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'मनोरंजन व सांस्कृतिक कार्यक्रम', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 50, fund: 'chhatra', waived: false });
+        items.push({ name: 'बालचर शुल्क (Scout & Guide)', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'परीक्षा शुल्क (3 त्रैमासिक परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+      } 
+      else if (cls === '11') {
+        const streamText = (stream === 'sci_agri') ? 'विज्ञान/कृषि' : 'कला/वाणिज्य';
+        labelText = `वर्ग 11वीं (${streamText})`;
+        
+        items.push({ name: 'प्रवेश शुल्क (Admission Fee)', amt: 50, fund: 'vikas', waived: isSameSchool, reason: 'उसी स्कूल में नामांकन छूट' });
+
+        const tAmt = (stream === 'sci_agri') ? 240 : 180;
+        items.push({ name: `शिक्षण शुल्क (${streamText})`, amt: tAmt, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 200, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+
+        if (stream === 'sci_agri') {
+          items.push({ name: 'प्रयोगशाला शुल्क (Lab Fee)', amt: 200, fund: 'chhatra', waived: false });
+        }
+        items.push({ name: 'क्रीड़ा सामग्री शुल्क', amt: 30, fund: 'chhatra', waived: false });
+        items.push({ name: 'मनोरंजन व सांस्कृतिक शुल्क', amt: 60, fund: 'chhatra', waived: false });
+        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 80, fund: 'chhatra', waived: false });
+        items.push({ name: 'पुस्तकालय शुल्क (Library)', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 150, fund: 'chhatra', waived: false });
+        items.push({ name: 'परिचय पत्र (ID Card Fee)', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'परीक्षा शुल्क (3 परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+      } 
+      else if (cls === '12') {
+        const streamText = (stream === 'sci_agri') ? 'विज्ञान/कृषि' : 'कला/वाणिज्य';
+        labelText = `वर्ग 12वीं (${streamText})`;
+
+        const tAmt = (stream === 'sci_agri') ? 240 : 180;
+        items.push({ name: `शिक्षण शुल्क (${streamText})`, amt: tAmt, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 200, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+
+        if (stream === 'sci_agri') {
+          items.push({ name: 'प्रयोगशाला शुल्क (Lab Fee)', amt: 200, fund: 'chhatra', waived: false });
+        }
+        items.push({ name: 'क्रीड़ा सामग्री शुल्क', amt: 30, fund: 'chhatra', waived: false });
+        items.push({ name: 'मनोरंजन व सांस्कृतिक शुल्क', amt: 60, fund: 'chhatra', waived: false });
+        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 80, fund: 'chhatra', waived: false });
+        items.push({ name: 'पुस्तकालय शुल्क (Library)', amt: 20, fund: 'chhatra', waived: false });
+        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 150, fund: 'chhatra', waived: false });
+        items.push({ name: 'परीक्षा शुल्क (3 परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+      }
+
+      let grandTotal = 0;
+      let vikasTotal = 0;
+      let chhatraTotal = 0;
+      let listHtml = '';
+
+      items.forEach(it => {
+        const effective = it.waived ? 0 : it.amt;
+        grandTotal += effective;
+        if (it.fund === 'vikas') vikasTotal += effective;
+        if (it.fund === 'chhatra') chhatraTotal += effective;
+
+        listHtml += `
+          <div class="slip-item ${it.waived ? 'waived' : ''}">
+            <span>${it.name} ${it.reason ? '<small style="color:var(--c-senior);font-weight:600;">(' + it.reason + ')</small>' : ''}</span>
+            <span class="fee-n">${it.waived ? '₹0' : '₹' + it.amt}</span>
+          </div>
+        `;
+      });
+
+      document.getElementById('totalAmountDisplay').textContent = '₹' + grandTotal;
+      document.getElementById('vikasTotalDisplay').textContent = '₹' + vikasTotal;
+      document.getElementById('chhatraTotalDisplay').textContent = '₹' + chhatraTotal;
+      document.getElementById('classBadgeDisplay').textContent = labelText;
+      document.getElementById('feeItemsBreakdown').innerHTML = listHtml;
+    }
+
+    // Run on initial load
+    updateCalc();
+  </script>
+</body>
+</html>
