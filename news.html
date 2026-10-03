@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Latest News — BSEBwala</title>
+    <title>Latest News — BSEB Portal Hub</title>
     <meta name="description" content="Latest live news, updates, and announcements strictly for Bihar Board (BSEB), OFSS, BBOSE, and Bihar Education.">
 
     <!-- Google Fonts: Lora for headings, Inter for body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================================
@@ -33,8 +33,21 @@
             color-scheme: light;
         }
 
+        :root[data-theme="dark"] {
+            --bg:            #15101F;
+            --surface:       #1F1830;
+            --surface-2:     #261D3A;
+            --border:        #382A54;
+            --text:          #F1ECFA;
+            --text-muted:    #B4A6CC;
+            --primary:       #B98CFF;
+            --accent:        #FF9EC1;
+            --shadow:        0 4px 12px rgba(0,0,0,.4);
+            color-scheme: dark;
+        }
+
         @media (prefers-color-scheme: dark) {
-            :root {
+            :root:not([data-theme="light"]):not([data-theme="dark"]) {
                 --bg:            #15101F;
                 --surface:       #1F1830;
                 --surface-2:     #261D3A;
@@ -56,40 +69,75 @@
             margin: 0; background: var(--bg); color: var(--text);
             font-family: var(--font-body); line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         h1, h2, h3 { font-family: var(--font-head); margin: 0; line-height: 1.2; }
         a { text-decoration: none; color: inherit; }
         .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
         /* ============================================================
-           3. HEADER & BUTTONS
+           3. HEADER & MENU NAVIGATION
            ============================================================ */
-        header.site {
-            position: sticky; top: 0; z-index: 50;
+        header.site-header {
+            position: sticky; top: 0; z-index: 100;
             background: color-mix(in srgb, var(--bg) 88%, transparent);
-            backdrop-filter: saturate(180%) blur(10px);
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
             border-bottom: 1px solid var(--border);
         }
         .header-inner {
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
             height: var(--header-h);
         }
-        .brand {
+        .site-brand {
             display: flex; align-items: center; gap: 10px;
-            font-family: var(--font-head); font-weight: 600; font-size: 1.1rem;
+            font-family: var(--font-head); font-weight: 700; font-size: 1.1rem;
+            white-space: nowrap;
         }
-        .brand .mark {
+        .brand-logo {
             width: 34px; height: 34px; border-radius: 10px;
             background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-family: var(--font-body); font-weight: 700; font-size: .85rem;
             box-shadow: 0 4px 10px rgba(123,47,247,.35);
+            flex-shrink: 0;
         }
+
+        /* Shared Navigation Menu */
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: 10px;
+        }
+        .main-nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.15s ease;
+            position: relative;
+        }
+        .main-nav a:hover {
+            color: var(--primary);
+        }
+        .main-nav a.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .main-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
         .header-actions {
-            display: flex; align-items: center; gap: 16px;
-        }
-        .back-link {
-            font-size: 0.9rem; font-weight: 600; color: var(--primary);
+            display: flex; align-items: center; gap: 10px;
         }
         
         /* Language & Action Buttons */
@@ -97,13 +145,14 @@
             background: var(--surface-2);
             color: var(--primary);
             border: 1px solid var(--border);
-            padding: 6px 14px;
+            padding: 7px 15px;
             border-radius: 999px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: var(--font-body);
+            white-space: nowrap;
         }
         .lang-btn:hover {
             background: var(--primary);
@@ -111,6 +160,15 @@
             transform: translateY(-1px);
             box-shadow: var(--shadow);
         }
+
+        .icon-btn {
+            border: 1px solid var(--border); background: var(--surface);
+            color: var(--text); width: 40px; height: 40px; border-radius: 999px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex: none; transition: background .15s ease;
+            font-size: 1rem;
+        }
+        .icon-btn:hover { background: var(--surface-2); }
 
         /* ============================================================
            4. PAGE LAYOUT & HERO
@@ -196,20 +254,62 @@
             text-align: center;
             margin-top: 40px;
         }
+
+        /* ============================================================
+           7. MOBILE RESPONSIVE TWEAKS
+           ============================================================ */
+        @media (max-width: 860px) {
+            .header-inner {
+                flex-wrap: wrap;
+                height: auto;
+                padding-top: 12px;
+                padding-bottom: 10px;
+            }
+            .main-nav {
+                order: 4;
+                width: 100%;
+                margin-left: 0;
+                margin-top: 8px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                padding-bottom: 4px;
+            }
+            .main-nav::-webkit-scrollbar { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .wrap { padding: 0 14px; }
+            main { padding: 24px 0 60px; }
+            .news-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <header class="site">
+    <!-- Header Navigation with Shared Menu & Theme Toggle -->
+    <header class="site-header">
         <div class="wrap header-inner">
-            <div class="brand">
-                <div class="mark">BB</div>
-                <span class="full">BSEB Portal Hub</span>
-            </div>
+            <a href="https://bsebwala.in/" class="site-brand">
+                <span class="brand-logo">BB</span>
+                <span>BSEB Portal Hub</span>
+            </a>
+
+            <!-- Shared Portal Navigation Menu -->
+            <nav class="main-nav">
+                <a href="https://bsebwala.in/">Home</a>
+                <a href="https://bsebwala.in/">Letter</a>
+                <a href="fee.html">Fee</a>
+                <a href="news.html" class="active">News</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
             <div class="header-actions">
                 <!-- Translation Toggle Button -->
                 <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
-                <a href="https://bsebwala.in/" class="back-link">← Back</a>
+                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
             </div>
         </div>
     </header>
@@ -282,25 +382,52 @@
         ];
 
         // ========================================================
-        // 2. TEXT PARSING, ENTITY CLEANING & TRANSLATION
+        // 2. THEME ENGINE (LOCALSTORAGE INTEGRATED)
         // ========================================================
-        
-        // Robust Multi-pass entity decoder that eliminates literal &nbsp; and duplicate spaces
+        (function themeModule(){
+            const root = document.documentElement;
+            const btn = document.getElementById('themeToggle');
+            const STORAGE_KEY = 'bseb-hub-theme';
+
+            function apply(theme){
+                if (theme === 'dark' || theme === 'light'){
+                    root.setAttribute('data-theme', theme);
+                } else {
+                    root.removeAttribute('data-theme');
+                }
+                const isDark = (root.getAttribute('data-theme') === 'dark' ||
+                    (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
+                btn.textContent = isDark ? '☀️' : '🌙';
+            }
+
+            let saved = null;
+            try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
+            apply(saved);
+
+            btn.addEventListener('click', function(){
+                const current = root.getAttribute('data-theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                const next = current === 'dark' ? 'light' : 'dark';
+                apply(next);
+                try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
+            });
+        })();
+
+        // ========================================================
+        // 3. TEXT PARSING, ENTITY CLEANING & TRANSLATION
+        // ========================================================
         function decodeHTML(html) {
             if (!html) return "";
             try {
-                // First pass using DOMParser
                 const parser = new DOMParser();
                 let doc = parser.parseFromString(html, "text/html");
                 let text = doc.body.textContent || "";
                 
-                // Second pass if entities like &amp;nbsp; left lingering &
                 if (text.includes("&")) {
                     doc = parser.parseFromString(text, "text/html");
                     text = doc.body.textContent || text;
                 }
 
-                // Strip literal '&nbsp;', non-breaking space unicode \u00a0, and collapse spaces
                 return text
                     .replace(/&nbsp;/gi, " ")
                     .replace(/\u00a0/g, " ")
@@ -311,7 +438,6 @@
             }
         }
 
-        // Strips redundant publication name if feed tacked it on at the end of the title
         function cleanNewsTitle(title, sourceName) {
             let cleaned = decodeHTML(title);
             if (sourceName) {
@@ -322,7 +448,6 @@
             return cleaned;
         }
 
-        // Native Translation using Google API
         async function translateText(text) {
             if (!text) return "";
             try {
@@ -359,7 +484,6 @@
             return date.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        // Sort helper: Newest at top (descending order)
         function sortArticlesByDate(articles) {
             return articles.sort((a, b) => {
                 const timeA = a.date ? new Date(a.date).getTime() : 0;
@@ -369,9 +493,8 @@
         }
 
         // ========================================================
-        // 3. CORE RENDERING LOGIC & FILTERING
+        // 4. CORE RENDERING LOGIC & FILTERING
         // ========================================================
-        
         window.loadOlderNews = function() {
             showOlder = true;
             renderNewsUI(false);
@@ -492,7 +615,6 @@
                         };
                     });
                     
-                    // Sort descending (latest news first)
                     allArticles = sortArticlesByDate(parsedArticles);
                     await renderNewsUI(false);
                 } else {
@@ -509,7 +631,7 @@
         // Initialize immediately
         loadNews();
 
-        // Auto-refresh seamlessly in the background every 5 minutes
+        // Auto-refresh in background every 5 minutes
         setInterval(loadNews, 5 * 60 * 1000);
     </script>
 </body>
