@@ -122,10 +122,10 @@
             background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
             -webkit-background-clip: text; background-clip: text; color: transparent;
             margin-bottom: 10px;
-            /* Added to fix the top clipping */
-    line-height: 1.4;
-    padding-top: 0.15em; 
-    padding-bottom: 0.1em;
+            /* Prevents top matras clipping in Hindi */
+            line-height: 1.4;
+            padding-top: 0.15em; 
+            padding-bottom: 0.1em;
         }
         .page-header p { color: var(--text-muted); font-size: 1.05rem; }
 
@@ -209,7 +209,7 @@
             </div>
             <div class="header-actions">
                 <!-- Translation Toggle Button -->
-                <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">Read in English</button>
+                <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
                 <a href="https://bsebwala.in/" class="back-link">← Back</a>
             </div>
         </div>
@@ -217,14 +217,14 @@
 
     <main class="wrap">
         <div class="page-header">
-            <h1 id="ui-title">लाइव अपडेट और समाचार</h1>
-            <p id="ui-subtitle">बिहार बोर्ड के छात्रों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।</p>
+            <h1 id="ui-title">Live Updates & News</h1>
+            <p id="ui-subtitle">The latest filtered announcements, results, and notices strictly for Bihar Board students.</p>
         </div>
 
         <div id="news-container" class="news-grid">
             <div class="status-container">
                 <div class="spinner"></div>
-                <h2 id="ui-loading">नवीनतम समाचार लोड हो रहा है...</h2>
+                <h2 id="ui-loading">Loading latest news...</h2>
             </div>
         </div>
         
@@ -238,11 +238,11 @@
         // ========================================================
         // 1. STATE & DICTIONARIES
         // ========================================================
-        let currentLang = 'hi'; // Hindi is the default language
+        let currentLang = 'en'; // English is now the default language
         let allArticles = []; // Stores all fetched news globally
         let showOlder = false; // Tracks if >30 days news is visible
         
-        // Static UI Dictionary
+        // Static UI Dictionary for instantaneous UI swaps
         const UI = {
             hi: {
                 title: "लाइव अपडेट और समाचार",
@@ -251,7 +251,7 @@
                 offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं। कृपया पुनः लोड करें।",
                 empty: "अभी कोई हालिया समाचार नहीं मिला।",
                 readMore: "पूरी खबर पढ़ें →",
-                btnText: "Read in English",
+                btnText: "Read in English", // Button text when currently in Hindi
                 refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:",
                 loadMore: "पुराने समाचार लोड करें (+30 दिन)"
             },
@@ -262,7 +262,7 @@
                 offline: "Displaying cached offline news due to network lag. Please reload.",
                 empty: "No recent matching news found.",
                 readMore: "Read Full Article →",
-                btnText: "हिंदी में पढ़ें",
+                btnText: "हिंदी में पढ़ें", // Button text when currently in English
                 refresh: "News feed auto-refreshed at",
                 loadMore: "Load Older News (> 30 Days)"
             }
@@ -275,7 +275,7 @@
                 hi_title: "BSEB 2027 मैट्रिक और इंटर परीक्षा पंजीकरण की अंतिम तिथि बढ़ी",
                 summary: "The Bihar School Examination Board (BSEB) has officially extended the online application and registration deadline for Class 10 and 12 examinations.",
                 hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने कक्षा 10 और 12 की परीक्षाओं के लिए ऑनलाइन आवेदन और पंजीकरण की अंतिम तिथि आधिकारिक तौर पर बढ़ा दी है।",
-                date: new Date().toISOString(), // Use current date so it shows up in <30 days filter
+                date: new Date().toISOString(), 
                 sourceName: "BSEB Official",
                 hi_source: "BSEB आधिकारिक",
                 url: "https://secondary.biharboardonline.com"
@@ -286,7 +286,7 @@
         // 2. TEXT PARSING & TRANSLATION
         // ========================================================
         
-        // FIX: Decodes HTML entities (like &nbsp;) before they get saved and double-encoded
+        // Decodes HTML entities (like &nbsp;) before they get saved and double-encoded
         function decodeHTML(html) {
             if (!html) return "";
             const txt = document.createElement("textarea");
@@ -383,7 +383,7 @@
                 return;
             }
 
-            // If we are currently in Hindi, batch translate the fetched articles
+            // If we are currently in Hindi, batch translate any fetched articles that haven't been translated yet
             if (currentLang === 'hi') {
                 newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2>अनुवाद किया जा रहा है... (Translating)</h2></div>`;
                 loadMoreContainer.innerHTML = '';
