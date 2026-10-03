@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Contact & Support — BSEBwala</title>
+    <meta name="description" content="Get in touch with Ashish Kumar Singh. Reach out for IT tools, automation, educational templates, or support our community platforms.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           1. DESIGN SYSTEM & TOKENS
+           ============================================================ */
+        :root {
+            --bg:            #FDF6FF;   
+            --surface:       #FFFFFF;   
+            --surface-2:     #F4EBFF;   
+            --border:        #E7D9F7;
+            --text:          #241A38;   
+            --text-muted:    #6B5C82;
+            --primary:       #7B2FF7;   
+            --primary-hover: #6420D9;
+            --accent:        #FF6B9D;   
+            --accent-glow:   rgba(255, 107, 157, 0.35);
+            --success:       #10B981;
+            --radius-sm:     10px;
+            --radius-md:     16px;
+            --radius-lg:     24px;
+            --shadow:        0 10px 30px rgba(123, 47, 247, 0.08);
+            --font-head:     'Lora', Georgia, serif;
+            --font-body:     'Inter', system-ui, -apple-system, sans-serif;
+            --header-h:      68px;
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg:            #120D1B;
+                --surface:       #1B1428;
+                --surface-2:     #241B36;
+                --border:        #372A52;
+                --text:          #F4EFFC;
+                --text-muted:    #B2A4C9;
+                --primary:       #B88BFF;
+                --primary-hover: #A06BF5;
+                --accent:        #FF85B3;
+                --shadow:        0 10px 30px rgba(0, 0, 0, 0.45);
+                color-scheme: dark;
+            }
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: var(--font-body); line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4 { font-family: var(--font-head); margin: 0; line-height: 1.25; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ============================================================
+           2. HEADER
+           ============================================================ */
+        header.site-header {
+            position: sticky; top: 0; z-index: 100;
+            background: color-mix(in srgb, var(--bg) 85%, transparent);
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+        }
+        .header-inner {
+            max-width: 1100px; margin: 0 auto; padding: 0 20px;
+            height: var(--header-h);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .site-brand {
+            display: flex; align-items: center; gap: 10px;
+            font-family: var(--font-head); font-weight: 700; font-size: 1.15rem;
+        }
+        .brand-logo {
+            width: 36px; height: 36px; border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-body); font-weight: 700; font-size: .88rem;
+            box-shadow: 0 4px 12px rgba(123,47,247,.3);
+        }
+        .btn-nav-home {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 18px; border-radius: 999px;
+            background: var(--surface-2); color: var(--primary);
+            font-size: 0.88rem; font-weight: 600;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+        }
+        .btn-nav-home:hover {
+            background: var(--primary); color: #fff;
+            border-color: var(--primary); transform: translateY(-1px);
+        }
+
+        /* ============================================================
+           3. PAGE LAYOUT
+           ============================================================ */
+        .wrap { max-width: 1100px; margin: 0 auto; padding: 48px 20px 80px; }
+        
+        .page-intro {
+            text-align: center; margin-bottom: 52px;
+        }
+        .page-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--surface-2); color: var(--primary);
+            border: 1px solid var(--border); padding: 5px 14px;
+            border-radius: 999px; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 14px;
+        }
+        .page-intro h1 {
+            font-size: clamp(2.3rem, 5vw, 3.2rem);
+            background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            margin-bottom: 14px; padding-bottom: 0.1em;
+        }
+        .page-intro p {
+            color: var(--text-muted); font-size: 1.12rem; max-width: 650px; margin: 0 auto;
+        }
+
+        .main-grid {
+            display: grid; grid-template-columns: 1fr; gap: 32px;
+        }
+        @media (min-width: 880px) {
+            .main-grid {
+                grid-template-columns: 1.15fr 1fr;
+                align-items: start;
+            }
+        }
+
+        /* Card Container */
+        .panel {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 36px;
+            box-shadow: var(--shadow); position: relative; overflow: hidden;
+        }
+        .panel::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        /* ============================================================
+           4. LEFT: INTERACTIVE QUERY FORM
+           ============================================================ */
+        .panel-heading { margin-bottom: 24px; }
+        .panel-heading h2 { font-size: 1.65rem; color: var(--text); margin-bottom: 6px; }
+        .panel-heading p { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+
+        .query-form { display: flex; flex-direction: column; gap: 18px; }
+        .form-row { display: grid; grid-template-columns: 1fr; gap: 18px; }
+        @media(min-width: 540px) {
+            .form-row { grid-template-columns: 1fr 1fr; }
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 7px; text-align: left; }
+        .form-group label {
+            font-size: 0.88rem; font-weight: 600; color: var(--text);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px 16px; border-radius: var(--radius-sm);
+            background: var(--surface-2); border: 1.5px solid var(--border);
+            color: var(--text); font-family: var(--font-body); font-size: 0.95rem;
+            outline: none; transition: all 0.2s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+            background: var(--surface);
+        }
+        .form-group textarea { resize: vertical; min-height: 110px; }
+
+        .btn-submit {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; font-weight: 700; font-size: 1rem; padding: 14px 28px;
+            border-radius: var(--radius-sm); border: none; cursor: pointer;
+            box-shadow: 0 6px 18px var(--accent-glow); transition: all 0.2s ease;
+            margin-top: 6px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow);
+        }
+        .btn-submit:disabled {
+            opacity: 0.65; cursor: not-allowed; transform: none;
+        }
+
+        .form-status {
+            font-size: 0.9rem; font-weight: 600; text-align: center; margin-top: 4px;
+            display: none;
+        }
+        .form-status.success { color: var(--success); display: block; }
+        .form-status.error { color: #EF4444; display: block; }
+
+        /* ============================================================
+           5. RIGHT: DETAILS & CROWDFUNDING
+           ============================================================ */
+        .right-col { display: flex; flex-direction: column; gap: 28px; }
+
+        /* Address & Contact Info */
+        .info-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow);
+        }
+        .info-list { display: flex; flex-direction: column; gap: 16px; }
+        .info-item {
+            display: flex; align-items: flex-start; gap: 14px;
+        }
+        .info-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: var(--surface-2); color: var(--primary);
+            border: 1px solid var(--border); display: flex;
+            align-items: center; justify-content: center; font-size: 1.15rem; flex-shrink: 0;
+        }
+        .info-text h4 {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--text-muted); font-family: var(--font-body); margin-bottom: 2px;
+        }
+        .info-text a, .info-text span {
+            font-weight: 600; font-size: 0.98rem; color: var(--text);
+        }
+        .info-text a:hover { color: var(--primary); }
+
+        /* Crowdfunding Card */
+        .crowdfund-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .crowdfund-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--surface-2); color: var(--accent);
+            border: 1px solid var(--border); padding: 4px 12px;
+            border-radius: 999px; font-size: 0.76rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;
+        }
+        .crowdfund-card h3 { font-size: 1.45rem; color: var(--text); margin-bottom: 8px; }
+        .crowdfund-card .cause-desc {
+            color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px;
+        }
+        
+        .cf-body {
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+        }
+        @media(min-width: 480px) {
+            .cf-body { flex-direction: row; align-items: center; gap: 24px; }
+        }
+
+        .qr-wrapper {
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 12px; text-align: center;
+            flex-shrink: 0; width: 150px;
+        }
+        .qr-wrapper img {
+            width: 126px; height: 126px; object-fit: contain; border-radius: 8px; display: block;
+        }
+        .qr-tag {
+            font-size: 0.65rem; font-weight: 700; color: var(--text-muted);
+            letter-spacing: 0.05em; margin-top: 6px; text-transform: uppercase; display: block;
+        }
+
+        .cf-actions { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .btn-upi-pay {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #6C38F7, #EB4793);
+            color: #fff; font-weight: 700; font-size: 0.9rem; padding: 10px 20px;
+            border-radius: 999px; box-shadow: 0 4px 14px rgba(235,71,147,.25);
+            transition: all 0.2s;
+        }
+        .btn-upi-pay:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 20px rgba(235,71,147,.35);
+        }
+
+        .upi-copy-box {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--surface-2); border: 1px solid var(--border);
+            padding: 6px 12px; border-radius: var(--radius-sm);
+        }
+        .upi-id {
+            font-family: monospace; font-size: 0.88rem; font-weight: 600; color: var(--text);
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .btn-copy-upi {
+            background: var(--surface); color: var(--text); border: 1px solid var(--border);
+            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+        }
+        .btn-copy-upi:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="https://bsebwala.in/" class="site-brand">
+                <span class="brand-logo">BB</span>
+                <span>BSEBwala</span>
+            </a>
+            <a href="https://bsebwala.in/" class="btn-nav-home">← Back to Portal</a>
+        </div>
+    </header>
+
+    <main class="wrap">
+        
+        <!-- Page Intro -->
+        <div class="page-intro">
+            <div class="page-badge">Direct Communication &amp; Support</div>
+            <h1>Get in Touch</h1>
+            <p>Have queries, require custom EdTech/workplace automation templates, or want to support our mission? Let's connect.</p>
+        </div>
+
+        <div class="main-grid">
+            
+            <!-- LEFT: QUERY SUBMISSION FORM -->
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Submit a Query</h2>
+                    <p>Fill out the details below. Messages are recorded securely in our database.</p>
+                </div>
+
+                <form id="contactForm" class="query-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="e.g., Ashish Singh" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile Number *</label>
+                            <input type="tel" id="mobile" name="mobile" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="you@domain.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address / City</label>
+                        <input type="text" id="address" name="address" placeholder="e.g., Patna, Bihar">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="question">Your Question / Message *</label>
+                        <textarea id="question" name="question" placeholder="Describe your query, template requirement, or partnership idea..." required></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn-submit">
+                        <span>Send Message</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+            </section>
+
+            <!-- RIGHT: CONTACT DETAILS & CROWDFUNDING -->
+            <div class="right-col">
+                
+                <!-- Information Card -->
+                <div class="info-card">
+                    <div class="info-list">
+                        <!-- Location -->
+                        <div class="info-item">
+                            <div class="info-icon">📍</div>
+                            <div class="info-text">
+                                <h4>Location</h4>
+                                <span>Patna, Bihar, India</span>
+                            </div>
+                        </div>
+
+                        <!-- Direct Email -->
+                        <div class="info-item">
+                            <div class="info-icon">✉️</div>
+                            <div class="info-text">
+                                <h4>Official Email</h4>
+                                <a href="mailto:Ashishkumarsingh9@gmail.com">Ashishkumarsingh9@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div class="info-item">
+                            <div class="info-icon">🔗</div>
+                            <div class="info-text">
+                                <h4>LinkedIn Profile</h4>
+                                <a href="https://www.linkedin.com/in/ashish9singh/" target="_blank" rel="noopener">linkedin.com/in/ashish9singh</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crowdfunding / Sustaining Mission Card -->
+                <div class="crowdfund-card">
+                    <div class="crowdfund-badge">Support Our Digital Tools</div>
+                    <h3>Empower Open EdTech</h3>
+                    <p class="cause-desc">
+                        We build and operate free public tools, e-Shikshakosh DCF generators, cyber safety manuals, and automated office sheets for teachers and students across Bihar. Your contribution directly funds domain renewals, cloud hosting, and continuous development of free IT utilities.
+                    </p>
+
+                    <div class="cf-body">
+                        <!-- QR Code Frame -->
+                        <div class="qr-wrapper">
+                            <img src="https://bsebwala.in/qr.png" 
+                                 alt="Scan to support BSEBwala" 
+                                 onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=ashishkumarsingh9-1@oksbi&pn=Ashish%20Kumar%20Singh';">
+                            <span class="qr-tag">Scan with any UPI</span>
+                        </div>
+
+                        <!-- Action links -->
+                        <div class="cf-actions">
+                            <a href="upi://pay?pa=ashishkumarsingh9-1@oksbi&pn=Ashish%20Kumar%20Singh&cu=INR" class="btn-upi-pay">
+                                Pay via UPI App 🔗
+                            </a>
+
+                            <div class="upi-copy-box">
+                                <span class="upi-id" id="contactUpiId">ashishkumarsingh9-1@oksbi</span>
+                                <button type="button" class="btn-copy-upi" id="copyBtn" onclick="copyUpi()">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Deployed Google Apps Script Web App URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec";
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const status = document.getElementById("formStatus");
+
+            const formData = {
+                name: document.getElementById("name").value.trim(),
+                mobile: document.getElementById("mobile").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                question: document.getElementById("question").value.trim()
+            };
+
+            btn.disabled = true;
+            btn.querySelector("span").innerText = "Submitting...";
+            status.className = "form-status";
+            status.style.display = "none";
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify(formData),
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8" // Avoids CORS pre-flight blockage in Google Apps Script
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.result === "success") {
+                    status.innerText = "Thank you! Your query has been recorded successfully.";
+                    status.className = "form-status success";
+                    document.getElementById("contactForm").reset();
+                } else {
+                    throw new Error(result.error || "Submission failed");
+                }
+            } catch (err) {
+                console.error("Submission error:", err);
+                status.innerText = "Something went wrong. Please try again or reach out via email.";
+                status.className = "form-status error";
+            } finally {
+                btn.disabled = false;
+                btn.querySelector("span").innerText = "Send Message";
+            }
+        }
+
+        // 1-Click UPI Copy function
+        function copyUpi() {
+            const upi = document.getElementById("contactUpiId").innerText;
+            const btn = document.getElementById("copyBtn");
+            navigator.clipboard.writeText(upi).then(() => {
+                const prev = btn.innerText;
+                btn.innerText = "Copied!";
+                btn.style.background = "var(--success)";
+                btn.style.color = "#fff";
+                setTimeout(() => {
+                    btn.innerText = prev;
+                    btn.style.background = "var(--surface)";
+                    btn.style.color = "var(--text)";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
