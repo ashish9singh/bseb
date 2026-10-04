@@ -6,285 +6,13 @@
     <title>Latest News — BSEB Portal Hub</title>
     <meta name="description" content="Latest live news, updates, and announcements strictly for Bihar Board (BSEB), OFSS, BBOSE, and Bihar Education.">
 
-    <!-- Google Fonts: Lora for headings, Inter for body text -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        /* ============================================================
-           1. DESIGN TOKENS
-           ============================================================ */
-        :root {
-            --bg:            #FDF6FF;   
-            --surface:       #FFFFFF;   
-            --surface-2:     #F4EBFF;   
-            --border:        #E7D9F7;
-            --text:          #241A38;   
-            --text-muted:    #6B5C82;
-            --primary:       #7B2FF7;   
-            --primary-hover: #6420D9;
-            --accent:        #FF6B9D;   
-            --radius:        14px;
-            --radius-lg:     20px;
-            --shadow:        0 4px 12px rgba(123,47,247,.08);
-            --font-head:     'Lora', Georgia, serif;
-            --font-body:     'Inter', system-ui, sans-serif;
-            --header-h:      64px;
-            color-scheme: light;
-        }
-
-        :root[data-theme="dark"] {
-            --bg:            #15101F;
-            --surface:       #1F1830;
-            --surface-2:     #261D3A;
-            --border:        #382A54;
-            --text:          #F1ECFA;
-            --text-muted:    #B4A6CC;
-            --primary:       #B98CFF;
-            --accent:        #FF9EC1;
-            --shadow:        0 4px 12px rgba(0,0,0,.4);
-            color-scheme: dark;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]):not([data-theme="dark"]) {
-                --bg:            #15101F;
-                --surface:       #1F1830;
-                --surface-2:     #261D3A;
-                --border:        #382A54;
-                --text:          #F1ECFA;
-                --text-muted:    #B4A6CC;
-                --primary:       #B98CFF;
-                --accent:        #FF9EC1;
-                --shadow:        0 4px 12px rgba(0,0,0,.4);
-                color-scheme: dark;
-            }
-        }
-
-        /* ============================================================
-           2. BASE STYLES
-           ============================================================ */
-        *, *::before, *::after { box-sizing: border-box; }
-        body {
-            margin: 0; background: var(--bg); color: var(--text);
-            font-family: var(--font-body); line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-        h1, h2, h3 { font-family: var(--font-head); margin: 0; line-height: 1.2; }
-        a { text-decoration: none; color: inherit; }
-        .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-
-        /* ============================================================
-           3. HEADER & MENU NAVIGATION
-           ============================================================ */
-        header.site-header {
-            position: sticky; top: 0; z-index: 100;
-            background: color-mix(in srgb, var(--bg) 88%, transparent);
-            backdrop-filter: blur(14px) saturate(180%);
-            -webkit-backdrop-filter: blur(14px) saturate(180%);
-            border-bottom: 1px solid var(--border);
-        }
-        .header-inner {
-            display: flex; align-items: center; justify-content: space-between; gap: 16px;
-            height: var(--header-h);
-        }
-        .site-brand {
-            display: flex; align-items: center; gap: 10px;
-            font-family: var(--font-head); font-weight: 700; font-size: 1.1rem;
-            white-space: nowrap;
-        }
-        .brand-logo {
-            width: 34px; height: 34px; border-radius: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-body); font-weight: 700; font-size: .85rem;
-            box-shadow: 0 4px 10px rgba(123,47,247,.35);
-            flex-shrink: 0;
-        }
-
-        /* Shared Navigation Menu */
-        .main-nav {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-left: 10px;
-        }
-        .main-nav a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.15s ease;
-            position: relative;
-        }
-        .main-nav a:hover {
-            color: var(--primary);
-        }
-        .main-nav a.active {
-            color: var(--primary);
-            font-weight: 700;
-        }
-        .main-nav a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .header-actions {
-            display: flex; align-items: center; gap: 10px;
-        }
-        
-        /* Language & Action Buttons */
-        .lang-btn {
-            background: var(--surface-2);
-            color: var(--primary);
-            border: 1px solid var(--border);
-            padding: 7px 15px;
-            border-radius: 999px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: var(--font-body);
-            white-space: nowrap;
-        }
-        .lang-btn:hover {
-            background: var(--primary);
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow);
-        }
-
-        .icon-btn {
-            border: 1px solid var(--border); background: var(--surface);
-            color: var(--text); width: 40px; height: 40px; border-radius: 999px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; flex: none; transition: background .15s ease;
-            font-size: 1rem;
-        }
-        .icon-btn:hover { background: var(--surface-2); }
-
-        /* ============================================================
-           4. PAGE LAYOUT & HERO
-           ============================================================ */
-        main { padding: 40px 0 80px; }
-        .page-header { margin-bottom: 40px; text-align: center; }
-        .page-header h1 {
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            padding-top: 0.15em; 
-            padding-bottom: 0.1em;
-        }
-        .page-header p { color: var(--text-muted); font-size: 1.05rem; }
-
-        /* ============================================================
-           5. NEWS GRID & CARDS
-           ============================================================ */
-        .news-grid {
-            display: grid; gap: 24px;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        }
-
-        .news-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 24px;
-            box-shadow: var(--shadow); display: flex; flex-direction: column;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            position: relative; overflow: hidden;
-        }
-
-        .news-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0.8;
-        }
-
-        .news-card:hover {
-            transform: translateY(-4px); box-shadow: 0 12px 24px rgba(123,47,247,.15);
-            border-color: var(--primary);
-        }
-
-        .news-card h2 { font-size: 1.15rem; color: var(--text); margin-bottom: 12px; }
-        .news-card p {
-            font-size: 0.92rem; color: var(--text-muted);
-            margin: 0 0 20px 0; flex-grow: 1; 
-            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-        }
-
-        .card-meta {
-            display: flex; align-items: center; justify-content: space-between;
-            font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
-            margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
-        }
-        .source-tag {
-            background: var(--surface-2); color: var(--primary); padding: 4px 10px;
-            border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.7rem;
-        }
-
-        .read-more {
-            display: inline-flex; align-items: center; gap: 6px;
-            font-weight: 700; font-size: 0.95rem; color: var(--primary);
-            transition: color 0.2s;
-        }
-        .read-more:hover { color: var(--accent); }
-
-        /* ============================================================
-           6. STATUS / LOADING / EMPTY
-           ============================================================ */
-        .status-container {
-            text-align: center; padding: 60px 20px; grid-column: 1 / -1; color: var(--text-muted);
-        }
-        .spinner {
-            display: inline-block; width: 40px; height: 40px;
-            border: 4px solid var(--surface-2); border-top-color: var(--primary);
-            border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .last-updated { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 40px; font-weight: 500; }
-        
-        #load-more-container {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        /* ============================================================
-           7. MOBILE RESPONSIVE TWEAKS
-           ============================================================ */
-        @media (max-width: 860px) {
-            .header-inner {
-                flex-wrap: wrap;
-                height: auto;
-                padding-top: 12px;
-                padding-bottom: 10px;
-            }
-            .main-nav {
-                order: 4;
-                width: 100%;
-                margin-left: 0;
-                margin-top: 8px;
-                overflow-x: auto;
-                white-space: nowrap;
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-                padding-bottom: 4px;
-            }
-            .main-nav::-webkit-scrollbar { display: none; }
-        }
-
-        @media (max-width: 640px) {
-            .wrap { padding: 0 14px; }
-            main { padding: 24px 0 60px; }
-            .news-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -296,7 +24,7 @@
                 <span>BSEB Portal Hub</span>
             </a>
 
-            <!-- Shared Portal Navigation Menu -->
+            <!-- Menu with Active News Highlight -->
             <nav class="main-nav">
                 <a href="https://bsebwala.in/">Home</a>
                 <a href="https://bsebwala.in/">Letter</a>
@@ -307,7 +35,6 @@
             </nav>
 
             <div class="header-actions">
-                <!-- Translation Toggle Button -->
                 <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
             </div>
@@ -327,21 +54,15 @@
             </div>
         </div>
         
-        <!-- Container for Load More Button -->
-        <div id="load-more-container"></div>
-        
+        <div id="load-more-container" style="text-align: center; margin-top: 40px;"></div>
         <div id="last-updated-text" class="last-updated"></div>
     </main>
 
     <script>
-        // ========================================================
-        // 1. STATE & DICTIONARIES
-        // ========================================================
         let currentLang = 'en'; 
         let allArticles = []; 
         let showOlder = false; 
         
-        // Static UI Dictionary
         const UI = {
             hi: {
                 title: "लाइव अपडेट और समाचार",
@@ -367,7 +88,6 @@
             }
         };
 
-        // Offline Fallback Stories
         const FALLBACK_STORIES = [
             {
                 title: "BSEB 2027 Matric & Inter Exam Registration Deadline Extended",
@@ -381,9 +101,6 @@
             }
         ];
 
-        // ========================================================
-        // 2. THEME ENGINE (LOCALSTORAGE INTEGRATED)
-        // ========================================================
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
@@ -413,9 +130,6 @@
             });
         })();
 
-        // ========================================================
-        // 3. TEXT PARSING, ENTITY CLEANING & TRANSLATION
-        // ========================================================
         function decodeHTML(html) {
             if (!html) return "";
             try {
@@ -492,9 +206,6 @@
             });
         }
 
-        // ========================================================
-        // 4. CORE RENDERING LOGIC & FILTERING
-        // ========================================================
         window.loadOlderNews = function() {
             showOlder = true;
             renderNewsUI(false);
@@ -628,10 +339,7 @@
             }
         }
 
-        // Initialize immediately
         loadNews();
-
-        // Auto-refresh in background every 5 minutes
         setInterval(loadNews, 5 * 60 * 1000);
     </script>
 </body>
