@@ -46,6 +46,17 @@
             <p id="ui-subtitle">The latest filtered announcements, results, and notices strictly for Bihar Board students.</p>
         </div>
 
+        <!-- Categorized Quick-Filter Chips -->
+        <div class="news-filters" id="categoryChips">
+            <button class="news-chip active" data-cat="all" onclick="filterCategory('all')">All News (सभी)</button>
+            <button class="news-chip" data-cat="matric" onclick="filterCategory('matric')">Class 10 (मैट्रिक)</button>
+            <button class="news-chip" data-cat="inter" onclick="filterCategory('inter')">Class 12 (इंटर)</button>
+            <button class="news-chip" data-cat="deled" onclick="filterCategory('deled')">D.El.Ed / STET</button>
+            <button class="news-chip" data-cat="teachers" onclick="filterCategory('teachers')">Teachers (शिक्षक)</button>
+            <button class="news-chip" data-cat="scholarships" onclick="filterCategory('scholarships')">Scholarships</button>
+        </div>
+
+        <!-- News Cards Grid -->
         <div id="news-container" class="news-grid">
             <div class="status-container">
                 <div class="spinner"></div>
@@ -60,43 +71,50 @@
     <script>
         let currentLang = 'en'; 
         let allArticles = []; 
+        let currentCategory = 'all';
         let showOlder = false; 
         
         const UI = {
             hi: {
                 title: "लाइव अपडेट और समाचार",
-                subtitle: "बिहार बोर्ड के छात्रों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।",
+                subtitle: "बिहार बोर्ड के छात्रों और शिक्षकों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।",
                 loading: "नवीनतम समाचार लोड हो रहा है...",
-                offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं। कृपया पुनः लोड करें।",
-                empty: "अभी कोई हालिया समाचार नहीं मिला।",
+                offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं।",
+                empty: "इस श्रेणी में अभी कोई समाचार उपलब्ध नहीं है।",
                 readMore: "पूरी खबर पढ़ें →",
                 btnText: "Read in English",
                 refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:",
-                loadMore: "पुराने समाचार लोड करें (+30 दिन)"
+                loadMore: "पुराने समाचार लोड करें (+30 दिन)",
+                takeaways: "मुख्य बिंदु (Key Takeaways):",
+                shareText: "शेयर करें",
+                readTime: "30 सेकंड पठन"
             },
             en: {
                 title: "Live Updates & News",
                 subtitle: "The latest filtered announcements, results, and notices strictly for Bihar Board students.",
                 loading: "Loading latest news...",
-                offline: "Displaying cached offline news due to network lag. Please reload.",
-                empty: "No recent matching news found.",
+                offline: "Displaying cached offline news due to network lag.",
+                empty: "No news found in this category.",
                 readMore: "Read Full Article →",
                 btnText: "हिंदी में पढ़ें",
                 refresh: "News feed auto-refreshed at",
-                loadMore: "Load Older News (> 30 Days)"
+                loadMore: "Load Older News (> 30 Days)",
+                takeaways: "Key Takeaways:",
+                shareText: "Share",
+                readTime: "30 sec read"
             }
         };
 
         const FALLBACK_STORIES = [
             {
-                title: "BSEB 2027 Matric & Inter Exam Registration Deadline Extended",
-                hi_title: "BSEB 2027 मैट्रिक और इंटर परीक्षा पंजीकरण की अंतिम तिथि बढ़ी",
-                summary: "The Bihar School Examination Board (BSEB) has officially extended the online application and registration deadline for Class 10 and 12 examinations.",
-                hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने कक्षा 10 और 12 की परीक्षाओं के लिए ऑनलाइन आवेदन और पंजीकरण की अंतिम तिथि आधिकारिक तौर पर बढ़ा दी है।",
-                date: "2026-10-03", 
-                sourceName: "BSEB Official",
-                hi_source: "BSEB आधिकारिक",
-                url: "https://secondary.biharboardonline.com"
+                title: "Bihar DElEd Answer Key 2026 Out @bsebdeled.com, Steps to Download Official PDF",
+                hi_title: "Bihar DElEd Answer Key 2026 आउट @bsebdeled.com, आधिकारिक PDF डाउनलोड करने के चरण",
+                summary: "The Bihar School Examination Board (BSEB) has officially released the DElEd Answer Key. Candidates can file online objections through the official portal.",
+                hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने आधिकारिक तौर पर DElEd आंसर की जारी कर दी है। अभ्यर्थी आधिकारिक पोर्टल पर ऑनलाइन आपत्ति दर्ज कर सकते हैं।",
+                date: "2026-10-03T11:40:00Z", 
+                sourceName: "ADDA247",
+                hi_source: "ADDA247",
+                url: "https://bsebdeled.com"
             }
         ];
 
@@ -183,36 +201,63 @@
             }[tag] || tag));
         }
 
-        // Exact date formatter: preserves the publication day without timezone shift
-        function formatDate(dateInput) {
+        // Exact UTC date and time formatter
+        function formatDateTime(dateInput) {
             if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
-
-            const rawStr = String(dateInput).trim();
-
-            // Match YYYY-MM-DD anywhere in the string
-            const isoMatch = rawStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
-            if (isoMatch) {
-                const year = parseInt(isoMatch[1], 10);
-                const month = parseInt(isoMatch[2], 10) - 1;
-                const day = parseInt(isoMatch[3], 10);
-
-                const monthsEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const monthsHi = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
-
-                if (currentLang === 'hi') {
-                    return `${day} ${monthsHi[month]}, ${year}`;
-                }
-                return `${monthsEn[month]} ${day}, ${year}`;
-            }
-
-            // Fallback for standard date objects
             const d = new Date(dateInput);
-            if (!isNaN(d.getTime())) {
-                const monthsEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                return `${monthsEn[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
-            }
+            if (isNaN(d.getTime())) return dateInput;
 
-            return rawStr;
+            return d.toLocaleString(currentLang === 'hi' ? 'hi-IN' : 'en-US', {
+                timeZone: 'UTC',
+                timeZoneName: 'short',
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        // Automatic Category Tagger
+        function assignCategory(title, summary) {
+            const combined = (title + " " + summary).toLowerCase();
+            if (/matric|10th|कक्षा 10|माध्यमिक|मैट्रिक/.test(combined)) return 'matric';
+            if (/inter|12th|11th|कक्षा 12|इंटर|ofss/.test(combined)) return 'inter';
+            if (/deled|d\.el\.ed|stet|डीएलएड|एसटीईटी|ctet|answer key/.test(combined)) return 'deled';
+            if (/teacher|shikshak|transfer|niyojit|bpsc tre|sakshamta|सक्षमता|शिक्षक|नियोजित|वेतन|e-shikshakosh/.test(combined)) return 'teachers';
+            if (/scholarship|medhasoft|pms|protsahan|छात्रवृत्ति|मेधासॉफ्ट|कल्याण/.test(combined)) return 'scholarships';
+            return 'general';
+        }
+
+        // Break text into key bullet points
+        function formatBulletTakeaways(summary) {
+            if (!summary) return ['Click the link below for complete details.'];
+            
+            // Split sentences on period or exclamation
+            const sentences = summary
+                .split(/(?<=[.!?।])\s+/)
+                .map(s => s.trim())
+                .filter(s => s.length > 12);
+
+            if (sentences.length === 0) return [summary];
+            return sentences.slice(0, 2); // Show up to 2 sharp takeaways
+        }
+
+        // 1-Tap WhatsApp Share Generator
+        function shareArticleWhatsApp(title, takeaway, url, date) {
+            const msg = `📢 *${title}*\n\n📌 *मुख्य बिंदु:*\n• ${takeaway}\n\n📅 *तारीख:* ${date}\n🔗 *पूरा विवरण:* ${url}\n\n— via https://bsebwala.in/news.html`;
+            const waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
+            window.open(waUrl, "_blank", "noopener,noreferrer");
+        }
+
+        // Filter Category Handler
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.news-chip').forEach(chip => {
+                chip.classList.toggle('active', chip.dataset.cat === cat);
+            });
+            renderNewsUI(false);
         }
 
         function sortArticlesByDate(articles) {
@@ -232,24 +277,20 @@
             const now = new Date();
             const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
             
-            let filteredArticles = [];
-            let hasOlder = false;
+            // 1. Time filter
+            let filtered = showOlder ? allArticles : allArticles.filter(a => {
+                const d = new Date(a.date);
+                return isNaN(d.getTime()) || (now - d) <= thirtyDaysMs;
+            });
+            
+            const hasOlder = !showOlder && (allArticles.length > filtered.length);
 
-            if (showOlder) {
-                filteredArticles = allArticles;
-            } else {
-                filteredArticles = allArticles.filter(a => {
-                    const articleDate = new Date(a.date);
-                    if (isNaN(articleDate.getTime())) return true;
-                    return (now - articleDate) <= thirtyDaysMs;
-                });
-                
-                if (allArticles.length > filteredArticles.length) {
-                    hasOlder = true;
-                }
+            // 2. Category filter
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(a => a.category === currentCategory);
             }
 
-            await renderArticles(filteredArticles, isOffline, hasOlder);
+            await renderArticles(filtered, isOffline, hasOlder);
         }
 
         async function renderArticles(articles, isOffline = false, hasOlder = false) {
@@ -279,21 +320,42 @@
                 const displayTitle = currentLang === 'hi' ? article.hi_title : article.title;
                 const displaySummary = currentLang === 'hi' ? article.hi_summary : article.summary;
                 const displaySource = currentLang === 'hi' ? article.hi_source : article.sourceName;
-                const displayDate = formatDate(article.date);
+                const displayDateTime = formatDateTime(article.date);
+                const bullets = formatBulletTakeaways(displaySummary);
+                const firstTakeaway = bullets[0] || displaySummary;
 
                 htmlContent += `
                     <article class="news-card">
-                        <h2>${escapeHTML(displayTitle)}</h2>
-                        <p>${escapeHTML(displaySummary)}</p>
-                        
-                        <div class="card-meta">
+                        <div class="card-top-tags">
                             <span class="source-tag">${escapeHTML(displaySource)}</span>
-                            <span>${displayDate}</span>
+                            <span class="read-time-tag">⚡ ${UI[currentLang].readTime}</span>
+                        </div>
+
+                        <h2>${escapeHTML(displayTitle)}</h2>
+
+                        <!-- Bullet Takeaways -->
+                        <div class="takeaways-wrapper">
+                            <div class="takeaways-label">📌 ${UI[currentLang].takeaways}</div>
+                            <ul class="takeaways-list">
+                                ${bullets.map(b => `<li>${escapeHTML(b)}</li>`).join('')}
+                            </ul>
                         </div>
                         
-                        <a href="${encodeURI(article.url || '#')}" class="read-more" target="_blank" rel="noopener">
-                            ${UI[currentLang].readMore}
-                        </a>
+                        <div class="card-meta">
+                            <span>🕒 ${displayDateTime}</span>
+                        </div>
+                        
+                        <div class="card-actions-row">
+                            <a href="${encodeURI(article.url || '#')}" class="read-more" target="_blank" rel="noopener">
+                                ${UI[currentLang].readMore}
+                            </a>
+
+                            <!-- 1-Tap WhatsApp Share Button -->
+                            <button type="button" class="whatsapp-share-btn" 
+                                onclick="shareArticleWhatsApp('${escapeHTML(displayTitle.replace(/'/g, "\\'"))}', '${escapeHTML(firstTakeaway.replace(/'/g, "\\'"))}', '${encodeURI(article.url || '')}', '${displayDateTime}')">
+                                <span>🟢 ${UI[currentLang].shareText}</span>
+                            </button>
+                        </div>
                     </article>
                 `;
             });
@@ -334,16 +396,17 @@
                 if (data.articles && data.articles.length > 0) {
                     const parsedArticles = data.articles.map(article => {
                         const rawSource = decodeHTML(article.source || "News Source");
-                        
-                        // Extract only the publication date field
                         const rawDate = article.publishedAt || article.pubDate || article.date;
+                        const titleClean = cleanNewsTitle(article.title || "News Update", rawSource);
+                        const summaryClean = decodeHTML(article.description || "Click to read full details.");
 
                         return {
-                            title: cleanNewsTitle(article.title || "News Update", rawSource),
-                            summary: decodeHTML(article.description || "Click the link to read more."),
+                            title: titleClean,
+                            summary: summaryClean,
                             sourceName: rawSource,
                             url: article.url || "#",
-                            date: rawDate
+                            date: rawDate,
+                            category: assignCategory(titleClean, summaryClean)
                         };
                     });
                     
@@ -355,7 +418,10 @@
 
             } catch (error) {
                 console.warn("API Error. Falling back to offline stories.", error);
-                allArticles = sortArticlesByDate(FALLBACK_STORIES);
+                allArticles = sortArticlesByDate(FALLBACK_STORIES.map(s => ({
+                    ...s,
+                    category: assignCategory(s.title, s.summary)
+                })));
                 await renderNewsUI(true);
             }
         }
