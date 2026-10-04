@@ -48,14 +48,15 @@
 
         <!-- Categorized Quick-Filter Chips -->
         <div class="news-filters" id="categoryChips">
-            <button class="news-chip active" data-cat="all" onclick="filterCategory('all')">All News (सभी)</button>
-            <button class="news-chip" data-cat="matric" onclick="filterCategory('matric')">Class 10 (मैट्रिक)</button>
-            <button class="news-chip" data-cat="inter" onclick="filterCategory('inter')">Class 12 (इंटर)</button>
-            <button class="news-chip" data-cat="deled" onclick="filterCategory('deled')">D.El.Ed / STET</button>
-            <button class="news-chip" data-cat="teachers" onclick="filterCategory('teachers')">Teachers (शिक्षक)</button>
-            <button class="news-chip" data-cat="scholarships" onclick="filterCategory('scholarships')">Scholarships</button>
+            <button class="news-chip active" data-cat="all" onclick="filterCategory('all')">ALL (सभी)</button>
+            <button class="news-chip" data-cat="secondary" onclick="filterCategory('secondary')">CLASS 9/10</button>
+            <button class="news-chip" data-cat="senior" onclick="filterCategory('senior')">CLASS 11/12</button>
+            <button class="news-chip" data-cat="bed_deled" onclick="filterCategory('bed_deled')">D.El.Ed/B.Ed</button>
+            <button class="news-chip" data-cat="stet_tre" onclick="filterCategory('stet_tre')">STET/TRE</button>
+            <button class="news-chip" data-cat="teachers" onclick="filterCategory('teachers')">TEACHERS</button>
+            <button class="news-chip" data-cat="scholarship" onclick="filterCategory('scholarship')">SCHOLARSHIP</button>
         </div>
-
+        
         <!-- News Cards Grid -->
         <div id="news-container" class="news-grid">
             <div class="status-container">
@@ -219,14 +220,29 @@
             });
         }
 
-        // Automatic Category Tagger
+// Automatic Category Tagger
         function assignCategory(title, summary) {
             const combined = (title + " " + summary).toLowerCase();
-            if (/matric|10th|कक्षा 10|माध्यमिक|मैट्रिक/.test(combined)) return 'matric';
-            if (/inter|12th|11th|कक्षा 12|इंटर|ofss/.test(combined)) return 'inter';
-            if (/deled|d\.el\.ed|stet|डीएलएड|एसटीईटी|ctet|answer key/.test(combined)) return 'deled';
-            if (/teacher|shikshak|transfer|niyojit|bpsc tre|sakshamta|सक्षमता|शिक्षक|नियोजित|वेतन|e-shikshakosh/.test(combined)) return 'teachers';
-            if (/scholarship|medhasoft|pms|protsahan|छात्रवृत्ति|मेधासॉफ्ट|कल्याण/.test(combined)) return 'scholarships';
+            
+            // 1. D.El.Ed / B.Ed
+            if (/deled|d\.el\.ed|b\.ed|bed|डीएलएड|बीएड|d\.ed/.test(combined)) return 'bed_deled';
+            
+            // 2. STET / TRE (Exams for teachers)
+            if (/stet|bpsc tre|tre 1|tre 2|tre 3|tre 4|btet|ctet|एसटीईटी|टीआरई/.test(combined)) return 'stet_tre';
+            
+            // 3. Teachers & Admin (General)
+            if (/teacher|shikshak|niyojit|sakshamta|transfer|वेतन|शिक्षक|नियोजित|सक्षमता|e-shikshakosh/.test(combined)) return 'teachers';
+            
+            // 4. Class 9/10 (Secondary)
+            if (/matric|10th|9th|class 9|class 10|कक्षा 9|कक्षा 10|माध्यमिक|मैट्रिक/.test(combined)) return 'secondary';
+            
+            // 5. Class 11/12 (Senior Secondary)
+            if (/inter|12th|11th|class 11|class 12|कक्षा 11|कक्षा 12|इंटर|ofss/.test(combined)) return 'senior';
+            
+            // 6. Scholarships
+            if (/scholarship|medhasoft|pms|protsahan|nmms|kanya utthan|छात्रवृत्ति|मेधासॉफ्ट|कल्याण/.test(combined)) return 'scholarship';
+            
+            // Fallback for general board news
             return 'general';
         }
 
