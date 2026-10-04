@@ -18,12 +18,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <!-- Layout Tweak: Minimizing space between Profile Pic and Text -->
+ <!-- Layout Tweak: Minimizing space between Profile Pic and Text -->
     <style>
         @media (min-width: 768px) {
-            .hero-profile { gap: 32px !important; }
+            .hero-profile { 
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 60px !important; /* Controls the exact space between pic and text */
+                max-width: 1050px !important; /* Stops them from drifting apart on large screens */
+                margin-left: auto !important; 
+                margin-right: auto !important;
+            }
+            .hero-profile .image-wrapper {
+                flex: 0 0 auto !important;
+                margin: 0 !important;
+            }
+            .hero-profile .hero-text {
+                flex: 1 1 auto !important;
+                max-width: 600px !important; /* Keeps paragraph line-lengths readable */
+                margin: 0 !important;
+            }
         }
-    </style>
-</head>
+    </style></head>
 <body>
 
     <!-- Sticky Navigation Header with Main Menu & Theme Toggle -->
