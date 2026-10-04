@@ -8,7 +8,6 @@
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Master Stylesheet -->
@@ -24,7 +23,7 @@
                 <span>BSEB Portal Hub</span>
             </a>
 
-            <!-- Menu with Active News Highlight -->
+            <!-- Shared Portal Navigation Menu -->
             <nav class="main-nav">
                 <a href="https://bsebwala.in/">Home</a>
                 <a href="https://bsebwala.in/">Letter</a>
@@ -35,6 +34,7 @@
             </nav>
 
             <div class="header-actions">
+                <!-- Translation Toggle Button -->
                 <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
             </div>
@@ -54,11 +54,16 @@
             </div>
         </div>
         
+        <!-- Container for Load More Button -->
         <div id="load-more-container" style="text-align: center; margin-top: 40px;"></div>
+        
         <div id="last-updated-text" class="last-updated"></div>
     </main>
 
     <script>
+        // ========================================================
+        // 1. STATE & DICTIONARIES
+        // ========================================================
         let currentLang = 'en'; 
         let allArticles = []; 
         let showOlder = false; 
@@ -101,6 +106,9 @@
             }
         ];
 
+        // ========================================================
+        // 2. THEME ENGINE
+        // ========================================================
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
@@ -130,6 +138,9 @@
             });
         })();
 
+        // ========================================================
+        // 3. TEXT PARSING & ACCURATE DATE FORMATTER
+        // ========================================================
         function decodeHTML(html) {
             if (!html) return "";
             try {
@@ -191,11 +202,31 @@
             }[tag] || tag));
         }
 
-        function formatDate(dateString) {
-            if (!dateString) return currentLang === 'hi' ? "हाल ही में" : "Recent";
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) return dateString;
-            return date.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        // Accurately formats dates without false day roll-overs
+        function formatDate(dateInput) {
+            if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
+            
+            // If date string contains a pure date (YYYY-MM-DD), extract directly to prevent timezone shift
+            if (typeof dateInput === 'string' && /^\d{4}-\d{2}-\d{2}/.test(dateInput)) {
+                const parts = dateInput.substring(0, 10).split('-');
+                const utcDate = new Date(Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])));
+                return utcDate.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', {
+                    timeZone: 'UTC',
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+            }
+
+            const date = new Date(dateInput);
+            if (isNaN(date.getTime())) return dateInput;
+
+            return date.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', { 
+                timeZone: 'Asia/Kolkata',
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
         }
 
         function sortArticlesByDate(articles) {
@@ -206,6 +237,9 @@
             });
         }
 
+        // ========================================================
+        // 4. CORE RENDERING & DATA FETCHING
+        // ========================================================
         window.loadOlderNews = function() {
             showOlder = true;
             renderNewsUI(false);
@@ -317,12 +351,16 @@
                 if (data.articles && data.articles.length > 0) {
                     const parsedArticles = data.articles.map(article => {
                         const rawSource = decodeHTML(article.source || "News Source");
+                        
+                        // Prioritise true publication date over scraper update time
+                        const pubDate = article.publishedAt || article.pubDate || article.date || article.updatedAt;
+
                         return {
                             title: cleanNewsTitle(article.title || "News Update", rawSource),
                             summary: decodeHTML(article.description || "Click the link to read more."),
                             sourceName: rawSource,
                             url: article.url || "#",
-                            date: article.publishedAt || article.updatedAt || article.date
+                            date: pubDate
                         };
                     });
                     
