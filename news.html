@@ -10,8 +10,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Master Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+<!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Mobile Fix: Make Filter Chips Wrap Automatically -->
+  <style>
+    .filters {
+        display: flex !important;
+        flex-wrap: wrap !important; /* This forces them to drop to the next line */
+        justify-content: center !important; /* Centers the buttons nicely */
+        gap: 10px !important; /* Space between buttons */
+        overflow-x: visible !important; /* Removes the horizontal scroll */
+        padding: 10px 5px !important;
+    }
+    .chip {
+        flex: 0 1 auto; /* Allows chips to size themselves naturally */
+        white-space: nowrap; /* Keeps the text inside the chip on one line */
+    }
+  </style>
+    
 </head>
 <body>
 
