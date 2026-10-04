@@ -575,7 +575,7 @@ header.site, header.site-header {
 /* ============================================================
    7. NEWS CARDS & LIVE FEED (news.html)
    ============================================================ */
-.page-header { margin-bottom: 40px; text-align: center; }
+.page-header { margin-bottom: 24px; text-align: center; }
 .page-header h1 {
   font-size: clamp(2rem, 5vw, 2.8rem);
   background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
@@ -583,41 +583,121 @@ header.site, header.site-header {
   margin-bottom: 10px; line-height: 1.4; padding-top: 0.15em; padding-bottom: 0.1em;
 }
 .page-header p { color: var(--text-muted); font-size: 1.05rem; }
+
+/* News Category Quick Filter Chips */
+.news-filters {
+  display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 20px;
+  justify-content: center; -ms-overflow-style: none; scrollbar-width: none;
+}
+.news-filters::-webkit-scrollbar { display: none; }
+@media (max-width: 768px) {
+  .news-filters { justify-content: flex-start; padding-left: 2px; }
+}
+
+.news-chip {
+  flex: none; padding: 8px 16px; border-radius: 999px;
+  border: 1.5px solid var(--border); background: var(--surface);
+  color: var(--text-muted); font-size: .84rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap; transition: all .15s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,.03);
+}
+.news-chip:hover {
+  border-color: var(--primary); color: var(--primary); transform: translateY(-1px);
+}
+.news-chip.active {
+  background: var(--primary); border-color: var(--primary); color: #fff;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+/* News Grid & Cards */
 .news-grid {
-  display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 .news-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow);
+  border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow);
   display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative; overflow: hidden;
 }
 .news-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0.8;
+  background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0.85;
 }
 .news-card:hover {
-  transform: translateY(-4px); box-shadow: 0 12px 24px rgba(123,47,247,.15); border-color: var(--primary);
+  transform: translateY(-3px); box-shadow: 0 12px 24px rgba(123,47,247,.12);
+  border-color: var(--primary);
 }
-.news-card h2 { font-size: 1.15rem; color: var(--text); margin-bottom: 12px; }
-.news-card p {
-  font-size: 0.92rem; color: var(--text-muted); margin: 0 0 20px 0; flex-grow: 1;
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-}
-.card-meta {
+
+/* Card Header & Badges */
+.card-top-tags {
   display: flex; align-items: center; justify-content: space-between;
-  font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
-  margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+  gap: 8px; margin-bottom: 12px;
 }
 .source-tag {
-  background: var(--surface-2); color: var(--primary); padding: 4px 10px;
-  border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.7rem;
+  background: var(--surface-2); color: var(--primary); padding: 3px 10px;
+  border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em;
+  font-size: 0.7rem; font-weight: 700;
+}
+.read-time-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
+  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+  padding: 3px 8px; border-radius: 6px;
+}
+
+.news-card h2 {
+  font-size: 1.12rem; color: var(--text); margin-bottom: 14px; line-height: 1.35;
+}
+
+/* Key Bullet Takeaways */
+.takeaways-wrapper {
+  background: var(--surface-2); border-radius: var(--radius-sm);
+  padding: 12px 14px; margin-bottom: 16px; border: 1px solid var(--border);
+  flex-grow: 1;
+}
+.takeaways-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
+  color: var(--primary); letter-spacing: 0.04em; margin-bottom: 8px;
+}
+.takeaways-list {
+  margin: 0; padding-left: 18px; font-size: 0.88rem; color: var(--text);
+  line-height: 1.5; display: flex; flex-direction: column; gap: 6px;
+}
+.takeaways-list li {
+  margin: 0;
+}
+
+/* Card Meta (Date & UTC time) */
+.card-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+  margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+
+/* Card Actions: Read More + WhatsApp Share */
+.card-actions-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-top: auto;
 }
 .read-more {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-weight: 700; font-size: 0.95rem; color: var(--primary); transition: color 0.2s;
+  display: inline-flex; align-items: center; gap: 4px;
+  font-weight: 700; font-size: 0.88rem; color: var(--primary); transition: color 0.15s;
 }
 .read-more:hover { color: var(--accent); }
+
+.whatsapp-share-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #25D366; color: #FFFFFF; font-size: 0.78rem; font-weight: 700;
+  padding: 6px 12px; border-radius: 999px; border: none; cursor: pointer;
+  text-decoration: none; transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(37,211,102,.25);
+}
+.whatsapp-share-btn:hover {
+  background: #20BD5A; transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37,211,102,.35);
+}
+
 .status-container {
   text-align: center; padding: 60px 20px; grid-column: 1 / -1; color: var(--text-muted);
 }
@@ -626,13 +706,14 @@ header.site, header.site-header {
   border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-.last-updated { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 40px; font-weight: 500; }
+.last-updated { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 36px; font-weight: 500; }
 .lang-btn {
   background: var(--surface-2); color: var(--primary); border: 1px solid var(--border);
   padding: 7px 15px; border-radius: 999px; font-size: 0.82rem; font-weight: 700;
   cursor: pointer; transition: all 0.2s ease; font-family: var(--font-body); white-space: nowrap;
 }
 .lang-btn:hover { background: var(--primary); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow); }
+
 
 /* ============================================================
    8. PROFILE, 2X2 FEATURES & SUPPORT (about.html)
