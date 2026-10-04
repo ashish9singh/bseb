@@ -34,7 +34,6 @@
             </nav>
 
             <div class="header-actions">
-                <!-- Translation Toggle Button -->
                 <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
             </div>
@@ -54,16 +53,11 @@
             </div>
         </div>
         
-        <!-- Container for Load More Button -->
         <div id="load-more-container" style="text-align: center; margin-top: 40px;"></div>
-        
         <div id="last-updated-text" class="last-updated"></div>
     </main>
 
     <script>
-        // ========================================================
-        // 1. STATE & DICTIONARIES
-        // ========================================================
         let currentLang = 'en'; 
         let allArticles = []; 
         let showOlder = false; 
@@ -99,16 +93,14 @@
                 hi_title: "BSEB 2027 मैट्रिक और इंटर परीक्षा पंजीकरण की अंतिम तिथि बढ़ी",
                 summary: "The Bihar School Examination Board (BSEB) has officially extended the online application and registration deadline for Class 10 and 12 examinations.",
                 hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने कक्षा 10 और 12 की परीक्षाओं के लिए ऑनलाइन आवेदन और पंजीकरण की अंतिम तिथि आधिकारिक तौर पर बढ़ा दी है।",
-                date: new Date().toISOString(), 
+                date: "2026-10-03", 
                 sourceName: "BSEB Official",
                 hi_source: "BSEB आधिकारिक",
                 url: "https://secondary.biharboardonline.com"
             }
         ];
 
-        // ========================================================
-        // 2. THEME ENGINE
-        // ========================================================
+        // Theme Toggle Engine
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
@@ -138,26 +130,17 @@
             });
         })();
 
-        // ========================================================
-        // 3. TEXT PARSING & ACCURATE DATE FORMATTER
-        // ========================================================
         function decodeHTML(html) {
             if (!html) return "";
             try {
                 const parser = new DOMParser();
                 let doc = parser.parseFromString(html, "text/html");
                 let text = doc.body.textContent || "";
-                
                 if (text.includes("&")) {
                     doc = parser.parseFromString(text, "text/html");
                     text = doc.body.textContent || text;
                 }
-
-                return text
-                    .replace(/&nbsp;/gi, " ")
-                    .replace(/\u00a0/g, " ")
-                    .replace(/\s+/g, " ")
-                    .trim();
+                return text.replace(/&nbsp;/gi, " ").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
             } catch (e) {
                 return html.replace(/&nbsp;/gi, " ").trim();
             }
@@ -187,11 +170,9 @@
 
         function toggleLanguage() {
             currentLang = currentLang === 'hi' ? 'en' : 'hi';
-            
             document.getElementById('ui-title').innerText = UI[currentLang].title;
             document.getElementById('ui-subtitle').innerText = UI[currentLang].subtitle;
             document.getElementById('langToggleBtn').innerText = UI[currentLang].btnText;
-            
             renderNewsUI(false); 
         }
 
@@ -202,31 +183,36 @@
             }[tag] || tag));
         }
 
-        // Accurately formats dates without false day roll-overs
+        // Exact date formatter: preserves the publication day without timezone shift
         function formatDate(dateInput) {
             if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
-            
-            // If date string contains a pure date (YYYY-MM-DD), extract directly to prevent timezone shift
-            if (typeof dateInput === 'string' && /^\d{4}-\d{2}-\d{2}/.test(dateInput)) {
-                const parts = dateInput.substring(0, 10).split('-');
-                const utcDate = new Date(Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])));
-                return utcDate.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', {
-                    timeZone: 'UTC',
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric'
-                });
+
+            const rawStr = String(dateInput).trim();
+
+            // Match YYYY-MM-DD anywhere in the string
+            const isoMatch = rawStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (isoMatch) {
+                const year = parseInt(isoMatch[1], 10);
+                const month = parseInt(isoMatch[2], 10) - 1;
+                const day = parseInt(isoMatch[3], 10);
+
+                const monthsEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const monthsHi = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
+
+                if (currentLang === 'hi') {
+                    return `${day} ${monthsHi[month]}, ${year}`;
+                }
+                return `${monthsEn[month]} ${day}, ${year}`;
             }
 
-            const date = new Date(dateInput);
-            if (isNaN(date.getTime())) return dateInput;
+            // Fallback for standard date objects
+            const d = new Date(dateInput);
+            if (!isNaN(d.getTime())) {
+                const monthsEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                return `${monthsEn[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+            }
 
-            return date.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : 'en-US', { 
-                timeZone: 'Asia/Kolkata',
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
-            });
+            return rawStr;
         }
 
         function sortArticlesByDate(articles) {
@@ -237,9 +223,6 @@
             });
         }
 
-        // ========================================================
-        // 4. CORE RENDERING & DATA FETCHING
-        // ========================================================
         window.loadOlderNews = function() {
             showOlder = true;
             renderNewsUI(false);
@@ -352,15 +335,15 @@
                     const parsedArticles = data.articles.map(article => {
                         const rawSource = decodeHTML(article.source || "News Source");
                         
-                        // Prioritise true publication date over scraper update time
-                        const pubDate = article.publishedAt || article.pubDate || article.date || article.updatedAt;
+                        // Extract only the publication date field
+                        const rawDate = article.publishedAt || article.pubDate || article.date;
 
                         return {
                             title: cleanNewsTitle(article.title || "News Update", rawSource),
                             summary: decodeHTML(article.description || "Click the link to read more."),
                             sourceName: rawSource,
                             url: article.url || "#",
-                            date: pubDate
+                            date: rawDate
                         };
                     });
                     
