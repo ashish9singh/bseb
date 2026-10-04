@@ -1,757 +1,696 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149" crossorigin="anonymous"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JNFE9PSTH3');
+  </script>
    
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149"
-     crossorigin="anonymous"></script>
-   
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BSEB Portal Hub — Bihar Board Links</title>
+  <meta name="description" content="A fast, searchable directory of official Bihar Board (BSEB) portals, exam forms, syllabus PDFs and scholarship links.">
 
-  gtag('config', 'G-JNFE9PSTH3');
-</script>
-   
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BSEB Portal Hub — Bihar Board Links</title>
-<meta name="description" content="A fast, searchable directory of official Bihar Board (BSEB) portals, exam forms, syllabus PDFs and scholarship links.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Google Fonts: Lora for headings (institutional/serious), Inter for body/UI (clean, readable) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 
-<!-- QRCode.js — draws a real, scannable QR code client-side for the support card below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<link rel="stylesheet" href="style.css">
-
- </head>
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
 <body id="home">
 
-<!-- =================== HEADER =================== -->
-<header class="site">
-  <div class="wrap header-inner">
-    <div class="brand">
-      <div class="mark">BB</div>
-      <span class="full">BSEB Portal Hub</span>
-    </div>
+  <!-- =================== HEADER =================== -->
+  <header class="site">
+    <div class="wrap header-inner">
+      <a href="https://bsebwala.in/" class="brand">
+        <div class="mark">BB</div>
+        <span class="full">BSEB Portal Hub</span>
+      </a>
 
-    <!-- Site Menu with Active Home Highlight -->
-    <nav class="main-nav">
-      <a href="https://bsebwala.in/" class="active">Home</a>
-      <a href="https://bsebwala.in/">Letter</a>
-      <a href="fee.html">Fee</a>
-      <a href="news.html">News</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+      <!-- Menu with Active Home Highlight -->
+      <nav class="main-nav">
+        <a href="https://bsebwala.in/" class="active">Home</a>
+        <a href="https://bsebwala.in/">Letter</a>
+        <a href="fee.html">Fee</a>
+        <a href="news.html">News</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
 
-    <div class="search-box">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="searchInput" type="text" placeholder="Search links in English or Hindi… (e.g. STET, मेधासॉफ्ट, exam form)" autocomplete="off">
-    </div>
-
-    <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <!-- =================== HERO =================== -->
-  <section class="hero">
-    <div>
-      <h1>Every Bihar Board link, in one fast page</h1>
-      <p>A single directory of official BSEB portals, exam forms, syllabus PDFs and scholarship links — searchable, pinnable, and quick to load on any device.</p>
-    </div>
-    <div class="hero-panel">
-      <div class="hero-panel-inner">
-        <div>
-          <div class="big-num" id="statTotal">--</div>
-          <div class="big-label">links indexed right now</div>
-        </div>
-        <div class="mini-row">
-          <div><strong id="statCats">--</strong>categories</div>
-          <div><strong id="statPins">0</strong>pinned by you</div>
-        </div>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInput" type="text" placeholder="Search links in English or Hindi… (e.g. STET, मेधासॉफ्ट, exam form)" autocomplete="off">
       </div>
+
+      <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
     </div>
-  </section>
+  </header>
 
-  <!-- =================== LIVE UPDATES BAR =================== -->
-  <div class="notice-bar">
-    <span class="notice-pill">Live Updates</span>
-    <span>📌 <strong>Inter 2027 Exam Form</strong> (2025–27) &amp; <strong>2026–28 Registration</strong> portals are active · <strong>D.El.Ed 2026 Results</strong> &amp; <strong>STET</strong> portals updated.</span>
-  </div>
-
-  <!-- =================== CATEGORY FILTERS =================== -->
-  <!-- data-filter values must match each .section's data-category -->
-  <div class="filters" id="filterRow">
-    <button class="chip active" data-filter="all">All</button>
-    <button class="chip" data-filter="secondary">Secondary (9–10)</button>
-    <button class="chip" data-filter="senior">Senior Secondary (11–12)</button>
-    <button class="chip" data-filter="scholarship">Scholarships</button>
-    <button class="chip" data-filter="admin">Admin &amp; HR</button>
-    <button class="chip" data-filter="udise">UDISE+</button>
-    <button class="chip" data-filter="docs">Docs &amp; Forms</button>
-  </div>
-
-  <!-- =================== PINNED BAR (built by JS from localStorage) =================== -->
-  <div class="pinned-bar" id="pinnedBar">
-    <h3>📌 Your pinned links</h3>
-    <div class="grid" id="pinnedGrid"></div>
-  </div>
-
-  <!-- =================== LINK DATA (Regrouped Logically to Match Filter Order) =================== -->
-<!-- 6. STUDENT & ACADEMIC SERVICES (DOCS & FORMS) -->
-  <section class="section" data-category="docs">
-    <div class="section-head"><h2>Student &amp; Academic Services</h2><span>Forms, Excel &amp; PDFs</span></div>
-    <div class="grid">
-      <!-- Generators & School Excel Formats -->
-      <a class="card" href="https://script.google.com/macros/s/AKfycbx9rAvIAvf02EmrIw840ozASjcGdUYLRV_YbDFRdKsHTHTomcgzFb-cve1N2JivhPvg9A/exec" target="_blank" rel="noopener" data-tags="bonafide certificate generator बोनाफाइड प्रमाण पत्र">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🎓</span><span class="title">Bonafide Application Form</span><span class="status-badge">Tool</span></div>
-        <span class="desc">Generate a ready-to-print student bonafide certificate</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/sentup-result-std-10-2025-format.xlsx" target="_blank" rel="noopener" data-tags="matric sentup excel sheet 10th सेंटअप रिजल्ट">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📊</span><span class="title">Std 10 Sentup Result Format</span></div>
-        <span class="desc">Excel template • Class 10 Sent-up marks</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/sentup-result-std-12-format.xlsx" target="_blank" rel="noopener" data-tags="inter sentup excel sheet 12th सेंटअप रिजल्ट">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📈</span><span class="title">Std 12 Sentup Result Format</span></div>
-        <span class="desc">Excel template • Class 12 Sent-up marks</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/03/absentee-format.xlsx" target="_blank" rel="noopener" data-tags="exam absentee statement excel अनुपस्थिति पत्रक">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📝</span><span class="title">Absentee Format</span></div>
-        <span class="desc">Excel sheet for Teacher's Absentee</span>
-      </a>
-      <!-- Official Formats & Computer Science PDFs -->
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/01/asset-declaration-format-bihar.docx" target="_blank" rel="noopener" data-tags="property asset declaration word docx संपत्ति घोषणा पत्र">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📂</span><span class="title">Asset Declaration Format</span></div>
-        <span class="desc">Editable DOCX — Bihar employee format</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/tds.pdf" target="_blank" rel="noopener" data-tags="income tax tds guide टीडीएस आयकर">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📄</span><span class="title">TDS Sample Guide</span></div>
-        <span class="desc">Reference PDF guide for teachers</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/11-12-cs-syllabus.pdf" target="_blank" rel="noopener" data-tags="computer science syllabus 11 12 कंप्यूटर साइंस">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">💻</span><span class="title">CS Syllabus (Class 11–12)</span></div>
-        <span class="desc">Official Computer Science syllabus PDF</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/cs-syllabus-9-10-hin-eng.pdf" target="_blank" rel="noopener" data-tags="computer science 9 10 syllabus कंप्यूटर साइंस">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🖥️</span><span class="title">CS Syllabus (Class 9–10)</span></div>
-        <span class="desc">Bilingual Hindi/English reference PDF</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/05/cyber-safety-hindi.pdf" target="_blank" rel="noopener" data-tags="cyber security safety manual साइबर सुरक्षा">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🛡️</span><span class="title">Cyber Safety Manual</span></div>
-        <span class="desc">Student study material in Hindi — PDF</span>
-      </a>
-    </div>
-  </section>
-  
-  <!-- 1. SECONDARY SECTION (CLASS 9–10) -->
-  <section class="section" data-category="secondary">
-    <div class="section-head"><h2>Secondary Section (Class 9–10)</h2><span>BSEB Matric</span></div>
-    <div class="grid">
-      <!-- Gateway & Student Forms -->
-      <a class="card" href="https://secondary.biharboardonline.org/" target="_blank" rel="noopener" data-tags="matric 10th secondary bihar board मैट्रिक बिहार बोर्ड">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🌐</span><span class="title">Official Secondary Portal</span><span class="status-badge">Active</span></div>
-        <span class="desc">Primary gateway for all BSEB Class 9–10 services</span>
-      </a>
-      <a class="card" href="https://exam.biharboardonline.org/" target="_blank" rel="noopener" data-tags="matric exam form 10th admit card परीक्षा फॉर्म डमी एडमिट कार्ड">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">✍️</span><span class="title">Matric Exam Form</span><span class="status-badge">Active</span></div>
-        <span class="desc">Secondary examination application &amp; admit card portal</span>
-      </a>
-      <a class="card" href="https://reg28.biharboardonline.org/" target="_blank" rel="noopener" data-tags="class 9 registration matric panjiyan पंजीकरण रजिस्ट्रेशन">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📋</span><span class="title">Secondary Registration</span><span class="status-badge">Active</span></div>
-        <span class="desc">Class 9 registration &amp; dummy card portal</span>
-      </a>
-      <a class="card" href="https://result.biharboardonline.org/" target="_blank" rel="noopener" data-tags="result marksheet scrutiny compartmental रिजल्ट मार्कशीट स्क्रूटनी">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏆</span><span class="title">BSEB Results &amp; Scrutiny</span></div>
-        <span class="desc">Check Matric/Inter results &amp; apply for scrutiny</span>
-      </a>
-      <!-- Academics, Books & Model Papers -->
-      <a class="card" href="https://bstbpc.bihar.gov.in/Class9.aspx" target="_blank" rel="noopener" data-tags="textbook book pdf scert किताब कक्षा 9">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📘</span><span class="title">Class 9 e-Books</span></div>
-        <span class="desc">Official BSTBPC textbook PDFs</span>
-      </a>
-      <a class="card" href="https://bstbpc.bihar.gov.in/Class10.aspx" target="_blank" rel="noopener" data-tags="textbook book pdf matric किताब कक्षा 10">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📗</span><span class="title">Class 10 e-Books</span></div>
-        <span class="desc">Official BSTBPC textbook PDFs</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/class-9_10_syllabus_bseb.pdf" target="_blank" rel="noopener" data-tags="matric syllabus सिलेबस पाठ्यक्रम">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📖</span><span class="title">Class 9–10 Full Syllabus</span></div>
-        <span class="desc">All subjects combined PDF</span>
-      </a>
-      <a class="card" href="https://biharboardonline.com/modelpapermatric.html" target="_blank" rel="noopener" data-tags="sample paper question paper मॉडल पेपर प्रश्न पत्र">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📄</span><span class="title">Matric Model Papers</span></div>
-        <span class="desc">Official Matric model question papers</span>
-      </a>
-      <!-- Teacher & Evaluation Portals -->
-      <a class="card" href="https://teach.biharboardonline.com/" target="_blank" rel="noopener" data-tags="secondary teacher directory शिक्षक डायरेक्टरी मूल्यांकन">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">👨‍🏫</span><span class="title">Teacher Directory (9–10)</span></div>
-        <span class="desc">Secondary teacher directory &amp; updation</span>
-      </a>
-      <a class="card" href="https://secondaryletter.biharboardonline.com/Letterdefault.aspx" target="_blank" rel="noopener" data-tags="copy checking evaluation appointment परीक्षक पत्र मूल्यांकन">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📩</span><span class="title">Examiner Letter Portal</span></div>
-        <span class="desc">Download Matric evaluation appointment letters</span>
-      </a>
-      <a class="card" href="https://secondaryletter.biharboardonline.com/mppletter.aspx" target="_blank" rel="noopener" data-tags="marks posting personnel mpp letter एमपीपी">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">💼</span><span class="title">MPP Letter Access</span></div>
-        <span class="desc">Matric MPP administration letters</span>
-      </a>
-      <a class="card" href="https://www.biharboardonline.org/" target="_blank" rel="noopener" data-tags="old registration archive पुराना रजिस्ट्रेशन">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🗄️️</span><span class="title">Archive Registration</span></div>
-        <span class="desc">Older Matric registration records</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- 2. SENIOR SECONDARY SECTION (CLASS 11–12) -->
-  <section class="section" data-category="senior">
-    <div class="section-head"><h2>Senior Secondary Section (Class 11–12)</h2><span>BSEB Inter</span></div>
-    <div class="grid">
-      <!-- Gateway, Admission & Forms -->
-      <a class="card" href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener" data-tags="inter 12th 11th portal इंटरमीडिएट बिहार बोर्ड">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏛️</span><span class="title">Official Intermediate Portal</span><span class="status-badge">Active</span></div>
-        <span class="desc">Centralized gateway for Class 11–12 services</span>
-      </a>
-      <a class="card" href="https://intermediate.biharboardonline.com/2025%E2%80%9327/" target="_blank" rel="noopener" data-tags="inter exam form 2027 12th form इंटर परीक्षा फॉर्म">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">✍️</span><span class="title">2027 Examination Form</span><span class="status-badge">Active</span></div>
-        <span class="desc">Intermediate 2025–27 session exam form</span>
-      </a>
-      <a class="card" href="https://intermediate.biharboardonline.com/2026-28/" target="_blank" rel="noopener" data-tags="inter registration 11th panjiyan इंटर रजिस्ट्रेशन">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📑</span><span class="title">2026–28 Registration</span><span class="status-badge">Active</span></div>
-        <span class="desc">Class 11 batch registration portal</span>
-      </a>
-      <a class="card" href="https://ofssbihar.net/Higher-Education/index.html" target="_blank" rel="noopener" data-tags="ofss 11th admission intimation letter नामांकन ओएफएसएस">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🎓</span><span class="title">OFSS Bihar Admission</span></div>
-        <span class="desc">Online Class 11 &amp; degree admission facilitation</span>
-      </a>
-      <!-- Academics, Books & Open Schooling -->
-      <a class="card" href="https://bstbpc.bihar.gov.in/Class11.aspx" target="_blank" rel="noopener" data-tags="11th books pdf किताब">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📘</span><span class="title">Class 11 e-Books</span></div>
-        <span class="desc">Official BSTBPC textbook portal</span>
-      </a>
-      <a class="card" href="https://bstbpc.bihar.gov.in/Class12.aspx" target="_blank" rel="noopener" data-tags="12th books pdf किताब">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📗</span><span class="title">Class 12 e-Books</span></div>
-        <span class="desc">Official BSTBPC textbook portal</span>
-      </a>
-      <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/class-11_12_syllabus_bseb.pdf" target="_blank" rel="noopener" data-tags="inter syllabus science arts commerce सिलेबस">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📖</span><span class="title">Class 11–12 Full Syllabus</span></div>
-        <span class="desc">All streams &amp; subjects — PDF</span>
-      </a>
-      <a class="card" href="https://biharboardonline.com/modelpaperinter.html" target="_blank" rel="noopener" data-tags="inter model paper question paper मॉडल पेपर">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📊</span><span class="title">Inter Model Papers</span></div>
-        <span class="desc">Official Intermediate model question papers</span>
-      </a>
-      <a class="card" href="https://result.bboseonline.com/" target="_blank" rel="noopener" data-tags="bbose open board admit card result बिहार मुक्त विद्यालयी">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏫</span><span class="title">BBOSE Open Schooling</span></div>
-        <span class="desc">Bihar Board of Open Schooling results &amp; admit cards</span>
-      </a>
-      <!-- Teacher & Evaluation Portals (Upgraded to HTTPS) -->
-      <a class="card" href="https://teachdirinter.biharboardonline.com/" target="_blank" rel="noopener" data-tags="inter teacher directory +2 teacher शिक्षक डायरेक्टरी">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">👩‍🏫</span><span class="title">Teacher Directory (11–12)</span></div>
-        <span class="desc">Senior secondary (+2) teacher portal</span>
-      </a>
-      <a class="card" href="https://letter12.biharboardonline.com/" target="_blank" rel="noopener" data-tags="inter examiner letter mpp copy checking परीक्षक पत्र">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">✉️</span><span class="title">Examiner &amp; MPP Letters</span></div>
-        <span class="desc">Intermediate evaluation &amp; invigilator letters</span>
-      </a>
-      <a class="card" href="https://seniorsecondary.biharboardonline.com/inter26/#/login" target="_blank" rel="noopener" data-tags="inter archive 2026 old portal">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🗄️</span><span class="title">Inter 2026 Archive Login</span></div>
-        <span class="desc">Previous session registration &amp; admit card portal</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- 3. SCHOLARSHIPS & STUDENT WELFARE -->
-  <section class="section" data-category="scholarship">
-    <div class="section-head"><h2>Scholarships &amp; Student Welfare</h2><span>Apply &amp; track</span></div>
-    <div class="grid">
-      <a class="card" href="https://medhasoft.bihar.gov.in/" target="_blank" rel="noopener" data-tags="medhasoft dbt kanya utthan 10th 12th pass protsahan मेधासॉफ्ट छात्रवृत्ति">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">💳</span><span class="title">Medhasoft Bihar</span><span class="status-badge">Active</span></div>
-        <span class="desc">DBT, Matric/Inter Protsahan &amp; Kanya Utthan portal</span>
-      </a>
-      <a class="card" href="https://pmsonline.bihar.gov.in/" target="_blank" rel="noopener" data-tags="pms post matric scholarship bc ebc sc st पोस्ट मैट्रिक छात्रवृत्ति">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🎓</span><span class="title">Post Matric Scholarship</span><span class="status-badge">Active</span></div>
-        <span class="desc">Apply online for Bihar PMS (BC/EBC/SC/ST)</span>
-      </a>
-      <a class="card" href="https://nmmssbihar.co.in/" target="_blank" rel="noopener" data-tags="nmms class 8 scholarship राष्ट्रीय आय सह मेधा छात्रवृत्ति">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🎖️</span><span class="title">NMMSS Portal</span></div>
-        <span class="desc">National Means-cum-Merit Scholarship (Class 8)</span>
-      </a>
-      <a class="card" href="https://scholarships.gov.in/otrapplication/" target="_blank" rel="noopener" data-tags="nsp otr central scholarship नेशनल स्कॉलरशिप">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📄</span><span class="title">NSP OTR Registration</span></div>
-        <span class="desc">National Scholarship Portal — one-time registration</span>
-      </a>
-      <a class="card" href="https://www.7nishchay-yuvaupmission.bihar.gov.in/" target="_blank" rel="noopener" data-tags="drcc bsscc student credit card kushal yuva kyp स्टूडेंट क्रेडिट कार्ड">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">💰</span><span class="title">Student Credit Card (MNSSBY)</span></div>
-        <span class="desc">7 Nishchay education loan &amp; KYP portal</span>
-      </a>
-      <a class="card" href="https://serviceonline.bihar.gov.in/" target="_blank" rel="noopener" data-tags="rtps service plus caste income residence certificate जाति आय निवास प्रमाण पत्र">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏛️</span><span class="title">RTPS Bihar (ServicePlus)</span></div>
-        <span class="desc">Apply for Caste, Income &amp; Residence certificates</span>
-      </a>
-      <a class="card" href="https://www.digilocker.gov.in/" target="_blank" rel="noopener" data-tags="digilocker digital marksheet migration certificate डिजिलॉकर मार्कशीट">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🔐</span><span class="title">DigiLocker Marksheets</span></div>
-        <span class="desc">Download verified BSEB marksheets &amp; certificates</span>
-      </a>
-      <a class="card" href="https://nccindia.gov.in/" target="_blank" rel="noopener" data-tags="ncc cadet corps एनसीसी">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🇮🇳</span><span class="title">NCC India</span></div>
-        <span class="desc">National Cadet Corps official portal</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- 4. ACADEMIC RESOURCES & ADMINISTRATION -->
-  <section class="section" data-category="admin">
-    <div class="section-head"><h2>Academic Resources &amp; Administration</h2><span>Teachers, Exams &amp; HR</span></div>
-    <div class="grid">
-      <!-- Core HR & School Portals -->
-      <a class="card" href="https://eshikshakosh.bihar.gov.in/login" target="_blank" rel="noopener" data-tags="eshikshakosh attendance leave teacher login ई-शिक्षाकोष उपस्थिति">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🔑</span><span class="title">e-Shikshakosh</span><span class="status-badge">Daily</span></div>
-        <span class="desc">Teacher attendance, leave &amp; school administration</span>
-      </a>
-      <a class="card" href="https://hrms.bihar.gov.in/" target="_blank" rel="noopener" data-tags="hrms salary slip service book वेतन पे स्लिप">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🧑‍💼</span><span class="title">HRMS Bihar</span></div>
-        <span class="desc">State employee salary, PRAN &amp; service portal</span>
-      </a>
-      <!-- Teacher Eligibility & Training Exams -->
-      <a class="card" href="https://bsebstet.org/" target="_blank" rel="noopener" data-tags="stet paper 1 paper 2 admit card result एसटीईटी शिक्षक पात्रता">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📝</span><span class="title">Bihar STET Portal</span><span class="status-badge">Active</span></div>
-        <span class="desc">Secondary Teacher Eligibility Test (Paper I &amp; II)</span>
-      </a>
-      <a class="card" href="https://www.bsebsakshamta.com/" target="_blank" rel="noopener" data-tags="sakshamta pariksha niyojit teacher competency सक्षमता परीक्षा">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏅</span><span class="title">Sakshamta Pariksha</span></div>
-        <span class="desc">BSEB Competency Test for local body teachers</span>
-      </a>
-      <a class="card" href="https://deledresult.biharboardonline.org/" target="_blank" rel="noopener" data-tags="deled exam result admit card डीएलएड रिजल्ट">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🎓</span><span class="title">BSEB D.El.Ed Portal</span><span class="status-badge">New</span></div>
-        <span class="desc">D.El.Ed 1st &amp; 2nd Year results &amp; notifications</span>
-      </a>
-      <a class="card" href="https://scert.bihar.gov.in/" target="_blank" rel="noopener" data-tags="scert training diet ptec curriculum एससीईआरटी प्रशिक्षण">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏛️</span><span class="title">SCERT Bihar</span></div>
-        <span class="desc">Teacher training, DIETs &amp; curriculum research</span>
-      </a>
-      <!-- School Initiatives & Learning -->
-      <a class="card" href="https://gyandeep-rte.bihar.gov.in/" target="_blank" rel="noopener" data-tags="gyandeep rte 25% admission ज्ञानदीप आरटीई">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏫</span><span class="title">Gyandeep RTE</span></div>
-        <span class="desc">RTE school admission &amp; reimbursement portal</span>
-      </a>
-      <a class="card" href="https://bepclots.bihar.gov.in/" target="_blank" rel="noopener" data-tags="elots library digital books ई-लॉट्स">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📚</span><span class="title">e-LOTS Digital Library</span></div>
-        <span class="desc">BEPC digital library for teachers &amp; students</span>
-      </a>
-      <a class="card" href="https://play.google.com/store/apps/details?id=com.mintbook.bsdl.bsdl_mobile" target="_blank" rel="noopener" data-tags="vidyabodh app android">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📱</span><span class="title">Vidyabodh App</span></div>
-        <span class="desc">Install Bihar digital library mobile app</span>
-      </a>
-      <a class="card" href="https://ecoclubs.education.gov.in/" target="_blank" rel="noopener" data-tags="eco club mission life paryavaran इको क्लब">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🌱</span><span class="title">Eco Club Portal</span></div>
-        <span class="desc">School environment education &amp; Mission LiFE reports</span>
-      </a>
-      <a class="card" href="https://shvr.education.gov.in/" target="_blank" rel="noopener" data-tags="shvr swachh vidyalaya rating स्वच्छ विद्यालय">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🕒</span><span class="title">Swachh Evam Harit Vidyalaya</span></div>
-        <span class="desc">School hygiene, green practices &amp; SHVR rating</span>
-      </a>
-      <a class="card" href="https://sahyog.bihar.gov.in/Sahyog/ComplaintRegistration.aspx" target="_blank" rel="noopener" data-tags="sahyog grievance complaint सहयोग शिकायत">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">📢</span><span class="title">Sahyog Grievance Portal</span></div>
-        <span class="desc">Education department public grievance redressal</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- 5. UDISE+ MANAGEMENT MODULES -->
-  <section class="section" data-category="udise">
-    <div class="section-head"><h2>UDISE+ Management Modules</h2><span>School data systems</span></div>
-    <div class="grid">
-      <a class="card" href="https://sdms.udiseplus.gov.in/p0/v1/login?state-id=110" target="_blank" rel="noopener" data-tags="udise student module progression apaar id यूडायस छात्र मॉड्यूल">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🧑‍🎓</span><span class="title">Students Module (Bihar)</span><span class="status-badge">Active</span></div>
-        <span class="desc">Bihar SDMS student progression &amp; APAAR ID</span>
-      </a>
-      <a class="card" href="https://udiseplus.gov.in/moe_udise/#/login" target="_blank" rel="noopener" data-tags="udise profile facilities DCF यूडायस प्रोफाइल">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🧱</span><span class="title">Profile &amp; Facilities</span></div>
-        <span class="desc">UDISE+ school infrastructure &amp; DCF module</span>
-      </a>
-      <a class="card" href="https://udiseplus.gov.in/udiseteacher/" target="_blank" rel="noopener" data-tags="udise teacher module यूडायस शिक्षक">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">👨‍🏫</span><span class="title">Teacher Module</span></div>
-        <span class="desc">UDISE+ school teacher records update</span>
-      </a>
-      <a class="card" href="https://udiseplus.gov.in/ud/home?loginId=1" target="_blank" rel="noopener" data-tags="udise school directory code search">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🏫</span><span class="title">School Directory</span></div>
-        <span class="desc">UDISE+ directory &amp; user management</span>
-      </a>
-      <a class="card" href="https://kys.udiseplus.gov.in/#/home" target="_blank" rel="noopener" data-tags="know your school kys report card">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🔍</span><span class="title">Know Your School (KYS)</span></div>
-        <span class="desc">Public school lookup by UDISE code or name</span>
-      </a>
-      <a class="card" href="https://schoolgis.nic.in/" target="_blank" rel="noopener" data-tags="gis map school location">
-        <button class="pin" aria-label="Pin this link">☆</button>
-        <div class="top-row"><span class="emoji">🗺️</span><span class="title">School Geo Portal</span></div>
-        <span class="desc">NIC map-based school GIS locator</span>
-      </a>
-    </div>
-  </section>
-
-  
-
-  <!-- Shown only when a search matches zero cards -->
-  <div class="empty-state" id="emptyState">
-    <p>No links match your search. Try a different keyword.</p>
-  </div>
-
-  <!-- =================== PROFILE + SUPPORT (placed after all links) =================== -->
-  <div class="people-section">
-
-    <!-- ---- Support / QR card ---- -->
-    <section class="support-card">
-      <div class="support-grid">
-        <!-- QR code is generated live by qrcode.min.js into this div -->
-        <div>
-          <div class="qr-wrap"><div id="qrcode"></div></div>
-          <div class="qr-caption">SCAN TO SUPPORT</div>
-        </div>
-
-        <div>
-          <div class="support-title">❤️ Contribution</div>
-          <p class="support-text">
-            इस मंच को निरंतर चलाने और बेहतर बनाने के लिए आपके सहयोग की आवश्यकता है।
-            आप QR कोड के माध्यम से योगदान दे सकते हैं। आपका हर समर्थन हमारे लिए अमूल्य है।
-          </p>
-          <p class="thanks">धन्यवाद! 🙏</p>
-
-          <a class="upi-btn" id="upiPayBtn" href="upi://pay?pa=ashishkumarsingh9-1%40oksbi&amp;pn=BSEB_Portals&amp;cu=INR">Pay via UPI Link 🔗</a>
-
-          <div class="upi-id-row">
-            <code id="upiIdText">ashishkumarsingh9-1@oksbi</code>
-            <button class="copy-btn" id="copyUpiBtn">Copy</button>
+  <main class="wrap">
+    <!-- =================== HERO =================== -->
+    <section class="hero">
+      <div>
+        <h1>Every Bihar Board link, in one fast page</h1>
+        <p>A single directory of official BSEB portals, exam forms, syllabus PDFs and scholarship links — searchable, pinnable, and quick to load on any device.</p>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-panel-inner">
+          <div>
+            <div class="big-num" id="statTotal">--</div>
+            <div class="big-label">links indexed right now</div>
+          </div>
+          <div class="mini-row">
+            <div><strong id="statCats">--</strong>categories</div>
+            <div><strong id="statPins">0</strong>pinned by you</div>
           </div>
         </div>
       </div>
     </section>
 
-  </div>
+    <!-- =================== LIVE UPDATES BAR =================== -->
+    <div class="notice-bar">
+      <span class="notice-pill">Live Updates</span>
+      <span>📌 <strong>Inter 2027 Exam Form</strong> (2025–27) &amp; <strong>2026–28 Registration</strong> portals are active · <strong>D.El.Ed 2026 Results</strong> &amp; <strong>STET</strong> portals updated.</span>
+    </div>
 
-</main>
+    <!-- =================== CATEGORY FILTERS =================== -->
+    <div class="filters" id="filterRow">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="secondary">Secondary (9–10)</button>
+      <button class="chip" data-filter="senior">Senior Secondary (11–12)</button>
+      <button class="chip" data-filter="scholarship">Scholarships</button>
+      <button class="chip" data-filter="admin">Admin &amp; HR</button>
+      <button class="chip" data-filter="udise">UDISE+</button>
+      <button class="chip" data-filter="docs">Docs &amp; Forms</button>
+    </div>
 
-<footer>
-  <div class="wrap">
-    Independent resource directory of publicly available Bihar Board (BSEB) links · Not an official government site
-  </div>
-</footer>
+    <!-- =================== PINNED BAR =================== -->
+    <div class="pinned-bar" id="pinnedBar">
+      <h3>📌 Your pinned links</h3>
+      <div class="grid" id="pinnedGrid"></div>
+    </div>
 
-<script>
-/* ============================================================
-   ALL JAVASCRIPT — organized into clearly labeled blocks so you
-   can find and edit each feature independently.
-   ============================================================ */
+    <!-- =================== LINK DATA =================== -->
+    <!-- 6. STUDENT & ACADEMIC SERVICES (DOCS & FORMS) -->
+    <section class="section" data-category="docs">
+      <div class="section-head"><h2>Student &amp; Academic Services</h2><span>Forms, Excel &amp; PDFs</span></div>
+      <div class="grid">
+        <a class="card" href="https://script.google.com/macros/s/AKfycbx9rAvIAvf02EmrIw840ozASjcGdUYLRV_YbDFRdKsHTHTomcgzFb-cve1N2JivhPvg9A/exec" target="_blank" rel="noopener" data-tags="bonafide certificate generator बोनाफाइड प्रमाण पत्र">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🎓</span><span class="title">Bonafide Application Form</span><span class="status-badge">Tool</span></div>
+          <span class="desc">Generate a ready-to-print student bonafide certificate</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/sentup-result-std-10-2025-format.xlsx" target="_blank" rel="noopener" data-tags="matric sentup excel sheet 10th सेंटअप रिजल्ट">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📊</span><span class="title">Std 10 Sentup Result Format</span></div>
+          <span class="desc">Excel template • Class 10 Sent-up marks</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/sentup-result-std-12-format.xlsx" target="_blank" rel="noopener" data-tags="inter sentup excel sheet 12th सेंटअप रिजल्ट">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📈</span><span class="title">Std 12 Sentup Result Format</span></div>
+          <span class="desc">Excel template • Class 12 Sent-up marks</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/03/absentee-format.xlsx" target="_blank" rel="noopener" data-tags="exam absentee statement excel अनुपस्थिति पत्रक">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📝</span><span class="title">Absentee Format</span></div>
+          <span class="desc">Excel sheet for Teacher's Absentee</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/01/asset-declaration-format-bihar.docx" target="_blank" rel="noopener" data-tags="property asset declaration word docx संपत्ति घोषणा पत्र">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📂</span><span class="title">Asset Declaration Format</span></div>
+          <span class="desc">Editable DOCX — Bihar employee format</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/02/tds.pdf" target="_blank" rel="noopener" data-tags="income tax tds guide टीडीएस आयकर">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📄</span><span class="title">TDS Sample Guide</span></div>
+          <span class="desc">Reference PDF guide for teachers</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/11-12-cs-syllabus.pdf" target="_blank" rel="noopener" data-tags="computer science syllabus 11 12 कंप्यूटर साइंस">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">💻</span><span class="title">CS Syllabus (Class 11–12)</span></div>
+          <span class="desc">Official Computer Science syllabus PDF</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/cs-syllabus-9-10-hin-eng.pdf" target="_blank" rel="noopener" data-tags="computer science 9 10 syllabus कंप्यूटर साइंस">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🖥️</span><span class="title">CS Syllabus (Class 9–10)</span></div>
+          <span class="desc">Bilingual Hindi/English reference PDF</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/05/cyber-safety-hindi.pdf" target="_blank" rel="noopener" data-tags="cyber security safety manual साइबर सुरक्षा">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🛡️</span><span class="title">Cyber Safety Manual</span></div>
+          <span class="desc">Student study material in Hindi — PDF</span>
+        </a>
+      </div>
+    </section>
 
-/* ---------- 1. THEME TOGGLE (persists choice in localStorage) ---------- */
-(function themeModule(){
-  const root = document.documentElement;
-  const btn = document.getElementById('themeToggle');
-  const STORAGE_KEY = 'bseb-hub-theme';
+    <!-- 1. SECONDARY SECTION (CLASS 9–10) -->
+    <section class="section" data-category="secondary">
+      <div class="section-head"><h2>Secondary Section (Class 9–10)</h2><span>BSEB Matric</span></div>
+      <div class="grid">
+        <a class="card" href="https://secondary.biharboardonline.com/" target="_blank" rel="noopener" data-tags="matric 10th secondary bihar board मैट्रिक बिहार बोर्ड">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🌐</span><span class="title">Official Secondary Portal</span><span class="status-badge">Active</span></div>
+          <span class="desc">Primary gateway for all BSEB Class 9–10 services</span>
+        </a>
+        <a class="card" href="https://exam.biharboardonline.org/" target="_blank" rel="noopener" data-tags="matric exam form 10th admit card परीक्षा फॉर्म डमी एडमिट कार्ड">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">✍️</span><span class="title">Matric Exam Form</span><span class="status-badge">Active</span></div>
+          <span class="desc">Secondary examination application &amp; admit card portal</span>
+        </a>
+        <a class="card" href="https://reg28.biharboardonline.org/" target="_blank" rel="noopener" data-tags="class 9 registration matric panjiyan पंजीकरण रजिस्ट्रेशन">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📋</span><span class="title">Secondary Registration</span><span class="status-badge">Active</span></div>
+          <span class="desc">Class 9 registration &amp; dummy card portal</span>
+        </a>
+        <a class="card" href="https://result.biharboardonline.org/" target="_blank" rel="noopener" data-tags="result marksheet scrutiny compartmental रिजल्ट मार्कशीट स्क्रूटनी">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏆</span><span class="title">BSEB Results &amp; Scrutiny</span></div>
+          <span class="desc">Check Matric/Inter results &amp; apply for scrutiny</span>
+        </a>
+        <a class="card" href="https://bstbpc.bihar.gov.in/Class9.aspx" target="_blank" rel="noopener" data-tags="textbook book pdf scert किताब कक्षा 9">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📘</span><span class="title">Class 9 e-Books</span></div>
+          <span class="desc">Official BSTBPC textbook PDFs</span>
+        </a>
+        <a class="card" href="https://bstbpc.bihar.gov.in/Class10.aspx" target="_blank" rel="noopener" data-tags="textbook book pdf matric किताब कक्षा 10">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📗</span><span class="title">Class 10 e-Books</span></div>
+          <span class="desc">Official BSTBPC textbook PDFs</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/class-9_10_syllabus_bseb.pdf" target="_blank" rel="noopener" data-tags="matric syllabus सिलेबस पाठ्यक्रम">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📖</span><span class="title">Class 9–10 Full Syllabus</span></div>
+          <span class="desc">All subjects combined PDF</span>
+        </a>
+        <a class="card" href="https://biharboardonline.com/modelpapermatric.html" target="_blank" rel="noopener" data-tags="sample paper question paper मॉडल पेपर प्रश्न पत्र">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📄</span><span class="title">Matric Model Papers</span></div>
+          <span class="desc">Official Matric model question papers</span>
+        </a>
+        <a class="card" href="https://teach.biharboardonline.com/" target="_blank" rel="noopener" data-tags="secondary teacher directory शिक्षक डायरेक्टरी मूल्यांकन">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">👨‍🏫</span><span class="title">Teacher Directory (9–10)</span></div>
+          <span class="desc">Secondary teacher directory &amp; updation</span>
+        </a>
+        <a class="card" href="https://secondaryletter.biharboardonline.com/Letterdefault.aspx" target="_blank" rel="noopener" data-tags="copy checking evaluation appointment परीक्षक पत्र मूल्यांकन">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📩</span><span class="title">Examiner Letter Portal</span></div>
+          <span class="desc">Download Matric evaluation appointment letters</span>
+        </a>
+        <a class="card" href="https://secondaryletter.biharboardonline.com/mppletter.aspx" target="_blank" rel="noopener" data-tags="marks posting personnel mpp letter एमपीपी">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">💼</span><span class="title">MPP Letter Access</span></div>
+          <span class="desc">Matric MPP administration letters</span>
+        </a>
+        <a class="card" href="https://www.biharboardonline.org/" target="_blank" rel="noopener" data-tags="old registration archive पुराना रजिस्ट्रेशन">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🗄</span><span class="title">Archive Registration</span></div>
+          <span class="desc">Older Matric registration records</span>
+        </a>
+      </div>
+    </section>
 
-  function apply(theme){
-    if (theme === 'dark' || theme === 'light'){
-      root.setAttribute('data-theme', theme);
-    } else {
-      root.removeAttribute('data-theme'); // follow system preference
-    }
-    btn.textContent = (root.getAttribute('data-theme') === 'dark' ||
-      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches))
-      ? '☀️' : '🌙';
-  }
+    <!-- 2. SENIOR SECONDARY SECTION (CLASS 11–12) -->
+    <section class="section" data-category="senior">
+      <div class="section-head"><h2>Senior Secondary Section (Class 11–12)</h2><span>BSEB Inter</span></div>
+      <div class="grid">
+        <a class="card" href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener" data-tags="inter 12th 11th portal इंटरमीडिएट बिहार बोर्ड">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏛️</span><span class="title">Official Intermediate Portal</span><span class="status-badge">Active</span></div>
+          <span class="desc">Centralized gateway for Class 11–12 services</span>
+        </a>
+        <a class="card" href="https://intermediate.biharboardonline.com/2025%E2%80%9327/" target="_blank" rel="noopener" data-tags="inter exam form 2027 12th form इंटर परीक्षा फॉर्म">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">✍️</span><span class="title">2027 Examination Form</span><span class="status-badge">Active</span></div>
+          <span class="desc">Intermediate 2025–27 session exam form</span>
+        </a>
+        <a class="card" href="https://intermediate.biharboardonline.com/2026-28/" target="_blank" rel="noopener" data-tags="inter registration 11th panjiyan इंटर रजिस्ट्रेशन">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📑</span><span class="title">2026–28 Registration</span><span class="status-badge">Active</span></div>
+          <span class="desc">Class 11 batch registration portal</span>
+        </a>
+        <a class="card" href="https://ofssbihar.net/Higher-Education/index.html" target="_blank" rel="noopener" data-tags="ofss 11th admission intimation letter नामांकन ओएफएसएस">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🎓</span><span class="title">OFSS Bihar Admission</span></div>
+          <span class="desc">Online Class 11 &amp; degree admission facilitation</span>
+        </a>
+        <a class="card" href="https://bstbpc.bihar.gov.in/Class11.aspx" target="_blank" rel="noopener" data-tags="11th books pdf किताब">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📘</span><span class="title">Class 11 e-Books</span></div>
+          <span class="desc">Official BSTBPC textbook portal</span>
+        </a>
+        <a class="card" href="https://bstbpc.bihar.gov.in/Class12.aspx" target="_blank" rel="noopener" data-tags="12th books pdf किताब">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📗</span><span class="title">Class 12 e-Books</span></div>
+          <span class="desc">Official BSTBPC textbook portal</span>
+        </a>
+        <a class="card" href="https://ashish9singh.wordpress.com/wp-content/uploads/2026/04/class-11_12_syllabus_bseb.pdf" target="_blank" rel="noopener" data-tags="inter syllabus science arts commerce सिलेबस">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📖</span><span class="title">Class 11–12 Full Syllabus</span></div>
+          <span class="desc">All streams &amp; subjects — PDF</span>
+        </a>
+        <a class="card" href="https://biharboardonline.com/modelpaperinter.html" target="_blank" rel="noopener" data-tags="inter model paper question paper मॉडल पेपर">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📊</span><span class="title">Inter Model Papers</span></div>
+          <span class="desc">Official Intermediate model question papers</span>
+        </a>
+        <a class="card" href="https://result.bboseonline.com/" target="_blank" rel="noopener" data-tags="bbose open board admit card result बिहार मुक्त विद्यालयी">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏫</span><span class="title">BBOSE Open Schooling</span></div>
+          <span class="desc">Bihar Board of Open Schooling results &amp; admit cards</span>
+        </a>
+        <a class="card" href="https://teachdirinter.biharboardonline.com/" target="_blank" rel="noopener" data-tags="inter teacher directory +2 teacher शिक्षक डायरेक्टरी">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">👩‍🏫</span><span class="title">Teacher Directory (11–12)</span></div>
+          <span class="desc">Senior secondary (+2) teacher portal</span>
+        </a>
+        <a class="card" href="https://letter12.biharboardonline.com/" target="_blank" rel="noopener" data-tags="inter examiner letter mpp copy checking परीक्षक पत्र">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">✉️</span><span class="title">Examiner &amp; MPP Letters</span></div>
+          <span class="desc">Intermediate evaluation &amp; invigilator letters</span>
+        </a>
+        <a class="card" href="https://seniorsecondary.biharboardonline.com/inter26/#/login" target="_blank" rel="noopener" data-tags="inter archive 2026 old portal">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🗄️</span><span class="title">Inter 2026 Archive Login</span></div>
+          <span class="desc">Previous session registration &amp; admit card portal</span>
+        </a>
+      </div>
+    </section>
 
-  let saved = null;
-  try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){ /* storage unavailable, ignore */ }
-  apply(saved);
+    <!-- 3. SCHOLARSHIPS & STUDENT WELFARE -->
+    <section class="section" data-category="scholarship">
+      <div class="section-head"><h2>Scholarships &amp; Student Welfare</h2><span>Apply &amp; track</span></div>
+      <div class="grid">
+        <a class="card" href="https://medhasoft.bihar.gov.in/" target="_blank" rel="noopener" data-tags="medhasoft dbt kanya utthan 10th 12th pass protsahan मेधासॉफ्ट छात्रवृत्ति">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">💳</span><span class="title">Medhasoft Bihar</span><span class="status-badge">Active</span></div>
+          <span class="desc">DBT, Matric/Inter Protsahan &amp; Kanya Utthan portal</span>
+        </a>
+        <a class="card" href="https://pmsonline.bihar.gov.in/" target="_blank" rel="noopener" data-tags="pms post matric scholarship bc ebc sc st पोस्ट मैट्रिक छात्रवृत्ति">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🎓</span><span class="title">Post Matric Scholarship</span><span class="status-badge">Active</span></div>
+          <span class="desc">Apply online for Bihar PMS (BC/EBC/SC/ST)</span>
+        </a>
+        <a class="card" href="https://nmmssbihar.co.in/" target="_blank" rel="noopener" data-tags="nmms class 8 scholarship राष्ट्रीय आय सह मेधा छात्रवृत्ति">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🎖️</span><span class="title">NMMSS Portal</span></div>
+          <span class="desc">National Means-cum-Merit Scholarship (Class 8)</span>
+        </a>
+        <a class="card" href="https://scholarships.gov.in/otrapplication/" target="_blank" rel="noopener" data-tags="nsp otr central scholarship नेशनल स्कॉलरशिप">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📄</span><span class="title">NSP OTR Registration</span></div>
+          <span class="desc">National Scholarship Portal — one-time registration</span>
+        </a>
+        <a class="card" href="https://www.7nishchay-yuvaupmission.bihar.gov.in/" target="_blank" rel="noopener" data-tags="drcc bsscc student credit card kushal yuva kyp स्टूडेंट क्रेडिट कार्ड">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">💰</span><span class="title">Student Credit Card (MNSSBY)</span></div>
+          <span class="desc">7 Nishchay education loan &amp; KYP portal</span>
+        </a>
+        <a class="card" href="https://serviceonline.bihar.gov.in/" target="_blank" rel="noopener" data-tags="rtps service plus caste income residence certificate जाति आय निवास प्रमाण पत्र">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏛️</span><span class="title">RTPS Bihar (ServicePlus)</span></div>
+          <span class="desc">Apply for Caste, Income &amp; Residence certificates</span>
+        </a>
+        <a class="card" href="https://www.digilocker.gov.in/" target="_blank" rel="noopener" data-tags="digilocker digital marksheet migration certificate डिजिलॉकर मार्कशीट">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🔐</span><span class="title">DigiLocker Marksheets</span></div>
+          <span class="desc">Download verified BSEB marksheets &amp; certificates</span>
+        </a>
+        <a class="card" href="https://nccindia.gov.in/" target="_blank" rel="noopener" data-tags="ncc cadet corps एनसीसी">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🇮🇳</span><span class="title">NCC India</span></div>
+          <span class="desc">National Cadet Corps official portal</span>
+        </a>
+      </div>
+    </section>
 
-  btn.addEventListener('click', function(){
-    const current = root.getAttribute('data-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    apply(next);
-    try { localStorage.setItem(STORAGE_KEY, next); } catch(e){ /* ignore */ }
-  });
-})();
+    <!-- 4. ACADEMIC RESOURCES & ADMINISTRATION -->
+    <section class="section" data-category="admin">
+      <div class="section-head"><h2>Academic Resources &amp; Administration</h2><span>Teachers, Exams &amp; HR</span></div>
+      <div class="grid">
+        <a class="card" href="https://eshikshakosh.bihar.gov.in/login" target="_blank" rel="noopener" data-tags="eshikshakosh attendance leave teacher login ई-शिक्षाकोष उपस्थिति">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🔑</span><span class="title">e-Shikshakosh</span><span class="status-badge">Daily</span></div>
+          <span class="desc">Teacher attendance, leave &amp; school administration</span>
+        </a>
+        <a class="card" href="https://hrms.bihar.gov.in/" target="_blank" rel="noopener" data-tags="hrms salary slip service book वेतन पे स्लिप">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🧑‍💼</span><span class="title">HRMS Bihar</span></div>
+          <span class="desc">State employee salary, PRAN &amp; service portal</span>
+        </a>
+        <a class="card" href="https://bsebstet.org/" target="_blank" rel="noopener" data-tags="stet paper 1 paper 2 admit card result एसटीईटी शिक्षक पात्रता">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📝</span><span class="title">Bihar STET Portal</span><span class="status-badge">Active</span></div>
+          <span class="desc">Secondary Teacher Eligibility Test (Paper I &amp; II)</span>
+        </a>
+        <a class="card" href="https://www.bsebsakshamta.com/" target="_blank" rel="noopener" data-tags="sakshamta pariksha niyojit teacher competency सक्षमता परीक्षा">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏅</span><span class="title">Sakshamta Pariksha</span></div>
+          <span class="desc">BSEB Competency Test for local body teachers</span>
+        </a>
+        <a class="card" href="https://deledresult.biharboardonline.org/" target="_blank" rel="noopener" data-tags="deled exam result admit card डीएलएड रिजल्ट">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🎓</span><span class="title">BSEB D.El.Ed Portal</span><span class="status-badge">New</span></div>
+          <span class="desc">D.El.Ed 1st &amp; 2nd Year results &amp; notifications</span>
+        </a>
+        <a class="card" href="https://scert.bihar.gov.in/" target="_blank" rel="noopener" data-tags="scert training diet ptec curriculum एससीईआरटी प्रशिक्षण">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏛️</span><span class="title">SCERT Bihar</span></div>
+          <span class="desc">Teacher training, DIETs &amp; curriculum research</span>
+        </a>
+        <a class="card" href="https://gyandeep-rte.bihar.gov.in/" target="_blank" rel="noopener" data-tags="gyandeep rte 25% admission ज्ञानदीप आरटीई">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏫</span><span class="title">Gyandeep RTE</span></div>
+          <span class="desc">RTE school admission &amp; reimbursement portal</span>
+        </a>
+        <a class="card" href="https://bepclots.bihar.gov.in/" target="_blank" rel="noopener" data-tags="elots library digital books ई-लॉट्स">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📚</span><span class="title">e-LOTS Digital Library</span></div>
+          <span class="desc">BEPC digital library for teachers &amp; students</span>
+        </a>
+        <a class="card" href="https://play.google.com/store/apps/details?id=com.mintbook.bsdl.bsdl_mobile" target="_blank" rel="noopener" data-tags="vidyabodh app android">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📱</span><span class="title">Vidyabodh App</span></div>
+          <span class="desc">Install Bihar digital library mobile app</span>
+        </a>
+        <a class="card" href="https://ecoclubs.education.gov.in/" target="_blank" rel="noopener" data-tags="eco club mission life paryavaran इको क्लब">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🌱</span><span class="title">Eco Club Portal</span></div>
+          <span class="desc">School environment education &amp; Mission LiFE reports</span>
+        </a>
+        <a class="card" href="https://shvr.education.gov.in/" target="_blank" rel="noopener" data-tags="shvr swachh vidyalaya rating स्वच्छ विद्यालय">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🕒</span><span class="title">Swachh Evam Harit Vidyalaya</span></div>
+          <span class="desc">School hygiene, green practices &amp; SHVR rating</span>
+        </a>
+        <a class="card" href="https://sahyog.bihar.gov.in/Sahyog/ComplaintRegistration.aspx" target="_blank" rel="noopener" data-tags="sahyog grievance complaint सहयोग शिकायत">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">📢</span><span class="title">Sahyog Grievance Portal</span></div>
+          <span class="desc">Education department public grievance redressal</span>
+        </a>
+      </div>
+    </section>
 
-/* ---------- 2. CATEGORY FILTER CHIPS ---------- */
-(function filterModule(){
-  const chips = document.querySelectorAll('.chip');
-  const sections = document.querySelectorAll('.section');
+    <!-- 5. UDISE+ MANAGEMENT MODULES -->
+    <section class="section" data-category="udise">
+      <div class="section-head"><h2>UDISE+ Management Modules</h2><span>School data systems</span></div>
+      <div class="grid">
+        <a class="card" href="https://sdms.udiseplus.gov.in/p0/v1/login?state-id=110" target="_blank" rel="noopener" data-tags="udise student module progression apaar id यूडायस छात्र मॉड्यूल">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🧑‍🎓</span><span class="title">Students Module (Bihar)</span><span class="status-badge">Active</span></div>
+          <span class="desc">Bihar SDMS student progression &amp; APAAR ID</span>
+        </a>
+        <a class="card" href="https://udiseplus.gov.in/moe_udise/#/login" target="_blank" rel="noopener" data-tags="udise profile facilities DCF यूडायस प्रोफाइल">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🧱</span><span class="title">Profile &amp; Facilities</span></div>
+          <span class="desc">UDISE+ school infrastructure &amp; DCF module</span>
+        </a>
+        <a class="card" href="https://udiseplus.gov.in/udiseteacher/" target="_blank" rel="noopener" data-tags="udise teacher module यूडायस शिक्षक">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">👨‍🏫</span><span class="title">Teacher Module</span></div>
+          <span class="desc">UDISE+ school teacher records update</span>
+        </a>
+        <a class="card" href="https://udiseplus.gov.in/ud/home?loginId=1" target="_blank" rel="noopener" data-tags="udise school directory code search">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🏫</span><span class="title">School Directory</span></div>
+          <span class="desc">UDISE+ directory &amp; user management</span>
+        </a>
+        <a class="card" href="https://kys.udiseplus.gov.in/#/home" target="_blank" rel="noopener" data-tags="know your school kys report card">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🔍</span><span class="title">Know Your School (KYS)</span></div>
+          <span class="desc">Public school lookup by UDISE code or name</span>
+        </a>
+        <a class="card" href="https://schoolgis.nic.in/" target="_blank" rel="noopener" data-tags="gis map school location">
+          <button class="pin" aria-label="Pin this link">☆</button>
+          <div class="top-row"><span class="emoji">🗺️</span><span class="title">School Geo Portal</span></div>
+          <span class="desc">NIC map-based school GIS locator</span>
+        </a>
+      </div>
+    </section>
 
-  chips.forEach(chip => {
-    chip.addEventListener('click', function(){
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const filter = chip.dataset.filter;
+    <div class="empty-state" id="emptyState">
+      <p>No links match your search. Try a different keyword.</p>
+    </div>
 
-      sections.forEach(section => {
-        const match = (filter === 'all' || section.dataset.category === filter);
-        section.classList.toggle('hidden', !match);
+    <!-- PROFILE + SUPPORT -->
+    <div class="people-section">
+      <section class="support-card">
+        <div class="support-grid">
+          <div>
+            <div class="qr-wrap"><div id="qrcode"></div></div>
+            <div class="qr-caption">SCAN TO SUPPORT</div>
+          </div>
+          <div>
+            <div class="support-title">❤️ Contribution</div>
+            <p class="support-text">
+              इस मंच को निरंतर चलाने और बेहतर बनाने के लिए आपके सहयोग की आवश्यकता है।
+              आप QR कोड के माध्यम से योगदान दे सकते हैं। आपका हर समर्थन हमारे लिए अमूल्य है।
+            </p>
+            <p class="thanks">धन्यवाद! 🙏</p>
+            <a class="upi-btn" id="upiPayBtn" href="upi://pay?pa=ashishkumarsingh9-1%40oksbi&amp;pn=BSEB_Portals&amp;cu=INR">Pay via UPI Link 🔗</a>
+            <div class="upi-id-row">
+              <code id="upiIdText">ashishkumarsingh9-1@oksbi</code>
+              <button class="copy-btn" id="copyUpiBtn">Copy</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Independent resource directory of publicly available Bihar Board (BSEB) links · Not an official government site
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    (function themeModule(){
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const STORAGE_KEY = 'bseb-hub-theme';
+
+      function apply(theme){
+        if (theme === 'dark' || theme === 'light'){
+          root.setAttribute('data-theme', theme);
+        } else {
+          root.removeAttribute('data-theme');
+        }
+        btn.textContent = (root.getAttribute('data-theme') === 'dark' ||
+          (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches))
+          ? '☀️' : '🌙';
+      }
+
+      let saved = null;
+      try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
+      apply(saved);
+
+      btn.addEventListener('click', function(){
+        const current = root.getAttribute('data-theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
       });
+    })();
 
-      // Re-run search so filter + search combine correctly
-      runSearch();
-    });
-  });
-})();
+    // Filter Chips
+    (function filterModule(){
+      const chips = document.querySelectorAll('.chip');
+      const sections = document.querySelectorAll('.section');
 
-/* ---------- 3. LIVE SEARCH (Matches Title, Description & Hindi/Acronym data-tags) ---------- */
-const searchInput = document.getElementById('searchInput');
-const emptyState = document.getElementById('emptyState');
+      chips.forEach(chip => {
+        chip.addEventListener('click', function(){
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const filter = chip.dataset.filter;
 
-function runSearch(){
-  const query = searchInput.value.trim().toLowerCase();
-  let anyVisible = false;
+          sections.forEach(section => {
+            const match = (filter === 'all' || section.dataset.category === filter);
+            section.classList.toggle('hidden', !match);
+          });
+          runSearch();
+        });
+      });
+    })();
 
-  document.querySelectorAll('.section:not(.hidden)').forEach(section => {
-    let sectionHasMatch = false;
-    section.querySelectorAll('.card').forEach(card => {
-      const text = (card.textContent + ' ' + (card.dataset.tags || '')).toLowerCase();
-      const matches = text.includes(query);
-      card.classList.toggle('hidden', !matches);
-      if (matches) sectionHasMatch = true;
-    });
-    // Hide whole section only for search purposes, without permanently
-    // overriding the category filter's hidden state
-    if (!section.classList.contains('hidden')) {
-      section.style.display = sectionHasMatch ? '' : 'none';
-      if (sectionHasMatch) anyVisible = true;
+    // Search Engine
+    const searchInput = document.getElementById('searchInput');
+    const emptyState = document.getElementById('emptyState');
+
+    function runSearch(){
+      const query = searchInput.value.trim().toLowerCase();
+      let anyVisible = false;
+
+      document.querySelectorAll('.section:not(.hidden)').forEach(section => {
+        let sectionHasMatch = false;
+        section.querySelectorAll('.card').forEach(card => {
+          const text = (card.textContent + ' ' + (card.dataset.tags || '')).toLowerCase();
+          const matches = text.includes(query);
+          card.classList.toggle('hidden', !matches);
+          if (matches) sectionHasMatch = true;
+        });
+        if (!section.classList.contains('hidden')) {
+          section.style.display = sectionHasMatch ? '' : 'none';
+          if (sectionHasMatch) anyVisible = true;
+        }
+      });
+      emptyState.classList.toggle('show', !anyVisible);
     }
-  });
+    searchInput.addEventListener('input', runSearch);
 
-  emptyState.classList.toggle('show', !anyVisible);
-}
-searchInput.addEventListener('input', runSearch);
+    // Pinning & Sharing
+    (function pinAndShareModule(){
+      const STORAGE_KEY = 'bseb-hub-pins';
+      const pinnedBar = document.getElementById('pinnedBar');
+      const pinnedGrid = document.getElementById('pinnedGrid');
 
-/* ---------- 4. PIN / FAVORITES + WHATSAPP SHARE ---------- */
-(function pinAndShareModule(){
-  const STORAGE_KEY = 'bseb-hub-pins';
-  const pinnedBar = document.getElementById('pinnedBar');
-  const pinnedGrid = document.getElementById('pinnedGrid');
+      function getPins(){
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e){ return []; }
+      }
+      function savePins(pins){
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(pins)); } catch(e){}
+      }
 
-  function getPins(){
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch(e){ return []; }
-  }
-  function savePins(pins){
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(pins)); }
-    catch(e){ /* storage unavailable, ignore silently */ }
-  }
+      function refreshPinnedBar(){
+        const pins = getPins();
+        pinnedGrid.innerHTML = '';
+        pinnedBar.classList.toggle('show', pins.length > 0);
 
-  function refreshPinnedBar(){
-    const pins = getPins();
-    pinnedGrid.innerHTML = '';
-    pinnedBar.classList.toggle('show', pins.length > 0);
-
-    pins.forEach(pin => {
-      const a = document.createElement('a');
-      a.className = 'card';
-      a.href = pin.href;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.innerHTML =
-        '<div class="top-row"><span class="emoji">' + pin.emoji + '</span>' +
-        '<span class="title">' + pin.title + '</span></div>';
-      pinnedGrid.appendChild(a);
-    });
-  }
-
-  function syncButtonStates(){
-    const pins = getPins();
-    document.querySelectorAll('.card .pin').forEach(btn => {
-      const card = btn.closest('.card');
-      const isPinned = pins.some(p => p.href === card.href);
-      btn.textContent = isPinned ? '★' : '☆';
-      btn.classList.toggle('pinned', isPinned);
-    });
-  }
-
-  // Inject a 1-tap WhatsApp share button next to every pin button
-  document.querySelectorAll('.section .card').forEach(card => {
-    const shareBtn = document.createElement('button');
-    shareBtn.className = 'share-btn';
-    shareBtn.title = 'Share on WhatsApp';
-    shareBtn.setAttribute('aria-label', 'Share link on WhatsApp');
-    shareBtn.textContent = '📤';
-    shareBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      const title = card.querySelector('.title').textContent;
-      const desc = card.querySelector('.desc') ? card.querySelector('.desc').textContent : '';
-      const msg = `📌 *${title}* (${desc})\n🔗 ${card.href}\n— via https://bsebwala.in`;
-      window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-    });
-    card.appendChild(shareBtn);
-  });
-
-  document.querySelectorAll('.card .pin').forEach(btn => {
-    btn.addEventListener('click', function(e){
-      e.preventDefault();   // don't follow the link when pinning
-      e.stopPropagation();
-      const card = btn.closest('.card');
-      let pins = getPins();
-      const exists = pins.some(p => p.href === card.href);
-
-      if (exists){
-        pins = pins.filter(p => p.href !== card.href);
-      } else {
-        pins.push({
-          href: card.href,
-          title: card.querySelector('.title').textContent,
-          emoji: card.querySelector('.emoji').textContent
+        pins.forEach(pin => {
+          const a = document.createElement('a');
+          a.className = 'card';
+          a.href = pin.href;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.innerHTML = '<div class="top-row"><span class="emoji">' + pin.emoji + '</span>' +
+            '<span class="title">' + pin.title + '</span></div>';
+          pinnedGrid.appendChild(a);
         });
       }
-      savePins(pins);
+
+      function syncButtonStates(){
+        const pins = getPins();
+        document.querySelectorAll('.card .pin').forEach(btn => {
+          const card = btn.closest('.card');
+          const isPinned = pins.some(p => p.href === card.href);
+          btn.textContent = isPinned ? '★' : '☆';
+          btn.classList.toggle('pinned', isPinned);
+        });
+      }
+
+      document.querySelectorAll('.section .card').forEach(card => {
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'share-btn';
+        shareBtn.title = 'Share on WhatsApp';
+        shareBtn.setAttribute('aria-label', 'Share link on WhatsApp');
+        shareBtn.textContent = '📤';
+        shareBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          const title = card.querySelector('.title').textContent;
+          const desc = card.querySelector('.desc') ? card.querySelector('.desc').textContent : '';
+          const msg = `📌 *${title}* (${desc})\n🔗 ${card.href}\n— via https://bsebwala.in`;
+          window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+        });
+        card.appendChild(shareBtn);
+      });
+
+      document.querySelectorAll('.card .pin').forEach(btn => {
+        btn.addEventListener('click', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          const card = btn.closest('.card');
+          let pins = getPins();
+          const exists = pins.some(p => p.href === card.href);
+
+          if (exists){
+            pins = pins.filter(p => p.href !== card.href);
+          } else {
+            pins.push({
+              href: card.href,
+              title: card.querySelector('.title').textContent,
+              emoji: card.querySelector('.emoji').textContent
+            });
+          }
+          savePins(pins);
+          refreshPinnedBar();
+          syncButtonStates();
+          refreshStats();
+        });
+      });
+
       refreshPinnedBar();
       syncButtonStates();
-      refreshStats();
-    });
-  });
+    })();
 
-  refreshPinnedBar();
-  syncButtonStates();
-})();
+    // Live Stats
+    function refreshStats(){
+      document.getElementById('statTotal').textContent = document.querySelectorAll('.section .card').length;
+      document.getElementById('statCats').textContent = document.querySelectorAll('.section').length;
+      let pinCount = 0;
+      try { pinCount = (JSON.parse(localStorage.getItem('bseb-hub-pins')) || []).length; } catch(e){}
+      document.getElementById('statPins').textContent = pinCount;
+    }
+    refreshStats();
 
-/* ---------- 5. LIVE STATS (fills the hero panel; pin count kept in sync by pin module) ---------- */
-function refreshStats(){
-  document.getElementById('statTotal').textContent = document.querySelectorAll('.section .card').length;
-  document.getElementById('statCats').textContent = document.querySelectorAll('.section').length;
-  let pinCount = 0;
-  try { pinCount = (JSON.parse(localStorage.getItem('bseb-hub-pins')) || []).length; } catch(e){}
-  document.getElementById('statPins').textContent = pinCount;
-}
-refreshStats();
+    // Support QR
+    (function supportCardModule(){
+      const UPI_CONFIG = {
+        payeeAddress: 'ashishkumarsingh9-1@oksbi',
+        payeeName: 'BSEB_Portals',
+        currency: 'INR'
+      };
+      const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_CONFIG.payeeAddress)}&pn=${encodeURIComponent(UPI_CONFIG.payeeName)}&cu=${UPI_CONFIG.currency}`;
 
-/* ---------- 6. SUPPORT CARD — live QR code, UPI link, copy button ---------- */
-(function supportCardModule(){
-  // Edit your UPI details in this one place
-  const UPI_CONFIG = {
-    payeeAddress: 'ashishkumarsingh9-1@oksbi', // pa=
-    payeeName:    'BSEB_Portals',              // pn=
-    currency:     'INR'                        // cu=
-  };
-  const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_CONFIG.payeeAddress)}` +
-                  `&pn=${encodeURIComponent(UPI_CONFIG.payeeName)}` +
-                  `&cu=${UPI_CONFIG.currency}`;
-
-  // Draw the real, scannable QR code client-side
-  if (typeof QRCode !== 'undefined') {
-    new QRCode(document.getElementById('qrcode'), {
-      text: upiLink, width: 188, height: 188,
-      colorDark: '#241A38', colorLight: '#FFFFFF',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-  }
-
-  document.getElementById('upiPayBtn').setAttribute('href', upiLink);
-
-  document.getElementById('copyUpiBtn').addEventListener('click', function(){
-    const text = document.getElementById('upiIdText').textContent;
-    const btn = this;
-    navigator.clipboard.writeText(text).then(function(){
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
-    }).catch(function(){ /* clipboard unavailable — fail silently */ });
-  });
-})();
-
-/* ---------- 7. ONE-TIME SCROLL REVEAL (single deliberate motion per section) ---------- */
-(function revealModule(){
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        io.unobserve(entry.target); // only ever animate once per section
+      if (typeof QRCode !== 'undefined') {
+        new QRCode(document.getElementById('qrcode'), {
+          text: upiLink, width: 188, height: 188,
+          colorDark: '#241A38', colorLight: '#FFFFFF',
+          correctLevel: QRCode.CorrectLevel.M
+        });
       }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.section').forEach(section => io.observe(section));
-})();
 
-/* ---------- 8. VISIT LOGGER (IP, total fetches, last fetch time → Google Sheet) ---------- */
-(function visitLogger(){
-  const LOG_URL = 'https://script.google.com/macros/s/AKfycbxS5MNYlktRkIZq9pt7X9r8wJt-3GInYjtDNL4qEBymaMGE9rTjUXej7YlUmkC94QdPcw/exec';
-  if (!LOG_URL || LOG_URL.indexOf('PASTE_') === 0) return;
-
-  fetch('https://api.ipify.org?format=json')
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if (!d || !d.ip) return;
-      // no-cors + form-encoded body = simple request, works with Apps Script without CORS errors
-      return fetch(LOG_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams({ ip: d.ip })
+      document.getElementById('upiPayBtn').setAttribute('href', upiLink);
+      document.getElementById('copyUpiBtn').addEventListener('click', function(){
+        const text = document.getElementById('upiIdText').textContent;
+        const btn = this;
+        navigator.clipboard.writeText(text).then(function(){
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+        }).catch(function(){});
       });
-    })
-    .catch(function(){ /* logging must never break the page */ });
-})();
+    })();
 
-</script>
+    // Visit Logger
+    (function visitLogger(){
+      const LOG_URL = 'https://script.google.com/macros/s/AKfycbxS5MNYlktRkIZq9pt7X9r8wJt-3GInYjtDNL4qEBymaMGE9rTjUXej7YlUmkC94QdPcw/exec';
+      if (!LOG_URL || LOG_URL.indexOf('PASTE_') === 0) return;
+
+      fetch('https://api.ipify.org?format=json')
+        .then(r => r.json())
+        .then(d => {
+          if (!d || !d.ip) return;
+          return fetch(LOG_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: new URLSearchParams({ ip: d.ip })
+          });
+        }).catch(() => {});
+    })();
+  </script>
 </body>
 </html>
