@@ -135,7 +135,9 @@ header.site, header.site-header {
   border-bottom: 1px solid var(--border);
 }
 .header-inner {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  display: flex; 
+  align-items: center; 
+  gap: 16px;
   height: var(--header-h);
 }
 .brand, .site-brand {
@@ -152,8 +154,16 @@ header.site, header.site-header {
   flex-shrink: 0;
 }
 .main-nav {
-  display: flex; align-items: center; gap: 18px; margin-left: 10px;
+  display: flex; 
+  align-items: center; 
+  gap: 22px; 
+  margin-left: 24px;
 }
+
+.search-box, .header-actions, .header-right {
+  margin-left: auto;
+}
+
 .main-nav a {
   text-decoration: none; color: var(--text-muted);
   font-weight: 600; font-size: 0.95rem; transition: color 0.15s ease;
