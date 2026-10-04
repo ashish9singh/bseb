@@ -202,15 +202,15 @@
             }[tag] || tag));
         }
 
-        // Exact UTC date and time formatter
+        // IST date and time formatter
         function formatDateTime(dateInput) {
             if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
             const d = new Date(dateInput);
             if (isNaN(d.getTime())) return dateInput;
 
             return d.toLocaleString(currentLang === 'hi' ? 'hi-IN' : 'en-US', {
-                timeZone: 'UTC',
-                timeZoneName: 'short',
+                timeZone: 'Asia/Kolkata', // Automatically converts UTC to IST (+5:30)
+                timeZoneName: 'short',    // Adds the "IST" label
                 month: 'short', 
                 day: 'numeric', 
                 year: 'numeric',
