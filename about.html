@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Ashish Kumar Singh | Educator, IT Architect & Creative Soul</title>
-    <meta name="description" content="I am an Indian soul with a deep love for words, light, and humanity. Bridging the gap between classroom pedagogy and AI-driven technology.">
+    <meta name="description" content="I bridge the gap between traditional classroom pedagogy and modern automation, building digital solutions that give educators their time back.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +13,16 @@
 
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Layout Tweak: Minimizing space between Profile Pic and Text -->
+    <style>
+        @media (min-width: 768px) {
+            .hero-profile { gap: 32px !important; }
+        }
+    </style>
 </head>
 <body>
 
@@ -52,48 +62,53 @@
                 <h1>Ashish K. Singh</h1>
                 <div class="tagline">Educator | IT Architect | Creative Soul</div>
                 
-                <p class="quote">"I am an Indian soul with a deep love for words, light, and humanity. To me, programming is a creative art—a delicate balance of structure and soul."</p>
+                <p class="quote">"To me, programming is a creative art—a delicate balance of structure, logic, and human empathy."</p>
                 
-                <p>Guided by compassion, integrity, and the discipline of an officer, I believe in lifting others as I grow. While many view technology and human emotion as two separate worlds, I have spent the last 8+ years proving they belong together by using tech to humanize and elevate education.</p>
+                <p>I bridge the gap between traditional classroom pedagogy and modern automation. Backed by advanced IT degrees and specialized AI training, my mission is simple: use technology to give educators their time back.</p>
                 
-                <p>Backed by advanced degrees in Computer Applications (BCA & MCA) and specialized training from Intel and the CBSE, I bridge the gap between traditional classroom pedagogy and AI-driven technology. From mentoring students in AIoT and Cyber Safety to establishing modern computer labs, my mission is to build automated digital solutions that simplify everyday work.</p>
+                <p>From establishing foundational school computer labs to building smartphone-based attendance and automated salary systems, I architect digital solutions that turn administrative burdens into single-click realities.</p>
             </div>
         </section>
 
         <!-- 2x2 GRID FEATURES -->
         <section class="grid grid-features" style="margin-bottom: 60px;">
             <div class="card" style="padding: 30px;">
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">Strategic AI & EdTech Innovation</h3>
-                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">As a specialist trained by Intel and CBSE, I focus on Prompt Engineering, AIoT, and forward-thinking curriculum design. My technical toolkit includes professional certifications in Google Gemini and Agentic AI Development, alongside hands-on expertise in building applied RAG Assistants and OpenCV computer vision systems.</p>
+                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">AI & EdTech Innovation</h3>
+                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">Certified in Google Gemini, Agentic AI, and advanced Microsoft courses, my toolkit spans applied RAG Assistants and OpenCV computer vision. I design curricula that seamlessly integrate AI into everyday classrooms.</p>
             </div>
             
             <div class="card" style="padding: 30px;">
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">Disciplined, Mission-Driven Leadership</h3>
-                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">Holding an NCC ‘C’ Certificate instills the discipline, clear communication, and integrity of an officer into my daily work. This leadership ethos drives my active engagement as a Microsoft Innovative Educator Expert (MIEE) and a contributor to SWAYAM Plus.</p>
+                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">The IT Architect</h3>
+                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">I build robust Python and Google Apps Script solutions that reduce hours of complex administration to a single click, deploying automated workflows for exam results, salaries, and daily attendance.</p>
             </div>
 
             <div class="card" style="padding: 30px;">
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">The IT Architect & Creative Poet</h3>
-                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">I find harmony in contrasts. I write poetry and blogs that reflect life's unspoken beauty, while architecting robust Python, Google Apps Script, and Excel/Power Query solutions that reduce complex administrative tasks to a single click.</p>
+                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">Disciplined Leadership</h3>
+                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">Grounded in the integrity of an NCC ‘C’ Certificate, my leadership is driven by collaboration. This ethos fuels my role as a Microsoft Innovative Educator Expert (MIEE) and my active contributions to the Synergy educational framework.</p>
             </div>
 
             <div class="card" style="padding: 30px;">
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">Books, Badminton & The Lens</h3>
-                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">Books are my refuge, continuously shaping how I see and serve the world. When I step away from the screen, you’ll find me competing on the badminton court, exploring the open road on long motorcycle rides, or capturing sunsets, smiles, and stories through <em>Ashish’s Lens</em>.</p>
+                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.3rem;">The Explorer & Poet</h3>
+                <p style="color: var(--text-muted); font-size: 0.98rem; margin: 0;">I find harmony in contrasts. Between writing poetry, capturing life through <em>Ashish’s Lens</em>, and embarking on cross-country rail and motorcycle journeys, I stay grounded. Off-screen, you’ll find me on the badminton court or deep into a new memoir.</p>
             </div>
         </section>
 
         <!-- HIGHLIGHT: SIMPLY DIFFERENT -->
         <section class="highlight-section">
             <h2>Lifting Others as I Grow: The “S!mply D!fferent” Portal</h2>
-            <p>True technical mastery is measured by the people it uplifts. To serve the educational community, I developed <strong>S!mply D!fferent</strong>—a unified digital gateway for BSEB teachers and students.</p>
-            <p>This platform offers free web utilities for e-Shikshakosh DCF generation, automated Bonafide Application Forms, bilingual Cyber Safety manuals, Computer Science syllabi, and ready-to-use administrative and exam result templates.</p>
+            <p style="margin-bottom: 24px;">True technical mastery is measured by the people it uplifts. To serve the educational community, I developed this unified digital gateway for BSEB teachers and students, providing free access to:</p>
+            
+            <ul style="text-align: left; max-width: 600px; margin: 0 auto 30px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;">
+                <li><strong>Automated Utilities:</strong> e-Shikshakosh DCF generation and 1-click Bonafide Forms.</li>
+                <li><strong>Curated Academics:</strong> Bilingual Cyber Safety manuals and Computer Science syllabi.</li>
+                <li><strong>Office Templates:</strong> Ready-to-use administrative and evaluation Excel formats.</li>
+            </ul>
         </section>
 
         <!-- CTA & CONTACT -->
         <section class="cta-box">
             <h2>IT Support • Digital Services • Custom Solutions</h2>
-            <p>Need custom IT solutions, automation, or ready-to-use templates? Whether you require technical support, AI & EdTech workshops, or bespoke automated tools to streamline your school or office workflows, I am here to help.</p>
+            <p>Whether you require technical support, AI & EdTech workshops, or bespoke automated tools to streamline your school workflows, I am here to help.</p>
             
             <a href="mailto:Ashishkumarsingh9@gmail.com" class="btn-primary" style="margin-bottom: 30px;">✉️ Request IT Support / Templates</a>
             
@@ -103,9 +118,35 @@
                 <a href="https://www.linkedin.com/in/ashish9singh/" class="link-btn" target="_blank" rel="noopener">Connect on LinkedIn</a>
             </div>
         </section>
+
+        <!-- Profile + Support Component -->
+        <div class="people-section">
+            <section class="support-card">
+                <div class="support-grid">
+                    <div>
+                        <div class="qr-wrap"><div id="qrcode"></div></div>
+                        <div class="qr-caption">SCAN TO SUPPORT</div>
+                    </div>
+                    <div>
+                        <div class="support-title">❤️ Contribution</div>
+                        <p class="support-text">
+                            इस मंच को निरंतर चलाने और बेहतर बनाने के लिए आपके सहयोग की आवश्यकता है।
+                            आप QR कोड के माध्यम से योगदान दे सकते हैं। आपका हर समर्थन हमारे लिए अमूल्य है।
+                        </p>
+                        <p class="thanks">धन्यवाद! 🙏</p>
+                        <a class="upi-btn" id="upiPayBtn" href="upi://pay?pa=ashishkumarsingh9-1%40oksbi&amp;pn=BSEB_Portals&amp;cu=INR">Pay via UPI Link 🔗</a>
+                        <div class="upi-id-row">
+                            <code id="upiIdText">ashishkumarsingh9-1@oksbi</code>
+                            <button class="copy-btn" id="copyUpiBtn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script>
+        // Theme Toggle Engine
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
@@ -135,6 +176,36 @@
             });
         })();
 
+        // Support QR Code Generation
+        (function supportCardModule(){
+            const UPI_CONFIG = {
+                payeeAddress: 'ashishkumarsingh9-1@oksbi',
+                payeeName: 'BSEB_Portals',
+                currency: 'INR'
+            };
+            const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_CONFIG.payeeAddress)}&pn=${encodeURIComponent(UPI_CONFIG.payeeName)}&cu=${UPI_CONFIG.currency}`;
+
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(document.getElementById('qrcode'), {
+                    text: upiLink, width: 188, height: 188,
+                    colorDark: '#241A38', colorLight: '#FFFFFF',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+
+            document.getElementById('upiPayBtn').setAttribute('href', upiLink);
+            document.getElementById('copyUpiBtn').addEventListener('click', function(){
+                const text = document.getElementById('upiIdText').textContent;
+                const btn = this;
+                navigator.clipboard.writeText(text).then(function(){
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+                }).catch(function(){});
+            });
+        })();
+
+        // Image Protection
         document.addEventListener('contextmenu', event => {
             if(event.target.classList.contains('img-protection-overlay') || event.target.classList.contains('profile-img')) {
                 event.preventDefault();
