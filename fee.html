@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149" crossorigin="anonymous"></script>
-
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -18,673 +15,15 @@
   <title>विद्यालय एवं बोर्ड शुल्क विवरण (वर्ग 9-12) — BSEB Portal Hub</title>
   <meta name="description" content="बिहार सरकार शिक्षा विभाग आदेश ज्ञापांक 720 एवं बिहार बोर्ड (BSEB) के तहत कक्षा 9वीं व 11वीं पंजीयन, 10वीं व 12वीं परीक्षा फॉर्म एवं विद्यालय नामांकन शुल्क का पूर्ण विवरण।">
 
-  <!-- Google Fonts: Lora for headings, Inter for UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg:             #FDF6FF;
-      --surface:        #FFFFFF;
-      --surface-2:      #F4EBFF;
-      --border:         #E7D9F7;
-      --text:           #241A38;
-      --text-muted:     #6B5C82;
-      --primary:        #7B2FF7;
-      --primary-hover:  #6420D9;
-      --accent:         #FF6B9D;
-      --accent-soft:    #FFE1EC;
-      --danger:         #E4572E;
-      --radius:         12px;
-      --radius-lg:      16px;
-      --shadow:         0 2px 6px rgba(123,47,247,.08), 0 10px 26px rgba(123,47,247,.12);
-      --font-head:      'Lora', Georgia, serif;
-      --font-body:      'Inter', system-ui, -apple-system, sans-serif;
-      --header-h:       64px;
-      color-scheme: light;
-
-      --c-secondary:    #2E9BFF;
-      --c-senior:       #21C08B;
-      --c-scholarship:  #FFB020;
-      --c-docs:         #FF7A45;
-    }
-
-    :root[data-theme="dark"] {
-      --bg:             #15101F;
-      --surface:        #1F1830;
-      --surface-2:      #261D3A;
-      --border:         #382A54;
-      --text:           #F1ECFA;
-      --text-muted:     #B4A6CC;
-      --primary:        #B98CFF;
-      --primary-hover:  #CBA6FF;
-      --accent:         #FF9EC1;
-      --accent-soft:    #3A2038;
-      --danger:         #FF8A65;
-      --shadow:         0 2px 6px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
-      color-scheme: dark;
-
-      --c-secondary:    #5CB3FF;
-      --c-senior:       #4CD9A6;
-      --c-scholarship:  #FFC94D;
-      --c-docs:         #FF9A6B;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]):not([data-theme="dark"]) {
-        --bg:             #15101F;
-        --surface:        #1F1830;
-        --surface-2:      #261D3A;
-        --border:         #382A54;
-        --text:           #F1ECFA;
-        --text-muted:     #B4A6CC;
-        --primary:        #B98CFF;
-        --primary-hover:  #CBA6FF;
-        --accent:         #FF9EC1;
-        --accent-soft:    #3A2038;
-        --danger:         #FF8A65;
-        --shadow:         0 2px 6px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
-        color-scheme: dark;
-
-        --c-secondary:    #5CB3FF;
-        --c-senior:       #4CD9A6;
-        --c-scholarship:  #FFC94D;
-        --c-docs:         #FF9A6B;
-      }
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top,0px) + 12px);
-      -webkit-text-size-adjust: 100%;
-    }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.5;
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    h1, h2, h3, h4 { font-family: var(--font-head); margin: 0; line-height: 1.25; }
-    a { color: inherit; }
-    button { font-family: inherit; }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
-
-    /* =================== SITE HEADER & NAV =================== */
-    header.site {
-      position: sticky; top: 0; z-index: 50;
-      padding-top: env(safe-area-inset-top, 0px);
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: saturate(180%) blur(10px);
-      border-bottom: 1px solid var(--border);
-    }
-    .header-inner {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      height: var(--header-h);
-    }
-    .brand {
-      display: flex; align-items: center; gap: 10px;
-      font-family: var(--font-head); font-weight: 600; font-size: 1.05rem;
-      white-space: nowrap; text-decoration: none;
-    }
-    .brand .mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-body); font-weight: 700; font-size: .85rem;
-      box-shadow: 0 4px 10px rgba(123,47,247,.35);
-      flex-shrink: 0;
-    }
-
-    /* Main Menu Navigation */
-    .main-nav {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-left: 10px;
-    }
-    .main-nav a {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.15s ease;
-      position: relative;
-      padding-bottom: 6px;
-    }
-    .main-nav a:hover {
-      color: var(--primary);
-    }
-    
-    /* Specific Active Highlighter as shown in image */
-    .main-nav a.active {
-      color: var(--primary);
-      font-weight: 700;
-    }
-    .main-nav a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--primary);
-      border-radius: 999px;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .icon-btn {
-      border: 1px solid var(--border); background: var(--surface);
-      color: var(--text); width: 40px; height: 40px; border-radius: 999px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; flex: none; transition: background .15s ease;
-      font-size: 1rem;
-    }
-    .icon-btn:hover { background: var(--surface-2); }
-
-    /* =================== HERO SECTION =================== */
-    .hero {
-      padding: 32px 0 18px;
-      display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items: center;
-    }
-    .hero h1 {
-      font-size: clamp(1.6rem, 3.8vw, 2.4rem); font-weight: 700;
-      background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 60%, var(--c-senior) 100%);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .hero p { color: var(--text-muted); margin-top: 8px; font-size: 0.95rem; }
-    .hero-panel {
-      position: relative; border-radius: var(--radius-lg); padding: 2px;
-      background: conic-gradient(from 180deg, var(--primary), var(--accent), var(--c-senior), var(--primary));
-    }
-    .hero-panel-inner {
-      background: var(--surface); border-radius: calc(var(--radius-lg) - 2px);
-      padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;
-    }
-    .hero-panel .big-num {
-      font-family: var(--font-head); font-size: 2rem; font-weight: 700; line-height: 1;
-      color: var(--primary);
-    }
-    .hero-panel .big-label { font-size: .82rem; color: var(--text-muted); margin-top: 2px; }
-    .hero-panel .mini-row {
-      display: flex; gap: 16px; padding-top: 8px; border-top: 1px solid var(--border);
-    }
-    .hero-panel .mini-row div { font-size: .76rem; color: var(--text-muted); }
-    .hero-panel .mini-row strong { display: block; font-size: 1.05rem; color: var(--text); font-family: var(--font-head); }
-
-    .notice-bar {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 10px 14px; margin-bottom: 20px;
-      font-size: .83rem; color: var(--text);
-    }
-    .notice-pill {
-      background: var(--primary); color: #fff; font-weight: 700; font-size: .7rem;
-      padding: 2px 8px; border-radius: 999px; letter-spacing: .02em; text-transform: uppercase;
-      flex-shrink: 0;
-    }
-
-    /* Official Letter Download Badge */
-    .doc-link-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--surface-2); color: var(--primary);
-      border: 1px solid var(--border); padding: 6px 14px; border-radius: 999px;
-      font-size: .78rem; font-weight: 700; text-decoration: none; transition: all .15s ease;
-      white-space: nowrap;
-    }
-    .doc-link-btn:hover {
-      background: var(--primary); color: #fff;
-    }
-
-    /* Top Letter Download Banner */
-    .download-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 14px 18px; box-shadow: var(--shadow);
-      position: relative; overflow: hidden; margin-bottom: 22px;
-      display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
-    }
-    .download-card::before {
-      content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
-      background: linear-gradient(180deg, var(--c-docs), var(--accent));
-    }
-    .download-info { display: flex; align-items: center; gap: 12px; }
-    .pdf-badge-icon {
-      width: 42px; height: 42px; border-radius: 10px;
-      background: color-mix(in srgb, var(--c-docs) 15%, transparent);
-      color: var(--c-docs); display: flex; align-items: center; justify-content: center;
-      font-size: 1.35rem; flex: none;
-    }
-    .download-text h3 { font-size: .96rem; font-weight: 700; color: var(--text); }
-    .download-text p { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
-
-    /* Category Nav Tabs */
-    .category-nav {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .cat-tab-btn {
-      padding: 12px 14px;
-      border-radius: var(--radius);
-      border: 1.5px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-weight: 700;
-      font-size: 0.92rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.15s ease;
-      box-shadow: var(--shadow);
-      -webkit-tap-highlight-color: transparent;
-    }
-    .cat-tab-btn span.cat-sub {
-      font-size: 0.74rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-    .cat-tab-btn:hover {
-      border-color: var(--primary);
-    }
-    .cat-tab-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-      box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 30%, transparent);
-    }
-    .cat-tab-btn.active span.cat-sub {
-      color: #F4EBFF;
-    }
-
-    /* Tab Content Wrapper */
-    .tab-content-panel {
-      display: none;
-    }
-    .tab-content-panel.active {
-      display: block;
-    }
-
-    /* Secondary Sub-Tabs */
-    .sub-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .sub-tab-btn {
-      flex: 1;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .sub-tab-btn:hover {
-      border-color: var(--primary);
-    }
-    .sub-tab-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-      box-shadow: 0 3px 8px color-mix(in srgb, var(--primary) 25%, transparent);
-    }
-
-    /* Section Headings */
-    .section-head {
-      display: flex; align-items: baseline; justify-content: space-between;
-      gap: 12px; margin-bottom: 12px; border-bottom: 2px solid var(--primary);
-      padding-bottom: 8px; flex-wrap: wrap;
-    }
-    .section-head h2 { font-size: 1.18rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-    .section-head h2::before {
-      content: ''; width: 10px; height: 10px; border-radius: 50%;
-      background: var(--primary); flex: none;
-    }
-
-    /* Interactive Calculator Section */
-    .calculator-wrapper {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow);
-      position: relative; overflow: hidden; margin-bottom: 24px;
-    }
-    .calculator-wrapper::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, var(--c-secondary), var(--primary), var(--accent));
-    }
-    .calc-head { margin-bottom: 12px; }
-    .calc-head h2 { font-size: 1.22rem; color: var(--text); }
-
-    /* Class Tab Selector */
-    .tab-selector {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
-    }
-    .tab-btn {
-      flex: 1; min-width: 110px; padding: 9px 12px; border-radius: 8px;
-      border: 1.5px solid var(--border); background: var(--surface-2);
-      color: var(--text); font-weight: 600; font-size: 0.84rem; cursor: pointer;
-      text-align: center; transition: all 0.15s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .tab-btn:hover { border-color: var(--primary); }
-    .tab-btn.active {
-      background: var(--primary); color: #fff; border-color: var(--primary);
-      box-shadow: 0 3px 8px color-mix(in srgb, var(--primary) 30%, transparent);
-    }
-
-    .calc-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;
-    }
-    .calc-controls { display: flex; flex-direction: column; gap: 11px; }
-    .form-group label {
-      display: block; font-size: .84rem; font-weight: 600; margin-bottom: 4px; color: var(--text);
-    }
-    .form-select {
-      width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border);
-      background: var(--surface); color: var(--text); font-family: var(--font-body);
-      font-size: .88rem; outline: none; transition: border-color .15s;
-    }
-    .form-select:focus { border-color: var(--primary); }
-
-    .check-card {
-      display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px;
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: var(--radius); cursor: pointer; transition: background .15s;
-    }
-    .check-card:hover {
-      background: color-mix(in srgb, var(--surface-2) 75%, var(--primary) 25%);
-    }
-    .check-card input[type="checkbox"] {
-      margin-top: 3px; accent-color: var(--primary); width: 17px; height: 17px; cursor: pointer; flex-shrink: 0;
-    }
-    .check-card-text { font-size: .8rem; line-height: 1.4; color: var(--text-muted); }
-    .check-card-text strong { display: block; color: var(--text); font-size: .85rem; }
-
-    /* Live Slip (Full view, No Scroll) */
-    .calc-slip {
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 14px; display: flex;
-      flex-direction: column; gap: 10px;
-    }
-    .slip-total-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 10px 14px; text-align: center;
-      box-shadow: 0 2px 6px rgba(123,47,247,.05);
-    }
-    .slip-total-card .lbl { font-size: .74rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-    .slip-total-card .val {
-      font-family: var(--font-head); font-size: 2rem; font-weight: 700;
-      color: var(--primary); margin: 2px 0;
-    }
-    .slip-total-card .tag {
-      font-size: .72rem; font-weight: 600; padding: 3px 10px; border-radius: 999px;
-      background: var(--accent-soft); color: var(--accent); display: inline-block;
-    }
-
-    .funds-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    }
-    .fund-box {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 8px 10px; text-align: center;
-    }
-    .fund-box span { font-size: .72rem; color: var(--text-muted); font-weight: 600; display: block; }
-    .fund-box strong { font-size: 1.05rem; font-family: var(--font-head); color: var(--text); }
-
-    .slip-breakdown {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 8px 12px; font-size: .8rem;
-      max-height: none; overflow-y: visible;
-    }
-    .slip-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 4px 0; border-bottom: 1px dashed var(--border); gap: 8px;
-    }
-    .slip-item:last-child { border-bottom: none; }
-    .slip-item.waived { color: var(--text-muted); text-decoration: line-through; }
-    .slip-item.waived .fee-n { text-decoration: none; color: var(--c-senior); font-weight: 700; }
-    .slip-item .fee-n { white-space: nowrap; font-weight: 600; }
-
-    /* Tables & Search Toolbar */
-    .table-section { margin-bottom: 24px; }
-    .table-toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
-    }
-    .table-search {
-      position: relative; flex: 1; max-width: 280px;
-    }
-    .table-search input {
-      width: 100%; padding: 7px 12px 7px 32px; border-radius: 999px;
-      border: 1px solid var(--border); background: var(--surface);
-      color: var(--text); font-size: 0.82rem; outline: none;
-    }
-    .table-search input:focus { border-color: var(--primary); }
-    .table-search svg {
-      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
-      width: 14px; height: 14px; color: var(--text-muted);
-    }
-    .table-filters { display: flex; gap: 5px; flex-wrap: wrap; }
-    .tbl-filter-btn {
-      padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border);
-      background: var(--surface); color: var(--text-muted); font-size: 0.76rem; font-weight: 600;
-      cursor: pointer; transition: all 0.15s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .tbl-filter-btn.active {
-      background: var(--primary); color: #fff; border-color: var(--primary);
-    }
-
-    .table-container {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); overflow-x: auto; box-shadow: var(--shadow);
-      -webkit-overflow-scrolling: touch;
-    }
-    .styled-table {
-      width: 100%; border-collapse: collapse; font-size: .84rem; text-align: left;
-      min-width: 520px;
-    }
-    .styled-table th {
-      background: var(--surface-2); color: var(--text); padding: 10px 14px;
-      font-weight: 700; border-bottom: 1px solid var(--border); white-space: nowrap;
-    }
-    .styled-table td {
-      padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text);
-    }
-    .styled-table tr:last-child td { border-bottom: none; }
-    .styled-table tr:hover { background: color-mix(in srgb, var(--surface-2) 40%, transparent); }
-    .badge-tag {
-      font-size: .7rem; font-weight: 700; padding: 2px 7px; border-radius: 4px;
-      white-space: nowrap;
-    }
-    .tag-vikas { background: color-mix(in srgb, var(--c-secondary) 15%, transparent); color: var(--c-secondary); }
-    .tag-chhatra { background: color-mix(in srgb, var(--c-scholarship) 20%, transparent); color: #c47d00; }
-    .tag-abolished { background: color-mix(in srgb, var(--danger) 15%, transparent); color: var(--danger); text-decoration: line-through; }
-
-    /* Directives 2x2 Grid */
-    .rules-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .rule-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 14px 16px; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; gap: 4px; transition: transform .15s ease;
-    }
-    .rule-card::before {
-      content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 3px;
-      background: var(--primary);
-    }
-    .rule-card:hover { transform: translateY(-2px); }
-    .rule-card .r-icon { font-size: 1.15rem; line-height: 1; margin-bottom: 2px; }
-    .rule-card .r-title { font-weight: 700; font-size: .88rem; color: var(--text); }
-    .rule-card .r-desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
-
-    /* Abolished Charges */
-    .danger-alert-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 14px 18px; position: relative;
-      overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow);
-    }
-    .danger-alert-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--danger);
-    }
-    .danger-alert-card h3 {
-      color: var(--danger); font-size: .98rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
-    }
-    .danger-alert-card p {
-      color: var(--text-muted); font-size: .8rem; margin-bottom: 8px;
-    }
-    .pill-list { display: flex; flex-wrap: wrap; gap: 6px; }
-    .strike-pill {
-      background: color-mix(in srgb, var(--danger) 10%, transparent);
-      color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 20%, transparent);
-      font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border); padding: 22px 0;
-      color: var(--text-muted); font-size: .8rem; text-align: center;
-    }
-
-    /* =================== MOBILE RESPONSIVE TWEAKS =================== */
-    @media (max-width: 860px) {
-      .header-inner {
-        flex-wrap: wrap;
-        height: auto;
-        padding-top: 10px;
-        padding-bottom: 8px;
-      }
-      .main-nav {
-        order: 4;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 8px;
-        overflow-x: auto;
-        white-space: nowrap;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        padding-bottom: 4px;
-      }
-      .main-nav::-webkit-scrollbar { display: none; }
-    }
-
-    @media (max-width: 768px) {
-      .wrap { padding: 0 14px; }
-      
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 16px 0 12px;
-        gap: 14px;
-      }
-      .hero h1 {
-        font-size: 1.45rem;
-        line-height: 1.3;
-      }
-      .hero p {
-        font-size: 0.85rem;
-      }
-
-      .category-nav {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-      .cat-tab-btn {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 11px 16px;
-        font-size: 0.88rem;
-      }
-
-      .sub-tabs {
-        flex-direction: column;
-        gap: 6px;
-      }
-      .sub-tab-btn {
-        padding: 9px 12px;
-        font-size: 0.82rem;
-      }
-
-      .calc-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .tab-selector {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-      }
-      .tab-btn {
-        min-width: 0;
-        padding: 8px 10px;
-        font-size: 0.78rem;
-      }
-
-      .rules-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .download-card {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-      }
-      .download-card .doc-link-btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .section-head {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .section-head .doc-link-btn {
-        align-self: flex-start;
-      }
-
-      .table-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-      .table-search {
-        max-width: 100%;
-      }
-      .table-filters {
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding-bottom: 3px;
-      }
-    }
-  </style>
+  
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- =================== HEADER & NAVIGATION =================== -->
   <header class="site">
     <div class="wrap header-inner">
       <a href="https://bsebwala.in/" class="brand">
@@ -692,7 +31,6 @@
         <span>BSEB Portal Hub</span>
       </a>
 
-      <!-- Complete Navigation Menu with Active Highlight on Fee -->
       <nav class="main-nav">
         <a href="https://bsebwala.in/">Home</a>
         <a href="https://bsebwala.in/">Letter</a>
@@ -709,8 +47,6 @@
   </header>
 
   <main class="wrap">
-
-    <!-- =================== HERO =================== -->
     <section class="hero">
       <div>
         <h1>विद्यालय एवं बोर्ड शुल्क विवरण (वर्ग 9 से 12)</h1>
@@ -730,13 +66,11 @@
       </div>
     </section>
 
-    <!-- =================== NOTIFICATION BAR =================== -->
     <div class="notice-bar">
       <span class="notice-pill">Official Circular</span>
       <span>शिक्षा विभाग आदेश संख्या: <strong>09/विविध (शुल्क)-41/2021-720</strong> एवं बिहार विद्यालय परीक्षा समिति (BSEB) मार्गदर्शिका।</span>
     </div>
 
-    <!-- =================== TOP DOWNLOAD CARD =================== -->
     <div class="download-card">
       <div class="download-info">
         <div class="pdf-badge-icon">📄</div>
@@ -750,7 +84,6 @@
       </a>
     </div>
 
-    <!-- =================== MAIN TAB NAVIGATION =================== -->
     <nav class="category-nav" aria-label="Fee Sections">
       <button class="cat-tab-btn active" data-tab="tab-admission" onclick="switchCategory('tab-admission')">
         <span>🏫 नामांकन शुल्क (Admission Fee)</span>
@@ -766,12 +99,8 @@
       </button>
     </nav>
 
-    <!-- ==============================================================
-         TAB 1: ADMISSION FEE (कक्षा 9-12 नामांकन व विद्यालय शुल्क)
-         ============================================================== -->
+    <!-- TAB 1: ADMISSION -->
     <div class="tab-content-panel active" id="tab-admission">
-
-      <!-- Interactive Calculator for Admission & School Fee -->
       <div class="calculator-wrapper">
         <div class="calc-head">
           <h2>⚡ विद्यालय नामांकन एवं वार्षिक शुल्क गणक (Admission Fee Calculator)</h2>
@@ -813,7 +142,6 @@
             </label>
           </div>
 
-          <!-- Dynamic Output Slip -->
           <div class="calc-slip" id="feeSlip">
             <div class="slip-total-card">
               <div class="lbl">कुल देय नामांकन/वार्षिक शुल्क (Payable)</div>
@@ -832,14 +160,11 @@
               </div>
             </div>
 
-            <div class="slip-breakdown" id="feeItemsBreakdown">
-              <!-- Populated via JS -->
-            </div>
+            <div class="slip-breakdown" id="feeItemsBreakdown"></div>
           </div>
         </div>
       </div>
 
-      <!-- Abolished Charges -->
       <div class="danger-alert-card">
         <h3>🚫 पूरी तरह समाप्त किए गए शुल्क एवं जुर्माने (Abolished Charges)</h3>
         <p>शिक्षा विभाग ज्ञापांक 720 के निर्देशानुसार विद्यालयों द्वारा निम्नलिखित मदों में कोई शुल्क नहीं लिया जा सकता:</p>
@@ -852,7 +177,6 @@
         </div>
       </div>
 
-      <!-- Master Admission Fee Table -->
       <section class="table-section">
         <div class="section-head">
           <h2>मदवार नामांकन एवं विद्यालय शुल्क तालिका (Memo 720)</h2>
@@ -1002,7 +326,6 @@
         </div>
       </section>
 
-      <!-- Directives 2x2 Grid -->
       <div class="section-head">
         <h2>महत्वपूर्ण विभागीय निर्देश (Directives)</h2>
         <a href="admission-fee-order-720-21-12-21.pdf" target="_blank" rel="noopener" class="doc-link-btn">
@@ -1032,20 +355,15 @@
           <div class="r-desc">विकास कोष एवं छात्र कोष की ली गई राशि की स्पष्ट प्राप्ति रसीद छात्र को दी जाएगी तथा अंकेक्षण हेतु संधारित होगी।</div>
         </div>
       </div>
-
     </div>
 
-    <!-- ==============================================================
-         TAB 2: REGISTRATION FEE (कक्षा 9 एवं 11 बोर्ड पंजीयन शुल्क)
-         ============================================================== -->
+    <!-- TAB 2: REGISTRATION -->
     <div class="tab-content-panel" id="tab-registration">
-
       <div class="sub-tabs">
         <button class="sub-tab-btn active" data-sub="sub-reg-9" onclick="switchSubTab('reg', 'sub-reg-9')">कक्षा 9वीं पंजीयन शुल्क (Class 9 Registration)</button>
         <button class="sub-tab-btn" data-sub="sub-reg-11" onclick="switchSubTab('reg', 'sub-reg-11')">कक्षा 11वीं पंजीयन/सूचीकरण शुल्क (Class 11 Registration)</button>
       </div>
 
-      <!-- Class 9 Registration Table -->
       <div id="sub-reg-9" class="sub-tab-content">
         <div class="section-head">
           <h2>कक्षा 9वीं बिहार बोर्ड पंजीयन शुल्क (Class 9 Registration Fee Structure)</h2>
@@ -1120,7 +438,6 @@
         </div>
       </div>
 
-      <!-- Class 11 Registration Table -->
       <div id="sub-reg-11" class="sub-tab-content" style="display: none;">
         <div class="section-head">
           <h2>कक्षा 11वीं सूचीकरण/अनुमति शुल्क (Class 11 Registration / Permission Fee)</h2>
@@ -1190,20 +507,15 @@
           </table>
         </div>
       </div>
-
     </div>
 
-    <!-- ==============================================================
-         TAB 3: EXAM FORM FEE (कक्षा 10 एवं 12 बोर्ड परीक्षा फॉर्म शुल्क)
-         ============================================================== -->
+    <!-- TAB 3: EXAM FORM -->
     <div class="tab-content-panel" id="tab-examform">
-
       <div class="sub-tabs">
         <button class="sub-tab-btn active" data-sub="sub-exam-10" onclick="switchSubTab('exam', 'sub-exam-10')">कक्षा 10वीं मैट्रिक परीक्षा फॉर्म शुल्क (Matric Exam Form)</button>
         <button class="sub-tab-btn" data-sub="sub-exam-12" onclick="switchSubTab('exam', 'sub-exam-12')">कक्षा 12वीं इंटरमीडिएट परीक्षा फॉर्म शुल्क (Inter Exam Form)</button>
       </div>
 
-      <!-- Class 10 Exam Form Table -->
       <div id="sub-exam-10" class="sub-tab-content">
         <div class="section-head">
           <h2>कक्षा 10वीं वार्षिक माध्यमिक परीक्षा शुल्क (Class 10 Matric Exam Form Fee)</h2>
@@ -1288,7 +600,6 @@
         </div>
       </div>
 
-      <!-- Class 12 Exam Form Table -->
       <div id="sub-exam-12" class="sub-tab-content" style="display: none;">
         <div class="section-head">
           <h2>कक्षा 12वीं इन्टरमीडिएट वार्षिक परीक्षा शुल्क (Class 12 Inter Exam Form Fee)</h2>
@@ -1378,7 +689,6 @@
           </table>
         </div>
 
-        <!-- Category-wise Total Summary Table -->
         <div class="section-head" style="margin-top: 14px;">
           <h2>विभिन्न कोटि के परीक्षार्थियों के लिए कुल निर्धारित शुल्क विवरणी (Category-wise Summary)</h2>
         </div>
@@ -1433,7 +743,6 @@
           </table>
         </div>
       </div>
-
     </div>
 
   </main>
@@ -1444,9 +753,7 @@
     </div>
   </footer>
 
-  <!-- =================== SCRIPTS =================== -->
   <script>
-    /* Theme Toggle */
     (function themeModule(){
       const root = document.documentElement;
       const btn = document.getElementById('themeToggle');
@@ -1476,7 +783,6 @@
       });
     })();
 
-    /* Main Category Nav Switcher */
     function switchCategory(targetTabId) {
       document.querySelectorAll('.cat-tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === targetTabId);
@@ -1486,7 +792,6 @@
       });
     }
 
-    /* Sub-Tabs Switcher */
     function switchSubTab(group, targetSubId) {
       const container = (group === 'reg') ? document.getElementById('tab-registration') : document.getElementById('tab-examform');
       container.querySelectorAll('.sub-tab-btn').forEach(btn => {
@@ -1497,7 +802,6 @@
       });
     }
 
-    /* Class Tab Selector (Admission) */
     function selectClassTab(cls) {
       document.querySelectorAll('#classTabs .tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.class === cls);
@@ -1506,7 +810,6 @@
       updateCalc();
     }
 
-    /* Animated Counter */
     function animateCount(elem, target) {
       const current = parseInt(elem.innerText.replace('₹', '')) || 0;
       if (current === target) {
@@ -1526,7 +829,6 @@
       }, 15);
     }
 
-    /* Dynamic Fee Calculator Engine */
     function updateCalc() {
       const cls = document.getElementById('calcClass').value;
       const streamContainer = document.getElementById('streamContainer');
@@ -1652,7 +954,6 @@
       document.getElementById('feeItemsBreakdown').innerHTML = listHtml;
     }
 
-    /* Live Table Search & Fund Filtering */
     let currentFundFilter = 'all';
 
     function filterFund(fund) {
@@ -1676,7 +977,6 @@
       });
     }
 
-    // Initialize
     updateCalc();
   </script>
 </body>
