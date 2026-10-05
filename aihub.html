@@ -10,58 +10,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- 
-      ========================================================
-      CSS STYLESHEET 
-      (Copy everything below this line into style.css later)
-      ======================================================== 
-    -->
+    <!-- Master Stylesheet (Crucial for the main menu and global styles) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- AI Hub Specific Layout CSS -->
     <style>
-        /* --- 1. CSS VARIABLES (BSEBWala Theme) --- */
+        /* --- 1. CSS VARIABLES (BSEBWala Theme Extenstions) --- */
         :root {
-            --primary: #6366f1;       /* Indigo primary */
-            --primary-light: #818cf8; /* Lighter indigo for hover states */
-            --accent: #a855f7;        /* Purple accent */
-            --bg: #f8fafc;            /* Light gray background */
-            --surface: #ffffff;       /* Pure white cards */
-            --surface-2: #f1f5f9;     /* Slight gray for buttons */
-            --text: #1e293b;          /* Dark slate text */
-            --text-muted: #64748b;    /* Light slate text */
-            --border: #e2e8f0;        /* Soft borders */
-            
-            /* Shadows & Radii */
+            --primary-light: #818cf8;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
             --shadow-hover: 0 16px 32px -4px rgba(99, 102, 241, 0.15);
-            --radius-lg: 16px;
-            --radius-sm: 8px;
-            
-            /* Typography */
-            --font-head: 'Lora', serif;
-            --font-body: 'Inter', sans-serif;
         }
 
-        /* --- 2. GLOBAL RESET --- */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
-        body { 
-            font-family: var(--font-body); 
-            background: var(--bg); 
-            color: var(--text); 
-            line-height: 1.6;
-            padding: 30px 20px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- 3. PAGE HEADER --- */
+        /* --- 2. PAGE HEADER STYLES --- */
         .page-header { 
             text-align: center; 
             margin-bottom: 50px; 
-            padding-top: 20px;
+            padding-top: 40px;
         }
 
         .page-header h1 {
@@ -84,19 +50,19 @@
             font-weight: 500;
         }
 
-        /* --- 4. MAIN DASHBOARD GRID --- */
+        /* --- 3. MAIN DASHBOARD GRID --- */
         .dashboard { 
             width: 100%; 
             max-width: 1280px; 
             margin: 0 auto;
             display: grid; 
-            /* Auto-fits columns on desktop, stacks on mobile */
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
             gap: 28px; 
+            padding-bottom: 60px;
         }
 
-        /* --- 5. CATEGORY CARDS (SECTIONS) --- */
-        .section { 
+        /* --- 4. CATEGORY CARDS (SECTIONS) --- */
+        .ai-section { 
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
@@ -107,8 +73,7 @@
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
         }
 
-        /* Top Gradient Accent Line */
-        .section::before {
+        .ai-section::before {
             content: ''; 
             position: absolute; 
             top: 0; left: 0; right: 0; 
@@ -117,13 +82,13 @@
             opacity: 0.9;
         }
 
-        .section:hover {
+        .ai-section:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
             border-color: var(--primary-light);
         }
 
-        .section h2 { 
+        .ai-section h2 { 
             font-family: var(--font-head);
             font-size: 1.35rem; 
             font-weight: 700; 
@@ -134,21 +99,20 @@
             gap: 10px;
         }
 
-        /* --- 6. TOOLS GRID (INNER BUTTONS) --- */
+        /* --- 5. TOOLS GRID (INNER BUTTONS) --- */
         .links-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
             gap: 12px; 
         }
 
-        /* Make the 5th button span the full width elegantly */
-        .links-grid .btn:nth-child(5) { 
+        .links-grid .ai-btn:nth-child(5) { 
             grid-column: 1 / -1; 
             background: linear-gradient(145deg, var(--surface), var(--surface-2));
         }
 
-        /* --- 7. BUTTON STYLES --- */
-        .btn { 
+        /* --- 6. BUTTON STYLES --- */
+        .ai-btn { 
             background: var(--surface-2); 
             border: 1px solid var(--border); 
             border-radius: var(--radius-sm); 
@@ -164,7 +128,7 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .btn:hover { 
+        .ai-btn:hover { 
             background: var(--surface); 
             border-color: var(--primary);
             color: var(--primary);
@@ -172,8 +136,7 @@
             box-shadow: 0 6px 15px color-mix(in srgb, var(--primary) 20%, transparent);
         }
 
-        /* Button Subtext (Company/Type) */
-        .btn span { 
+        .ai-btn span { 
             font-size: 0.78rem; 
             color: var(--text-muted); 
             margin-top: 5px; 
@@ -182,142 +145,195 @@
             letter-spacing: 0.05em;
         }
 
-        /* --- 8. MOBILE RESPONSIVENESS --- */
+        /* --- 7. MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
-            body { padding: 15px; }
+            .page-header { padding-top: 20px; }
             .dashboard { gap: 20px; }
-            .section { padding: 20px; }
-            /* Keep 2 columns on mobile for compactness, 5th item spans full */
+            .ai-section { padding: 20px; }
             .links-grid { gap: 10px; }
         }
 
         @media (max-width: 400px) {
-            /* If screen is extremely small, stack buttons one by one */
             .links-grid { grid-template-columns: 1fr; }
-            .links-grid .btn:nth-child(5) { grid-column: auto; }
+            .links-grid .ai-btn:nth-child(5) { grid-column: auto; }
         }
     </style>
-    <!-- ======================================================== -->
 </head>
 <body>
 
-    <!-- Page Header -->
-    <header class="page-header">
+    <!-- Header Navigation with Shared Menu & Theme Toggle -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a href="https://bsebwala.in/" class="site-brand">
+                <span class="brand-logo">BB</span>
+                <span>BSEB Portal Hub</span>
+            </a>
+
+            <!-- Shared Portal Navigation Menu -->
+            <nav class="main-nav">
+                <a href="https://bsebwala.in/">Home</a>
+                <a href="https://bsebwala.in/">Letter</a>
+                <a href="fee.html">Fee</a>
+                <a href="news.html">News</a>
+                <a href="aihub.html" class="active">AIHub</a> <!-- 'active' class highlights this page -->
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <header class="page-header wrap">
         <h1>Ultimate AI Hub</h1>
         <p>A curated directory of the world's most powerful AI models, agents, and creation engines.</p>
     </header>
 
     <!-- Main Dashboard -->
-    <main class="dashboard">    
+    <main class="dashboard wrap">    
 
         <!-- Category 1: Core Conversational AI -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🧠 Core Intelligence & LLMs</h2>        
             <div class="links-grid">            
-                <a href="https://chatgpt.com" target="_blank" class="btn">ChatGPT <span>OpenAI</span></a>            
-                <a href="https://claude.ai" target="_blank" class="btn">Claude <span>Anthropic</span></a>            
-                <a href="https://gemini.google.com" target="_blank" class="btn">Gemini <span>Google</span></a>            
-                <a href="https://copilot.microsoft.com" target="_blank" class="btn">Copilot <span>Microsoft</span></a>            
-                <a href="https://deepseek.com" target="_blank" class="btn">DeepSeek <span>DeepSeek</span></a>        
+                <a href="https://chatgpt.com" target="_blank" class="ai-btn">ChatGPT <span>OpenAI</span></a>            
+                <a href="https://claude.ai" target="_blank" class="ai-btn">Claude <span>Anthropic</span></a>            
+                <a href="https://gemini.google.com" target="_blank" class="ai-btn">Gemini <span>Google</span></a>            
+                <a href="https://copilot.microsoft.com" target="_blank" class="ai-btn">Copilot <span>Microsoft</span></a>            
+                <a href="https://deepseek.com" target="_blank" class="ai-btn">DeepSeek <span>DeepSeek</span></a>        
             </div>    
         </section>
 
         <!-- Category 2: AI Coding & IDEs -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>💻 Code & App Generation</h2>        
             <div class="links-grid">            
-                <a href="https://cursor.com" target="_blank" class="btn">Cursor IDE <span>AI Native Code</span></a>            
-                <a href="https://codeium.com/windsurf" target="_blank" class="btn">Windsurf <span>Agentic IDE</span></a>            
-                <a href="https://v0.dev" target="_blank" class="btn">Vercel v0 <span>UI Generator</span></a>            
-                <a href="https://bolt.new" target="_blank" class="btn">Bolt.new <span>Full-Stack Sandbox</span></a>            
-                <a href="https://lovable.dev" target="_blank" class="btn">Lovable.dev <span>No-Code Web App</span></a>        
+                <a href="https://cursor.com" target="_blank" class="ai-btn">Cursor IDE <span>AI Native Code</span></a>            
+                <a href="https://codeium.com/windsurf" target="_blank" class="ai-btn">Windsurf <span>Agentic IDE</span></a>            
+                <a href="https://v0.dev" target="_blank" class="ai-btn">Vercel v0 <span>UI Generator</span></a>            
+                <a href="https://bolt.new" target="_blank" class="ai-btn">Bolt.new <span>Full-Stack Sandbox</span></a>            
+                <a href="https://lovable.dev" target="_blank" class="ai-btn">Lovable.dev <span>No-Code Web App</span></a>        
             </div>    
         </section>
 
         <!-- Category 3: Autonomous Agents -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🤖 Autonomous Agents</h2>        
             <div class="links-grid">            
-                <a href="https://cognition.ai" target="_blank" class="btn">Devin <span>Software Agent</span></a>            
-                <a href="https://manus.im" target="_blank" class="btn">Manus <span>General Workflow</span></a>            
-                <a href="https://agentgpt.reworkd.ai/" target="_blank" class="btn">AgentGPT <span>Web Agents</span></a>            
-                <a href="https://browser-use.com/" target="_blank" class="btn">Browser Use <span>Web Automation</span></a>        
-                <a href="https://github.com/copilot" target="_blank" class="btn">GitHub Copilot <span>Inline Assistant</span></a>    
+                <a href="https://cognition.ai" target="_blank" class="ai-btn">Devin <span>Software Agent</span></a>            
+                <a href="https://manus.im" target="_blank" class="ai-btn">Manus <span>General Workflow</span></a>            
+                <a href="https://agentgpt.reworkd.ai/" target="_blank" class="ai-btn">AgentGPT <span>Web Agents</span></a>            
+                <a href="https://browser-use.com/" target="_blank" class="ai-btn">Browser Use <span>Web Automation</span></a>        
+                <a href="https://github.com/copilot" target="_blank" class="ai-btn">GitHub Copilot <span>Inline Assistant</span></a>    
             </div>    
         </section>
 
         <!-- Category 4: Deep Research Engines -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🔍 Deep Research & Search</h2>        
             <div class="links-grid">            
-                <a href="https://perplexity.ai" target="_blank" class="btn">Perplexity <span>Answer Engine</span></a>            
-                <a href="https://notebooklm.google" target="_blank" class="btn">NotebookLM <span>Audio Research</span></a>            
-                <a href="https://x.com" target="_blank" class="btn">Grok <span>Real-time X Feed</span></a>            
-                <a href="https://getliner.com" target="_blank" class="btn">Liner <span>Research Assistant</span></a>
-                <a href="https://you.com" target="_blank" class="btn">You.com <span>Pro Search Engine</span></a>        
+                <a href="https://perplexity.ai" target="_blank" class="ai-btn">Perplexity <span>Answer Engine</span></a>            
+                <a href="https://notebooklm.google" target="_blank" class="ai-btn">NotebookLM <span>Audio Research</span></a>            
+                <a href="https://x.com" target="_blank" class="ai-btn">Grok <span>Real-time X Feed</span></a>            
+                <a href="https://getliner.com" target="_blank" class="ai-btn">Liner <span>Research Assistant</span></a>
+                <a href="https://you.com" target="_blank" class="ai-btn">You.com <span>Pro Search Engine</span></a>        
             </div>    
         </section>
 
         <!-- Category 5: Media & Video -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🎬 Video & Motion Graphics</h2>        
             <div class="links-grid">            
-                <a href="https://runwayml.com" target="_blank" class="btn">Runway Gen-3 <span>Film Engine</span></a>            
-                <a href="https://klingai.com" target="_blank" class="btn">Kling 3.0 <span>Physical Motion</span></a>            
-                <a href="https://lumalabs.ai" target="_blank" class="btn">Luma Dream <span>Fast Rendering</span></a>            
-                <a href="https://pika.art" target="_blank" class="btn">Pika Labs <span>Video Generation</span></a>        
-                <a href="https://synthesia.io" target="_blank" class="btn">Synthesia <span>Corporate Avatars</span></a>
+                <a href="https://runwayml.com" target="_blank" class="ai-btn">Runway Gen-3 <span>Film Engine</span></a>            
+                <a href="https://klingai.com" target="_blank" class="ai-btn">Kling 3.0 <span>Physical Motion</span></a>            
+                <a href="https://lumalabs.ai" target="_blank" class="ai-btn">Luma Dream <span>Fast Rendering</span></a>            
+                <a href="https://pika.art" target="_blank" class="ai-btn">Pika Labs <span>Video Generation</span></a>        
+                <a href="https://synthesia.io" target="_blank" class="ai-btn">Synthesia <span>Corporate Avatars</span></a>
             </div>    
         </section>
 
         <!-- Category 6: Image & Visual Art -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🎨 Image & Visual Design</h2>        
             <div class="links-grid">            
-                <a href="https://midjourney.com" target="_blank" class="btn">Midjourney <span>Creative Fine Art</span></a>            
-                <a href="https://blackforestlabs.ai" target="_blank" class="btn">Flux (BFL) <span>Hyper-Realism</span></a>            
-                <a href="https://ideogram.ai" target="_blank" class="btn">Ideogram <span>Typography Tech</span></a>            
-                <a href="https://canva.com" target="_blank" class="btn">Canva AI <span>Design Suite</span></a>        
-                <a href="https://leonardo.ai" target="_blank" class="btn">Leonardo.ai <span>Asset Generation</span></a>
+                <a href="https://midjourney.com" target="_blank" class="ai-btn">Midjourney <span>Creative Fine Art</span></a>            
+                <a href="https://blackforestlabs.ai" target="_blank" class="ai-btn">Flux (BFL) <span>Hyper-Realism</span></a>            
+                <a href="https://ideogram.ai" target="_blank" class="ai-btn">Ideogram <span>Typography Tech</span></a>            
+                <a href="https://canva.com" target="_blank" class="ai-btn">Canva AI <span>Design Suite</span></a>        
+                <a href="https://leonardo.ai" target="_blank" class="ai-btn">Leonardo.ai <span>Asset Generation</span></a>
             </div>    
         </section>
 
         <!-- Category 7: Audio & Music -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🎵 Audio & Voice Tech</h2>        
             <div class="links-grid">            
-                <a href="https://elevenlabs.io" target="_blank" class="btn">ElevenLabs <span>Speech Cloning</span></a>            
-                <a href="https://hume.ai" target="_blank" class="btn">Hume AI <span>Empathetic Voice</span></a>            
-                <a href="https://suno.com" target="_blank" class="btn">Suno AI <span>Composition Engine</span></a>            
-                <a href="https://udio.com" target="_blank" class="btn">Udio <span>Music Generation</span></a>        
-                <a href="https://murf.ai" target="_blank" class="btn">Murf.ai <span>Pro Voiceovers</span></a>
+                <a href="https://elevenlabs.io" target="_blank" class="ai-btn">ElevenLabs <span>Speech Cloning</span></a>            
+                <a href="https://hume.ai" target="_blank" class="ai-btn">Hume AI <span>Empathetic Voice</span></a>            
+                <a href="https://suno.com" target="_blank" class="ai-btn">Suno AI <span>Composition Engine</span></a>            
+                <a href="https://udio.com" target="_blank" class="ai-btn">Udio <span>Music Generation</span></a>        
+                <a href="https://murf.ai" target="_blank" class="ai-btn">Murf.ai <span>Pro Voiceovers</span></a>
             </div>    
         </section>
 
         <!-- Category 8: Productivity & Ops -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>⚡ Productivity & Workflow</h2>        
             <div class="links-grid">            
-                <a href="https://gamma.app" target="_blank" class="btn">Gamma App <span>Presentations</span></a>            
-                <a href="https://notion.so" target="_blank" class="btn">Notion AI <span>Smart Workspace</span></a>            
-                <a href="https://otter.ai" target="_blank" class="btn">Otter.ai <span>Meeting Notes</span></a>            
-                <a href="https://zapier.com/central" target="_blank" class="btn">Zapier Central <span>Automation</span></a>        
-                <a href="https://taskade.com" target="_blank" class="btn">Taskade <span>AI Work Agents</span></a>
+                <a href="https://gamma.app" target="_blank" class="ai-btn">Gamma App <span>Presentations</span></a>            
+                <a href="https://notion.so" target="_blank" class="ai-btn">Notion AI <span>Smart Workspace</span></a>            
+                <a href="https://otter.ai" target="_blank" class="ai-btn">Otter.ai <span>Meeting Notes</span></a>            
+                <a href="https://zapier.com/central" target="_blank" class="ai-btn">Zapier Central <span>Automation</span></a>        
+                <a href="https://taskade.com" target="_blank" class="ai-btn">Taskade <span>AI Work Agents</span></a>
             </div>    
         </section>
 
         <!-- Category 9: Education & Academic Research -->    
-        <section class="section">        
+        <section class="ai-section">        
             <h2>🎓 Education & Academic Research</h2>        
             <div class="links-grid">            
-                <a href="https://consensus.app" target="_blank" class="btn">Consensus <span>Evidence Search</span></a>            
-                <a href="https://elicit.com" target="_blank" class="btn">Elicit <span>Research Assistant</span></a>            
-                <a href="https://scispace.com" target="_blank" class="btn">SciSpace <span>Paper Explainer</span></a>            
-                <a href="https://curipod.com" target="_blank" class="btn">Curipod <span>Interactive Lessons</span></a>            
-                <a href="https://magicstudent.com" target="_blank" class="btn">MagicSchool AI <span>Teacher Tools</span></a>        
+                <a href="https://consensus.app" target="_blank" class="ai-btn">Consensus <span>Evidence Search</span></a>            
+                <a href="https://elicit.com" target="_blank" class="ai-btn">Elicit <span>Research Assistant</span></a>            
+                <a href="https://scispace.com" target="_blank" class="ai-btn">SciSpace <span>Paper Explainer</span></a>            
+                <a href="https://curipod.com" target="_blank" class="ai-btn">Curipod <span>Interactive Lessons</span></a>            
+                <a href="https://magicstudent.com" target="_blank" class="ai-btn">MagicSchool AI <span>Teacher Tools</span></a>        
             </div>    
         </section>
 
     </main>
+
+    <!-- Theme Toggle Engine Script -->
+    <script>
+        (function themeModule(){
+            const root = document.documentElement;
+            const btn = document.getElementById('themeToggle');
+            const STORAGE_KEY = 'bseb-hub-theme';
+
+            function apply(theme){
+                if (theme === 'dark' || theme === 'light'){
+                    root.setAttribute('data-theme', theme);
+                } else {
+                    root.removeAttribute('data-theme');
+                }
+                const isDark = (root.getAttribute('data-theme') === 'dark' ||
+                    (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
+                btn.textContent = isDark ? '☀️' : '🌙';
+            }
+
+            let saved = null;
+            try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
+            apply(saved);
+
+            btn.addEventListener('click', function(){
+                const current = root.getAttribute('data-theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                const next = current === 'dark' ? 'light' : 'dark';
+                apply(next);
+                try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
+            });
+        })();
+    </script>
 </body>
 </html>
