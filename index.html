@@ -67,6 +67,17 @@
         <a href="contact.html">Contact</a>
       </nav>
 
+      </nav>
+
+            <!-- Paste this entire block right below </nav> -->
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+            </div>
+            
+        </div>
+    </header>
+
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input id="searchInput" type="text" placeholder="Search links in English or Hindi… (e.g. STET, मेधासॉफ्ट, exam form)" autocomplete="off">
@@ -729,5 +740,22 @@
         }).catch(() => {});
     })();
   </script>
+
+  <!-- Mobile Menu Toggle Script -->
+    <script>
+        (function mobileMenu() {
+            const menuBtn = document.getElementById('menuToggle');
+            const nav = document.querySelector('.main-nav');
+            
+            if (menuBtn && nav) {
+                menuBtn.addEventListener('click', () => {
+                    nav.classList.toggle('open');
+                    // Change icon to 'X' when open
+                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        })();
+    </script>
+  
 </body>
 </html>
