@@ -695,33 +695,33 @@
     refreshStats();
 
     // Support QR
-    (function supportCardModule(){
-      const UPI_CONFIG = {
-        payeeAddress: 'ashishkumarsingh9-1@oksbi',
-        payeeName: 'BSEB_Portals',
-        currency: 'INR'
-      };
-      const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_CONFIG.payeeAddress)}&pn=${encodeURIComponent(UPI_CONFIG.payeeName)}&cu=${UPI_CONFIG.currency}`;
+   // (function supportCardModule(){
+    //  const UPI_CONFIG = {
+    //    payeeAddress: 'ashishkumarsingh9-1@oksbi',
+    //    payeeName: 'BSEB_Portals',
+     //   currency: 'INR'
+     // };
+     // const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_CONFIG.payeeAddress)}&pn=${encodeURIComponent(UPI_CONFIG.payeeName)}&cu=${UPI_CONFIG.currency}`;
 
-      if (typeof QRCode !== 'undefined') {
-        new QRCode(document.getElementById('qrcode'), {
-          text: upiLink, width: 188, height: 188,
-          colorDark: '#241A38', colorLight: '#FFFFFF',
-          correctLevel: QRCode.CorrectLevel.M
-        });
-      }
+//      if (typeof QRCode !== 'undefined') {
+ //       new QRCode(document.getElementById('qrcode'), {
+  //        text: upiLink, width: 188, height: 188,
+  //        colorDark: '#241A38', colorLight: '#FFFFFF',
+  //        correctLevel: QRCode.CorrectLevel.M
+  //      });
+  //    }
 
-      document.getElementById('upiPayBtn').setAttribute('href', upiLink);
-      document.getElementById('copyUpiBtn').addEventListener('click', function(){
-        const text = document.getElementById('upiIdText').textContent;
-        const btn = this;
-        navigator.clipboard.writeText(text).then(function(){
-          btn.textContent = 'Copied!';
-          btn.classList.add('copied');
-          setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
-        }).catch(function(){});
-      });
-    })();
+//      document.getElementById('upiPayBtn').setAttribute('href', upiLink);
+ //     document.getElementById('copyUpiBtn').addEventListener('click', function(){
+ //       const text = document.getElementById('upiIdText').textContent;
+ //       const btn = this;
+ //       navigator.clipboard.writeText(text).then(function(){
+ //         btn.textContent = 'Copied!';
+ //         btn.classList.add('copied');
+ //         setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+ //       }).catch(function(){});
+ //     });
+ //   })();
 
     // Visit Logger
     (function visitLogger(){
