@@ -474,6 +474,24 @@
 
         loadNews();
         setInterval(loadNews, 5 * 60 * 1000);
+
+     </script>
+
+       <!-- Mobile Menu Toggle Script -->
+    <script>
+        (function mobileMenu() {
+            const menuBtn = document.getElementById('menuToggle');
+            const nav = document.querySelector('.main-nav');
+            
+            if (menuBtn && nav) {
+                menuBtn.addEventListener('click', () => {
+                    nav.classList.toggle('open');
+                    // Change icon to 'X' when open
+                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        })();
     </script>
+    
 </body>
 </html>
