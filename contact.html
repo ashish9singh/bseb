@@ -48,6 +48,22 @@
                 <a href="contact.html" class="active">Contact</a>
             </nav>
 
+         <!-- Mobile Menu Toggle Script -->
+    <script>
+        (function mobileMenu() {
+            const menuBtn = document.getElementById('menuToggle');
+            const nav = document.querySelector('.main-nav');
+            
+            if (menuBtn && nav) {
+                menuBtn.addEventListener('click', () => {
+                    nav.classList.toggle('open');
+                    // Change icon to 'X' when open
+                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        })();
+    </script>
+
             <div class="header-right">
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
             </div>
@@ -351,5 +367,23 @@
             });
         }
     </script>
+
+ <!-- Mobile Menu Toggle Script -->
+    <script>
+        (function mobileMenu() {
+            const menuBtn = document.getElementById('menuToggle');
+            const nav = document.querySelector('.main-nav');
+            
+            if (menuBtn && nav) {
+                menuBtn.addEventListener('click', () => {
+                    nav.classList.toggle('open');
+                    // Change icon to 'X' when open
+                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        })();
+    </script>
+
+ 
 </body>
 </html>
