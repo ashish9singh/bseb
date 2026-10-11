@@ -1024,12 +1024,22 @@ footer {
 }
 
 @media (max-width: 860px) {
-  .header-inner { flex-wrap: wrap; height: auto; padding-top: 12px; padding-bottom: 8px; }
-  .main-nav {
-    order: 4; width: 100%; margin-left: 0; margin-top: 8px;
-    overflow-x: auto; white-space: nowrap; -ms-overflow-style: none; scrollbar-width: none; padding-bottom: 4px;
+  .header-inner { 
+    flex-wrap: wrap; 
+    height: auto; 
+    padding-top: 12px; 
+    padding-bottom: 12px; 
   }
-  .main-nav::-webkit-scrollbar { display: none; }
+  .main-nav {
+    order: 4; 
+    width: 100%; 
+    margin-left: 0; 
+    margin-top: 14px;
+    display: flex; 
+    flex-wrap: wrap;          /* Allows the menu items to wrap to the next line */
+    justify-content: center;  /* Centers the links neatly */
+    gap: 12px 20px;           /* Adds perfect vertical and horizontal spacing */
+  }
 }
 
 @media (max-width: 768px) {
