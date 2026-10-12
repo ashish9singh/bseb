@@ -9,9 +9,9 @@
    7. News Cards & Live Feed (news.html)
    8. Profile, 2x2 Features & Support (about.html)
    9. Contact Form, Verification & Modals (contact.html)
-   10. Splash Screens & Tooltips (letter.html)
+   10. Official Letters & Documents Module (letter.html)
    11. Global Footer & Responsive Breakpoints
-   12. AI HUB TERMINAL (aihub.html)
+   12. AI Hub Terminal (aihub.html)
    ============================================================ */
 
 /* ============================================================
@@ -48,6 +48,15 @@
   --c-admin:        #FF6B9D;
   --c-udise:        #7B2FF7;
   --c-docs:         #FF7A45;
+
+  /* Document Module Tokens */
+  --primary-color:   #7B2FF7;
+  --list-bg:         #FFFFFF;
+  --list-hover:      #FAF5FF;
+  --badge-bg:        #F4EBFF;
+  --badge-text:      #7B2FF7;
+  --cat-bg:          #F3F4F6;
+  --cat-text:        #4B5563;
 }
 
 :root[data-theme="dark"] {
@@ -71,6 +80,15 @@
   --c-admin:        #FF9EC1;
   --c-udise:        #B98CFF;
   --c-docs:         #FF9A6B;
+
+  /* Document Module Tokens Dark */
+  --primary-color:   #B98CFF;
+  --list-bg:         #1F1830;
+  --list-hover:      #261D3A;
+  --badge-bg:        #261D3A;
+  --badge-text:      #D8B4FE;
+  --cat-bg:          #374151;
+  --cat-text:        #E5E7EB;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -95,6 +113,14 @@
     --c-admin:        #FF9EC1;
     --c-udise:        #B98CFF;
     --c-docs:         #FF9A6B;
+
+    --primary-color:   #B98CFF;
+    --list-bg:         #1F1830;
+    --list-hover:      #261D3A;
+    --badge-bg:        #261D3A;
+    --badge-text:      #D8B4FE;
+    --cat-bg:          #374151;
+    --cat-text:        #E5E7EB;
   }
 }
 
@@ -590,7 +616,6 @@ header.site, header.site-header {
 }
 .page-header p { color: var(--text-muted); font-size: 1.05rem; }
 
-/* News Category Quick Filter Chips */
 .news-filters {
   display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 20px;
   justify-content: center; -ms-overflow-style: none; scrollbar-width: none;
@@ -615,7 +640,6 @@ header.site, header.site-header {
   box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
-/* News Grid & Cards */
 .news-grid {
   display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
@@ -634,7 +658,6 @@ header.site, header.site-header {
   border-color: var(--primary);
 }
 
-/* Card Header & Badges */
 .card-top-tags {
   display: flex; align-items: center; justify-content: space-between;
   gap: 8px; margin-bottom: 12px;
@@ -655,7 +678,6 @@ header.site, header.site-header {
   font-size: 1.12rem; color: var(--text); margin-bottom: 14px; line-height: 1.35;
 }
 
-/* Key Bullet Takeaways */
 .takeaways-wrapper {
   background: var(--surface-2); border-radius: var(--radius-sm);
   padding: 12px 14px; margin-bottom: 16px; border: 1px solid var(--border);
@@ -670,18 +692,14 @@ header.site, header.site-header {
   margin: 0; padding-left: 18px; font-size: 0.88rem; color: var(--text);
   line-height: 1.5; display: flex; flex-direction: column; gap: 6px;
 }
-.takeaways-list li {
-  margin: 0;
-}
+.takeaways-list li { margin: 0; }
 
-/* Card Meta (Date & UTC time) */
 .card-meta {
   display: flex; align-items: center; justify-content: space-between;
   font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
   margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
 }
 
-/* Card Actions: Read More + WhatsApp Share */
 .card-actions-row {
   display: flex; align-items: center; justify-content: space-between;
   gap: 10px; margin-top: auto;
@@ -713,13 +731,13 @@ header.site, header.site-header {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .last-updated { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 36px; font-weight: 500; }
+
 .lang-btn {
   background: var(--surface-2); color: var(--primary); border: 1px solid var(--border);
   padding: 7px 15px; border-radius: 999px; font-size: 0.82rem; font-weight: 700;
   cursor: pointer; transition: all 0.2s ease; font-family: var(--font-body); white-space: nowrap;
 }
 .lang-btn:hover { background: var(--primary); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow); }
-
 
 /* ============================================================
    8. PROFILE, 2X2 FEATURES & SUPPORT (about.html)
@@ -766,7 +784,6 @@ header.site, header.site-header {
 .link-btn:hover { background: var(--surface-2); border-color: var(--primary); transform: translateY(-2px); }
 .link-btn-featured { background: var(--surface-2); border-color: var(--primary); font-weight: 700; }
 
-/* Support & QR Component */
 .people-section { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; }
 .profile-card, .support-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -889,7 +906,7 @@ header.site, header.site-header {
 .crowdfund-card .cause-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px; }
 .cf-body { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .qr-wrapper {
-  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 12px; text-align: center; flex-shrink: 0; width: 150px;
 }
 .qr-wrapper img { width: 126px; height: 126px; object-fit: contain; border-radius: 8px; display: block; }
@@ -942,60 +959,237 @@ header.site, header.site-header {
 }
 .btn-modal-close:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
 
-
 /* ============================================================
-   10. SPLASH SCREENS & TOOLTIPS (letter.html)
+   10. OFFICIAL LETTERS & DOCUMENTS MODULE (letter.html)
    ============================================================ */
-.splash-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 50px 30px; text-align: center;
-  max-width: 500px; box-shadow: var(--shadow); position: relative; overflow: hidden;
-  margin: 8vh auto 40px; /* Automatically centers the card vertically and horizontally */
-}
-.splash-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-}
-.splash-icon {
-  font-size: 4rem; line-height: 1; margin-bottom: 20px;
-  animation: float 3s ease-in-out infinite; display: inline-block;
-}
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-.splash-card h1 {
-  font-size: 2rem; margin-bottom: 12px;
-  background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.splash-card p {
-  color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;
-}
-.back-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(100deg, var(--primary), var(--accent));
-  color: #fff; padding: 12px 28px; border-radius: 999px;
-  font-weight: 700; font-size: 1rem;
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 35%, transparent); transition: transform 0.15s ease;
-}
-.back-btn:hover { transform: translateY(-2px); }
-
-/* Tooltip UI */
-.coming-soon-tooltip {
-  position: absolute; background: var(--text); color: var(--bg);
-  padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
-  pointer-events: none; opacity: 0; z-index: 1000; white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transform: translate(-50%, 10px); transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.coming-soon-tooltip.show { opacity: 1; transform: translate(-50%, 0); }
-.coming-soon-tooltip::before {
-  content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
-  border-width: 0 5px 5px 5px; border-style: solid; border-color: transparent transparent var(--text) transparent;
+.doc-controls {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
+@media (min-width: 768px) {
+  .doc-controls {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.control-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-left: 0.2rem;
+}
+
+.doc-controls .form-control {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: var(--surface);
+  color: var(--text);
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+.doc-controls select.form-control {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.doc-controls .form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.doc-container {
+  max-width: 1200px;
+  margin: 0 auto 4rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.doc-row {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--surface);
+  transition: transform 0.15s, box-shadow 0.2s;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.doc-row:hover {
+  background-color: var(--surface-2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(123, 47, 247, 0.1);
+}
+
+.doc-info-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex: 1;
+  width: 100%;
+}
+
+.doc-sl {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.doc-type-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.doc-cat-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: var(--cat-bg);
+  color: var(--cat-text);
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.doc-text-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+.doc-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-info-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.doc-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+@media (min-width: 768px) {
+  .doc-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    gap: 1rem;
+  }
+  
+  .doc-info-left {
+    flex-wrap: nowrap;
+    width: auto;
+  }
+  
+  .doc-sl {
+    width: 110px;
+    flex-shrink: 0;
+  }
+  
+  .doc-type-badge {
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  
+  .doc-cat-badge {
+    width: 130px;
+    text-align: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .doc-info-right {
+    width: auto;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+}
+
+.download-btn {
+  background-color: #22c55e;
+  color: #ffffff;
+  border: none;
+  padding: 0.4rem 1.25rem;
+  border-radius: 99px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.download-btn:hover {
+  background-color: #16a34a;
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  background-color: var(--surface);
+  border-radius: 8px;
+  border: 1px dashed var(--border);
+}
 
 /* ============================================================
    11. GLOBAL FOOTER & RESPONSIVE BREAKPOINTS
@@ -1025,58 +1219,55 @@ footer {
 
 /* Mobile Menu Toggle Button (Hidden on Desktop) */
 .menu-toggle-btn {
-    display: none;
-    font-size: 1.2rem;
-    font-weight: bold;
+  display: none;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 @media (max-width: 860px) {
-    .header-inner { 
-        flex-wrap: wrap; 
-        height: auto; 
-        padding-top: 12px; 
-        padding-bottom: 12px; 
-        justify-content: space-between;
-    }
-    
-    /* Show the hamburger button on mobile */
-    .menu-toggle-btn {
-        display: flex;
-    }
+  .header-inner { 
+    flex-wrap: wrap; 
+    height: auto; 
+    padding-top: 12px; 
+    padding-bottom: 12px; 
+    justify-content: space-between;
+  }
+  
+  .menu-toggle-btn {
+    display: flex;
+  }
 
-    /* Hide the menu by default and style the dropdown */
-    .main-nav {
-        display: none; /* Hidden until clicked */
-        width: 100%; 
-        order: 4; 
-        margin-left: 0; 
-        margin-top: 14px;
-        flex-direction: column; /* Stacks links vertically */
-        align-items: center;    /* Centers the text */
-        gap: 16px;
-        background: var(--surface-2);
-        padding: 20px 0;
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-    }
-    
-    /* When the Javascript adds the 'open' class, show the menu */
-    .main-nav.open {
-        display: flex;
-        animation: slideDown 0.3s ease;
-    }
+  .main-nav {
+    display: none;
+    width: 100%; 
+    order: 4; 
+    margin-left: 0; 
+    margin-top: 14px;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface-2);
+    padding: 20px 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  
+  .main-nav.open {
+    display: flex;
+    animation: slideDown 0.3s ease;
+  }
 
-    .main-nav a {
-        font-size: 1.1rem; /* Slightly larger text for mobile tapping */
-    }
+  .main-nav a {
+    font-size: 1.1rem;
+  }
 }
 
-/* Smooth dropdown animation */
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
 @media (max-width: 768px) {
   .wrap { padding: 0 14px; }
   .hero { grid-template-columns: 1fr; padding: 16px 0 12px; gap: 14px; }
@@ -1108,15 +1299,11 @@ footer {
   .highlight-section { padding: 32px 20px; }
   .panel { padding: 24px 18px; }
   .info-card, .crowdfund-card { padding: 22px 18px; }
-  .splash-card { margin-top: 4vh; }
 }
-
 
 /* ============================================================
    12. AI HUB TERMINAL (aihub.html)
    ============================================================ */
-
-/* AI Hub Specific Variables */
 :root {
   --primary-light: #818cf8;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
@@ -1124,7 +1311,6 @@ footer {
   --shadow-hover: 0 16px 32px -4px rgba(99, 102, 241, 0.15);
 }
 
-/* AI Hub Header */
 .ai-page-header { 
   text-align: center; 
   margin-bottom: 50px; 
@@ -1149,7 +1335,6 @@ footer {
   font-weight: 500;
 }
 
-/* Dashboard Grid */
 .dashboard { 
   width: 100%; 
   max-width: 1280px; 
@@ -1160,7 +1345,6 @@ footer {
   padding-bottom: 60px;
 }
 
-/* Category Sections */
 .ai-section { 
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1195,7 +1379,6 @@ footer {
   gap: 10px;
 }
 
-/* Tools Grid & Buttons */
 .ai-links-grid { 
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
@@ -1217,7 +1400,7 @@ footer {
   font-weight: 600; 
   display: flex; 
   flex-direction: column; 
-  justify-content: center;
+  justify-content: center; 
   transition: all 0.2s ease; 
   box-shadow: var(--shadow-sm);
 }
@@ -1237,7 +1420,6 @@ footer {
   letter-spacing: 0.05em;
 }
 
-/* AI Hub Mobile Responsiveness */
 @media (max-width: 768px) {
   .ai-page-header { padding-top: 20px; }
   .dashboard { gap: 20px; }
