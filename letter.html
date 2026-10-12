@@ -349,7 +349,7 @@
                 <label class="control-label" id="lblCategory">Category</label>
                 <select id="categoryFilter" class="form-control">
                     <option value="all" id="optCatAll">All</option>
-                    <option value="letter" id="optCatLetter">Circular / Letter</option>
+                    <option value="circular" id="optCatCircular">Circular</option>
                     <option value="order" id="optCatOrder">Order</option>
                     <option value="notification" id="optCatNotif">Notification</option>
                     <option value="scheme" id="optCatScheme">Scheme</option>
@@ -416,7 +416,7 @@
                     en: "District Level Teacher Training Circular",
                     hi: "जिला स्तरीय शिक्षक प्रशिक्षण परिपत्र"
                 },
-                category: "letter",
+                category: "circular",
                 fileType: "PDF",
                 date: "2026-10-05",
                 fileName: "training_oct.pdf",
@@ -454,7 +454,7 @@
                 phSearch: "Title or keyword...",
                 lblCategory: "Category",
                 lblSort: "Sort By",
-                cats: { all: "All", letter: "Circular / Letter", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
+                cats: { all: "All", circular: "Circular", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
                 sorts: { new: "Newest First", old: "Oldest First", az: "Alphabetically (A-Z)", za: "Alphabetically (Z-A)" },
                 download: "Download",
                 noResult: "No documents found matching your criteria."
@@ -465,7 +465,7 @@
                 phSearch: "शीर्षक या लिखावट...",
                 lblCategory: "श्रेणी",
                 lblSort: "क्रम",
-                cats: { all: "सभी", letter: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
+                cats: { all: "सभी", circular: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
                 sorts: { new: "नया पहले", old: "पुराना पहले", az: "अक्षर क्रमानुसार (A-Z)", za: "अक्षर क्रमानुसार (Z-A)" },
                 download: "डाउनलोड",
                 noResult: "आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।"
@@ -493,7 +493,7 @@
             document.getElementById('lblSort').textContent = t.lblSort;
 
             document.getElementById('optCatAll').textContent = t.cats.all;
-            document.getElementById('optCatLetter').textContent = t.cats.letter;
+            document.getElementById('optCatCircular').textContent = t.cats.circular;
             document.getElementById('optCatOrder').textContent = t.cats.order;
             document.getElementById('optCatNotif').textContent = t.cats.notif;
             document.getElementById('optCatScheme').textContent = t.cats.scheme;
