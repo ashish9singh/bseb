@@ -6,37 +6,36 @@
     <title>Official Letters & Documents — BSEBwala</title>
     <meta name="description" content="Official letters, eGazettes, notifications, and advertisements from the Bihar School Examination Board and Education Department.">
 
-    <!-- Google Fonts: Lora for headings, Inter for body/UI -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- LINK TO YOUR NEW EXTERNAL CSS FILE -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- ========================================== -->
-    <!-- LINEAR THEME PAGE STYLES                   -->
-    <!-- ========================================== -->
     <style>
-        /* Base Variables matching typical BSEBwala palette */
+        /* --- Color Scheme matching "Live Updates & News" (Image 3) --- */
         :root {
-            --primary-color: #1a56db;
-            --primary-hover: #1e40af;
-            --bg-color: #ffffff;
+            --primary-color: #a855f7; /* Purple */
+            --primary-hover: #9333ea;
+            --bg-color: #fdfafr; /* Soft light pink/purple tint background */
             --list-bg: #ffffff;
-            --list-hover: #f8fafc;
-            --text-main: #111827;
-            --text-muted: #4b5563;
-            --border-color: #e5e7eb;
+            --list-hover: #faf5ff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e9d5ff; /* Soft purple border */
+            
+            --badge-bg: #f3e8ff;
+            --badge-text: #6b21a8;
         }
 
-        /* Dark Mode Overrides */
         [data-theme="dark"] {
             --bg-color: #111827;
-            --list-bg: #111827;
-            --list-hover: #1f2937;
+            --list-bg: #1f2937;
+            --list-hover: #374151;
             --text-main: #f9fafb;
             --text-muted: #9ca3af;
-            --border-color: #374151;
+            --border-color: #4b5563;
+            --badge-bg: #374151;
+            --badge-text: #d8b4fe;
         }
 
         body {
@@ -46,210 +45,201 @@
             margin: 0;
         }
 
-        /* --- Controls Section (Search & Filter) --- */
+        /* --- Header Actions --- */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* --- Controls Section (Search & Filter dropdowns based on Image 1 & 2) --- */
         .doc-controls {
             max-width: 1000px;
-            margin: 2rem auto;
+            margin: 1.5rem auto;
             padding: 0 1rem;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 1rem;
         }
 
-        .search-wrapper {
-            position: relative;
-            width: 100%;
+        @media (min-width: 768px) {
+            .doc-controls {
+                grid-template-columns: 2fr 1fr 1fr; /* Search is wider */
+            }
         }
 
-        .search-wrapper input {
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .control-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-left: 0.2rem;
+        }
+
+        .form-control {
             width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.5rem;
+            padding: 0.6rem 1rem;
             border: 1px solid var(--border-color);
-            border-radius: 4px; /* Flatter, linear corners */
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
             background-color: var(--list-bg);
             color: var(--text-main);
             transition: border-color 0.2s;
             box-sizing: border-box;
+            appearance: none; /* For selects */
+        }
+        
+        select.form-control {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
         }
 
-        .search-wrapper input:focus {
+        .form-control:focus {
             outline: none;
             border-color: var(--primary-color);
         }
 
-        .search-icon {
-            position: absolute;
-            left: 0.85rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 1rem;
-        }
-
-        .filter-btn {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 0.4rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover {
-            background-color: var(--list-hover);
-            color: var(--text-main);
-        }
-
-        .filter-btn.active {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            border-color: var(--primary-color);
-        }
-
-        /* --- Linear List Container --- */
+        /* --- Compact Linear List --- */
         .doc-container {
             max-width: 1000px;
             margin: 0 auto 4rem auto;
             padding: 0 1rem;
             display: flex;
             flex-direction: column;
+            gap: 0.5rem; /* Gap between compact rows */
         }
 
-        /* Linear Row Item (Replacing Cards) */
         .doc-row {
             display: flex;
             flex-direction: column;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1rem; /* Much tighter padding */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             background-color: var(--list-bg);
-            transition: background-color 0.2s;
-            gap: 1rem;
+            transition: transform 0.1s, box-shadow 0.2s;
+            gap: 0.5rem;
         }
 
         .doc-row:hover {
             background-color: var(--list-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.1); /* Soft purple shadow */
         }
 
-        /* Desktop Linear Layout */
         @media (min-width: 768px) {
             .doc-row {
                 flex-direction: row;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: space-between;
-                padding: 1.5rem 1rem;
+                padding: 0.6rem 1rem; /* Ultra compact on desktop */
             }
         }
 
         .doc-info {
             flex: 1;
-            padding-right: 1rem;
-        }
-
-        .doc-header {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.4rem;
-            font-size: 0.75rem;
-            font-family: 'Inter', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .doc-sl {
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .doc-type-badge {
-            font-weight: 700;
-        }
-        
-        .type-pdf { color: #dc2626; }
-        .type-image { color: #2563eb; }
-        .type-doc { color: #059669; }
-        .type-other { color: var(--text-muted); }
-
-        .doc-title {
-            font-family: 'Lora', serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 0 0 0.5rem 0;
-            color: var(--text-main);
-            line-height: 1.3;
-        }
-
-        .doc-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-            line-height: 1.6;
-        }
-
-        .doc-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.25rem;
-        }
-
-        .doc-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .download-action {
-            display: flex;
-            align-items: center;
-            margin-top: 0.5rem;
+            flex-direction: column;
+            gap: 0.2rem;
         }
 
         @media (min-width: 768px) {
-            .download-action {
-                margin-top: 0;
+            .doc-info {
+                flex-direction: row;
+                align-items: center;
+                gap: 1.5rem;
             }
         }
 
-        .download-btn {
-            display: inline-block;
-            background-color: transparent;
+        .doc-meta-primary {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 150px;
+        }
+
+        .doc-sl {
             color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            padding: 0.5rem 1.25rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
+            font-weight: 700;
             font-size: 0.85rem;
-            transition: all 0.2s;
+        }
+
+        .doc-type-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .doc-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-main);
+            flex: 1;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .doc-meta-secondary {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1rem;
+            min-width: 140px;
+        }
+
+        .download-btn {
+            background-color: #22c55e; /* Green download button like image 1 */
+            color: #ffffff;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+            text-align: center;
         }
 
         .download-btn:hover {
-            background-color: var(--primary-color);
-            color: #ffffff;
+            background-color: #16a34a;
         }
-
-        /* Empty State */
+        
         .no-results {
             text-align: center;
-            padding: 3rem 0;
+            padding: 2rem;
             color: var(--text-muted);
-            font-size: 1rem;
-            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -264,217 +254,264 @@
             </a>
             <nav class="main-nav">
                 <a href="https://bsebwala.in/">Home</a>
-                <a href="aihub.html">AIHub</a>
-                <a href="letter.html" class="active">Letter</a>
-                <a href="fee.html">Fee</a>
-                <a href="news.html">News</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="letter.html" class="active">Documents</a>
             </nav>
             <div class="header-actions">
-                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+                <button class="lang-btn" id="langToggle">हिंदी में देखें</button>
+                <button class="icon-btn" id="themeToggle">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle">☰</button>
             </div>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <main>
-        <!-- Search and Filter Controls -->
+        <!-- Search and Filter Controls (3 Columns) -->
         <section class="doc-controls">
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Search documents by keyword, filename, or description...">
+            <div class="control-group">
+                <label class="control-label" id="lblSearch">Search</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Title or keyword...">
             </div>
             
-            <div class="filter-group" id="filterContainer">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="letter">Letters</button>
-                <button class="filter-btn" data-filter="egazette">eGazette</button>
-                <button class="filter-btn" data-filter="notification">Notifications</button>
-                <button class="filter-btn" data-filter="advertisement">Advertisements</button>
+            <div class="control-group">
+                <label class="control-label" id="lblCategory">Category</label>
+                <select id="categoryFilter" class="form-control">
+                    <option value="all" id="optCatAll">All</option>
+                    <option value="letter" id="optCatLetter">Circular / Letter</option>
+                    <option value="order" id="optCatOrder">Order</option>
+                    <option value="notification" id="optCatNotif">Notification</option>
+                    <option value="scheme" id="optCatScheme">Scheme</option>
+                    <option value="other" id="optCatOther">Other</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" id="lblSort">Sort By</label>
+                <select id="sortFilter" class="form-control">
+                    <option value="newest" id="optSortNew">Newest First</option>
+                    <option value="oldest" id="optSortOld">Oldest First</option>
+                    <option value="az" id="optSortAZ">Alphabetically (A-Z)</option>
+                    <option value="za" id="optSortZA">Alphabetically (Z-A)</option>
+                </select>
             </div>
         </section>
 
-        <!-- Linear Document List Container -->
-        <section class="doc-container" id="documentList">
-            <!-- Documents will be injected here via JavaScript -->
-        </section>
+        <!-- Compact Document List Container -->
+        <section class="doc-container" id="documentList"></section>
     </main>
 
     <!-- SCRIPTS -->
     <script>
-        /* ---------- THEME TOGGLE ---------- */
-        (function themeModule(){
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const STORAGE_KEY = 'bseb-hub-theme';
+        /* ---------- STATE & TRANSLATIONS ---------- */
+        let currentLang = 'en'; // 'en' or 'hi'
+        let currentFilter = 'all';
+        let currentSort = 'newest';
+        let searchQuery = '';
 
-            function apply(theme){
-                if (theme === 'dark' || theme === 'light'){
-                    root.setAttribute('data-theme', theme);
-                } else {
-                    root.removeAttribute('data-theme');
-                }
-                btn.textContent = (root.getAttribute('data-theme') === 'dark' ||
-                (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches))
-                ? '☀️' : '🌙';
+        const translations = {
+            en: {
+                toggleBtn: "हिंदी में देखें",
+                lblSearch: "Search",
+                phSearch: "Title or keyword...",
+                lblCategory: "Category",
+                lblSort: "Sort By",
+                cats: { all: "All", letter: "Circular / Letter", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
+                sorts: { new: "Newest First", old: "Oldest First", az: "Alphabetically (A-Z)", za: "Alphabetically (Z-A)" },
+                download: "Download",
+                noResult: "No documents found."
+            },
+            hi: {
+                toggleBtn: "View in English",
+                lblSearch: "खोज",
+                phSearch: "शीर्षक या लिखावट...",
+                lblCategory: "श्रेणी",
+                lblSort: "क्रम",
+                cats: { all: "सभी", letter: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
+                sorts: { new: "नया पहले", old: "पुराना पहले", az: "अक्षर क्रमानुसार (A-Z)", za: "अक्षर क्रमानुसार (Z-A)" },
+                download: "डाउनलोड",
+                noResult: "कोई दस्तावेज़ नहीं मिला।"
             }
+        };
 
-            let saved = null;
-            try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
-            apply(saved);
-
-            btn.addEventListener('click', function(){
-                const current = root.getAttribute('data-theme') ||
-                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                const next = current === 'dark' ? 'light' : 'dark';
-                apply(next);
-                try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
-            });
-        })();
-
-        /* ---------- MOBILE MENU ---------- */
-        (function mobileMenu() {
-            const menuBtn = document.getElementById('menuToggle');
-            const nav = document.querySelector('.main-nav');
-            if (menuBtn && nav) {
-                menuBtn.addEventListener('click', () => {
-                    nav.classList.toggle('open');
-                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
-                });
-            }
-        })();
-
-        /* ---------- DOCUMENT RENDERER & FILTER LOGIC ---------- */
+        /* ---------- MOCK DATABASE ---------- */
         const documentDatabase = [
             {
-                sl: "001",
-                title: "BSEB Exam Schedule 2027",
+                sl: "DOC-2026-010",
+                title: {
+                    en: "SMC Formation and Night Guard Deployment",
+                    hi: "SMC गठन एवं रात्रि प्रहरी की बहाली"
+                },
+                category: "other",
+                fileType: "PDF",
+                date: "2026-10-11", // ISO format for easy sorting
+                fileName: "smc_guard_2026.pdf",
+                fileUrl: "#"
+            },
+            {
+                sl: "DOC-2026-009",
+                title: {
+                    en: "BSEB Class 10th Final Exam Schedule",
+                    hi: "BSEB 10वीं बोर्ड परीक्षा का कार्यक्रम"
+                },
                 category: "notification",
-                fileType: "PDF",
-                description: "AI Summary: Official timetable for Class 10th and 12th board examinations for the academic year 2026-2027, including practical exam dates.",
-                uploadDate: "2026-10-10",
-                uploadTime: "14:30 IST",
-                fileName: "bseb_exam_schedule_2027.pdf",
-                fileUrl: "assets/docs/bseb_exam_schedule_2027.pdf" 
+                fileType: "IMG",
+                date: "2026-10-10",
+                fileName: "10th_schedule.jpg",
+                fileUrl: "#"
             },
             {
-                sl: "002",
-                title: "Holiday Calendar Revision - Oct 2026",
+                sl: "DOC-2026-008",
+                title: {
+                    en: "District Level Teacher Training Circular",
+                    hi: "जिला स्तरीय शिक्षक प्रशिक्षण परिपत्र"
+                },
                 category: "letter",
-                fileType: "IMAGE",
-                description: "AI Summary: Departmental letter revising the school holiday calendar for Diwali and Chhath Puja holidays for all state-affiliated schools.",
-                uploadDate: "2026-10-09",
-                uploadTime: "09:15 IST",
-                fileName: "holiday_revised_oct.jpg",
-                fileUrl: "assets/docs/holiday_revised_oct.jpg"
-            },
-            {
-                sl: "003",
-                title: "Bihar State eGazette - Education Amendment",
-                category: "egazette",
                 fileType: "PDF",
-                description: "AI Summary: Official state gazette publication regarding the amendment to teacher attendance protocols using digital tracking via smartphones.",
-                uploadDate: "2026-10-05",
-                uploadTime: "11:00 IST",
-                fileName: "bihar_egazette_edu_amendment.pdf",
-                fileUrl: "assets/docs/bihar_egazette_edu_amendment.pdf"
+                date: "2026-10-05",
+                fileName: "training_oct.pdf",
+                fileUrl: "#"
             },
             {
-                sl: "004",
-                title: "Tender Advertisement: Smart Class Equipment",
-                category: "advertisement",
+                sl: "DOC-2026-007",
+                title: {
+                    en: "Revised Holiday Calendar for November",
+                    hi: "नवंबर माह हेतु संशोधित अवकाश कैलेंडर"
+                },
+                category: "order",
                 fileType: "DOC",
-                description: "AI Summary: Public tender invitation for the procurement and installation of smart class infrastructure in 500 government high schools.",
-                uploadDate: "2026-10-01",
-                uploadTime: "16:45 IST",
-                fileName: "tender_smart_class_bseb.docx",
-                fileUrl: "assets/docs/tender_smart_class_bseb.docx"
+                date: "2026-10-01",
+                fileName: "holiday_nov.docx",
+                fileUrl: "#"
             }
         ];
 
-        let currentFilter = 'all';
-        let searchQuery = '';
+        /* ---------- DOM ELEMENTS ---------- */
+        const els = {
+            list: document.getElementById('documentList'),
+            search: document.getElementById('searchInput'),
+            cat: document.getElementById('categoryFilter'),
+            sort: document.getElementById('sortFilter'),
+            langBtn: document.getElementById('langToggle')
+        };
 
-        const documentListEl = document.getElementById('documentList');
-        const searchInput = document.getElementById('searchInput');
-        const filterButtons = document.querySelectorAll('.filter-btn');
+        /* ---------- RENDERING LOGIC ---------- */
+        function applyTranslations() {
+            const t = translations[currentLang];
+            
+            els.langBtn.textContent = t.toggleBtn;
+            document.getElementById('lblSearch').textContent = t.lblSearch;
+            els.search.placeholder = t.phSearch;
+            document.getElementById('lblCategory').textContent = t.lblCategory;
+            document.getElementById('lblSort').textContent = t.lblSort;
 
-        function getFileTypeClass(type) {
-            const t = type.toLowerCase();
-            if (t === 'pdf') return 'type-pdf';
-            if (t === 'image' || t === 'jpg' || t === 'png') return 'type-image';
-            if (t === 'doc' || t === 'docx') return 'type-doc';
-            return 'type-other';
+            document.getElementById('optCatAll').textContent = t.cats.all;
+            document.getElementById('optCatLetter').textContent = t.cats.letter;
+            document.getElementById('optCatOrder').textContent = t.cats.order;
+            document.getElementById('optCatNotif').textContent = t.cats.notif;
+            document.getElementById('optCatScheme').textContent = t.cats.scheme;
+            document.getElementById('optCatOther').textContent = t.cats.other;
+
+            document.getElementById('optSortNew').textContent = t.sorts.new;
+            document.getElementById('optSortOld').textContent = t.sorts.old;
+            document.getElementById('optSortAZ').textContent = t.sorts.az;
+            document.getElementById('optSortZA').textContent = t.sorts.za;
         }
 
         function renderDocuments() {
-            const filteredDocs = documentDatabase.filter(doc => {
-                const matchesCategory = currentFilter === 'all' || doc.category === currentFilter;
-                const searchLower = searchQuery.toLowerCase();
-                const matchesSearch = doc.title.toLowerCase().includes(searchLower) ||
-                                      doc.description.toLowerCase().includes(searchLower) ||
-                                      doc.fileName.toLowerCase().includes(searchLower);
-                return matchesCategory && matchesSearch;
+            // 1. Filter
+            let filtered = documentDatabase.filter(doc => {
+                const matchCat = currentFilter === 'all' || doc.category === currentFilter;
+                const query = searchQuery.toLowerCase();
+                const matchSearch = doc.title[currentLang].toLowerCase().includes(query) || 
+                                    doc.sl.toLowerCase().includes(query);
+                return matchCat && matchSearch;
             });
 
-            documentListEl.innerHTML = '';
+            // 2. Sort
+            filtered.sort((a, b) => {
+                if (currentSort === 'newest') return new Date(b.date) - new Date(a.date);
+                if (currentSort === 'oldest') return new Date(a.date) - new Date(b.date);
+                if (currentSort === 'az') return a.title[currentLang].localeCompare(b.title[currentLang]);
+                if (currentSort === 'za') return b.title[currentLang].localeCompare(a.title[currentLang]);
+            });
 
-            if (filteredDocs.length === 0) {
-                documentListEl.innerHTML = `
-                    <div class="no-results">
-                        No documents found matching your criteria.
-                    </div>
-                `;
+            // 3. Render
+            els.list.innerHTML = '';
+            const t = translations[currentLang];
+
+            if (filtered.length === 0) {
+                els.list.innerHTML = `<div class="no-results">${t.noResult}</div>`;
                 return;
             }
 
-            filteredDocs.forEach(doc => {
-                const typeClass = getFileTypeClass(doc.fileType);
-                
+            filtered.forEach(doc => {
+                // Formatting date: YYYY-MM-DD -> DD/MM/YYYY
+                const parts = doc.date.split('-');
+                const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+
                 const row = document.createElement('div');
                 row.className = 'doc-row';
                 row.innerHTML = `
                     <div class="doc-info">
-                        <div class="doc-header">
-                            <span class="doc-sl">SL NO. ${doc.sl}</span>
-                            <span>•</span>
-                            <span class="doc-type-badge ${typeClass}">${doc.fileType}</span>
+                        <div class="doc-meta-primary">
+                            <span class="doc-sl">${doc.sl}</span>
+                            <span class="doc-type-badge">${doc.fileType}</span>
                         </div>
-                        <h2 class="doc-title">${doc.title}</h2>
-                        <p class="doc-desc">${doc.description}</p>
-                        <div class="doc-meta">
-                            <span>📅 ${doc.uploadDate}</span>
-                            <span>⏰ ${doc.uploadTime}</span>
-                            <span>📁 ${doc.fileName}</span>
+                        <h2 class="doc-title" title="${doc.title[currentLang]}">${doc.title[currentLang]}</h2>
+                        <div class="doc-meta-secondary">
+                            <span>📅 ${formattedDate}</span>
                         </div>
                     </div>
-                    <div class="download-action">
-                        <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
-                            Download
-                        </a>
-                    </div>
+                    <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
+                        ${t.download}
+                    </a>
                 `;
-                documentListEl.appendChild(row);
+                els.list.appendChild(row);
             });
         }
 
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterButtons.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentFilter = e.target.getAttribute('data-filter');
-                renderDocuments();
-            });
+        /* ---------- EVENT LISTENERS ---------- */
+        els.langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            applyTranslations();
+            renderDocuments();
         });
 
-        searchInput.addEventListener('input', (e) => {
+        els.search.addEventListener('input', (e) => {
             searchQuery = e.target.value;
             renderDocuments();
         });
 
+        els.cat.addEventListener('change', (e) => {
+            currentFilter = e.target.value;
+            renderDocuments();
+        });
+
+        els.sort.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderDocuments();
+        });
+
+        // Initialize
+        applyTranslations();
         renderDocuments();
+
+        /* ---------- THEME TOGGLE (Preserved) ---------- */
+        (function themeModule(){
+            const root = document.documentElement;
+            const btn = document.getElementById('themeToggle');
+            function apply(theme){
+                theme === 'dark' ? root.setAttribute('data-theme', 'dark') : root.removeAttribute('data-theme');
+                btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+            }
+            let saved = localStorage.getItem('bseb-hub-theme');
+            apply(saved || 'light');
+            btn.addEventListener('click', () => {
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                apply(next);
+                localStorage.setItem('bseb-hub-theme', next);
+            });
+        })();
     </script>
 </body>
 </html>
