@@ -19,19 +19,19 @@
     <style>
         /* --- 1. Color Scheme & Variables --- */
         :root {
-            --primary-color: #a855f7;       /* Main Purple */
+            --primary-color: #a855f7;       
             --primary-hover: #9333ea;
-            --bg-color: #fdfafr;            /* Soft light pink/purple tint background */
-            --list-bg: #ffffff;             /* Row background */
-            --list-hover: #faf5ff;          /* Row hover background */
+            --bg-color: #fdfafr;            
+            --list-bg: #ffffff;             
+            --list-hover: #faf5ff;          
             --text-main: #1f2937;
             --text-muted: #6b7280;
-            --border-color: #e9d5ff;        /* Soft purple border */
+            --border-color: #e9d5ff;        
             
-            --badge-bg: #f3e8ff;            /* Pill background */
-            --badge-text: #6b21a8;          /* Pill text */
-            --cat-bg: #f3f4f6;              /* Category pill background */
-            --cat-text: #4b5563;            /* Category pill text */
+            --badge-bg: #f3e8ff;            
+            --badge-text: #6b21a8;          
+            --cat-bg: #f3f4f6;              
+            --cat-text: #4b5563;            
         }
 
         /* Dark Mode Overrides */
@@ -91,7 +91,7 @@
 
         @media (min-width: 768px) {
             .doc-controls {
-                grid-template-columns: 2fr 1fr 1fr; /* Search takes up more space */
+                grid-template-columns: 2fr 1fr 1fr; 
             }
         }
 
@@ -122,7 +122,6 @@
         }
         
         select.form-control {
-            /* Custom dropdown arrow */
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 1rem center;
@@ -136,9 +135,9 @@
             border-color: var(--primary-color);
         }
 
-        /* --- 4. Document List & Rows (Ultra Compact) --- */
+        /* --- 4. Document List & Rows (Perfect Linear Alignment) --- */
         .doc-container {
-            max-width: 1100px;
+            max-width: 1200px; /* Widened slightly to accommodate fixed widths comfortably */
             margin: 0 auto 4rem auto;
             padding: 0 1rem;
             display: flex;
@@ -164,31 +163,19 @@
             box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.1);
         }
 
-        /* Desktop specific: Single line layout */
-        @media (min-width: 768px) {
-            .doc-row {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0.6rem 1rem;
-                gap: 1rem;
-            }
-        }
-
-        /* Grouping metadata for desktop layout */
         .doc-info-left {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
             gap: 0.75rem;
-            flex: 1; /* Pushes the date and button to the right */
+            flex: 1;
+            width: 100%;
         }
 
         .doc-sl {
             color: var(--primary-color);
             font-weight: 700;
             font-size: 0.9rem;
-            min-width: 120px;
         }
 
         .doc-type-badge {
@@ -216,7 +203,6 @@
             font-weight: 600;
             margin: 0;
             color: var(--text-main);
-            /* Truncate long titles on smaller screens */
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
@@ -231,13 +217,6 @@
             justify-content: space-between;
         }
 
-        @media (min-width: 768px) {
-            .doc-info-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-        }
-
         .doc-date {
             font-size: 0.85rem;
             color: var(--text-muted);
@@ -247,9 +226,57 @@
             gap: 0.4rem;
         }
 
+        /* --- DESKTOP SPECIFIC: FIXED WIDTHS FOR PERFECT LINEAR ALIGNMENT --- */
+        @media (min-width: 768px) {
+            .doc-row {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.6rem 1rem;
+                gap: 1rem;
+            }
+            
+            .doc-info-left {
+                flex-wrap: nowrap;
+                width: auto;
+            }
+            
+            /* Fixing widths ensures titles always start at the exact same horizontal position */
+            .doc-sl {
+                width: 110px;
+                flex-shrink: 0;
+            }
+            
+            .doc-type-badge {
+                width: 40px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            
+            .doc-cat-badge {
+                width: 130px;
+                text-align: center;
+                flex-shrink: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .doc-title {
+                /* Title takes up remaining fluid space */
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .doc-info-right {
+                width: auto;
+                justify-content: flex-end;
+                flex-shrink: 0;
+            }
+        }
+
         /* --- 5. Download Button --- */
         .download-btn {
-            background-color: #22c55e; /* Green */
+            background-color: #22c55e; 
             color: #ffffff;
             border: none;
             padding: 0.4rem 1.25rem;
@@ -354,25 +381,7 @@
         
         /* =========================================================================
            1. DOCUMENT DATABASE (EASY TO EDIT)
-           =========================================================================
-           HOW TO ADD A NEW DOCUMENT:
-           Copy the template below, paste it at the TOP of the list inside the brackets [ ], 
-           and fill in your details. 
-
-           TEMPLATE:
-           {
-               sl: "DOC-2026-XXX",             // The Serial Number or Document ID
-               title: {
-                   en: "English Title Here",   // Title in English
-                   hi: "हिंदी शीर्षक यहाँ"       // Title in Hindi
-               },
-               category: "letter",             // MUST BE ONE OF: "letter", "order", "notification", "scheme", "other"
-               fileType: "PDF",                // Examples: "PDF", "IMG", "DOC", "XLS"
-               date: "YYYY-MM-DD",             // Date format MUST be YYYY-MM-DD for sorting to work (e.g., "2026-10-15")
-               fileName: "file_name.pdf",      // Name of the file being downloaded
-               fileUrl: "path/to/file.pdf"     // The actual URL/link to the file
-           },
-        ========================================================================= */
+           ========================================================================= */
 
         const documentDatabase = [
             // --- ADD NEW RECORDS DIRECTLY BELOW THIS LINE ---
@@ -433,12 +442,11 @@
         /* =========================================================================
            2. STATE & TRANSLATIONS
            ========================================================================= */
-        let currentLang = 'en'; // Defaults to English ('en' or 'hi')
+        let currentLang = 'en'; 
         let currentFilter = 'all';
         let currentSort = 'newest';
         let searchQuery = '';
 
-        // Dictionary for instant bilingual switching
         const translations = {
             en: {
                 toggleBtn: "हिंदी में देखें",
@@ -475,7 +483,6 @@
             langBtn: document.getElementById('langToggle')
         };
 
-        // Updates all static text on the page based on selected language
         function applyTranslations() {
             const t = translations[currentLang];
             
@@ -498,9 +505,7 @@
             document.getElementById('optSortZA').textContent = t.sorts.za;
         }
 
-        // Filters, Sorts, and Renders the actual document list
         function renderDocuments() {
-            // Step A: Filter by Category and Search Text
             let filtered = documentDatabase.filter(doc => {
                 const matchCat = currentFilter === 'all' || doc.category === currentFilter;
                 const query = searchQuery.toLowerCase();
@@ -509,7 +514,6 @@
                 return matchCat && matchSearch;
             });
 
-            // Step B: Sort data
             filtered.sort((a, b) => {
                 if (currentSort === 'newest') return new Date(b.date) - new Date(a.date);
                 if (currentSort === 'oldest') return new Date(a.date) - new Date(b.date);
@@ -517,7 +521,6 @@
                 if (currentSort === 'za') return b.title[currentLang].localeCompare(a.title[currentLang]);
             });
 
-            // Step C: Build HTML
             els.list.innerHTML = '';
             const t = translations[currentLang];
 
@@ -527,17 +530,13 @@
             }
 
             filtered.forEach(doc => {
-                // Formatting date: YYYY-MM-DD to DD/MM/YYYY
                 const parts = doc.date.split('-');
                 const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-
-                // Getting the correct translated Category name for the pill
                 const translatedCategory = t.cats[doc.category] || doc.category;
 
                 const row = document.createElement('div');
                 row.className = 'doc-row';
                 
-                // Constructing the layout inside the row
                 row.innerHTML = `
                     <div class="doc-info-left">
                         <span class="doc-sl">${doc.sl}</span>
@@ -552,8 +551,6 @@
                             ${formattedDate}
                         </span>
                         
-                        <!-- Note: The 'download' attribute prompts the browser to save the file. 
-                             This works best if the fileUrl is on the same domain as the website. -->
                         <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
                             ${t.download}
                         </a>
@@ -567,32 +564,27 @@
            4. EVENT LISTENERS
            ========================================================================= */
         
-        // Language Toggle Event
         els.langBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'hi' : 'en';
             applyTranslations();
             renderDocuments();
         });
 
-        // Search Input Event
         els.search.addEventListener('input', (e) => {
             searchQuery = e.target.value;
             renderDocuments();
         });
 
-        // Category Filter Event
         els.cat.addEventListener('change', (e) => {
             currentFilter = e.target.value;
             renderDocuments();
         });
 
-        // Sort Event
         els.sort.addEventListener('change', (e) => {
             currentSort = e.target.value;
             renderDocuments();
         });
 
-        // Initialize application on load
         applyTranslations();
         renderDocuments();
 
@@ -600,7 +592,6 @@
            5. THEME & MENU TOGGLE MODULES
            ========================================================================= */
         
-        // Dark Mode Toggle
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
@@ -625,7 +616,6 @@
             });
         })();
 
-        // Mobile Menu Toggle
         (function mobileMenu() {
             const menuBtn = document.getElementById('menuToggle');
             const nav = document.querySelector('.main-nav');
