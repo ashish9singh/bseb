@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Official Letters — BSEBwala</title>
-    <meta name="description" content="Official letters and circulars from the Bihar School Examination Board and Education Department.">
+    <title>Official Letters & Documents — BSEBwala</title>
+    <meta name="description" content="Official letters, eGazettes, notifications, and advertisements from the Bihar School Examination Board and Education Department.">
 
     <!-- Google Fonts: Lora for headings, Inter for body/UI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +13,255 @@
     <!-- LINK TO YOUR NEW EXTERNAL CSS FILE -->
     <link rel="stylesheet" href="style.css">
 
-    </head>
+    <!-- ========================================== -->
+    <!-- LINEAR THEME PAGE STYLES                   -->
+    <!-- ========================================== -->
+    <style>
+        /* Base Variables matching typical BSEBwala palette */
+        :root {
+            --primary-color: #1a56db;
+            --primary-hover: #1e40af;
+            --bg-color: #ffffff;
+            --list-bg: #ffffff;
+            --list-hover: #f8fafc;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border-color: #e5e7eb;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --list-bg: #111827;
+            --list-hover: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+        }
+
+        /* --- Controls Section (Search & Filter) --- */
+        .doc-controls {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px; /* Flatter, linear corners */
+            font-size: 1rem;
+            background-color: var(--list-bg);
+            color: var(--text-main);
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .search-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--list-hover);
+            color: var(--text-main);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-color: var(--primary-color);
+        }
+
+        /* --- Linear List Container --- */
+        .doc-container {
+            max-width: 1000px;
+            margin: 0 auto 4rem auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Linear Row Item (Replacing Cards) */
+        .doc-row {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--list-bg);
+            transition: background-color 0.2s;
+            gap: 1rem;
+        }
+
+        .doc-row:hover {
+            background-color: var(--list-hover);
+        }
+
+        /* Desktop Linear Layout */
+        @media (min-width: 768px) {
+            .doc-row {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        .doc-info {
+            flex: 1;
+            padding-right: 1rem;
+        }
+
+        .doc-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .doc-sl {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .doc-type-badge {
+            font-weight: 700;
+        }
+        
+        .type-pdf { color: #dc2626; }
+        .type-image { color: #2563eb; }
+        .type-doc { color: #059669; }
+        .type-other { color: var(--text-muted); }
+
+        .doc-title {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .doc-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .doc-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        .doc-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .download-action {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .download-action {
+                margin-top: 0;
+            }
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 0.5rem 1.25rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        /* Empty State */
+        .no-results {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+    </style>
+</head>
 <body>
 
     <!-- HEADER -->
-  <header class="site">
-    <div class="wrap header-inner">
-          <a href="index.html" class="brand">
-            <div class="mark">BB</div>
-            <span class="full">BSEB Portal Hub</span>
-          </a>
-
+    <header class="site">
+        <div class="wrap header-inner">
+            <a href="index.html" class="brand">
+                <div class="mark">BB</div>
+                <span class="full">BSEB Portal Hub</span>
+            </a>
             <nav class="main-nav">
                 <a href="https://bsebwala.in/">Home</a>
                 <a href="aihub.html">AIHub</a>
@@ -33,25 +271,35 @@
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
-
-            <!-- Paste this entire block right below </nav> -->
             <div class="header-actions">
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
                 <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
             </div>
-            
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <main>
-        <div class="splash-card">
-            <div class="splash-icon">📩</div>
-            <h1>Official Letters Archive</h1>
-            <p>We are building a highly searchable database of all official notifications, circulars, and departmental letters from BSEB and the Education Department.</p>
-            <p><strong>Coming Soon.</strong></p>
-            <a href="index.html" class="back-btn">← Return to Homepage</a>
-        </div>
+        <!-- Search and Filter Controls -->
+        <section class="doc-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search documents by keyword, filename, or description...">
+            </div>
+            
+            <div class="filter-group" id="filterContainer">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="letter">Letters</button>
+                <button class="filter-btn" data-filter="egazette">eGazette</button>
+                <button class="filter-btn" data-filter="notification">Notifications</button>
+                <button class="filter-btn" data-filter="advertisement">Advertisements</button>
+            </div>
+        </section>
+
+        <!-- Linear Document List Container -->
+        <section class="doc-container" id="documentList">
+            <!-- Documents will be injected here via JavaScript -->
+        </section>
     </main>
 
     <!-- SCRIPTS -->
@@ -86,46 +334,147 @@
             });
         })();
 
-        /* ---------- COMING SOON TOOLTIP ---------- */
-        (function comingSoonModule() {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'coming-soon-tooltip';
-            tooltip.innerHTML = 'Page is coming soon 🚀';
-            document.body.appendChild(tooltip);
-
-            let hideTimeout;
-
-            document.querySelectorAll('.coming-soon').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    const rect = this.getBoundingClientRect();
-                    tooltip.style.left = (rect.left + (rect.width / 2) + window.scrollX) + 'px';
-                    tooltip.style.top = (rect.bottom + window.scrollY + 10) + 'px';
-                    tooltip.classList.add('show');
-                    
-                    clearTimeout(hideTimeout);
-                    hideTimeout = setTimeout(() => {
-                        tooltip.classList.remove('show');
-                    }, 2000);
-                });
-            });
-        })();
-    </script>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
+        /* ---------- MOBILE MENU ---------- */
         (function mobileMenu() {
             const menuBtn = document.getElementById('menuToggle');
             const nav = document.querySelector('.main-nav');
-            
             if (menuBtn && nav) {
                 menuBtn.addEventListener('click', () => {
                     nav.classList.toggle('open');
-                    // Change icon to 'X' when open
                     menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
                 });
             }
         })();
+
+        /* ---------- DOCUMENT RENDERER & FILTER LOGIC ---------- */
+        const documentDatabase = [
+            {
+                sl: "001",
+                title: "BSEB Exam Schedule 2027",
+                category: "notification",
+                fileType: "PDF",
+                description: "AI Summary: Official timetable for Class 10th and 12th board examinations for the academic year 2026-2027, including practical exam dates.",
+                uploadDate: "2026-10-10",
+                uploadTime: "14:30 IST",
+                fileName: "bseb_exam_schedule_2027.pdf",
+                fileUrl: "assets/docs/bseb_exam_schedule_2027.pdf" 
+            },
+            {
+                sl: "002",
+                title: "Holiday Calendar Revision - Oct 2026",
+                category: "letter",
+                fileType: "IMAGE",
+                description: "AI Summary: Departmental letter revising the school holiday calendar for Diwali and Chhath Puja holidays for all state-affiliated schools.",
+                uploadDate: "2026-10-09",
+                uploadTime: "09:15 IST",
+                fileName: "holiday_revised_oct.jpg",
+                fileUrl: "assets/docs/holiday_revised_oct.jpg"
+            },
+            {
+                sl: "003",
+                title: "Bihar State eGazette - Education Amendment",
+                category: "egazette",
+                fileType: "PDF",
+                description: "AI Summary: Official state gazette publication regarding the amendment to teacher attendance protocols using digital tracking via smartphones.",
+                uploadDate: "2026-10-05",
+                uploadTime: "11:00 IST",
+                fileName: "bihar_egazette_edu_amendment.pdf",
+                fileUrl: "assets/docs/bihar_egazette_edu_amendment.pdf"
+            },
+            {
+                sl: "004",
+                title: "Tender Advertisement: Smart Class Equipment",
+                category: "advertisement",
+                fileType: "DOC",
+                description: "AI Summary: Public tender invitation for the procurement and installation of smart class infrastructure in 500 government high schools.",
+                uploadDate: "2026-10-01",
+                uploadTime: "16:45 IST",
+                fileName: "tender_smart_class_bseb.docx",
+                fileUrl: "assets/docs/tender_smart_class_bseb.docx"
+            }
+        ];
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        const documentListEl = document.getElementById('documentList');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        function getFileTypeClass(type) {
+            const t = type.toLowerCase();
+            if (t === 'pdf') return 'type-pdf';
+            if (t === 'image' || t === 'jpg' || t === 'png') return 'type-image';
+            if (t === 'doc' || t === 'docx') return 'type-doc';
+            return 'type-other';
+        }
+
+        function renderDocuments() {
+            const filteredDocs = documentDatabase.filter(doc => {
+                const matchesCategory = currentFilter === 'all' || doc.category === currentFilter;
+                const searchLower = searchQuery.toLowerCase();
+                const matchesSearch = doc.title.toLowerCase().includes(searchLower) ||
+                                      doc.description.toLowerCase().includes(searchLower) ||
+                                      doc.fileName.toLowerCase().includes(searchLower);
+                return matchesCategory && matchesSearch;
+            });
+
+            documentListEl.innerHTML = '';
+
+            if (filteredDocs.length === 0) {
+                documentListEl.innerHTML = `
+                    <div class="no-results">
+                        No documents found matching your criteria.
+                    </div>
+                `;
+                return;
+            }
+
+            filteredDocs.forEach(doc => {
+                const typeClass = getFileTypeClass(doc.fileType);
+                
+                const row = document.createElement('div');
+                row.className = 'doc-row';
+                row.innerHTML = `
+                    <div class="doc-info">
+                        <div class="doc-header">
+                            <span class="doc-sl">SL NO. ${doc.sl}</span>
+                            <span>•</span>
+                            <span class="doc-type-badge ${typeClass}">${doc.fileType}</span>
+                        </div>
+                        <h2 class="doc-title">${doc.title}</h2>
+                        <p class="doc-desc">${doc.description}</p>
+                        <div class="doc-meta">
+                            <span>📅 ${doc.uploadDate}</span>
+                            <span>⏰ ${doc.uploadTime}</span>
+                            <span>📁 ${doc.fileName}</span>
+                        </div>
+                    </div>
+                    <div class="download-action">
+                        <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
+                            Download
+                        </a>
+                    </div>
+                `;
+                documentListEl.appendChild(row);
+            });
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.getAttribute('data-filter');
+                renderDocuments();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderDocuments();
+        });
+
+        renderDocuments();
     </script>
 </body>
 </html>
