@@ -604,5 +604,38 @@
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
+            
             function apply(theme){
-                theme === 'dark' ? root
+                if (theme === 'dark') {
+                    root.setAttribute('data-theme', 'dark');
+                    btn.textContent = '☀️';
+                } else {
+                    root.removeAttribute('data-theme');
+                    btn.textContent = '🌙';
+                }
+            }
+            
+            let saved = localStorage.getItem('bseb-hub-theme');
+            apply(saved || 'light');
+            
+            btn.addEventListener('click', () => {
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                apply(next);
+                localStorage.setItem('bseb-hub-theme', next);
+            });
+        })();
+
+        // Mobile Menu Toggle
+        (function mobileMenu() {
+            const menuBtn = document.getElementById('menuToggle');
+            const nav = document.querySelector('.main-nav');
+            if (menuBtn && nav) {
+                menuBtn.addEventListener('click', () => {
+                    nav.classList.toggle('open');
+                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
