@@ -6,27 +6,35 @@
     <title>Official Letters & Documents — BSEBwala</title>
     <meta name="description" content="Official letters, eGazettes, notifications, and advertisements from the Bihar School Examination Board and Education Department.">
 
-    <!-- Google Fonts -->
+    <!-- ========================================== -->
+    <!-- EXTERNAL RESOURCES                         -->
+    <!-- ========================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
+    <!-- ========================================== -->
+    <!-- PAGE-SPECIFIC STYLES                       -->
+    <!-- ========================================== -->
     <style>
-        /* --- Color Scheme matching "Live Updates & News" (Image 3) --- */
+        /* --- 1. Color Scheme & Variables --- */
         :root {
-            --primary-color: #a855f7; /* Purple */
+            --primary-color: #a855f7;       /* Main Purple */
             --primary-hover: #9333ea;
-            --bg-color: #fdfafr; /* Soft light pink/purple tint background */
-            --list-bg: #ffffff;
-            --list-hover: #faf5ff;
+            --bg-color: #fdfafr;            /* Soft light pink/purple tint background */
+            --list-bg: #ffffff;             /* Row background */
+            --list-hover: #faf5ff;          /* Row hover background */
             --text-main: #1f2937;
             --text-muted: #6b7280;
-            --border-color: #e9d5ff; /* Soft purple border */
+            --border-color: #e9d5ff;        /* Soft purple border */
             
-            --badge-bg: #f3e8ff;
-            --badge-text: #6b21a8;
+            --badge-bg: #f3e8ff;            /* Pill background */
+            --badge-text: #6b21a8;          /* Pill text */
+            --cat-bg: #f3f4f6;              /* Category pill background */
+            --cat-text: #4b5563;            /* Category pill text */
         }
 
+        /* Dark Mode Overrides */
         [data-theme="dark"] {
             --bg-color: #111827;
             --list-bg: #1f2937;
@@ -36,6 +44,8 @@
             --border-color: #4b5563;
             --badge-bg: #374151;
             --badge-text: #d8b4fe;
+            --cat-bg: #4b5563;
+            --cat-text: #e5e7eb;
         }
 
         body {
@@ -45,7 +55,7 @@
             margin: 0;
         }
 
-        /* --- Header Actions --- */
+        /* --- 2. Header & Buttons --- */
         .header-actions {
             display: flex;
             align-items: center;
@@ -61,16 +71,17 @@
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
+
         .lang-btn:hover {
             background-color: var(--primary-color);
             color: #fff;
         }
 
-        /* --- Controls Section (Search & Filter dropdowns based on Image 1 & 2) --- */
+        /* --- 3. Filter & Search Controls --- */
         .doc-controls {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 1.5rem auto;
             padding: 0 1rem;
             display: grid;
@@ -80,7 +91,7 @@
 
         @media (min-width: 768px) {
             .doc-controls {
-                grid-template-columns: 2fr 1fr 1fr; /* Search is wider */
+                grid-template-columns: 2fr 1fr 1fr; /* Search takes up more space */
             }
         }
 
@@ -107,15 +118,17 @@
             color: var(--text-main);
             transition: border-color 0.2s;
             box-sizing: border-box;
-            appearance: none; /* For selects */
+            appearance: none;
         }
         
         select.form-control {
+            /* Custom dropdown arrow */
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 1rem center;
             background-size: 1em;
             padding-right: 2.5rem;
+            cursor: pointer;
         }
 
         .form-control:focus {
@@ -123,68 +136,59 @@
             border-color: var(--primary-color);
         }
 
-        /* --- Compact Linear List --- */
+        /* --- 4. Document List & Rows (Ultra Compact) --- */
         .doc-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto 4rem auto;
             padding: 0 1rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem; /* Gap between compact rows */
+            gap: 0.5rem;
         }
 
         .doc-row {
             display: flex;
             flex-direction: column;
-            padding: 0.75rem 1rem; /* Much tighter padding */
+            padding: 0.75rem 1rem;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             background-color: var(--list-bg);
             transition: transform 0.1s, box-shadow 0.2s;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            align-items: flex-start;
         }
 
         .doc-row:hover {
             background-color: var(--list-hover);
             transform: translateY(-1px);
-            box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.1); /* Soft purple shadow */
+            box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.1);
         }
 
+        /* Desktop specific: Single line layout */
         @media (min-width: 768px) {
             .doc-row {
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
-                padding: 0.6rem 1rem; /* Ultra compact on desktop */
+                padding: 0.6rem 1rem;
+                gap: 1rem;
             }
         }
 
-        .doc-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-
-        @media (min-width: 768px) {
-            .doc-info {
-                flex-direction: row;
-                align-items: center;
-                gap: 1.5rem;
-            }
-        }
-
-        .doc-meta-primary {
+        /* Grouping metadata for desktop layout */
+        .doc-info-left {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 0.75rem;
-            min-width: 150px;
+            flex: 1; /* Pushes the date and button to the right */
         }
 
         .doc-sl {
             color: var(--primary-color);
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            min-width: 120px;
         }
 
         .doc-type-badge {
@@ -193,39 +197,66 @@
             text-transform: uppercase;
             background-color: var(--badge-bg);
             color: var(--badge-text);
-            padding: 0.1rem 0.5rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 4px;
         }
 
+        .doc-cat-badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            background-color: var(--cat-bg);
+            color: var(--cat-text);
+            padding: 0.2rem 0.6rem;
+            border-radius: 99px;
+            white-space: nowrap;
+        }
+
         .doc-title {
-            font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             font-weight: 600;
             margin: 0;
             color: var(--text-main);
-            flex: 1;
-            white-space: nowrap;
+            /* Truncate long titles on smaller screens */
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .doc-meta-secondary {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        .doc-info-right {
             display: flex;
-            gap: 1rem;
-            min-width: 140px;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: space-between;
         }
 
+        @media (min-width: 768px) {
+            .doc-info-right {
+                width: auto;
+                justify-content: flex-end;
+            }
+        }
+
+        .doc-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* --- 5. Download Button --- */
         .download-btn {
-            background-color: #22c55e; /* Green download button like image 1 */
+            background-color: #22c55e; /* Green */
             color: #ffffff;
             border: none;
-            padding: 0.4rem 1rem;
+            padding: 0.4rem 1.25rem;
             border-radius: 99px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             transition: background-color 0.2s;
             white-space: nowrap;
             text-align: center;
@@ -237,15 +268,20 @@
         
         .no-results {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            background-color: var(--list-bg);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- ========================================== -->
+    <!-- HEADER                                     -->
+    <!-- ========================================== -->
     <header class="site">
         <div class="wrap header-inner">
             <a href="index.html" class="brand">
@@ -258,15 +294,18 @@
             </nav>
             <div class="header-actions">
                 <button class="lang-btn" id="langToggle">हिंदी में देखें</button>
-                <button class="icon-btn" id="themeToggle">🌙</button>
+                <button class="icon-btn" id="themeToggle" title="Toggle Theme">🌙</button>
                 <button class="icon-btn menu-toggle-btn" id="menuToggle">☰</button>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
+    <!-- ========================================== -->
+    <!-- MAIN CONTENT                               -->
+    <!-- ========================================== -->
     <main>
-        <!-- Search and Filter Controls (3 Columns) -->
+        
+        <!-- Controls: Search, Category, Sort -->
         <section class="doc-controls">
             <div class="control-group">
                 <label class="control-label" id="lblSearch">Search</label>
@@ -296,45 +335,42 @@
             </div>
         </section>
 
-        <!-- Compact Document List Container -->
-        <section class="doc-container" id="documentList"></section>
+        <!-- Document List Area -->
+        <section class="doc-container" id="documentList">
+            <!-- Documents will be rendered here by JavaScript -->
+        </section>
     </main>
 
-    <!-- SCRIPTS -->
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- ========================================== -->
     <script>
-        /* ---------- STATE & TRANSLATIONS ---------- */
-        let currentLang = 'en'; // 'en' or 'hi'
-        let currentFilter = 'all';
-        let currentSort = 'newest';
-        let searchQuery = '';
+        
+        /* =========================================================================
+           1. DOCUMENT DATABASE (EASY TO EDIT)
+           =========================================================================
+           HOW TO ADD A NEW DOCUMENT:
+           Copy the template below, paste it at the TOP of the list inside the brackets [ ], 
+           and fill in your details. 
 
-        const translations = {
-            en: {
-                toggleBtn: "हिंदी में देखें",
-                lblSearch: "Search",
-                phSearch: "Title or keyword...",
-                lblCategory: "Category",
-                lblSort: "Sort By",
-                cats: { all: "All", letter: "Circular / Letter", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
-                sorts: { new: "Newest First", old: "Oldest First", az: "Alphabetically (A-Z)", za: "Alphabetically (Z-A)" },
-                download: "Download",
-                noResult: "No documents found."
-            },
-            hi: {
-                toggleBtn: "View in English",
-                lblSearch: "खोज",
-                phSearch: "शीर्षक या लिखावट...",
-                lblCategory: "श्रेणी",
-                lblSort: "क्रम",
-                cats: { all: "सभी", letter: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
-                sorts: { new: "नया पहले", old: "पुराना पहले", az: "अक्षर क्रमानुसार (A-Z)", za: "अक्षर क्रमानुसार (Z-A)" },
-                download: "डाउनलोड",
-                noResult: "कोई दस्तावेज़ नहीं मिला।"
-            }
-        };
+           TEMPLATE:
+           {
+               sl: "DOC-2026-XXX",             // The Serial Number or Document ID
+               title: {
+                   en: "English Title Here",   // Title in English
+                   hi: "हिंदी शीर्षक यहाँ"       // Title in Hindi
+               },
+               category: "letter",             // MUST BE ONE OF: "letter", "order", "notification", "scheme", "other"
+               fileType: "PDF",                // Examples: "PDF", "IMG", "DOC", "XLS"
+               date: "YYYY-MM-DD",             // Date format MUST be YYYY-MM-DD for sorting to work (e.g., "2026-10-15")
+               fileName: "file_name.pdf",      // Name of the file being downloaded
+               fileUrl: "path/to/file.pdf"     // The actual URL/link to the file
+           },
+        ========================================================================= */
 
-        /* ---------- MOCK DATABASE ---------- */
         const documentDatabase = [
+            // --- ADD NEW RECORDS DIRECTLY BELOW THIS LINE ---
+
             {
                 sl: "DOC-2026-010",
                 title: {
@@ -343,9 +379,9 @@
                 },
                 category: "other",
                 fileType: "PDF",
-                date: "2026-10-11", // ISO format for easy sorting
+                date: "2026-10-11", 
                 fileName: "smc_guard_2026.pdf",
-                fileUrl: "#"
+                fileUrl: "assets/docs/smc_guard_2026.pdf"
             },
             {
                 sl: "DOC-2026-009",
@@ -357,7 +393,7 @@
                 fileType: "IMG",
                 date: "2026-10-10",
                 fileName: "10th_schedule.jpg",
-                fileUrl: "#"
+                fileUrl: "assets/docs/10th_schedule.jpg"
             },
             {
                 sl: "DOC-2026-008",
@@ -369,7 +405,7 @@
                 fileType: "PDF",
                 date: "2026-10-05",
                 fileName: "training_oct.pdf",
-                fileUrl: "#"
+                fileUrl: "assets/docs/training_oct.pdf"
             },
             {
                 sl: "DOC-2026-007",
@@ -381,11 +417,50 @@
                 fileType: "DOC",
                 date: "2026-10-01",
                 fileName: "holiday_nov.docx",
-                fileUrl: "#"
+                fileUrl: "assets/docs/holiday_nov.docx"
             }
+
+            // --- ADD OLDER RECORDS ABOVE THIS LINE ---
         ];
 
-        /* ---------- DOM ELEMENTS ---------- */
+
+        /* =========================================================================
+           2. STATE & TRANSLATIONS
+           ========================================================================= */
+        let currentLang = 'en'; // Defaults to English ('en' or 'hi')
+        let currentFilter = 'all';
+        let currentSort = 'newest';
+        let searchQuery = '';
+
+        // Dictionary for instant bilingual switching
+        const translations = {
+            en: {
+                toggleBtn: "हिंदी में देखें",
+                lblSearch: "Search",
+                phSearch: "Title or keyword...",
+                lblCategory: "Category",
+                lblSort: "Sort By",
+                cats: { all: "All", letter: "Circular / Letter", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
+                sorts: { new: "Newest First", old: "Oldest First", az: "Alphabetically (A-Z)", za: "Alphabetically (Z-A)" },
+                download: "Download",
+                noResult: "No documents found matching your criteria."
+            },
+            hi: {
+                toggleBtn: "View in English",
+                lblSearch: "खोज",
+                phSearch: "शीर्षक या लिखावट...",
+                lblCategory: "श्रेणी",
+                lblSort: "क्रम",
+                cats: { all: "सभी", letter: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
+                sorts: { new: "नया पहले", old: "पुराना पहले", az: "अक्षर क्रमानुसार (A-Z)", za: "अक्षर क्रमानुसार (Z-A)" },
+                download: "डाउनलोड",
+                noResult: "आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।"
+            }
+        };
+
+        /* =========================================================================
+           3. CORE RENDERING LOGIC
+           ========================================================================= */
         const els = {
             list: document.getElementById('documentList'),
             search: document.getElementById('searchInput'),
@@ -394,7 +469,7 @@
             langBtn: document.getElementById('langToggle')
         };
 
-        /* ---------- RENDERING LOGIC ---------- */
+        // Updates all static text on the page based on selected language
         function applyTranslations() {
             const t = translations[currentLang];
             
@@ -417,8 +492,9 @@
             document.getElementById('optSortZA').textContent = t.sorts.za;
         }
 
+        // Filters, Sorts, and Renders the actual document list
         function renderDocuments() {
-            // 1. Filter
+            // Step A: Filter by Category and Search Text
             let filtered = documentDatabase.filter(doc => {
                 const matchCat = currentFilter === 'all' || doc.category === currentFilter;
                 const query = searchQuery.toLowerCase();
@@ -427,7 +503,7 @@
                 return matchCat && matchSearch;
             });
 
-            // 2. Sort
+            // Step B: Sort data
             filtered.sort((a, b) => {
                 if (currentSort === 'newest') return new Date(b.date) - new Date(a.date);
                 if (currentSort === 'oldest') return new Date(a.date) - new Date(b.date);
@@ -435,7 +511,7 @@
                 if (currentSort === 'za') return b.title[currentLang].localeCompare(a.title[currentLang]);
             });
 
-            // 3. Render
+            // Step C: Build HTML
             els.list.innerHTML = '';
             const t = translations[currentLang];
 
@@ -445,73 +521,82 @@
             }
 
             filtered.forEach(doc => {
-                // Formatting date: YYYY-MM-DD -> DD/MM/YYYY
+                // Formatting date: YYYY-MM-DD to DD/MM/YYYY
                 const parts = doc.date.split('-');
                 const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
 
+                // Getting the correct translated Category name for the pill
+                const translatedCategory = t.cats[doc.category] || doc.category;
+
                 const row = document.createElement('div');
                 row.className = 'doc-row';
+                
+                // Constructing the layout inside the row
                 row.innerHTML = `
-                    <div class="doc-info">
-                        <div class="doc-meta-primary">
-                            <span class="doc-sl">${doc.sl}</span>
-                            <span class="doc-type-badge">${doc.fileType}</span>
-                        </div>
+                    <div class="doc-info-left">
+                        <span class="doc-sl">${doc.sl}</span>
+                        <span class="doc-type-badge">${doc.fileType}</span>
+                        <span class="doc-cat-badge">${translatedCategory}</span>
                         <h2 class="doc-title" title="${doc.title[currentLang]}">${doc.title[currentLang]}</h2>
-                        <div class="doc-meta-secondary">
-                            <span>📅 ${formattedDate}</span>
-                        </div>
                     </div>
-                    <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
-                        ${t.download}
-                    </a>
+                    
+                    <div class="doc-info-right">
+                        <span class="doc-date">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #60a5fa"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> 
+                            ${formattedDate}
+                        </span>
+                        
+                        <!-- Note: The 'download' attribute prompts the browser to save the file. 
+                             This works best if the fileUrl is on the same domain as the website. -->
+                        <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
+                            ${t.download}
+                        </a>
+                    </div>
                 `;
                 els.list.appendChild(row);
             });
         }
 
-        /* ---------- EVENT LISTENERS ---------- */
+        /* =========================================================================
+           4. EVENT LISTENERS
+           ========================================================================= */
+        
+        // Language Toggle Event
         els.langBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'hi' : 'en';
             applyTranslations();
             renderDocuments();
         });
 
+        // Search Input Event
         els.search.addEventListener('input', (e) => {
             searchQuery = e.target.value;
             renderDocuments();
         });
 
+        // Category Filter Event
         els.cat.addEventListener('change', (e) => {
             currentFilter = e.target.value;
             renderDocuments();
         });
 
+        // Sort Event
         els.sort.addEventListener('change', (e) => {
             currentSort = e.target.value;
             renderDocuments();
         });
 
-        // Initialize
+        // Initialize application on load
         applyTranslations();
         renderDocuments();
 
-        /* ---------- THEME TOGGLE (Preserved) ---------- */
+        /* =========================================================================
+           5. THEME & MENU TOGGLE MODULES
+           ========================================================================= */
+        
+        // Dark Mode Toggle
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
             function apply(theme){
-                theme === 'dark' ? root.setAttribute('data-theme', 'dark') : root.removeAttribute('data-theme');
-                btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-            }
-            let saved = localStorage.getItem('bseb-hub-theme');
-            apply(saved || 'light');
-            btn.addEventListener('click', () => {
-                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                apply(next);
-                localStorage.setItem('bseb-hub-theme', next);
-            });
-        })();
-    </script>
-</body>
-</html>
+                theme === 'dark' ? root
