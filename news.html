@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149"
      crossorigin="anonymous"></script>
     
@@ -21,15 +20,15 @@
     <style>
       .news-filters {
           display: flex !important;
-          flex-wrap: wrap !important; /* Forces chips to drop to the next line */
-          justify-content: center !important; /* Centers the buttons */
+          flex-wrap: wrap !important;
+          justify-content: center !important;
           gap: 8px !important;
-          overflow-x: visible !important; /* Removes the horizontal scroll */
+          overflow-x: visible !important;
           padding: 10px 5px 20px !important;
       }
       .news-chip {
           flex: 0 1 auto;
-          white-space: nowrap; /* Keeps text on one line inside the button */
+          white-space: nowrap;
       }
     </style>
 </head>
@@ -54,7 +53,6 @@
                 <a href="/contact">Contact</a>
             </nav>
 
-            <!-- Paste this entire block right below </nav> -->
             <div class="header-actions">
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
                 <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
@@ -83,9 +81,9 @@
         
         <!-- News Cards Grid -->
         <div id="news-container" class="news-grid">
+            <!-- Loading state removed text, kept minimal silent spinner -->
             <div class="status-container">
                 <div class="spinner"></div>
-                <h2 id="ui-loading">Loading latest news...</h2>
             </div>
         </div>
         
@@ -110,7 +108,6 @@
             hi: {
                 title: "लाइव अपडेट और समाचार",
                 subtitle: "बिहार बोर्ड के छात्रों और शिक्षकों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।",
-                loading: "नवीनतम समाचार लोड हो रहा है...",
                 offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं।",
                 empty: "इस श्रेणी में अभी कोई समाचार उपलब्ध नहीं है।",
                 readMore: "पूरी खबर पढ़ें →",
@@ -124,7 +121,6 @@
             en: {
                 title: "Live Updates & News",
                 subtitle: "The latest filtered announcements, results, and notices strictly for Bihar Board students.",
-                loading: "Loading latest news...",
                 offline: "Displaying cached offline news due to network lag.",
                 empty: "No news found in this category.",
                 readMore: "Read Full Article →",
@@ -233,22 +229,34 @@
             }[tag] || tag));
         }
 
-        // IST date and time formatter
+        // ==========================================
+        // REFINED DATE FORMATTING (Clean layout)
+        // ==========================================
         function formatDateTime(dateInput) {
             if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
             const d = new Date(dateInput);
             if (isNaN(d.getTime())) return dateInput;
 
-            return d.toLocaleString(currentLang === 'hi' ? 'hi-IN' : 'en-US', {
-                timeZone: 'Asia/Kolkata', // Automatically converts UTC to IST (+5:30)
-                timeZoneName: 'short',    // Adds the "IST" label
+            const locale = currentLang === 'hi' ? 'hi-IN' : 'en-IN';
+            
+            // Generate clean date: e.g., "12 Oct 2026"
+            const dateStr = new Intl.DateTimeFormat(locale, { 
+                timeZone: 'Asia/Kolkata', 
+                day: '2-digit', 
                 month: 'short', 
-                day: 'numeric', 
-                year: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            });
+                year: 'numeric' 
+            }).format(d);
+            
+            // Generate clean time: e.g., "09:52 PM"
+            const timeStr = new Intl.DateTimeFormat(locale, { 
+                timeZone: 'Asia/Kolkata', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: true 
+            }).format(d).toUpperCase();
+
+            // Combine into crisp layout
+            return `${dateStr} • ${timeStr}`;
         }
 
         // Automatic Category Tagger
@@ -427,7 +435,8 @@
             const newsContainer = document.getElementById("news-container");
             
             if (allArticles.length === 0) {
-                newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2 id="ui-loading">${UI[currentLang].loading}</h2></div>`;
+                // Initial silent spinner
+                newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div></div>`;
             }
 
             try {
