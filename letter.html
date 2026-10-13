@@ -157,7 +157,46 @@
         };
 
         /* =========================================================================
-           3. FETCH DATA FROM GOOGLE SHEETS
+           3. DIRECT DOWNLOAD HANDLER
+           ========================================================================= */
+        function formatDirectDownloadUrl(url) {
+            if (!url) return '#';
+            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) {
+                return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+            }
+            const idParamMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (url.includes('drive.google.com') && idParamMatch && idParamMatch[1]) {
+                return `https://drive.google.com/uc?export=download&id=${idParamMatch[1]}`;
+            }
+            return url;
+        }
+
+        async function triggerDirectDownload(event, fileUrl, fileName) {
+            const directUrl = formatDirectDownloadUrl(fileUrl);
+            
+            // Try fetching as Blob for instant forced download across same-origin/CORS-enabled URLs
+            try {
+                event.preventDefault();
+                const response = await fetch(directUrl);
+                if (!response.ok) throw new Error("Network fetch failed");
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                const tempLink = document.createElement('a');
+                tempLink.href = blobUrl;
+                tempLink.download = fileName || 'document.pdf';
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (err) {
+                // Direct fallback: open/download directly in a new tab if cross-origin blocks blob fetch
+                window.open(directUrl, '_blank', 'noopener,noreferrer');
+            }
+        }
+
+        /* =========================================================================
+           4. FETCH DATA FROM GOOGLE SHEETS
            ========================================================================= */
         async function fetchSheetData() {
             try {
@@ -184,12 +223,10 @@
                         rawDate = `${y}-${m}-${d}`;
                     }
 
-                    // Fallback to row index + 1 if sl is empty or not numeric
                     let serialVal = getCell(0);
                     if (!serialVal) {
                         serialVal = String(index + 1);
                     } else if (serialVal.startsWith("DOC") || serialVal.startsWith("DOC-")) {
-                        // Strips verbose 'DOC 0001' or 'DOC-2026-001' down to simple numbers
                         const extractedNum = parseInt(serialVal.replace(/[^0-9]/g, ''), 10);
                         if (!isNaN(extractedNum)) serialVal = String(extractedNum);
                     }
@@ -199,10 +236,6 @@
                         title: {
                             en: getCell(1) || "Untitled Document",
                             hi: getCell(2) || getCell(1) || "दस्तावेज़"
-                        },
-                        desc: {
-                            en: getCell(3) || "",
-                            hi: getCell(4) || getCell(3) || ""
                         },
                         category: (getCell(5) || 'other').toLowerCase(),
                         fileType: (getCell(6) || 'PDF').toUpperCase(),
@@ -220,7 +253,7 @@
         }
 
         /* =========================================================================
-           4. RENDER AND FILTER LOGIC
+           5. RENDER AND FILTER LOGIC
            ========================================================================= */
         function applyTranslations() {
             const t = translations[currentLang];
@@ -258,9 +291,8 @@
             let filtered = documentDatabase.filter(doc => {
                 const matchCat = (currentFilter === 'all' || doc.category === currentFilter);
                 const titleStr = (doc.title[currentLang] || doc.title.en || '').toLowerCase();
-                const descStr = (doc.desc[currentLang] || doc.desc.en || '').toLowerCase();
                 const slStr = (doc.sl || '').toLowerCase();
-                const matchSearch = !query || titleStr.includes(query) || descStr.includes(query) || slStr.includes(query);
+                const matchSearch = !query || titleStr.includes(query) || slStr.includes(query);
                 return matchCat && matchSearch;
             });
 
@@ -286,7 +318,7 @@
                 const formattedDate = formatDateDisplay(doc.date);
                 const translatedCategory = t.cats[doc.category] || doc.category;
                 const displayTitle = doc.title[currentLang] || doc.title.en;
-                const displayDesc = doc.desc[currentLang] || doc.desc.en;
+                const directUrl = formatDirectDownloadUrl(doc.fileUrl);
 
                 const row = document.createElement('div');
                 row.className = 'doc-row';
@@ -298,8 +330,7 @@
                         <span class="doc-cat-badge">${translatedCategory}</span>
                         
                         <div class="doc-text-group">
-                            <h2 class="doc-title" title="${displayTitle}">${displayTitle}</h2>
-                            <span class="doc-desc" title="${displayDesc}">${displayDesc}</span>
+                            <h2 class="doc-title">${displayTitle}</h2>
                         </div>
                     </div>
                     
@@ -309,7 +340,7 @@
                             ${formattedDate}
                         </span>
                         
-                        <a href="${doc.fileUrl}" target="_blank" rel="noopener noreferrer" download="${doc.fileName}" class="download-btn">
+                        <a href="${directUrl}" download="${doc.fileName}" class="download-btn" onclick="triggerDirectDownload(event, '${doc.fileUrl}', '${doc.fileName}')">
                             ${t.download}
                         </a>
                     </div>
@@ -319,7 +350,7 @@
         }
 
         /* =========================================================================
-           5. EVENT LISTENERS
+           6. EVENT LISTENERS
            ========================================================================= */
         els.langBtn.addEventListener('click', () => {
             currentLang = (currentLang === 'en') ? 'hi' : 'en';
@@ -346,7 +377,7 @@
         fetchSheetData();
 
         /* =========================================================================
-           6. THEME TOGGLE & MOBILE MENU
+           7. THEME TOGGLE & MOBILE MENU
            ========================================================================= */
         (function themeModule(){
             const root = document.documentElement;
