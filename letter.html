@@ -30,19 +30,19 @@
     <!-- Header Navigation -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="https://bsebwala.in/" class="brand">
+            <a href="index.html" class="brand">
                 <div class="mark">BB</div>
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
             <nav class="main-nav">
-                <a href="/index">Home</a>
-                <a href="/aihub">AIHub</a>
-                <a href="/letter" class="active">Letter</a>
-                <a href="/fee">Fee</a>
-                <a href="/news">News</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="aihub.html">AIHub</a>
+                <a href="letter.html" class="active">Letter</a>
+                <a href="fee.html">Fee</a>
+                <a href="news.html">News</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
             </nav>
 
             <div class="header-actions">
@@ -108,7 +108,6 @@
            ========================================================================= */
         const SHEET_ID = '1cjcqNGr7nDOP29VLc8EacRBaQx1o3ve60xZVJCMVt1M';
         const SHEET_NAME = 'Letter_DB';
-        // Timestamp cache-buster (&_=${Date.now()}) guarantees newly added rows load immediately
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&_=${Date.now()}`;
 
         let documentDatabase = [];
@@ -166,18 +165,16 @@
                 if (!response.ok) throw new Error("Network response was not ok");
                 
                 const text = await response.text();
-                // Extract clean JSON payload from Google Visualization response
                 const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
                 const json = JSON.parse(jsonText);
                 
                 const rows = json.table.rows || [];
                 
-                documentDatabase = rows.map(r => {
+                documentDatabase = rows.map((r, index) => {
                     const c = r.c || [];
                     const getCell = (idx) => (c[idx] && c[idx].v !== null && c[idx].v !== undefined) ? String(c[idx].v).trim() : '';
                     const getFormattedCell = (idx) => (c[idx] && c[idx].f) ? c[idx].f : getCell(idx);
 
-                    // Formats date whether stored as raw string or date object
                     let rawDate = getFormattedCell(7);
                     if (rawDate.startsWith("Date(") && rawDate.endsWith(")")) {
                         const parts = rawDate.replace("Date(", "").replace(")", "").split(",");
@@ -187,8 +184,18 @@
                         rawDate = `${y}-${m}-${d}`;
                     }
 
+                    // Fallback to row index + 1 if sl is empty or not numeric
+                    let serialVal = getCell(0);
+                    if (!serialVal) {
+                        serialVal = String(index + 1);
+                    } else if (serialVal.startsWith("DOC") || serialVal.startsWith("DOC-")) {
+                        // Strips verbose 'DOC 0001' or 'DOC-2026-001' down to simple numbers
+                        const extractedNum = parseInt(serialVal.replace(/[^0-9]/g, ''), 10);
+                        if (!isNaN(extractedNum)) serialVal = String(extractedNum);
+                    }
+
                     return {
-                        sl: getCell(0),
+                        sl: serialVal,
                         title: {
                             en: getCell(1) || "Untitled Document",
                             hi: getCell(2) || getCell(1) || "दस्तावेज़"
@@ -335,7 +342,6 @@
             renderDocuments();
         });
 
-        // Initialize translations and fetch live sheet database
         applyTranslations();
         fetchSheetData();
 
