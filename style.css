@@ -906,7 +906,7 @@ header.site, header.site-header {
 .crowdfund-card .cause-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px; }
 .cf-body { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .qr-wrapper {
-  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md);
   padding: 12px; text-align: center; flex-shrink: 0; width: 150px;
 }
 .qr-wrapper img { width: 126px; height: 126px; object-fit: contain; border-radius: 8px; display: block; }
@@ -962,6 +962,8 @@ header.site, header.site-header {
 /* ============================================================
    10. OFFICIAL LETTERS & DOCUMENTS MODULE (letter.html)
    ============================================================ */
+
+/* --- Document Filter & Search Controls --- */
 .doc-controls {
   max-width: 1100px;
   margin: 1.5rem auto;
@@ -1017,47 +1019,58 @@ header.site, header.site-header {
   border-color: var(--primary);
 }
 
+/* --- Document List Container --- */
 .doc-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto 4rem auto;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
+/* --- Document Row (Card) --- */
 .doc-row {
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background-color: var(--surface);
-  transition: transform 0.15s, box-shadow 0.2s;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.15s ease;
   gap: 0.75rem;
-  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
 }
 
 .doc-row:hover {
   background-color: var(--surface-2);
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(123, 47, 247, 0.1);
+  box-shadow: 0 4px 14px rgba(123, 47, 247, 0.1);
+  border-color: var(--primary);
 }
 
+/* --- Left Section: Serial, Badges, Title --- */
 .doc-info-left {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.75rem;
-  flex: 1;
-  min-width: 0; /* Crucial: allows text truncation to work inside flex parents */
+  flex: 1 1 auto;
+  min-width: 0;
   width: 100%;
 }
 
+/* Compact Serial Number: 1, 2, 3... */
 .doc-sl {
   color: var(--primary);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 22px;
 }
 
 .doc-type-badge {
@@ -1066,8 +1079,11 @@ header.site, header.site-header {
   text-transform: uppercase;
   background-color: var(--badge-bg);
   color: var(--badge-text);
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: center;
 }
 
 .doc-cat-badge {
@@ -1075,20 +1091,24 @@ header.site, header.site-header {
   font-weight: 500;
   background-color: var(--cat-bg);
   color: var(--cat-text);
-  padding: 0.2rem 0.6rem;
-  border-radius: 99px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
   white-space: nowrap;
+  flex-shrink: 0;
+  text-align: center;
 }
 
 .doc-text-group {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-width: 0; /* Prevents long titles from expanding past flex bounds */
+  flex: 1 1 0%;
+  min-width: 0;
   justify-content: center;
+  overflow: hidden;
 }
 
 .doc-title {
+  font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 600;
   margin: 0;
@@ -1096,6 +1116,9 @@ header.site, header.site-header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.4;
+  display: block;
+  max-width: 100%;
 }
 
 .doc-desc {
@@ -1105,84 +1128,101 @@ header.site, header.site-header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.3;
+  display: block;
+  max-width: 100%;
 }
 
+/* --- Right Section: Date & Download Button --- */
 .doc-info-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  width: 100%;
   justify-content: space-between;
+  gap: 1.25rem;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .doc-date {
   font-size: 0.85rem;
   color: var(--text-muted);
   white-space: nowrap;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  flex-shrink: 0;
 }
 
+.download-btn {
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 0.45rem 1.35rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-align: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-btn:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+
+/* --- Desktop Horizontal Alignment --- */
 @media (min-width: 768px) {
   .doc-row {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0.6rem 1rem;
-    gap: 1rem;
+    padding: 0.65rem 1.25rem;
+    gap: 1.5rem;
   }
-   
- .doc-info-left {
+
+  .doc-info-left {
     flex-wrap: nowrap;
-    flex: 1;       /* Takes up all available space up to the right side */
-    min-width: 0;  /* Forces text overflow ellipsis to trigger */
+    flex: 1 1 auto;
+    min-width: 0;
     width: auto;
   }
-  
+
+  /* Compact width for 1, 2, 3... */
   .doc-sl {
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .doc-type-badge {
+    width: 44px;
+    flex-shrink: 0;
+  }
+
+  .doc-cat-badge {
     width: 110px;
     flex-shrink: 0;
   }
-  
-  .doc-type-badge {
-    width: 40px;
-    text-align: center;
-    flex-shrink: 0;
+
+  .doc-text-group {
+    flex: 1 1 0%;
+    min-width: 0;
   }
-  
-  .doc-cat-badge {
-    width: 130px;
-    text-align: center;
-    flex-shrink: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
+
   .doc-info-right {
     width: auto;
     justify-content: flex-end;
-    flex-shrink: 0; /* Ensures date and download button never get squished or pushed out */
-    gap: 1rem;
+    flex-shrink: 0;
+    gap: 1.25rem;
   }
-}
-
-.download-btn {
-  background-color: #22c55e;
-  color: #ffffff;
-  border: none;
-  padding: 0.4rem 1.25rem;
-  border-radius: 99px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: background-color 0.2s;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.download-btn:hover {
-  background-color: #16a34a;
 }
 
 .no-results {
@@ -1191,7 +1231,7 @@ header.site, header.site-header {
   color: var(--text-muted);
   font-size: 1rem;
   background-color: var(--surface);
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px dashed var(--border);
 }
 
