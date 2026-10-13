@@ -30,19 +30,19 @@
     <!-- Header Navigation -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="index.html" class="brand">
+            <a href="https://bsebwala.in/" class="brand">
                 <div class="mark">BB</div>
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
             <nav class="main-nav">
-                <a href="index.html">Home</a>
-                <a href="aihub.html">AIHub</a>
-                <a href="letter.html" class="active">Letter</a>
-                <a href="fee.html">Fee</a>
-                <a href="news.html">News</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="/index">Home</a>
+                <a href="/aihub">AIHub</a>
+                <a href="/letter" class="active">Letter</a>
+                <a href="/fee">Fee</a>
+                <a href="/news">News</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
             </nav>
 
             <div class="header-actions">
@@ -86,7 +86,10 @@
 
         <!-- Document List Area -->
         <section class="doc-container" id="documentList">
-            <!-- Documents rendered dynamically by JavaScript -->
+            <div class="status-container" style="text-align: center; padding: 50px 0;">
+                <div class="spinner"></div>
+                <h3 id="loadingText" style="color: var(--text-muted); font-size: 1rem; margin-top: 15px;">Loading documents from database...</h3>
+            </div>
         </section>
     </main>
 
@@ -100,80 +103,23 @@
 
     <!-- Logic Engine -->
     <script>
-        /* 1. DOCUMENT DATABASE */
-        const documentDatabase = [
-            {
-                sl: "DOC-2026-010",
-                title: {
-                    en: "SMC Formation and Night Guard Deployment",
-                    hi: "SMC गठन एवं रात्रि प्रहरी की बहाली"
-                },
-                desc: {
-                    en: "Guidelines regarding the deployment of night guards across primary schools.",
-                    hi: "प्राथमिक विद्यालयों में रात्रि प्रहरी की तैनाती के संबंध में दिशानिर्देश।"
-                },
-                category: "other",
-                fileType: "PDF",
-                date: "2026-10-11",
-                fileName: "smc_guard_2026.pdf",
-                fileUrl: "assets/docs/smc_guard_2026.pdf"
-            },
-            {
-                sl: "DOC-2026-009",
-                title: {
-                    en: "BSEB Class 10th Final Exam Schedule",
-                    hi: "BSEB 10वीं बोर्ड परीक्षा का कार्यक्रम"
-                },
-                desc: {
-                    en: "Official timetable for the matriculation examinations 2027.",
-                    hi: "मैट्रिक परीक्षा 2027 के लिए आधिकारिक समय सारिणी।"
-                },
-                category: "notification",
-                fileType: "IMG",
-                date: "2026-10-10",
-                fileName: "10th_schedule.jpg",
-                fileUrl: "assets/docs/10th_schedule.jpg"
-            },
-            {
-                sl: "DOC-2026-008",
-                title: {
-                    en: "District Level Teacher Training Details",
-                    hi: "जिला स्तरीय शिक्षक प्रशिक्षण का विवरण"
-                },
-                desc: {
-                    en: "Mandatory FLN training modules for teachers starting next week.",
-                    hi: "अगले सप्ताह से शुरू होने वाले शिक्षकों के लिए अनिवार्य FLN प्रशिक्षण।"
-                },
-                category: "circular",
-                fileType: "PDF",
-                date: "2026-10-05",
-                fileName: "training_oct.pdf",
-                fileUrl: "assets/docs/training_oct.pdf"
-            },
-            {
-                sl: "DOC-2026-007",
-                title: {
-                    en: "Revised Holiday Calendar for November",
-                    hi: "नवंबर माह हेतु संशोधित अवकाश कैलेंडर"
-                },
-                desc: {
-                    en: "Updated leaves for Chhath Puja and Diwali across all state schools.",
-                    hi: "सभी राज्य के स्कूलों में छठ पूजा और दिवाली के लिए अद्यतन छुट्टियां।"
-                },
-                category: "order",
-                fileType: "DOC",
-                date: "2026-10-01",
-                fileName: "holiday_nov.docx",
-                fileUrl: "assets/docs/holiday_nov.docx"
-            }
-        ];
+        /* =========================================================================
+           1. GOOGLE SHEET CONFIGURATION
+           ========================================================================= */
+        const SHEET_ID = '1cjcqNGr7nDOP29VLc8EacRBaQx1o3ve60xZVJCMVt1M';
+        const SHEET_NAME = 'Letter_DB';
+        // Timestamp cache-buster (&_=${Date.now()}) guarantees newly added rows load immediately
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&_=${Date.now()}`;
 
-        /* 2. STATE & TRANSLATIONS */
+        let documentDatabase = [];
         let currentLang = 'en'; 
         let currentFilter = 'all';
         let currentSort = 'newest';
         let searchQuery = '';
 
+        /* =========================================================================
+           2. TRANSLATIONS
+           ========================================================================= */
         const translations = {
             en: {
                 toggleBtn: "हिंदी में देखें",
@@ -181,10 +127,12 @@
                 phSearch: "Title or keyword...",
                 lblCategory: "Category",
                 lblSort: "Sort By",
+                loading: "Loading documents from database...",
                 cats: { all: "All", circular: "Circular", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
                 sorts: { new: "Newest First", old: "Oldest First", az: "Alphabetically (A-Z)", za: "Alphabetically (Z-A)" },
                 download: "Download",
-                noResult: "No documents found matching your criteria."
+                noResult: "No documents found matching your criteria.",
+                loadError: "Unable to load document database. Please verify sheet permissions."
             },
             hi: {
                 toggleBtn: "View in English",
@@ -192,14 +140,15 @@
                 phSearch: "शीर्षक या लिखावट...",
                 lblCategory: "श्रेणी",
                 lblSort: "क्रम",
+                loading: "दस्तावेज़ डेटाबेस लोड हो रहा है...",
                 cats: { all: "सभी", circular: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
                 sorts: { new: "नया पहले", old: "पुराना पहले", az: "अक्षर क्रमानुसार (A-Z)", za: "अक्षर क्रमानुसार (Z-A)" },
                 download: "डाउनलोड",
-                noResult: "आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।"
+                noResult: "आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।",
+                loadError: "डेटाबेस लोड करने में त्रुटि। कृपया सुनिश्चित करें कि शीट लिंक साझा है।"
             }
         };
 
-        /* 3. DOM CACHE & TRANSLATION ENGINE */
         const els = {
             list: document.getElementById('documentList'),
             search: document.getElementById('searchInput'),
@@ -208,6 +157,64 @@
             langBtn: document.getElementById('langToggle')
         };
 
+        /* =========================================================================
+           3. FETCH DATA FROM GOOGLE SHEETS
+           ========================================================================= */
+        async function fetchSheetData() {
+            try {
+                const response = await fetch(SHEET_URL);
+                if (!response.ok) throw new Error("Network response was not ok");
+                
+                const text = await response.text();
+                // Extract clean JSON payload from Google Visualization response
+                const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const json = JSON.parse(jsonText);
+                
+                const rows = json.table.rows || [];
+                
+                documentDatabase = rows.map(r => {
+                    const c = r.c || [];
+                    const getCell = (idx) => (c[idx] && c[idx].v !== null && c[idx].v !== undefined) ? String(c[idx].v).trim() : '';
+                    const getFormattedCell = (idx) => (c[idx] && c[idx].f) ? c[idx].f : getCell(idx);
+
+                    // Formats date whether stored as raw string or date object
+                    let rawDate = getFormattedCell(7);
+                    if (rawDate.startsWith("Date(") && rawDate.endsWith(")")) {
+                        const parts = rawDate.replace("Date(", "").replace(")", "").split(",");
+                        const y = parts[0];
+                        const m = String(parseInt(parts[1], 10) + 1).padStart(2, '0');
+                        const d = String(parts[2]).padStart(2, '0');
+                        rawDate = `${y}-${m}-${d}`;
+                    }
+
+                    return {
+                        sl: getCell(0),
+                        title: {
+                            en: getCell(1) || "Untitled Document",
+                            hi: getCell(2) || getCell(1) || "दस्तावेज़"
+                        },
+                        desc: {
+                            en: getCell(3) || "",
+                            hi: getCell(4) || getCell(3) || ""
+                        },
+                        category: (getCell(5) || 'other').toLowerCase(),
+                        fileType: (getCell(6) || 'PDF').toUpperCase(),
+                        date: rawDate,
+                        fileName: getCell(8) || "document.pdf",
+                        fileUrl: getCell(9) || "#"
+                    };
+                }).filter(doc => doc.sl !== '' || doc.title.en !== '');
+
+                renderDocuments();
+            } catch (err) {
+                console.error("Failed to fetch Google Sheet data:", err);
+                els.list.innerHTML = `<div class="no-results" style="color: var(--danger);">${translations[currentLang].loadError}</div>`;
+            }
+        }
+
+        /* =========================================================================
+           4. RENDER AND FILTER LOGIC
+           ========================================================================= */
         function applyTranslations() {
             const t = translations[currentLang];
             
@@ -228,6 +235,15 @@
             document.getElementById('optSortOld').textContent = t.sorts.old;
             document.getElementById('optSortAZ').textContent = t.sorts.az;
             document.getElementById('optSortZA').textContent = t.sorts.za;
+        }
+
+        function formatDateDisplay(dateStr) {
+            if (!dateStr) return '';
+            if (dateStr.includes('-')) {
+                const parts = dateStr.split('-');
+                if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+            return dateStr;
         }
 
         function renderDocuments() {
@@ -260,8 +276,7 @@
             }
 
             filtered.forEach(doc => {
-                const parts = doc.date.split('-');
-                const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                const formattedDate = formatDateDisplay(doc.date);
                 const translatedCategory = t.cats[doc.category] || doc.category;
                 const displayTitle = doc.title[currentLang] || doc.title.en;
                 const displayDesc = doc.desc[currentLang] || doc.desc.en;
@@ -287,7 +302,7 @@
                             ${formattedDate}
                         </span>
                         
-                        <a href="${doc.fileUrl}" download="${doc.fileName}" class="download-btn">
+                        <a href="${doc.fileUrl}" target="_blank" rel="noopener noreferrer" download="${doc.fileName}" class="download-btn">
                             ${t.download}
                         </a>
                     </div>
@@ -296,7 +311,9 @@
             });
         }
 
-        /* 4. EVENT LISTENERS */
+        /* =========================================================================
+           5. EVENT LISTENERS
+           ========================================================================= */
         els.langBtn.addEventListener('click', () => {
             currentLang = (currentLang === 'en') ? 'hi' : 'en';
             applyTranslations();
@@ -318,10 +335,13 @@
             renderDocuments();
         });
 
+        // Initialize translations and fetch live sheet database
         applyTranslations();
-        renderDocuments();
+        fetchSheetData();
 
-        /* 5. THEME TOGGLE ENGINE */
+        /* =========================================================================
+           6. THEME TOGGLE & MOBILE MENU
+           ========================================================================= */
         (function themeModule(){
             const root = document.documentElement;
             const btn = document.getElementById('themeToggle');
@@ -351,7 +371,6 @@
             });
         })();
 
-        /* 6. MOBILE HAMBURGER MENU */
         document.addEventListener("DOMContentLoaded", function() {
             const menuBtn = document.getElementById('menuToggle');
             const nav = document.querySelector('.main-nav');
