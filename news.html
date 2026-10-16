@@ -4,6 +4,15 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149"
      crossorigin="anonymous"></script>
     
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JNFE9PSTH3');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Latest News — BSEB Portal Hub</title>
@@ -16,7 +25,7 @@
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Mobile Fix: Make News Filter Chips Wrap Automatically -->
+    <!-- Layout and Wrapping Guards -->
     <style>
       .news-filters {
           display: flex !important;
@@ -30,6 +39,25 @@
           flex: 0 1 auto;
           white-space: nowrap;
       }
+      .news-card {
+          box-sizing: border-box !important;
+          width: 100% !important;
+          overflow: hidden !important;
+      }
+      .news-card h2 {
+          word-break: break-word !important;
+          overflow-wrap: break-word !important;
+          white-space: normal !important;
+      }
+      .takeaways-wrapper, .takeaways-list, .takeaways-list li {
+          word-break: break-word !important;
+          overflow-wrap: break-word !important;
+          white-space: normal !important;
+      }
+      .card-actions-row {
+          flex-wrap: wrap !important;
+          gap: 8px !important;
+      }
     </style>
 </head>
 <body>
@@ -37,10 +65,10 @@
     <!-- Header Navigation with Shared Menu & Theme Toggle -->
     <header class="site-header">
         <div class="wrap header-inner">
-          <a href="https://bsebwala.in/" class="brand">
-            <div class="mark">BB</div>
-            <span class="full">BSEB Portal Hub</span>
-          </a>
+            <a href="https://bsebwala.in/" class="brand">
+                <div class="mark">BB</div>
+                <span class="full">BSEB Portal Hub</span>
+            </a>
 
             <!-- Shared Portal Navigation Menu -->
             <nav class="main-nav">
@@ -54,13 +82,14 @@
             </nav>
 
             <div class="header-actions">
+                <!-- Added Language Toggle Button at Top -->
+                <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
                 <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
             </div>
             
         </div>
     </header>
-
 
     <main class="wrap">
         <div class="page-header">
@@ -81,7 +110,6 @@
         
         <!-- News Cards Grid -->
         <div id="news-container" class="news-grid">
-            <!-- Loading state removed text, kept minimal silent spinner -->
             <div class="status-container">
                 <div class="spinner"></div>
             </div>
@@ -91,12 +119,12 @@
         <div id="last-updated-text" class="last-updated"></div>
     </main>
 
-     <footer>
-    <div class="wrap">
-     Disclaimer: BSEBWala is an independent educational informational portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body. 
-      All information provided is for educational and informational purposes only. <br>© 2026 BSEBWala. All Rights Reserved.
-    </div>
-  </footer>
+    <footer>
+        <div class="wrap">
+            Disclaimer: BSEBWala is an independent educational informational portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body. 
+            All information provided is for educational and informational purposes only. <br>© 2026 BSEBWala. All Rights Reserved.
+        </div>
+    </footer>
 
     <script>
         let currentLang = 'en'; 
@@ -218,7 +246,8 @@
             currentLang = currentLang === 'hi' ? 'en' : 'hi';
             document.getElementById('ui-title').innerText = UI[currentLang].title;
             document.getElementById('ui-subtitle').innerText = UI[currentLang].subtitle;
-            document.getElementById('langToggleBtn').innerText = UI[currentLang].btnText;
+            const langBtn = document.getElementById('langToggleBtn');
+            if (langBtn) langBtn.innerText = UI[currentLang].btnText;
             renderNewsUI(false); 
         }
 
@@ -229,9 +258,6 @@
             }[tag] || tag));
         }
 
-        // ==========================================
-        // REFINED DATE FORMATTING (Clean layout)
-        // ==========================================
         function formatDateTime(dateInput) {
             if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
             const d = new Date(dateInput);
@@ -239,7 +265,6 @@
 
             const locale = currentLang === 'hi' ? 'hi-IN' : 'en-IN';
             
-            // Generate clean date: e.g., "12 Oct 2026"
             const dateStr = new Intl.DateTimeFormat(locale, { 
                 timeZone: 'Asia/Kolkata', 
                 day: '2-digit', 
@@ -247,7 +272,6 @@
                 year: 'numeric' 
             }).format(d);
             
-            // Generate clean time: e.g., "09:52 PM"
             const timeStr = new Intl.DateTimeFormat(locale, { 
                 timeZone: 'Asia/Kolkata', 
                 hour: '2-digit', 
@@ -255,58 +279,37 @@
                 hour12: true 
             }).format(d).toUpperCase();
 
-            // Combine into crisp layout
             return `${dateStr} • ${timeStr}`;
         }
 
-        // Automatic Category Tagger
         function assignCategory(title, summary) {
             const combined = (title + " " + summary).toLowerCase();
-            
-            // 1. D.El.Ed / B.Ed
             if (/deled|d\.el\.ed|b\.ed|bed|डीएलएड|बीएड|d\.ed/.test(combined)) return 'bed_deled';
-            
-            // 2. STET / TRE (Exams for teachers)
             if (/stet|bpsc tre|tre 1|tre 2|tre 3|tre 4|btet|ctet|एसटीईटी|टीआरई/.test(combined)) return 'stet_tre';
-            
-            // 3. Teachers & Admin (General)
             if (/teacher|shikshak|niyojit|sakshamta|transfer|वेतन|शिक्षक|नियोजित|सक्षमता|e-shikshakosh/.test(combined)) return 'teachers';
-            
-            // 4. Class 9/10 (Secondary)
             if (/matric|10th|9th|class 9|class 10|कक्षा 9|कक्षा 10|माध्यमिक|मैट्रिक/.test(combined)) return 'secondary';
-            
-            // 5. Class 11/12 (Senior Secondary)
             if (/inter|12th|11th|class 11|class 12|कक्षा 11|कक्षा 12|इंटर|ofss/.test(combined)) return 'senior';
-            
-            // 6. Scholarships
             if (/scholarship|medhasoft|pms|protsahan|nmms|kanya utthan|छात्रवृत्ति|मेधासॉफ्ट|कल्याण/.test(combined)) return 'scholarship';
-            
-            // Fallback for general board news
             return 'general';
         }
 
-        // Break text into key bullet points
         function formatBulletTakeaways(summary) {
             if (!summary) return ['Click the link below for complete details.'];
-            
-            // Split sentences on period or exclamation
             const sentences = summary
                 .split(/(?<=[.!?।])\s+/)
                 .map(s => s.trim())
                 .filter(s => s.length > 12);
 
             if (sentences.length === 0) return [summary];
-            return sentences.slice(0, 2); // Show up to 2 sharp takeaways
+            return sentences.slice(0, 2);
         }
 
-        // 1-Tap WhatsApp Share Generator
         function shareArticleWhatsApp(title, takeaway, url, date) {
             const msg = `📢 *${title}*\n\n📌 *मुख्य बिंदु:*\n• ${takeaway}\n\n📅 *तारीख:* ${date}\n🔗 *पूरा विवरण:* ${url}\n\n— via https://bsebwala.in/news.html`;
             const waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
             window.open(waUrl, "_blank", "noopener,noreferrer");
         }
 
-        // Filter Category Handler
         function filterCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.news-chip').forEach(chip => {
@@ -332,7 +335,6 @@
             const now = new Date();
             const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
             
-            // 1. Time filter
             let filtered = showOlder ? allArticles : allArticles.filter(a => {
                 const d = new Date(a.date);
                 return isNaN(d.getTime()) || (now - d) <= thirtyDaysMs;
@@ -340,7 +342,6 @@
             
             const hasOlder = !showOlder && (allArticles.length > filtered.length);
 
-            // 2. Category filter
             if (currentCategory !== 'all') {
                 filtered = filtered.filter(a => a.category === currentCategory);
             }
@@ -401,7 +402,7 @@
                         </div>
                         
                         <div class="card-actions-row">
-                            <a href="${encodeURI(article.url || '#')}" class="read-more" target="_blank" rel="noopener">
+                            <a href="${encodeURI(article.url || '#')}" class="read-more" target="_blank" rel="noopener noreferrer">
                                 ${UI[currentLang].readMore}
                             </a>
 
@@ -435,13 +436,12 @@
             const newsContainer = document.getElementById("news-container");
             
             if (allArticles.length === 0) {
-                // Initial silent spinner
                 newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div></div>`;
             }
 
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const timeoutId = setTimeout(() => controller.abort(), 6000);
 
                 const response = await fetch("https://bsebwala-news-api2.vercel.app/api/news", { signal: controller.signal });
                 clearTimeout(timeoutId);
@@ -484,24 +484,22 @@
 
         loadNews();
         setInterval(loadNews, 5 * 60 * 1000);
+    </script>
 
-     </script>
-
-       <!-- Mobile Menu Toggle Script -->
+    <!-- Mobile Menu Toggle Script -->
     <script>
-        (function mobileMenu() {
+        document.addEventListener("DOMContentLoaded", function() {
             const menuBtn = document.getElementById('menuToggle');
             const nav = document.querySelector('.main-nav');
             
             if (menuBtn && nav) {
-                menuBtn.addEventListener('click', () => {
+                menuBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     nav.classList.toggle('open');
-                    // Change icon to 'X' when open
                     menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
                 });
             }
-        })();
+        });
     </script>
-    
 </body>
 </html>
