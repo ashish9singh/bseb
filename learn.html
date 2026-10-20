@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Video Learning Hub &amp; Bookmarks — BSEB Portal Hub</title>
-  <meta name="description" content="Structured video library with live playlist sidebar and bookmarking functionality for MS Office, C++, and Python courses.">
+  <title>Video Learning Hub &amp; Playlists — BSEB Portal Hub</title>
+  <meta name="description" content="Structured video library with live playlist sidebar and bookmarking functionality for MS Office, C++, ICT, and Python courses.">
   <meta name="theme-color" content="#7b2ff7">
 
   <!-- Google AdSense -->
@@ -246,11 +246,48 @@
       font-size: 0.92rem;
     }
 
+    /* Course Selection Shelf (Horizontal Scroll) */
+    .course-selection-bar {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .course-selection-bar::-webkit-scrollbar { display: none; }
+
+    .course-chip {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    .course-chip:hover {
+      border-color: var(--primary);
+      background: var(--surface-2);
+    }
+    .course-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 28%, transparent);
+    }
+
     /* ============================================================
        Video Stage & Right-Side Playlist Layout
        ============================================================ */
     .player-theater-section {
-      margin: 12px 0 38px;
+      margin: 6px 0 38px;
       width: 100%;
     }
 
@@ -309,7 +346,7 @@
       margin-bottom: 4px;
     }
 
-    .now-badge {
+    .now-tag {
       font-size: 0.68rem;
       font-weight: 700;
       color: var(--primary);
@@ -939,6 +976,14 @@
       <p id="heroSubtitle">Watch lessons with the interactive side-playlist or bookmark your favorites for quick access.</p>
     </section>
 
+    <!-- Course Selection Chips -->
+    <div class="course-selection-bar" id="courseSelectionBar">
+      <button class="course-chip active" onclick="switchActiveCourse('msoffice')">📊 MS Office</button>
+      <button class="course-chip" onclick="switchActiveCourse('cpp')">⚡ C++</button>
+      <button class="course-chip" onclick="switchActiveCourse('ict')">🌐 ICT &amp; Tools</button>
+      <button class="course-chip" onclick="switchActiveCourse('python')">🐍 Python</button>
+    </div>
+
     <!-- Split Stage: Video Player on Left, Playlist on Right -->
     <section class="player-theater-section" id="playerSection" aria-label="Video theater">
       <div class="theater-container">
@@ -949,7 +994,7 @@
             <iframe 
               id="mainVideoPlayer"
               src="https://www.youtube.com/embed/PONyUl0efrE?list=PLaNI8IHpwBHA&rel=0&playsinline=1"
-              title="MS Office Complete Playlist"
+              title="MS Office Video Player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin" 
               allowfullscreen>
@@ -962,8 +1007,8 @@
                 <span class="now-tag" id="nowPlayingTag">NOW PLAYING</span>
                 <span class="category-pill" id="stageTopicBadge">MS Office</span>
               </div>
-              <h2 id="currentVideoTitle">Learn MS Office Full Course Playlist</h2>
-              <p id="currentVideoDesc">Explore MS Word documents, Excel calculations, and PowerPoint presentations.</p>
+              <h2 id="currentVideoTitle">L-01: MS Office Suite Setup &amp; Word Masterclass</h2>
+              <p id="currentVideoDesc">Explore Word document formatting, mail merge, and official report design.</p>
             </div>
 
             <div class="player-actions-row">
@@ -980,18 +1025,18 @@
           </div>
         </div>
 
-        <!-- Right: Course Playlist Sidebar -->
+        <!-- Right: Course Playlist Sidebar (Shows ALL Videos in Current Playlist) -->
         <aside class="playlist-sidebar">
           <div class="sidebar-header" onclick="toggleMobileSidebar()">
             <div class="sidebar-header-left">
-              <h3 id="sidebarCourseHeading">Course Playlist</h3>
+              <h3 id="sidebarCourseHeading">MS Office Course Playlist</h3>
               <span class="sidebar-stats" id="sidebarStats">Showing video tracks</span>
             </div>
             <span class="mobile-drawer-indicator" id="sidebarIndicator">▼</span>
           </div>
 
           <div class="sidebar-items-scroll" id="sidebarPlaylistContainer">
-            <!-- Injected via JavaScript -->
+            <!-- Dynamic list of ALL videos inside the active course -->
           </div>
         </aside>
 
@@ -1012,6 +1057,7 @@
             <button class="tab" type="button" data-filter="bookmarks">&#9733; Bookmarked (<span id="bookmarkCount">0</span>)</button>
             <button class="tab" type="button" data-filter="msoffice">&#128202; MS Office</button>
             <button class="tab" type="button" data-filter="cpp">&#9889; C++</button>
+            <button class="tab" type="button" data-filter="ict">&#127760; ICT</button>
             <button class="tab" type="button" data-filter="python">&#128013; Python</button>
           </div>
         </div>
@@ -1036,64 +1082,78 @@
   <script>
     'use strict';
 
-    const VIDEO_CATALOG = [
-      {
-        id: 'v-office-series',
-        category: 'msoffice',
-        tag: 'MS Office',
-        title: 'Learn MS Office Full Course Playlist',
-        hi_title: 'एमएस ऑफिस संपूर्ण कोर्स (वर्ड, एक्सेल, पावरपॉइंट)',
-        desc: 'Explore MS Word documents, Excel calculations and data handling, and PowerPoint presentations.',
-        videoId: 'PONyUl0efrE',
+    /* -------------------------------------------------------------
+       A. REVISED COURSES WITH ALL INDIVIDUAL LESSONS/VIDEOS
+       ------------------------------------------------------------- */
+    const REVISED_COURSES = {
+      msoffice: {
+        id: 'msoffice',
+        name: 'MS Office Suite',
+        hi_name: 'एमएस ऑफिस',
         playlistId: 'PLaNI8IHpwBHA',
-        ytUrl: 'https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA',
-        channel: 'MS Office Hub',
-        typeBadge: 'Full Playlist'
+        ytUrl: 'https://youtube.com/playlist?list=PLaNI8IHpwBHA',
+        lessons: [
+          { id: 'off-1', videoId: 'PONyUl0efrE', trackNo: 1, tag: 'MS Office', title: 'L-01: MS Office Suite Setup & Word Masterclass', hi_title: 'पाठ 01: एमएस वर्ड - डॉक्यूमेंट फॉर्मेटिंग एवं सेटिंग्स', desc: 'Explore Word document formatting, mail merge, and official report design.', duration: '28:10' },
+          { id: 'off-2', videoId: 'S-nHYzK-BVg', trackNo: 2, tag: 'MS Office', title: 'L-02: MS Word: Tables, Graphics & Mail Merge', hi_title: 'पाठ 02: एमएस वर्ड - टेबल, मेल मर्ज और लेआउट', desc: 'Step-by-step masterclass on Word tables, official headers and single-click mail merge.', duration: '32:45' },
+          { id: 'off-3', videoId: 'Vl0H-qTclOg', trackNo: 3, tag: 'MS Office', title: 'L-03: MS Excel: Essential Formulas (VLOOKUP, SUMIF, IF)', hi_title: 'पाठ 03: एमएस एक्सेल - महत्वपूर्ण फॉर्मूले और डेटा विश्लेषण', desc: 'Spreadsheet mastery for calculations, marksheet tabulation, and automatic grading.', duration: '39:20' },
+          { id: 'off-4', videoId: 'XF34-Wu6qWU', trackNo: 4, tag: 'MS Office', title: 'L-04: MS PowerPoint: Transitions & Slide Animation', hi_title: 'पाठ 04: एमएस पावरपॉइंट - प्रेजेंटेशन डिजाइन और एनिमेशन', desc: 'Design clean classroom slide decks and presentations effortlessly.', duration: '25:15' }
+        ]
       },
-      {
-        id: 'v-cpp-series',
-        category: 'cpp',
-        tag: 'C++',
-        title: 'Learn C++ Complete Playlist & Core Programming',
-        hi_title: 'C++ प्रोग्रामिंग संपूर्ण कोर्स एवं कोर कॉन्सेप्ट्स',
-        desc: 'Learn C++ syntax, loops, functions, pointers, memory concepts and object-oriented programming.',
-        videoId: 'HH_Z6M6AB0A',
+      cpp: {
+        id: 'cpp',
+        name: 'C++ Programming',
+        hi_name: 'C++ प्रोग्रामिंग',
         playlistId: 'PLEpk3r07sPTU',
-        ytUrl: 'https://www.youtube.com/watch?v=HH_Z6M6AB0A&list=PLEpk3r07sPTU',
-        channel: 'C++ Programming',
-        typeBadge: 'Full Playlist'
+        ytUrl: 'https://youtube.com/playlist?list=PLEpk3r07sPTU',
+        lessons: [
+          { id: 'cpp-1', videoId: 'HH_Z6M6AB0A', trackNo: 1, tag: 'C++', title: 'L-01: C++ Introduction, Setup & First Program', hi_title: 'पाठ 01: C++ परिचय, एनवायरनमेंट और पहला प्रोग्राम', desc: 'Getting started with C++, input/output streams, compiler directives and setup.', duration: '26:40' },
+          { id: 'cpp-2', videoId: 'vLnPwxZdW4Y', trackNo: 2, tag: 'C++', title: 'L-02: C++ Tokens, Operators & Decision Making', hi_title: 'पाठ 02: टोकन्स, ऑपरेटर्स और कंडीशनल स्टेटमेंट्स', desc: 'Master variables, data types, if-else branches, and switch-case control flow.', duration: '31:10' },
+          { id: 'cpp-3', videoId: 'DTxHyVn0ODg', trackNo: 3, tag: 'C++', title: 'L-03: C++ Pointers, Dynamic Memory & References', hi_title: 'पाठ 03: पॉइंटर्स, मेमोरी एड्रेस और रेफरेंसिंग', desc: 'Demystifying memory management, pointer arithmetic, and reference variables.', duration: '38:50' },
+          { id: 'cpp-4', videoId: '1v_4dL82v0I', trackNo: 4, tag: 'C++', title: 'L-04: Classes, Objects & OOP Principles in C++', hi_title: 'पाठ 04: C++ ऑब्जेक्ट ओरिएंटेड प्रोग्रामिंग कॉन्सेप्ट्स', desc: 'Classes, constructors, destructors, inheritance and encapsulation.', duration: '42:15' }
+        ]
       },
-      {
-        id: 'v-python-series',
-        category: 'python',
-        tag: 'Python',
-        title: 'Python Programming Full Course Playlist',
-        hi_title: 'पायथन प्रोग्रामिंग संपूर्ण वीडियो प्लेलिस्ट',
-        desc: 'Explore Python syntax, data structures, loops, file handling and practical coding projects.',
-        videoId: 'VoQsPUXWaLM',
+      ict: {
+        id: 'ict',
+        name: 'ICT & Educational Tools',
+        hi_name: 'आईसीटी एवं डिजिटल टूल्स',
+        playlistId: 'PLG20JZmgsx9M',
+        ytUrl: 'https://youtube.com/playlist?list=PLG20JZmgsx9M',
+        lessons: [
+          { id: 'ict-1', videoId: 'kJQP7kiw5Fk', trackNo: 1, tag: 'ICT', title: 'L-01: e-Shikshakosh Portal Navigation & Digital Records', hi_title: 'पाठ 01: ई-शिक्षाकोष पोर्टल और शिक्षक रिकॉर्ड प्रबंधन', desc: 'Master online record updates, attendance registers, and school DCF profiles.', duration: '24:30' },
+          { id: 'ict-2', videoId: 'inWWhr5tnEA', trackNo: 2, tag: 'ICT', title: 'L-02: Cyber Safety & Privacy Guidelines for Schools', hi_title: 'पाठ 02: स्कूलों के लिए साइबर सुरक्षा और डेटा प्राइवेसी', desc: 'Preventing phishing, securing online credentials, and digital ethics.', duration: '29:40' },
+          { id: 'ict-3', videoId: 'fA8Hh1pB2_w', trackNo: 3, tag: 'ICT', title: 'L-03: Cloud Storage & Digital Collaborative Tools', hi_title: 'पाठ 03: गूगल ड्राइव, फॉर्म्स और क्लाउड टूल्स', desc: 'Setting up Google Drive, shared folders, and online surveys for classrooms.', duration: '33:15' }
+        ]
+      },
+      python: {
+        id: 'python',
+        name: 'Python Programming',
+        hi_name: 'पायथन प्रोग्रामिंग',
         playlistId: 'PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
-        ytUrl: 'https://www.youtube.com/watch?v=VoQsPUXWaLM&list=PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
-        channel: 'Python Tutorials',
-        typeBadge: 'Full Playlist'
+        ytUrl: 'https://youtube.com/playlist?list=PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
+        lessons: [
+          { id: 'py-1', videoId: 'VoQsPUXWaLM', trackNo: 1, tag: 'Python', title: 'L-01: Python 3 Fundamentals & Syntax Foundations', hi_title: 'पाठ 01: पायथन 3 बुनियादी सिंटैक्स और वेरिएबल', desc: 'Introduction to Python interpreter, data types, and script execution.', duration: '30:20' },
+          { id: 'py-2', videoId: 'kqtD5dpn9C8', trackNo: 2, tag: 'Python', title: 'L-02: Python Operators, Inputs & If-Else Logic', hi_title: 'पाठ 02: ऑपरेटर्स, इनपुट और कंडीशनल लॉजिक', desc: 'Logical expressions, truth testing, if-elif-else nesting in Python.', duration: '34:40' },
+          { id: 'py-3', videoId: 'Z1Yd7upQsXY', trackNo: 3, tag: 'Python', title: 'L-03: Lists, Tuples, Dictionaries & Loops', hi_title: 'पाठ 03: लिस्ट, टपल, डिक्शनरी और लूप्स', desc: 'Working with collections, key-value storage, for and while loops.', duration: '41:10' },
+          { id: 'py-4', videoId: '6iF8Xb7Z3wQ', trackNo: 4, tag: 'Python', title: 'L-04: Functions, Modules & File Operations', hi_title: 'पाठ 04: फ़ंक्शन्स, मॉड्यूल्स और फ़ाइल हैंडलिंग', desc: 'Writing clean modular code and reading/writing text and CSV files.', duration: '45:00' }
+        ]
       }
-    ];
+    };
 
+    let activeCourseKey = 'msoffice';
+    let activeLesson = REVISED_COURSES.msoffice.lessons[0];
     let currentFilter = 'all';
     let currentLang = 'en';
-    let activeVideoItem = VIDEO_CATALOG[0];
     let bookmarkedIds = new Set();
 
     const $ = id => document.getElementById(id);
 
     /* -------------------------------------------------------------
-       1. BOOKMARK STORAGE SYSTEM (localStorage)
+       1. BOOKMARKS ENGINE
        ------------------------------------------------------------- */
     function loadBookmarks() {
       try {
         const saved = localStorage.getItem('bseb_video_bookmarks');
-        if (saved) {
-          bookmarkedIds = new Set(JSON.parse(saved));
-        }
+        if (saved) bookmarkedIds = new Set(JSON.parse(saved));
       } catch (e) {
         bookmarkedIds = new Set();
       }
@@ -1107,12 +1167,12 @@
       updateBookmarkUI();
     }
 
-    function toggleBookmark(videoId, event) {
+    function toggleBookmark(lessonId, event) {
       if (event) event.stopPropagation();
-      if (bookmarkedIds.has(videoId)) {
-        bookmarkedIds.delete(videoId);
+      if (bookmarkedIds.has(lessonId)) {
+        bookmarkedIds.delete(lessonId);
       } else {
-        bookmarkedIds.add(videoId);
+        bookmarkedIds.add(lessonId);
       }
       saveBookmarks();
       renderSidebarPlaylist();
@@ -1120,12 +1180,12 @@
     }
 
     function toggleStageBookmark() {
-      toggleBookmark(activeVideoItem.id);
+      toggleBookmark(activeLesson.id);
     }
 
     function updateBookmarkUI() {
       $('bookmarkCount').textContent = bookmarkedIds.size;
-      const isBookmarked = bookmarkedIds.has(activeVideoItem.id);
+      const isBookmarked = bookmarkedIds.has(activeLesson.id);
       const btn = $('stageBookmarkBtn');
       const icon = $('stageBookmarkIcon');
       const text = $('stageBookmarkText');
@@ -1142,70 +1202,82 @@
     }
 
     /* -------------------------------------------------------------
-       2. VIDEO STAGE & EMBEDDING
+       2. ACTIVE COURSE & VIDEO STAGE CONTROLLER
        ------------------------------------------------------------- */
-    function getDirectEmbedUrl(item, autoplay = false) {
-      const params = new URLSearchParams({
-        rel: '0',
-        playsinline: '1',
-        autoplay: autoplay ? '1' : '0'
+    function switchActiveCourse(courseKey) {
+      activeCourseKey = courseKey;
+      const course = REVISED_COURSES[courseKey];
+      activeLesson = course.lessons[0]; // Set to first lesson of this playlist
+
+      // Update Course Selection Chips
+      document.querySelectorAll('#courseSelectionBar .course-chip').forEach(chip => {
+        const isActive = chip.getAttribute('onclick').includes(`'${courseKey}'`);
+        chip.classList.toggle('active', isActive);
       });
-      if (item.playlistId) params.set('list', item.playlistId);
-      return `https://www.youtube.com/embed/${encodeURIComponent(item.videoId)}?${params.toString()}`;
+
+      loadLessonToStage(activeLesson, false);
+      renderSidebarPlaylist();
     }
 
-    function setActiveVideo(videoId, shouldAutoplay = true) {
-      const item = VIDEO_CATALOG.find(video => video.id === videoId);
-      if (!item) return;
+    function loadLessonToStage(lesson, shouldAutoplay = true) {
+      activeLesson = lesson;
+      const course = REVISED_COURSES[activeCourseKey];
+      const isHi = currentLang === 'hi';
 
-      activeVideoItem = item;
-      $('currentVideoTitle').textContent = currentLang === 'hi' && item.hi_title ? item.hi_title : item.title;
-      $('currentVideoDesc').textContent = item.desc;
-      $('stageTopicBadge').textContent = item.tag;
-      $('openYouTubeAppBtn').href = item.ytUrl;
+      $('currentVideoTitle').textContent = isHi && lesson.hi_title ? lesson.hi_title : lesson.title;
+      $('currentVideoDesc').textContent = lesson.desc;
+      $('stageTopicBadge').textContent = lesson.tag;
+      $('openYouTubeAppBtn').href = `https://www.youtube.com/watch?v=${lesson.videoId}&list=${course.playlistId}`;
 
+      // Clean, Error-Free Iframe Stream
       const iframe = $('mainVideoPlayer');
-      iframe.title = item.title;
-      iframe.src = getDirectEmbedUrl(item, shouldAutoplay);
+      iframe.title = lesson.title;
+      iframe.src = `https://www.youtube.com/embed/${lesson.videoId}?list=${course.playlistId}&rel=0&playsinline=1${shouldAutoplay ? '&autoplay=1' : ''}`;
 
       updateBookmarkUI();
       renderSidebarPlaylist();
 
-      if (window.innerWidth <= 920) {
+      if (window.innerWidth <= 920 && shouldAutoplay) {
         $('playerSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
     /* -------------------------------------------------------------
-       3. RIGHT-SIDE PLAYLIST SIDEBAR RENDERER
+       3. RIGHT-SIDE PLAYLIST SIDEBAR (Shows ALL videos in current course)
        ------------------------------------------------------------- */
     function renderSidebarPlaylist() {
       const container = $('sidebarPlaylistContainer');
       container.replaceChildren();
 
-      $('sidebarStats').textContent = `${VIDEO_CATALOG.length} ${currentLang === 'hi' ? 'वीडियो उपलब्ध हैं' : 'Lessons Available'}`;
+      const course = REVISED_COURSES[activeCourseKey];
+      const isHi = currentLang === 'hi';
+      const courseName = isHi && course.hi_name ? course.hi_name : course.name;
 
-      VIDEO_CATALOG.forEach((video, index) => {
-        const isActive = (video.id === activeVideoItem.id);
-        const isBookmarked = bookmarkedIds.has(video.id);
-        const displayTitle = currentLang === 'hi' && video.hi_title ? video.hi_title : video.title;
+      $('sidebarCourseHeading').textContent = `${courseName} Playlist`;
+      $('sidebarStats').textContent = `${course.lessons.length} ${isHi ? 'वीडियो उपलब्ध हैं' : 'Lessons in Course'}`;
+
+      // Loop through ALL lessons belonging to this active playlist
+      course.lessons.forEach((lesson, index) => {
+        const isActive = (lesson.id === activeLesson.id);
+        const isBookmarked = bookmarkedIds.has(lesson.id);
+        const displayTitle = isHi && lesson.hi_title ? lesson.hi_title : lesson.title;
 
         const row = document.createElement('div');
         row.className = `playlist-row ${isActive ? 'active' : ''}`;
-        row.onclick = () => setActiveVideo(video.id, true);
+        row.onclick = () => loadLessonToStage(lesson, true);
 
         row.innerHTML = `
           <div class="row-index">${isActive ? '&#9654;' : (index + 1)}</div>
           <div class="row-thumb">
-            <img src="https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg" alt="${displayTitle}" loading="lazy">
+            <img src="https://img.youtube.com/vi/${lesson.videoId}/mqdefault.jpg" alt="${displayTitle}" loading="lazy">
           </div>
           <div class="row-info">
-            <span class="row-topic-pill">${video.tag}</span>
+            <span class="row-topic-pill">${lesson.tag} • ${lesson.duration}</span>
             <div class="row-title">${displayTitle}</div>
           </div>
           <button type="button" class="row-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
                   title="${isBookmarked ? 'Remove Bookmark' : 'Save Bookmark'}" 
-                  onclick="toggleBookmark('${video.id}', event)">
+                  onclick="toggleBookmark('${lesson.id}', event)">
             ${isBookmarked ? '&#9733;' : '&#9734;'}
           </button>
         `;
@@ -1222,8 +1294,18 @@
     }
 
     /* -------------------------------------------------------------
-       4. BOTTOM VIDEO DIRECTORY & GRID
+       4. DIRECTORY & GRID (Filterable & Searchable)
        ------------------------------------------------------------- */
+    function getAllLessonsFlat() {
+      const all = [];
+      Object.keys(REVISED_COURSES).forEach(key => {
+        REVISED_COURSES[key].lessons.forEach(l => {
+          all.push({ ...l, courseKey: key, playlistId: REVISED_COURSES[key].playlistId });
+        });
+      });
+      return all;
+    }
+
     function renderVideoGrid(items) {
       const grid = $('videoGrid');
       grid.replaceChildren();
@@ -1233,14 +1315,14 @@
         empty.className = 'empty-notice';
         empty.textContent = currentLang === 'hi' 
           ? (currentFilter === 'bookmarks' ? 'कोई बुकमार्क किया गया वीडियो नहीं मिला।' : 'आपकी खोज से कोई वीडियो नहीं मिला।') 
-          : (currentFilter === 'bookmarks' ? 'No bookmarked videos found yet. Tap the star to save one.' : 'No courses match your search.');
+          : (currentFilter === 'bookmarks' ? 'No bookmarked lessons yet. Tap the star to save one.' : 'No lessons match your search.');
         grid.appendChild(empty);
         return;
       }
 
-      items.forEach(video => {
-        const isBookmarked = bookmarkedIds.has(video.id);
-        const displayTitle = currentLang === 'hi' && video.hi_title ? video.hi_title : video.title;
+      items.forEach(lesson => {
+        const isBookmarked = bookmarkedIds.has(lesson.id);
+        const displayTitle = currentLang === 'hi' && lesson.hi_title ? lesson.hi_title : lesson.title;
 
         const card = document.createElement('article');
         card.className = 'video-card';
@@ -1253,11 +1335,11 @@
 
         const badge = document.createElement('span');
         badge.className = 'badge-tag';
-        badge.textContent = video.typeBadge;
+        badge.textContent = `Lesson ${lesson.trackNo}`;
 
         const category = document.createElement('span');
         category.className = 'category-pill';
-        category.textContent = video.tag;
+        category.textContent = lesson.tag;
 
         topLeft.append(badge, category);
 
@@ -1266,17 +1348,20 @@
         bmBtn.className = `card-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`;
         bmBtn.innerHTML = isBookmarked ? '&#9733;' : '&#9734;';
         bmBtn.title = isBookmarked ? 'Remove bookmark' : 'Bookmark this video';
-        bmBtn.onclick = (e) => toggleBookmark(video.id, e);
+        bmBtn.onclick = (e) => toggleBookmark(lesson.id, e);
 
         top.append(topLeft, bmBtn);
 
         // Thumbnail Preview Box
         const thumbBox = document.createElement('div');
         thumbBox.className = 'card-thumb-preview';
-        thumbBox.addEventListener('click', () => setActiveVideo(video.id, true));
+        thumbBox.onclick = () => {
+          activeCourseKey = lesson.courseKey;
+          loadLessonToStage(lesson, true);
+        };
         
         const thumbImg = document.createElement('img');
-        thumbImg.src = `https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`;
+        thumbImg.src = `https://img.youtube.com/vi/${lesson.videoId}/mqdefault.jpg`;
         thumbImg.alt = displayTitle;
         thumbImg.loading = 'lazy';
 
@@ -1292,11 +1377,11 @@
 
         const desc = document.createElement('p');
         desc.className = 'video-desc';
-        desc.textContent = video.desc;
+        desc.textContent = lesson.desc;
 
         const meta = document.createElement('div');
         meta.className = 'card-meta';
-        meta.textContent = '📡 ' + video.channel;
+        meta.textContent = `⏱ Duration: ${lesson.duration}`;
 
         const actions = document.createElement('div');
         actions.className = 'card-actions';
@@ -1305,11 +1390,14 @@
         playBtn.type = 'button';
         playBtn.className = 'btn-action btn-stream';
         playBtn.textContent = currentLang === 'hi' ? '▶ ऊपर चलाएँ' : '▶ Play on Stage';
-        playBtn.addEventListener('click', () => setActiveVideo(video.id, true));
+        playBtn.onclick = () => {
+          activeCourseKey = lesson.courseKey;
+          loadLessonToStage(lesson, true);
+        };
 
         const link = document.createElement('a');
         link.className = 'btn-action btn-redirect';
-        link.href = video.ytUrl;
+        link.href = `https://www.youtube.com/watch?v=${lesson.videoId}&list=${lesson.playlistId}`;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.textContent = currentLang === 'hi' ? '↗ YouTube पर' : '↗ On YouTube';
@@ -1322,22 +1410,24 @@
 
     function executeVideoSearchAndFilter() {
       const query = $('videoSearchInput').value.trim().toLocaleLowerCase();
-      const filtered = VIDEO_CATALOG.filter(item => {
+      const allLessons = getAllLessonsFlat();
+
+      const filtered = allLessons.filter(item => {
         let categoryMatches = true;
         if (currentFilter === 'bookmarks') {
           categoryMatches = bookmarkedIds.has(item.id);
         } else if (currentFilter !== 'all') {
-          categoryMatches = item.category === currentFilter;
+          categoryMatches = item.courseKey === currentFilter;
         }
 
-        const text = [item.title, item.hi_title || '', item.desc, item.tag, item.channel].join(' ').toLocaleLowerCase();
+        const text = [item.title, item.hi_title || '', item.desc, item.tag].join(' ').toLocaleLowerCase();
         return categoryMatches && (!query || text.includes(query));
       });
       renderVideoGrid(filtered);
     }
 
     /* -------------------------------------------------------------
-       5. BILINGUAL LANGUAGE SWITCHER
+       5. LANGUAGE TOGGLE
        ------------------------------------------------------------- */
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
@@ -1350,22 +1440,24 @@
       $('directorySubtitle').textContent = currentLang === 'hi' ? 'कोई भी अध्याय चुनें या बुकमार्क के आधार पर फ़िल्टर करें।' : 'Choose any lesson or filter by saved bookmarks.';
       $('videoSearchInput').placeholder = currentLang === 'hi' ? 'पाठ या विषय खोजें…' : 'Search lessons, topics…';
 
-      setActiveVideo(activeVideoItem.id, false);
+      loadLessonToStage(activeLesson, false);
+      renderSidebarPlaylist();
 
       document.querySelectorAll('#filterTabs .tab').forEach(button => {
         const f = button.dataset.filter;
         if (f === 'all') button.textContent = currentLang === 'hi' ? 'सभी कोर्स' : 'All Courses';
         if (f === 'bookmarks') button.innerHTML = `&#9733; ${currentLang === 'hi' ? 'बुकमार्क' : 'Bookmarked'} (<span id="bookmarkCount">${bookmarkedIds.size}</span>)`;
-        if (f === 'msoffice') button.innerHTML = '&#128202; MS Office';
-        if (f === 'cpp') button.innerHTML = '&#9889; C++';
-        if (f === 'python') button.innerHTML = '&#128013; Python';
+        if (f === 'msoffice') button.innerHTML = '📊 MS Office';
+        if (f === 'cpp') button.innerHTML = '⚡ C++';
+        if (f === 'ict') button.innerHTML = '🌐 ICT';
+        if (f === 'python') button.innerHTML = '🐍 Python';
       });
 
       executeVideoSearchAndFilter();
     }
 
     /* -------------------------------------------------------------
-       6. THEME INITIALIZER & LISTENERS
+       6. THEME INITIALIZER & EVENT BINDINGS
        ------------------------------------------------------------- */
     function initTheme() {
       const root = document.documentElement;
@@ -1411,8 +1503,9 @@
         $('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       });
 
-      renderSidebarPlaylist();
-      renderVideoGrid(VIDEO_CATALOG);
+      // Initialize default course and populate
+      switchActiveCourse('msoffice');
+      executeVideoSearchAndFilter();
     });
   </script>
 </body>
