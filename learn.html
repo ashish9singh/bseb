@@ -10,6 +10,7 @@
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149" crossorigin="anonymous"></script>
+  
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
   <script>
@@ -19,186 +20,958 @@
     gtag('config', 'G-JNFE9PSTH3');
   </script>
 
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#fdf6ff;--surface:#fff;--surface2:#f4ebff;--border:#e7d9f7;--text:#241a38;--muted:#6b5c82;--primary:#7b2ff7;--primaryHover:#6420d9;--accent:#ff6b9d;--shadow:0 4px 16px rgba(123,47,247,.08);--radius:14px;--head:'Lora',Georgia,serif;--body:'Inter',system-ui,-apple-system,sans-serif;color-scheme:light}
-    :root[data-theme="dark"]{--bg:#15101f;--surface:#1f1830;--surface2:#261d3a;--border:#382a54;--text:#f1ecfa;--muted:#b4a6cc;--primary:#b98cff;--primaryHover:#cba6ff;--accent:#ff9ec1;--shadow:0 4px 20px rgba(0,0,0,.4);color-scheme:dark}
-    html{scroll-behavior:smooth;scroll-padding-top:80px}body{width:100%;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.5;-webkit-text-size-adjust:100%}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}.wrap{width:100%;max-width:1140px;margin:auto;padding:0 16px}
-    .site-header{position:sticky;top:0;z-index:100;background:var(--bg);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}.header-inner{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:9px;flex-shrink:0;text-decoration:none;color:var(--text);font:700 1rem var(--head)}.mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;display:grid;place-items:center;font:700 .8rem var(--body)}.main-nav{display:flex;align-items:center;gap:15px;flex:1;margin-left:12px}.main-nav a{color:var(--muted);text-decoration:none;font-size:.84rem;font-weight:600;padding:7px 0;white-space:nowrap}.main-nav a:hover,.main-nav a.active{color:var(--primary)}.main-nav a.active{border-bottom:2px solid var(--primary)}.header-actions{display:flex;align-items:center;gap:7px;flex-shrink:0}.lang-btn,.icon-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;min-height:36px}.lang-btn{border-radius:999px;padding:5px 12px;color:var(--primary);font-size:.8rem;font-weight:700;background:var(--surface2)}.icon-btn{width:36px;border-radius:50%;display:grid;place-items:center}.menu-toggle-btn{display:none}
-    main{min-height:60vh}.learn-hero{text-align:center;padding:28px 0 20px}.hero-badge{display:inline-block;background:var(--surface2);border:1px solid var(--border);color:var(--primary);font-size:.72rem;font-weight:700;letter-spacing:.04em;padding:5px 12px;border-radius:999px;margin-bottom:10px}.learn-hero h1{font:700 clamp(1.55rem,3.5vw,2.25rem)/1.25 var(--head);margin-bottom:8px;background:linear-gradient(100deg,var(--primary) 15%,var(--accent) 90%);background-clip:text;-webkit-background-clip:text;color:transparent}.learn-hero p{color:var(--muted);max-width:680px;margin:auto;font-size:.9rem}
-    .player-section{margin:10px 0 34px}.player-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.video-screen{position:relative;width:100%;aspect-ratio:16/9;background:#000}.video-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.player-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px;border-top:1px solid var(--border)}.playing-info{min-width:0;flex:1}.now-tag{font-size:.66rem;font-weight:700;color:var(--primary);background:var(--surface2);padding:3px 8px;border-radius:4px;letter-spacing:.04em}.playing-info h2{font-size:1.05rem;margin:7px 0 3px;overflow-wrap:anywhere}.playing-info p{font-size:.82rem;color:var(--muted)}.youtube-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#f00;color:white;text-decoration:none;border-radius:999px;padding:10px 16px;font-size:.82rem;font-weight:700;min-height:42px;white-space:nowrap}.youtube-btn:hover,.btn-redirect:hover{opacity:.88}
-    .directory{margin-bottom:42px}.section-heading{border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:16px}.section-heading h2{font:700 1.18rem var(--head)}.section-heading p{font-size:.8rem;color:var(--muted);margin-top:4px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}.tabs-wrap{max-width:100%;overflow-x:auto}.tabs{display:flex;gap:7px;white-space:nowrap}.tab{border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:7px 13px;border-radius:999px;font-size:.8rem;font-weight:600;min-height:37px;cursor:pointer}.tab.active{background:var(--primary);border-color:var(--primary);color:#fff}.search-wrap{width:min(100%,300px);min-width:190px}.search{width:100%;min-height:40px;border:1px solid var(--border);border-radius:999px;padding:8px 14px;background:var(--surface);color:var(--text);outline:none}.search:focus{border-color:var(--primary)}.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:15px}.video-card{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .15s,border-color .15s}.video-card:hover{transform:translateY(-2px);border-color:var(--primary)}.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.badge-tag{font-size:.66rem;font-weight:700;padding:3px 7px;border-radius:4px;background:rgba(239,68,68,.12);color:#ef4444;text-transform:uppercase}.category-pill{font-size:.7rem;font-weight:700;color:var(--primary);background:var(--surface2);padding:3px 9px;border-radius:999px;white-space:nowrap}.video-title{font-size:.96rem;line-height:1.4;margin-bottom:7px;overflow-wrap:anywhere}.video-desc{font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:13px;flex:1}.card-meta{font-size:.74rem;color:var(--muted);padding-bottom:10px;margin-bottom:12px;border-bottom:1px dashed var(--border)}.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn-action{min-height:39px;padding:8px 6px;border-radius:7px;font-size:.79rem;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid transparent;cursor:pointer}.btn-stream{background:var(--surface2);border-color:var(--border);color:var(--primary)}.btn-stream:hover{background:var(--primary);color:#fff}.btn-redirect{background:#f00;color:#fff}.empty-notice{grid-column:1/-1;text-align:center;padding:32px 10px;color:var(--muted)}footer{border-top:1px solid var(--border);padding:20px 0;color:var(--muted);font-size:.76rem;text-align:center}footer p+p{margin-top:4px}
-    @media(max-width:900px){.header-inner{flex-wrap:wrap;padding-top:8px;padding-bottom:8px}.brand .full{display:none}.menu-toggle-btn{display:grid}.main-nav{display:none;order:4;flex-basis:100%;margin:2px 0 0;flex-direction:column;align-items:stretch;gap:0;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:12px}.main-nav.open{display:flex}.main-nav a{padding:9px 12px;border:0!important;border-radius:7px}.main-nav a.active{background:var(--surface);border:0}.player-bar{flex-direction:column;align-items:stretch}.youtube-btn{width:100%}}
-    @media(max-width:540px){.wrap{padding:0 12px}.learn-hero{padding-top:22px}.toolbar{align-items:stretch;flex-direction:column}.search-wrap{width:100%}.video-grid{grid-template-columns:1fr}.player-bar{padding:13px}.playing-info h2{font-size:1rem}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg: #FDF6FF;
+      --surface: #FFFFFF;
+      --surface-2: #F4EBFF;
+      --border: #E7D9F7;
+      --text: #241A38;
+      --text-muted: #6B5C82;
+      --primary: #7B2FF7;
+      --primary-hover: #6420D9;
+      --accent: #FF6B9D;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 18px rgba(123, 47, 247, 0.08);
+      --header-h: 64px;
+      --font-head: 'Lora', Georgia, serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      color-scheme: light;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #15101F;
+      --surface: #1F1830;
+      --surface-2: #261D3A;
+      --border: #382A54;
+      --text: #F1ECFA;
+      --text-muted: #B4A6CC;
+      --primary: #B98CFF;
+      --primary-hover: #CBA6FF;
+      --accent: #FF9EC1;
+      --shadow: 0 4px 22px rgba(0, 0, 0, 0.45);
+      color-scheme: dark;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-h) + 16px);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.55;
+    }
+
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 18px; }
+
+    /* Header & Navigation */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 10px rgba(123, 47, 247, 0.35);
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-left: 24px;
+      flex: 1;
+    }
+
+    .main-nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.15s ease;
+      position: relative;
+      padding-bottom: 6px;
+      white-space: nowrap;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: var(--primary);
+    }
+
+    .main-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 999px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      background: var(--surface-2);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      min-height: 38px;
+    }
+
+    .lang-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.15s;
+    }
+
+    .icon-btn:hover { background: var(--surface-2); }
+    .menu-toggle-btn { display: none; }
+
+    /* Hero Banner */
+    main { min-height: 60vh; }
+    
+    .learn-hero {
+      text-align: center;
+      padding: 30px 0 20px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .learn-hero h1 {
+      font: 700 clamp(1.8rem, 4vw, 2.5rem)/1.25 var(--font-head);
+      margin-bottom: 8px;
+      background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .learn-hero p {
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: auto;
+      font-size: 0.95rem;
+    }
+
+    /* Player Section */
+    .player-section {
+      margin: 12px 0 38px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .player-card {
+      width: min(100%, 780px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .video-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .video-screen iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .player-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .playing-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .now-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--surface-2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .playing-info h2 {
+      font-size: 1.05rem;
+      margin: 5px 0 2px;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .playing-info p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .youtube-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #FF0000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      min-height: 40px;
+      white-space: nowrap;
+      transition: opacity 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .youtube-btn:hover { opacity: 0.88; }
+
+    /* Directory, Tabs & Grid */
+    .directory { margin-bottom: 50px; }
+    
+    .section-heading {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      font: 700 1.22rem var(--font-head);
+      color: var(--text);
+    }
+
+    .section-heading p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .tabs-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+
+    .tabs { display: flex; gap: 8px; white-space: nowrap; }
+
+    .tab {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      min-height: 38px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .search-wrap { width: min(100%, 320px); min-width: 200px; }
+
+    .search {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      font-size: 0.84rem;
+      transition: border-color 0.2s;
+    }
+
+    .search:focus { border-color: var(--primary); }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .video-card {
+      min-width: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .badge-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      text-transform: uppercase;
+    }
+
+    .category-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--surface-2);
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .card-thumb-preview {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .card-thumb-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .card-thumb-preview:hover img { transform: scale(1.04); }
+
+    .thumb-play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: background 0.2s;
+    }
+
+    .card-thumb-preview:hover .thumb-play-overlay { background: rgba(0, 0, 0, 0.15); }
+
+    .video-title {
+      font-size: 0.98rem;
+      line-height: 1.4;
+      margin-bottom: 6px;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .video-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+
+    .card-meta {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-action {
+      min-height: 38px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-stream {
+      background: var(--surface-2);
+      border-color: var(--border);
+      color: var(--primary);
+    }
+
+    .btn-stream:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-redirect {
+      background: #FF0000;
+      color: #fff;
+    }
+
+    .empty-notice {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 10px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    footer p + p { margin-top: 4px; }
+
+    /* Mobile Responsive Rules (< 900px) */
+    @media (max-width: 900px) {
+      .header-inner {
+        flex-wrap: wrap;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      .brand .full { display: none; }
+      .menu-toggle-btn { display: grid; }
+
+      .main-nav {
+        display: none;
+        order: 4;
+        flex-basis: 100%;
+        margin: 10px 0 0 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+        padding: 10px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .main-nav.open { display: flex; }
+
+      .main-nav a {
+        padding: 10px 14px;
+        border: 0 !important;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      .main-nav a.active {
+        background: var(--surface);
+      }
+
+      .player-card {
+        width: 100%;
+      }
+
+      .player-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .youtube-btn { width: 100%; }
+    }
+
+    @media (max-width: 540px) {
+      .wrap { padding: 0 14px; }
+      .learn-hero { padding-top: 20px; }
+      .toolbar { align-items: stretch; flex-direction: column; }
+      .search-wrap { width: 100%; }
+      .video-grid { grid-template-columns: 1fr; }
+      .player-bar { padding: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Site Header -->
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="https://bsebwala.in/" class="brand" aria-label="BSEB Portal Hub home">
-        <span class="mark">BB</span><span class="full">BSEB Portal Hub</span></a>
+      <a href="index.html" class="brand" aria-label="BSEB Portal Hub home">
+        <span class="mark">BB</span>
+        <span class="full">BSEB Portal Hub</span>
+      </a>
+
+      <!-- Relative Links for Reliable GitHub Hosting -->
       <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-        <a href="https://bsebwala.in/">Home</a>
-        <a href="/aihub">AIHub</a>
-        <a href="/letter">Letter</a>
-        <a href="/fee">Fee</a>
-        <a href="/news">News</a>
-        <a href="/learn" class="active" aria-current="page">Videos</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="aihub.html">AIHub</a>
+        <a href="letter.html">Letter</a>
+        <a href="fee.html">Fee</a>
+        <a href="news.html">News</a>
+        <a href="learn.html" class="active" aria-current="page">Videos</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
       </nav>
+
       <div class="header-actions">
         <button class="lang-btn" id="langToggleBtn" type="button">हिंदी</button>
-        <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-        <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+        <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">&#127769;</button>
+        <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false">&#9776;</button>
       </div>
     </div>
   </header>
 
   <main class="wrap">
+    <!-- Hero Banner -->
     <section class="learn-hero">
-      <span class="hero-badge" id="heroBadge">⚡ Video Learning Hub</span>
+      <span class="hero-badge" id="heroBadge">&#9889; Video Learning Hub</span>
       <h1 id="heroTitle">Computer Video Learning Hub</h1>
-      <p id="heroSubtitle">Explore computer courses and playlists. Watch in your browser or open a lesson on YouTube.</p>
+      <p id="heroSubtitle">Explore computer courses and playlists. Watch in your browser or open a lesson directly on YouTube.</p>
     </section>
 
+    <!-- Auto-Adjustable Desktop Video Player (70-80% Footprint) -->
     <section class="player-section" id="playerSection" aria-label="Video player">
       <div class="player-card">
         <div class="video-screen" id="videoWrapper">
-          <iframe id="mainVideoPlayer"
-            src="https://www.youtube.com/embed/PONyUl0efrE?list=PLaNI8IHpwBHA&amp;rel=0&amp;playsinline=1&amp;origin=https%3A%2F%2Fbsebwala.in"
+          <iframe 
+            id="mainVideoPlayer"
+            src="https://www.youtube.com/embed/PONyUl0efrE?list=PLaNI8IHpwBHA&rel=0&playsinline=1"
             title="MS Office Complete Playlist"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
           </iframe>
         </div>
+        
         <div class="player-bar">
-          <div class="playing-info"><span class="now-tag" id="nowPlayingTag">NOW PLAYING</span><h2 id="currentVideoTitle">Learn MS Office Full Course Playlist</h2><p id="currentVideoDesc">Watch the playlist here or open it directly on YouTube.</p></div>
-          <a id="openYouTubeAppBtn" class="youtube-btn" href="https://www.youtube.com/watch?v=PONyUl0efrE&amp;list=PLaNI8IHpwBHA" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">▶</span><span id="openYouTubeLabel">Open on YouTube</span></a>
+          <div class="playing-info">
+            <span class="now-tag" id="nowPlayingTag">NOW PLAYING</span>
+            <h2 id="currentVideoTitle">Learn MS Office Full Course Playlist</h2>
+            <p id="currentVideoDesc">Watch the playlist here or open it directly on YouTube.</p>
+          </div>
+          
+          <a id="openYouTubeAppBtn" class="youtube-btn" href="https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA" target="_blank" rel="noopener noreferrer">
+            <span aria-hidden="true">&#9654;</span>
+            <span id="openYouTubeLabel">Open on YouTube</span>
+          </a>
         </div>
       </div>
     </section>
 
+    <!-- Course & Playlist Directory -->
     <section class="directory">
-      <div class="section-heading"><h2 id="directoryTitle">📺 Video Courses &amp; Playlists</h2><p id="directorySubtitle">Choose a course to play it above or open it on YouTube.</p></div>
-      <div class="toolbar">
-        <div class="tabs-wrap"><div class="tabs" id="filterTabs" role="group" aria-label="Filter courses">
-          <button class="tab active" type="button" data-filter="all">All Courses</button><button class="tab" type="button" data-filter="msoffice">📊 MS Office</button><button class="tab" type="button" data-filter="cpp">⚡ C++</button><button class="tab" type="button" data-filter="python">🐍 Python</button>
-        </div></div>
-        <div class="search-wrap"><input class="search" id="videoSearchInput" type="search" placeholder="Search lessons, topics…" aria-label="Search video courses"></div>
+      <div class="section-heading">
+        <h2 id="directoryTitle">&#128250; Video Courses &amp; Playlists</h2>
+        <p id="directorySubtitle">Choose a course to play it above or open it on YouTube.</p>
       </div>
+      
+      <div class="toolbar">
+        <div class="tabs-wrap">
+          <div class="tabs" id="filterTabs" role="group" aria-label="Filter courses">
+            <button class="tab active" type="button" data-filter="all">All Courses</button>
+            <button class="tab" type="button" data-filter="msoffice">&#128202; MS Office</button>
+            <button class="tab" type="button" data-filter="cpp">&#9889; C++</button>
+            <button class="tab" type="button" data-filter="python">&#128013; Python</button>
+          </div>
+        </div>
+        
+        <div class="search-wrap">
+          <input class="search" id="videoSearchInput" type="search" placeholder="Search lessons, topics…" aria-label="Search video courses">
+        </div>
+      </div>
+      
       <div class="video-grid" id="videoGrid" aria-live="polite"></div>
     </section>
   </main>
 
-  <footer><div class="wrap"><p>Disclaimer: BSEBWala is an independent educational information portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body.</p><p>Video tutorials link to YouTube resources. © <span id="copyrightYear">2026</span> BSEBWala. All rights reserved.</p></div></footer>
+  <footer>
+    <div class="wrap">
+      <p>Disclaimer: BSEBWala is an independent educational information portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body.</p>
+      <p>Video tutorials link to educational YouTube resources. © <span id="copyrightYear">2026</span> BSEBWala. All rights reserved.</p>
+    </div>
+  </footer>
 
+  <!-- Script Engine -->
   <script>
     'use strict';
+
     const VIDEO_CATALOG = [
-      {id:'v-office-series',category:'msoffice',tag:'MS Office',title:'Learn MS Office Full Course Playlist',hi_title:'एमएस ऑफिस संपूर्ण कोर्स (वर्ड, एक्सेल, पावरपॉइंट)',desc:'Explore MS Word documents, Excel calculations and data, and PowerPoint presentations.',videoId:'PONyUl0efrE',playlistId:'PLaNI8IHpwBHA',ytUrl:'https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA',channel:'MS Office Hub',typeBadge:'Full Playlist'},
-      {id:'v-cpp-series',category:'cpp',tag:'C++',title:'Learn C++ Complete Playlist & Core Programming',hi_title:'C++ प्रोग्रामिंग संपूर्ण कोर्स एवं कोर कॉन्सेप्ट्स',desc:'Learn C++ syntax, loops, functions, pointers, memory concepts and object-oriented programming.',videoId:'HH_Z6M6AB0A',playlistId:'PLEpk3r07sPTU',ytUrl:'https://www.youtube.com/watch?v=HH_Z6M6AB0A&list=PLEpk3r07sPTU',channel:'C++ Programming',typeBadge:'Full Playlist'},
-      {id:'v-python-series',category:'python',tag:'Python',title:'Python Programming Full Course Playlist',hi_title:'पायथन प्रोग्रामिंग संपूर्ण वीडियो प्लेलिस्ट',desc:'Explore Python syntax, data structures, loops, file handling and practical projects.',videoId:'VoQsPUXWaLM',playlistId:'PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',ytUrl:'https://www.youtube.com/watch?v=VoQsPUXWaLM&list=PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',channel:'Python Tutorials',typeBadge:'Full Playlist'}
+      {
+        id: 'v-office-series',
+        category: 'msoffice',
+        tag: 'MS Office',
+        title: 'Learn MS Office Full Course Playlist',
+        hi_title: 'एमएस ऑफिस संपूर्ण कोर्स (वर्ड, एक्सेल, पावरपॉइंट)',
+        desc: 'Explore MS Word documents, Excel calculations and data handling, and PowerPoint presentations.',
+        videoId: 'PONyUl0efrE',
+        playlistId: 'PLaNI8IHpwBHA',
+        ytUrl: 'https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA',
+        channel: 'MS Office Hub',
+        typeBadge: 'Full Playlist'
+      },
+      {
+        id: 'v-cpp-series',
+        category: 'cpp',
+        tag: 'C++',
+        title: 'Learn C++ Complete Playlist & Core Programming',
+        hi_title: 'C++ प्रोग्रामिंग संपूर्ण कोर्स एवं कोर कॉन्सेप्ट्स',
+        desc: 'Learn C++ syntax, loops, functions, pointers, memory concepts and object-oriented programming.',
+        videoId: 'HH_Z6M6AB0A',
+        playlistId: 'PLEpk3r07sPTU',
+        ytUrl: 'https://www.youtube.com/watch?v=HH_Z6M6AB0A&list=PLEpk3r07sPTU',
+        channel: 'C++ Programming',
+        typeBadge: 'Full Playlist'
+      },
+      {
+        id: 'v-python-series',
+        category: 'python',
+        tag: 'Python',
+        title: 'Python Programming Full Course Playlist',
+        hi_title: 'पायथन प्रोग्रामिंग संपूर्ण वीडियो प्लेलिस्ट',
+        desc: 'Explore Python syntax, data structures, loops, file handling and practical coding projects.',
+        videoId: 'VoQsPUXWaLM',
+        playlistId: 'PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
+        ytUrl: 'https://www.youtube.com/watch?v=VoQsPUXWaLM&list=PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
+        channel: 'Python Tutorials',
+        typeBadge: 'Full Playlist'
+      }
     ];
-    let currentFilter='all';
-    let currentLang='en';
-    let activeVideoItem=VIDEO_CATALOG[0];
+
+    let currentFilter = 'all';
+    let currentLang = 'en';
+    let activeVideoItem = VIDEO_CATALOG[0];
 
     const $ = id => document.getElementById(id);
-    function getDirectEmbedUrl(item, autoplay=false){
-      const params=new URLSearchParams({rel:'0',playsinline:'1',autoplay:autoplay?'1':'0'});
-      if(item.playlistId) params.set('list',item.playlistId);
-      // The origin must match the actual page origin; do not hard-code a different domain.
-      params.set('origin',window.location.origin);
+
+    function getDirectEmbedUrl(item, autoplay = false) {
+      const params = new URLSearchParams({
+        rel: '0',
+        playsinline: '1',
+        autoplay: autoplay ? '1' : '0'
+      });
+      if (item.playlistId) params.set('list', item.playlistId);
       return `https://www.youtube.com/embed/${encodeURIComponent(item.videoId)}?${params.toString()}`;
     }
-    function setActiveVideo(videoId){
-      const item=VIDEO_CATALOG.find(video=>video.id===videoId);
-      if(!item) return;
-      activeVideoItem=item;
-      $('currentVideoTitle').textContent=currentLang==='hi'&&item.hi_title?item.hi_title:item.title;
-      $('currentVideoDesc').textContent=item.desc;
-      $('openYouTubeAppBtn').href=item.ytUrl;
-      const iframe=$('mainVideoPlayer');
-      iframe.title=item.title;
-      iframe.src=getDirectEmbedUrl(item,false);
-      if(window.innerWidth<=900) $('playerSection').scrollIntoView({behavior:'smooth',block:'start'});
+
+    function setActiveVideo(videoId, shouldAutoplay = true) {
+      const item = VIDEO_CATALOG.find(video => video.id === videoId);
+      if (!item) return;
+
+      activeVideoItem = item;
+      $('currentVideoTitle').textContent = currentLang === 'hi' && item.hi_title ? item.hi_title : item.title;
+      $('currentVideoDesc').textContent = item.desc;
+      $('openYouTubeAppBtn').href = item.ytUrl;
+
+      const iframe = $('mainVideoPlayer');
+      iframe.title = item.title;
+      iframe.src = getDirectEmbedUrl(item, shouldAutoplay);
+
+      if (window.innerWidth <= 900) {
+        $('playerSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
-    function renderVideoGrid(items){
-      const grid=$('videoGrid');
+
+    function renderVideoGrid(items) {
+      const grid = $('videoGrid');
       grid.replaceChildren();
-      if(!items.length){const empty=document.createElement('div');empty.className='empty-notice';empty.textContent=currentLang==='hi'?'आपकी खोज से कोई वीडियो नहीं मिला।':'No courses match your search. Try another keyword or category.';grid.appendChild(empty);return;}
-      items.forEach(video=>{
-        const card=document.createElement('article');card.className='video-card';
-        const top=document.createElement('div');top.className='card-top';
-        const badge=document.createElement('span');badge.className='badge-tag';badge.textContent=video.typeBadge;
-        const category=document.createElement('span');category.className='category-pill';category.textContent=video.tag;
-        top.append(badge,category);
-        const title=document.createElement('h3');title.className='video-title';title.textContent=currentLang==='hi'&&video.hi_title?video.hi_title:video.title;
-        const desc=document.createElement('p');desc.className='video-desc';desc.textContent=video.desc;
-        const meta=document.createElement('div');meta.className='card-meta';meta.textContent='📡 '+video.channel;
-        const actions=document.createElement('div');actions.className='card-actions';
-        const play=document.createElement('button');play.type='button';play.className='btn-action btn-stream';play.textContent=currentLang==='hi'?'▶ वीडियो चलाएँ':'▶ Play here';play.addEventListener('click',()=>setActiveVideo(video.id));
-        const link=document.createElement('a');link.className='btn-action btn-redirect';link.href=video.ytUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent=currentLang==='hi'?'↗ YouTube पर':'↗ On YouTube';
-        actions.append(play,link);card.append(top,title,desc,meta,actions);grid.appendChild(card);
+
+      if (!items.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-notice';
+        empty.textContent = currentLang === 'hi' ? 'आपकी खोज से कोई वीडियो नहीं मिला।' : 'No courses match your search. Try another keyword or category.';
+        grid.appendChild(empty);
+        return;
+      }
+
+      items.forEach(video => {
+        const card = document.createElement('article');
+        card.className = 'video-card';
+
+        const top = document.createElement('div');
+        top.className = 'card-top';
+
+        const badge = document.createElement('span');
+        badge.className = 'badge-tag';
+        badge.textContent = video.typeBadge;
+
+        const category = document.createElement('span');
+        category.className = 'category-pill';
+        category.textContent = video.tag;
+        top.append(badge, category);
+
+        // Thumbnail Preview Box
+        const thumbBox = document.createElement('div');
+        thumbBox.className = 'card-thumb-preview';
+        thumbBox.addEventListener('click', () => setActiveVideo(video.id, true));
+        
+        const thumbImg = document.createElement('img');
+        thumbImg.src = `https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`;
+        thumbImg.alt = video.title;
+        thumbImg.loading = 'lazy';
+
+        const playOverlay = document.createElement('div');
+        playOverlay.className = 'thumb-play-overlay';
+        playOverlay.innerHTML = '&#9654;';
+
+        thumbBox.append(thumbImg, playOverlay);
+
+        const title = document.createElement('h3');
+        title.className = 'video-title';
+        title.textContent = currentLang === 'hi' && video.hi_title ? video.hi_title : video.title;
+
+        const desc = document.createElement('p');
+        desc.className = 'video-desc';
+        desc.textContent = video.desc;
+
+        const meta = document.createElement('div');
+        meta.className = 'card-meta';
+        meta.textContent = '📡 ' + video.channel;
+
+        const actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        const playBtn = document.createElement('button');
+        playBtn.type = 'button';
+        playBtn.className = 'btn-action btn-stream';
+        playBtn.textContent = currentLang === 'hi' ? '▶ वीडियो चलाएँ' : '▶ Play here';
+        playBtn.addEventListener('click', () => setActiveVideo(video.id, true));
+
+        const link = document.createElement('a');
+        link.className = 'btn-action btn-redirect';
+        link.href = video.ytUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = currentLang === 'hi' ? '↗ YouTube पर' : '↗ On YouTube';
+
+        actions.append(playBtn, link);
+        card.append(top, thumbBox, title, desc, meta, actions);
+        grid.appendChild(card);
       });
     }
-    function executeVideoSearchAndFilter(){
-      const query=$('videoSearchInput').value.trim().toLocaleLowerCase();
-      const filtered=VIDEO_CATALOG.filter(item=>{
-        const categoryMatches=currentFilter==='all'||item.category===currentFilter;
-        const text=[item.title,item.hi_title||'',item.desc,item.tag,item.channel].join(' ').toLocaleLowerCase();
-        return categoryMatches&&(!query||text.includes(query));
+
+    function executeVideoSearchAndFilter() {
+      const query = $('videoSearchInput').value.trim().toLocaleLowerCase();
+      const filtered = VIDEO_CATALOG.filter(item => {
+        const categoryMatches = currentFilter === 'all' || item.category === currentFilter;
+        const text = [item.title, item.hi_title || '', item.desc, item.tag, item.channel].join(' ').toLocaleLowerCase();
+        return categoryMatches && (!query || text.includes(query));
       });
       renderVideoGrid(filtered);
     }
-    function toggleLanguage(){
-      currentLang=currentLang==='en'?'hi':'en';
-      $('langToggleBtn').textContent=currentLang==='hi'?'English':'हिंदी';
-      $('heroTitle').textContent=currentLang==='hi'?'कंप्यूटर वीडियो लर्निंग हब':'Computer Video Learning Hub';
-      $('heroSubtitle').textContent=currentLang==='hi'?'कंप्यूटर कोर्स और वीडियो प्लेलिस्ट देखें। वीडियो ब्राउज़र में चलाएँ या YouTube पर खोलें।':'Explore computer courses and playlists. Watch in your browser or open a lesson on YouTube.';
-      $('nowPlayingTag').textContent=currentLang==='hi'?'अभी चल रहा है':'NOW PLAYING';
-      $('openYouTubeLabel').textContent=currentLang==='hi'?'YouTube पर खोलें':'Open on YouTube';
-      $('directoryTitle').textContent=currentLang==='hi'?'📺 वीडियो कोर्स और प्लेलिस्ट':'📺 Video Courses & Playlists';
-      $('directorySubtitle').textContent=currentLang==='hi'?'कोर्स चुनें और ऊपर वीडियो चलाएँ या YouTube पर खोलें।':'Choose a course to play it above or open it on YouTube.';
-      $('videoSearchInput').placeholder=currentLang==='hi'?'पाठ या विषय खोजें…':'Search lessons, topics…';
-      setActiveVideo(activeVideoItem.id);
-      document.querySelectorAll('#filterTabs .tab').forEach(button=>{
-        const labels={all:currentLang==='hi'?'सभी कोर्स':'All Courses',msoffice:'📊 MS Office',cpp:'⚡ C++',python:'🐍 Python'};
-        button.textContent=labels[button.dataset.filter];
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'hi' : 'en';
+      $('langToggleBtn').textContent = currentLang === 'hi' ? 'English' : 'हिंदी';
+      $('heroTitle').textContent = currentLang === 'hi' ? 'कंप्यूटर वीडियो लर्निंग हब' : 'Computer Video Learning Hub';
+      $('heroSubtitle').textContent = currentLang === 'hi' ? 'कंप्यूटर कोर्स और वीडियो प्लेलिस्ट देखें। वीडियो ब्राउज़र में चलाएँ या YouTube पर खोलें।' : 'Explore computer courses and playlists. Watch in your browser or open a lesson directly on YouTube.';
+      $('nowPlayingTag').textContent = currentLang === 'hi' ? 'अभी चल रहा है' : 'NOW PLAYING';
+      $('openYouTubeLabel').textContent = currentLang === 'hi' ? 'YouTube पर खोलें' : 'Open on YouTube';
+      $('directoryTitle').innerHTML = currentLang === 'hi' ? '&#128250; वीडियो कोर्स और प्लेलिस्ट' : '&#128250; Video Courses &amp; Playlists';
+      $('directorySubtitle').textContent = currentLang === 'hi' ? 'कोर्स चुनें और ऊपर वीडियो चलाएँ या YouTube पर खोलें।' : 'Choose a course to play it above or open it on YouTube.';
+      $('videoSearchInput').placeholder = currentLang === 'hi' ? 'पाठ या विषय खोजें…' : 'Search lessons, topics…';
+
+      setActiveVideo(activeVideoItem.id, false);
+
+      document.querySelectorAll('#filterTabs .tab').forEach(button => {
+        const labels = {
+          all: currentLang === 'hi' ? 'सभी कोर्स' : 'All Courses',
+          msoffice: '📊 MS Office',
+          cpp: '⚡ C++',
+          python: '🐍 Python'
+        };
+        button.textContent = labels[button.dataset.filter];
       });
+
       executeVideoSearchAndFilter();
     }
-    function initTheme(){
-      const root=document.documentElement;
-      let saved=null;
-      try{saved=localStorage.getItem('bseb-hub-theme');}catch(error){}
-      const initial=saved==='dark'||saved==='light'?saved:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+
+    function initTheme() {
+      const root = document.documentElement;
+      let saved = null;
+      try { saved = localStorage.getItem('bseb-hub-theme'); } catch (error) {}
+      const initial = saved === 'dark' || saved === 'light' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       applyTheme(initial);
-      $('themeToggle').addEventListener('click',()=>{
-        const next=root.dataset.theme==='dark'?'light':'dark';applyTheme(next);
-        try{localStorage.setItem('bseb-hub-theme',next);}catch(error){}
+
+      $('themeToggle').addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem('bseb-hub-theme', next); } catch (error) {}
       });
-      function applyTheme(theme){root.dataset.theme=theme;$('themeToggle').textContent=theme==='dark'?'☀️':'🌙';$('themeToggle').setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');}
+
+      function applyTheme(theme) {
+        root.dataset.theme = theme;
+        $('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+        $('themeToggle').setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
     }
-    document.addEventListener('DOMContentLoaded',()=>{
+
+    document.addEventListener('DOMContentLoaded', () => {
       initTheme();
-      $('copyrightYear').textContent=new Date().getFullYear();
-      $('langToggleBtn').addEventListener('click',toggleLanguage);
-      $('videoSearchInput').addEventListener('input',executeVideoSearchAndFilter);
-      document.querySelectorAll('#filterTabs .tab').forEach(button=>button.addEventListener('click',()=>{
-        currentFilter=button.dataset.filter;
-        document.querySelectorAll('#filterTabs .tab').forEach(tab=>tab.classList.toggle('active',tab===button));
-        executeVideoSearchAndFilter();
-      }));
-      $('menuToggle').addEventListener('click',()=>{
-        const nav=$('mainNav');const open=nav.classList.toggle('open');
-        $('menuToggle').textContent=open?'✕':'☰';$('menuToggle').setAttribute('aria-expanded',String(open));$('menuToggle').setAttribute('aria-label',open?'Close menu':'Open menu');
+      $('copyrightYear').textContent = new Date().getFullYear();
+      $('langToggleBtn').addEventListener('click', toggleLanguage);$('videoSearchInput').addEventListener('input', executeVideoSearchAndFilter);
+
+      document.querySelectorAll('#filterTabs .tab').forEach(button => {
+        button.addEventListener('click', () => {
+          currentFilter = button.dataset.filter;
+          document.querySelectorAll('#filterTabs .tab').forEach(tab => tab.classList.toggle('active', tab === button));
+          executeVideoSearchAndFilter();
+        });
       });
+
+      $('menuToggle').addEventListener('click', () => {
+        const nav = $('mainNav');
+        const open = nav.classList.toggle('open');
+        $('menuToggle').textContent = open ? '✕' : '☰';
+        $('menuToggle').setAttribute('aria-expanded', String(open));$('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+
       renderVideoGrid(VIDEO_CATALOG);
     });
   </script>
