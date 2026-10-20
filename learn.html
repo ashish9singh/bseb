@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Video Learning Hub — BSEB Portal Hub</title>
-  <meta name="description" content="Watch curated computer science and IT video tutorials from BSEBWala. Explore MS Office, C++ and Python learning playlists.">
+  <title>Video Learning Hub &amp; Bookmarks — BSEB Portal Hub</title>
+  <meta name="description" content="Structured video library with live playlist sidebar and bookmarking functionality for MS Office, C++, and Python courses.">
   <meta name="theme-color" content="#7b2ff7">
 
   <!-- Google AdSense -->
@@ -38,6 +38,7 @@
       --primary: #7B2FF7;
       --primary-hover: #6420D9;
       --accent: #FF6B9D;
+      --gold: #F59E0B;
       --radius: 14px;
       --radius-lg: 20px;
       --radius-sm: 8px;
@@ -58,6 +59,7 @@
       --primary: #B98CFF;
       --primary-hover: #CBA6FF;
       --accent: #FF9EC1;
+      --gold: #FBBF24;
       --shadow: 0 4px 22px rgba(0, 0, 0, 0.45);
       color-scheme: dark;
     }
@@ -79,7 +81,7 @@
 
     button, input { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
-    .wrap { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 18px; }
+    .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 18px; }
 
     /* Header & Navigation */
     header.site-header {
@@ -206,12 +208,12 @@
     .icon-btn:hover { background: var(--surface-2); }
     .menu-toggle-btn { display: none; }
 
-    /* Hero Banner */
+    /* Hero */
     main { min-height: 60vh; }
     
     .learn-hero {
       text-align: center;
-      padding: 30px 0 20px;
+      padding: 24px 0 18px;
     }
 
     .hero-badge {
@@ -224,13 +226,13 @@
       letter-spacing: 0.04em;
       padding: 4px 14px;
       border-radius: 999px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-transform: uppercase;
     }
 
     .learn-hero h1 {
-      font: 700 clamp(1.8rem, 4vw, 2.5rem)/1.25 var(--font-head);
-      margin-bottom: 8px;
+      font: 700 clamp(1.8rem, 4vw, 2.4rem)/1.25 var(--font-head);
+      margin-bottom: 6px;
       background: linear-gradient(100deg, var(--primary) 15%, var(--accent) 90%);
       background-clip: text;
       -webkit-background-clip: text;
@@ -241,34 +243,44 @@
       color: var(--text-muted);
       max-width: 680px;
       margin: auto;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
-    /* Player Section */
-    .player-section {
+    /* ============================================================
+       Video Stage & Right-Side Playlist Layout
+       ============================================================ */
+    .player-theater-section {
       margin: 12px 0 38px;
-      display: flex;
-      justify-content: center;
+      width: 100%;
     }
 
-    .player-card {
-      width: min(100%, 780px);
+    .theater-container {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow);
-      transition: box-shadow 0.2s ease;
+      display: grid;
+      grid-template-columns: 1fr 380px; /* Video on Left, Sidebar Playlist on Right */
     }
 
-    .video-screen {
+    /* Left Stage */
+    .video-stage {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      min-width: 0;
+    }
+
+    .video-screen-wrapper {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
       background: #000;
     }
 
-    .video-screen iframe {
+    .video-screen-wrapper iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -276,21 +288,28 @@
       border: 0;
     }
 
-    .player-bar {
+    .player-meta-bar {
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 16px 20px;
-      border-top: 1px solid var(--border);
+      background: var(--surface);
     }
 
-    .playing-info {
+    .meta-details {
       min-width: 0;
       flex: 1;
     }
 
-    .now-tag {
+    .meta-details-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .now-badge {
       font-size: 0.68rem;
       font-weight: 700;
       color: var(--primary);
@@ -300,39 +319,225 @@
       letter-spacing: 0.04em;
     }
 
-    .playing-info h2 {
+    .meta-details h2 {
       font-size: 1.05rem;
-      margin: 5px 0 2px;
       color: var(--text);
+      margin: 4px 0 2px;
       overflow-wrap: anywhere;
     }
 
-    .playing-info p {
-      font-size: 0.82rem;
+    .meta-details p {
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
-    .youtube-btn {
+    .player-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* Bookmark Button on Stage */
+    .btn-stage-bookmark {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-stage-bookmark:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-stage-bookmark.bookmarked {
+      background: color-mix(in srgb, var(--gold) 15%, var(--surface));
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .btn-yt-launch {
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
       background: #FF0000;
       color: #fff;
       text-decoration: none;
       border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 0.82rem;
+      padding: 8px 16px;
+      font-size: 0.8rem;
       font-weight: 700;
-      min-height: 40px;
+      min-height: 38px;
       white-space: nowrap;
       transition: opacity 0.15s ease;
+    }
+
+    .btn-yt-launch:hover { opacity: 0.88; }
+
+    /* Right Playlist Sidebar */
+    .playlist-sidebar {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      height: 100%;
+      min-width: 0;
+    }
+
+    .sidebar-header {
+      padding: 14px 18px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .sidebar-header-left {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .sidebar-header h3 {
+      font-size: 0.92rem;
+      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sidebar-stats {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .mobile-drawer-indicator {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--primary);
+    }
+
+    /* Scrollable Playlist Drawer */
+    .sidebar-items-scroll {
+      overflow-y: auto;
+      max-height: 480px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .playlist-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .playlist-row:hover {
+      background: var(--surface-2);
+      border-color: var(--border);
+    }
+
+    .playlist-row.active {
+      background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+      border-color: var(--primary);
+    }
+
+    .row-index {
+      width: 22px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
       flex-shrink: 0;
     }
 
-    .youtube-btn:hover { opacity: 0.88; }
+    .row-thumb {
+      position: relative;
+      width: 72px;
+      aspect-ratio: 16 / 9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #000;
+      flex-shrink: 0;
+    }
 
-    /* Directory, Tabs & Grid */
+    .row-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .row-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .row-topic-pill {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--surface-2);
+      padding: 1px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+
+    .row-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .row-bookmark-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      flex-shrink: 0;
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+
+    .row-bookmark-btn:hover {
+      transform: scale(1.15);
+      color: var(--gold);
+    }
+
+    .row-bookmark-btn.bookmarked {
+      color: var(--gold);
+    }
+
+    /* ============================================================
+       Directory & Filter Toolbar
+       ============================================================ */
     .directory { margin-bottom: 50px; }
     
     .section-heading {
@@ -407,9 +612,10 @@
 
     .search:focus { border-color: var(--primary); }
 
+    /* Directory Video Cards Grid */
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 18px;
     }
 
@@ -423,6 +629,7 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.15s ease, border-color 0.15s ease;
+      position: relative;
     }
 
     .video-card:hover {
@@ -435,7 +642,13 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-top-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .badge-tag {
@@ -456,6 +669,25 @@
       padding: 3px 10px;
       border-radius: 999px;
       white-space: nowrap;
+    }
+
+    .card-bookmark-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.15rem;
+      padding: 2px 6px;
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+
+    .card-bookmark-btn:hover {
+      transform: scale(1.15);
+      color: var(--gold);
+    }
+
+    .card-bookmark-btn.bookmarked {
+      color: var(--gold);
     }
 
     .card-thumb-preview {
@@ -573,8 +805,10 @@
 
     footer p + p { margin-top: 4px; }
 
-    /* Mobile Responsive Rules (< 900px) */
-    @media (max-width: 900px) {
+    /* ============================================================
+       Mobile Media Queries (< 920px)
+       ============================================================ */
+    @media (max-width: 920px) {
       .header-inner {
         flex-wrap: wrap;
         padding-top: 8px;
@@ -611,16 +845,46 @@
         background: var(--surface);
       }
 
-      .player-card {
-        width: 100%;
+      /* Stack Player on Top and Playlist Below on Mobile */
+      .theater-container {
+        grid-template-columns: 1fr;
       }
 
-      .player-bar {
+      .video-stage {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .player-meta-bar {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .youtube-btn { width: 100%; }
+      .player-actions-row {
+        justify-content: space-between;
+      }
+
+      .btn-yt-launch {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .sidebar-header {
+        cursor: pointer;
+      }
+
+      .mobile-drawer-indicator {
+        display: inline-block;
+      }
+
+      .sidebar-items-scroll {
+        display: none;
+        max-height: 280px;
+      }
+
+      .sidebar-items-scroll.expanded {
+        display: flex;
+      }
     }
 
     @media (max-width: 540px) {
@@ -629,7 +893,7 @@
       .toolbar { align-items: stretch; flex-direction: column; }
       .search-wrap { width: 100%; }
       .video-grid { grid-template-columns: 1fr; }
-      .player-bar { padding: 14px; }
+      .player-meta-bar { padding: 14px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -648,7 +912,6 @@
         <span class="full">BSEB Portal Hub</span>
       </a>
 
-      <!-- Relative Links for Reliable GitHub Hosting -->
       <nav class="main-nav" id="mainNav" aria-label="Main navigation">
         <a href="https://bsebwala.in/">Home</a>
         <a href="/aihub">AIHub</a>
@@ -672,50 +935,81 @@
     <!-- Hero Banner -->
     <section class="learn-hero">
       <span class="hero-badge" id="heroBadge">&#9889; Video Learning Hub</span>
-      <h1 id="heroTitle">Computer Video Learning Hub</h1>
-      <p id="heroSubtitle">Explore computer courses and playlists. Watch in your browser or open a lesson directly on YouTube.</p>
+      <h1 id="heroTitle">Computer Studies &amp; Playlists</h1>
+      <p id="heroSubtitle">Watch lessons with the interactive side-playlist or bookmark your favorites for quick access.</p>
     </section>
 
-    <!-- Auto-Adjustable Desktop Video Player (70-80% Footprint) -->
-    <section class="player-section" id="playerSection" aria-label="Video player">
-      <div class="player-card">
-        <div class="video-screen" id="videoWrapper">
-          <iframe 
-            id="mainVideoPlayer"
-            src="https://www.youtube.com/embed/PONyUl0efrE?list=PLaNI8IHpwBHA&rel=0&playsinline=1"
-            title="MS Office Complete Playlist"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-          </iframe>
-        </div>
+    <!-- Split Stage: Video Player on Left, Playlist on Right -->
+    <section class="player-theater-section" id="playerSection" aria-label="Video theater">
+      <div class="theater-container">
         
-        <div class="player-bar">
-          <div class="playing-info">
-            <span class="now-tag" id="nowPlayingTag">NOW PLAYING</span>
-            <h2 id="currentVideoTitle">Learn MS Office Full Course Playlist</h2>
-            <p id="currentVideoDesc">Watch the playlist here or open it directly on YouTube.</p>
+        <!-- Left: Video Screen & Meta Bar -->
+        <div class="video-stage">
+          <div class="video-screen-wrapper" id="videoWrapper">
+            <iframe 
+              id="mainVideoPlayer"
+              src="https://www.youtube.com/embed/PONyUl0efrE?list=PLaNI8IHpwBHA&rel=0&playsinline=1"
+              title="MS Office Complete Playlist"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" 
+              allowfullscreen>
+            </iframe>
           </div>
-          
-          <a id="openYouTubeAppBtn" class="youtube-btn" href="https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA" target="_blank" rel="noopener noreferrer">
-            <span aria-hidden="true">&#9654;</span>
-            <span id="openYouTubeLabel">Open on YouTube</span>
-          </a>
+
+          <div class="player-meta-bar">
+            <div class="meta-details">
+              <div class="meta-details-top">
+                <span class="now-tag" id="nowPlayingTag">NOW PLAYING</span>
+                <span class="category-pill" id="stageTopicBadge">MS Office</span>
+              </div>
+              <h2 id="currentVideoTitle">Learn MS Office Full Course Playlist</h2>
+              <p id="currentVideoDesc">Explore MS Word documents, Excel calculations, and PowerPoint presentations.</p>
+            </div>
+
+            <div class="player-actions-row">
+              <button class="btn-stage-bookmark" id="stageBookmarkBtn" onclick="toggleStageBookmark()">
+                <span id="stageBookmarkIcon">&#9734;</span>
+                <span id="stageBookmarkText">Bookmark</span>
+              </button>
+              
+              <a id="openYouTubeAppBtn" class="btn-yt-launch" href="https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA" target="_blank" rel="noopener noreferrer">
+                <span>&#9654;</span>
+                <span id="openYouTubeLabel">YouTube</span>
+              </a>
+            </div>
+          </div>
         </div>
+
+        <!-- Right: Course Playlist Sidebar -->
+        <aside class="playlist-sidebar">
+          <div class="sidebar-header" onclick="toggleMobileSidebar()">
+            <div class="sidebar-header-left">
+              <h3 id="sidebarCourseHeading">Course Playlist</h3>
+              <span class="sidebar-stats" id="sidebarStats">Showing video tracks</span>
+            </div>
+            <span class="mobile-drawer-indicator" id="sidebarIndicator">▼</span>
+          </div>
+
+          <div class="sidebar-items-scroll" id="sidebarPlaylistContainer">
+            <!-- Injected via JavaScript -->
+          </div>
+        </aside>
+
       </div>
     </section>
 
-    <!-- Course & Playlist Directory -->
+    <!-- Video Library Directory & Search -->
     <section class="directory">
       <div class="section-heading">
-        <h2 id="directoryTitle">&#128250; Video Courses &amp; Playlists</h2>
-        <p id="directorySubtitle">Choose a course to play it above or open it on YouTube.</p>
+        <h2 id="directoryTitle">&#128250; Video Courses &amp; Library</h2>
+        <p id="directorySubtitle">Choose any lesson or filter by saved bookmarks.</p>
       </div>
       
       <div class="toolbar">
         <div class="tabs-wrap">
           <div class="tabs" id="filterTabs" role="group" aria-label="Filter courses">
             <button class="tab active" type="button" data-filter="all">All Courses</button>
+            <button class="tab" type="button" data-filter="bookmarks">&#9733; Bookmarked (<span id="bookmarkCount">0</span>)</button>
             <button class="tab" type="button" data-filter="msoffice">&#128202; MS Office</button>
             <button class="tab" type="button" data-filter="cpp">&#9889; C++</button>
             <button class="tab" type="button" data-filter="python">&#128013; Python</button>
@@ -734,7 +1028,7 @@
   <footer>
     <div class="wrap">
       <p>Disclaimer: BSEBWala is an independent educational information portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body.</p>
-      <p>Video tutorials link to educational YouTube resources. © <span id="copyrightYear">2026</span> BSEBWala. All rights reserved.</p>
+      <p>Video tutorials link to educational YouTube resources. &copy; <span id="copyrightYear">2026</span> BSEBWala. All rights reserved.</p>
     </div>
   </footer>
 
@@ -787,9 +1081,69 @@
     let currentFilter = 'all';
     let currentLang = 'en';
     let activeVideoItem = VIDEO_CATALOG[0];
+    let bookmarkedIds = new Set();
 
     const $ = id => document.getElementById(id);
 
+    /* -------------------------------------------------------------
+       1. BOOKMARK STORAGE SYSTEM (localStorage)
+       ------------------------------------------------------------- */
+    function loadBookmarks() {
+      try {
+        const saved = localStorage.getItem('bseb_video_bookmarks');
+        if (saved) {
+          bookmarkedIds = new Set(JSON.parse(saved));
+        }
+      } catch (e) {
+        bookmarkedIds = new Set();
+      }
+      updateBookmarkUI();
+    }
+
+    function saveBookmarks() {
+      try {
+        localStorage.setItem('bseb_video_bookmarks', JSON.stringify([...bookmarkedIds]));
+      } catch (e) {}
+      updateBookmarkUI();
+    }
+
+    function toggleBookmark(videoId, event) {
+      if (event) event.stopPropagation();
+      if (bookmarkedIds.has(videoId)) {
+        bookmarkedIds.delete(videoId);
+      } else {
+        bookmarkedIds.add(videoId);
+      }
+      saveBookmarks();
+      renderSidebarPlaylist();
+      executeVideoSearchAndFilter();
+    }
+
+    function toggleStageBookmark() {
+      toggleBookmark(activeVideoItem.id);
+    }
+
+    function updateBookmarkUI() {
+      $('bookmarkCount').textContent = bookmarkedIds.size;
+      const isBookmarked = bookmarkedIds.has(activeVideoItem.id);
+      const btn = $('stageBookmarkBtn');
+      const icon = $('stageBookmarkIcon');
+      const text = $('stageBookmarkText');
+
+      if (isBookmarked) {
+        btn.classList.add('bookmarked');
+        icon.innerHTML = '&#9733;';
+        text.textContent = currentLang === 'hi' ? 'बुकमार्क किया गया' : 'Bookmarked';
+      } else {
+        btn.classList.remove('bookmarked');
+        icon.innerHTML = '&#9734;';
+        text.textContent = currentLang === 'hi' ? 'बुकमार्क करें' : 'Bookmark';
+      }
+    }
+
+    /* -------------------------------------------------------------
+       2. VIDEO STAGE & EMBEDDING
+       ------------------------------------------------------------- */
     function getDirectEmbedUrl(item, autoplay = false) {
       const params = new URLSearchParams({
         rel: '0',
@@ -807,17 +1161,69 @@
       activeVideoItem = item;
       $('currentVideoTitle').textContent = currentLang === 'hi' && item.hi_title ? item.hi_title : item.title;
       $('currentVideoDesc').textContent = item.desc;
+      $('stageTopicBadge').textContent = item.tag;
       $('openYouTubeAppBtn').href = item.ytUrl;
 
       const iframe = $('mainVideoPlayer');
       iframe.title = item.title;
       iframe.src = getDirectEmbedUrl(item, shouldAutoplay);
 
-      if (window.innerWidth <= 900) {
+      updateBookmarkUI();
+      renderSidebarPlaylist();
+
+      if (window.innerWidth <= 920) {
         $('playerSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
+    /* -------------------------------------------------------------
+       3. RIGHT-SIDE PLAYLIST SIDEBAR RENDERER
+       ------------------------------------------------------------- */
+    function renderSidebarPlaylist() {
+      const container = $('sidebarPlaylistContainer');
+      container.replaceChildren();
+
+      $('sidebarStats').textContent = `${VIDEO_CATALOG.length} ${currentLang === 'hi' ? 'वीडियो उपलब्ध हैं' : 'Lessons Available'}`;
+
+      VIDEO_CATALOG.forEach((video, index) => {
+        const isActive = (video.id === activeVideoItem.id);
+        const isBookmarked = bookmarkedIds.has(video.id);
+        const displayTitle = currentLang === 'hi' && video.hi_title ? video.hi_title : video.title;
+
+        const row = document.createElement('div');
+        row.className = `playlist-row ${isActive ? 'active' : ''}`;
+        row.onclick = () => setActiveVideo(video.id, true);
+
+        row.innerHTML = `
+          <div class="row-index">${isActive ? '&#9654;' : (index + 1)}</div>
+          <div class="row-thumb">
+            <img src="https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg" alt="${displayTitle}" loading="lazy">
+          </div>
+          <div class="row-info">
+            <span class="row-topic-pill">${video.tag}</span>
+            <div class="row-title">${displayTitle}</div>
+          </div>
+          <button type="button" class="row-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
+                  title="${isBookmarked ? 'Remove Bookmark' : 'Save Bookmark'}" 
+                  onclick="toggleBookmark('${video.id}', event)">
+            ${isBookmarked ? '&#9733;' : '&#9734;'}
+          </button>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function toggleMobileSidebar() {
+      if (window.innerWidth > 920) return;
+      const scrollArea = $('sidebarPlaylistContainer');
+      const indicator = $('sidebarIndicator');
+      const isOpen = scrollArea.classList.toggle('expanded');
+      indicator.innerHTML = isOpen ? '&#9650;' : '&#9660;';
+    }
+
+    /* -------------------------------------------------------------
+       4. BOTTOM VIDEO DIRECTORY & GRID
+       ------------------------------------------------------------- */
     function renderVideoGrid(items) {
       const grid = $('videoGrid');
       grid.replaceChildren();
@@ -825,17 +1231,25 @@
       if (!items.length) {
         const empty = document.createElement('div');
         empty.className = 'empty-notice';
-        empty.textContent = currentLang === 'hi' ? 'आपकी खोज से कोई वीडियो नहीं मिला।' : 'No courses match your search. Try another keyword or category.';
+        empty.textContent = currentLang === 'hi' 
+          ? (currentFilter === 'bookmarks' ? 'कोई बुकमार्क किया गया वीडियो नहीं मिला।' : 'आपकी खोज से कोई वीडियो नहीं मिला।') 
+          : (currentFilter === 'bookmarks' ? 'No bookmarked videos found yet. Tap the star to save one.' : 'No courses match your search.');
         grid.appendChild(empty);
         return;
       }
 
       items.forEach(video => {
+        const isBookmarked = bookmarkedIds.has(video.id);
+        const displayTitle = currentLang === 'hi' && video.hi_title ? video.hi_title : video.title;
+
         const card = document.createElement('article');
         card.className = 'video-card';
 
         const top = document.createElement('div');
         top.className = 'card-top';
+
+        const topLeft = document.createElement('div');
+        topLeft.className = 'card-top-left';
 
         const badge = document.createElement('span');
         badge.className = 'badge-tag';
@@ -844,7 +1258,17 @@
         const category = document.createElement('span');
         category.className = 'category-pill';
         category.textContent = video.tag;
-        top.append(badge, category);
+
+        topLeft.append(badge, category);
+
+        const bmBtn = document.createElement('button');
+        bmBtn.type = 'button';
+        bmBtn.className = `card-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`;
+        bmBtn.innerHTML = isBookmarked ? '&#9733;' : '&#9734;';
+        bmBtn.title = isBookmarked ? 'Remove bookmark' : 'Bookmark this video';
+        bmBtn.onclick = (e) => toggleBookmark(video.id, e);
+
+        top.append(topLeft, bmBtn);
 
         // Thumbnail Preview Box
         const thumbBox = document.createElement('div');
@@ -853,7 +1277,7 @@
         
         const thumbImg = document.createElement('img');
         thumbImg.src = `https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`;
-        thumbImg.alt = video.title;
+        thumbImg.alt = displayTitle;
         thumbImg.loading = 'lazy';
 
         const playOverlay = document.createElement('div');
@@ -864,7 +1288,7 @@
 
         const title = document.createElement('h3');
         title.className = 'video-title';
-        title.textContent = currentLang === 'hi' && video.hi_title ? video.hi_title : video.title;
+        title.textContent = displayTitle;
 
         const desc = document.createElement('p');
         desc.className = 'video-desc';
@@ -880,7 +1304,7 @@
         const playBtn = document.createElement('button');
         playBtn.type = 'button';
         playBtn.className = 'btn-action btn-stream';
-        playBtn.textContent = currentLang === 'hi' ? '▶ वीडियो चलाएँ' : '▶ Play here';
+        playBtn.textContent = currentLang === 'hi' ? '▶ ऊपर चलाएँ' : '▶ Play on Stage';
         playBtn.addEventListener('click', () => setActiveVideo(video.id, true));
 
         const link = document.createElement('a');
@@ -899,39 +1323,50 @@
     function executeVideoSearchAndFilter() {
       const query = $('videoSearchInput').value.trim().toLocaleLowerCase();
       const filtered = VIDEO_CATALOG.filter(item => {
-        const categoryMatches = currentFilter === 'all' || item.category === currentFilter;
+        let categoryMatches = true;
+        if (currentFilter === 'bookmarks') {
+          categoryMatches = bookmarkedIds.has(item.id);
+        } else if (currentFilter !== 'all') {
+          categoryMatches = item.category === currentFilter;
+        }
+
         const text = [item.title, item.hi_title || '', item.desc, item.tag, item.channel].join(' ').toLocaleLowerCase();
         return categoryMatches && (!query || text.includes(query));
       });
       renderVideoGrid(filtered);
     }
 
+    /* -------------------------------------------------------------
+       5. BILINGUAL LANGUAGE SWITCHER
+       ------------------------------------------------------------- */
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
       $('langToggleBtn').textContent = currentLang === 'hi' ? 'English' : 'हिंदी';
-      $('heroTitle').textContent = currentLang === 'hi' ? 'कंप्यूटर वीडियो लर्निंग हब' : 'Computer Video Learning Hub';
-      $('heroSubtitle').textContent = currentLang === 'hi' ? 'कंप्यूटर कोर्स और वीडियो प्लेलिस्ट देखें। वीडियो ब्राउज़र में चलाएँ या YouTube पर खोलें।' : 'Explore computer courses and playlists. Watch in your browser or open a lesson directly on YouTube.';
+      $('heroTitle').textContent = currentLang === 'hi' ? 'कंप्यूटर वीडियो एवं प्लेलिस्ट' : 'Computer Studies & Playlists';
+      $('heroSubtitle').textContent = currentLang === 'hi' ? 'वीडियो देखें, दाईं ओर प्लेलिस्ट से अध्याय चुनें और पसंदीदा वीडियो बुकमार्क करें।' : 'Watch lessons with the interactive side-playlist or bookmark your favorites for quick access.';
       $('nowPlayingTag').textContent = currentLang === 'hi' ? 'अभी चल रहा है' : 'NOW PLAYING';
-      $('openYouTubeLabel').textContent = currentLang === 'hi' ? 'YouTube पर खोलें' : 'Open on YouTube';
-      $('directoryTitle').innerHTML = currentLang === 'hi' ? '&#128250; वीडियो कोर्स और प्लेलिस्ट' : '&#128250; Video Courses &amp; Playlists';
-      $('directorySubtitle').textContent = currentLang === 'hi' ? 'कोर्स चुनें और ऊपर वीडियो चलाएँ या YouTube पर खोलें।' : 'Choose a course to play it above or open it on YouTube.';
+      $('openYouTubeLabel').textContent = currentLang === 'hi' ? 'यूट्यूब' : 'YouTube';
+      $('directoryTitle').innerHTML = currentLang === 'hi' ? '&#128250; वीडियो लाइब्रेरी एवं कोर्सेज' : '&#128250; Video Courses &amp; Library';
+      $('directorySubtitle').textContent = currentLang === 'hi' ? 'कोई भी अध्याय चुनें या बुकमार्क के आधार पर फ़िल्टर करें।' : 'Choose any lesson or filter by saved bookmarks.';
       $('videoSearchInput').placeholder = currentLang === 'hi' ? 'पाठ या विषय खोजें…' : 'Search lessons, topics…';
 
       setActiveVideo(activeVideoItem.id, false);
 
       document.querySelectorAll('#filterTabs .tab').forEach(button => {
-        const labels = {
-          all: currentLang === 'hi' ? 'सभी कोर्स' : 'All Courses',
-          msoffice: '📊 MS Office',
-          cpp: '⚡ C++',
-          python: '🐍 Python'
-        };
-        button.textContent = labels[button.dataset.filter];
+        const f = button.dataset.filter;
+        if (f === 'all') button.textContent = currentLang === 'hi' ? 'सभी कोर्स' : 'All Courses';
+        if (f === 'bookmarks') button.innerHTML = `&#9733; ${currentLang === 'hi' ? 'बुकमार्क' : 'Bookmarked'} (<span id="bookmarkCount">${bookmarkedIds.size}</span>)`;
+        if (f === 'msoffice') button.innerHTML = '&#128202; MS Office';
+        if (f === 'cpp') button.innerHTML = '&#9889; C++';
+        if (f === 'python') button.innerHTML = '&#128013; Python';
       });
 
       executeVideoSearchAndFilter();
     }
 
+    /* -------------------------------------------------------------
+       6. THEME INITIALIZER & LISTENERS
+       ------------------------------------------------------------- */
     function initTheme() {
       const root = document.documentElement;
       let saved = null;
@@ -954,8 +1389,11 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
+      loadBookmarks();
+
       $('copyrightYear').textContent = new Date().getFullYear();
-      $('langToggleBtn').addEventListener('click', toggleLanguage);$('videoSearchInput').addEventListener('input', executeVideoSearchAndFilter);
+      $('langToggleBtn').addEventListener('click', toggleLanguage);
+      $('videoSearchInput').addEventListener('input', executeVideoSearchAndFilter);
 
       document.querySelectorAll('#filterTabs .tab').forEach(button => {
         button.addEventListener('click', () => {
@@ -969,9 +1407,11 @@
         const nav = $('mainNav');
         const open = nav.classList.toggle('open');
         $('menuToggle').textContent = open ? '✕' : '☰';
-        $('menuToggle').setAttribute('aria-expanded', String(open));$('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        $('menuToggle').setAttribute('aria-expanded', String(open));
+        $('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       });
 
+      renderSidebarPlaylist();
       renderVideoGrid(VIDEO_CATALOG);
     });
   </script>
