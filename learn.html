@@ -8,10 +8,13 @@
   <meta name="description" content="Structured video library with live playlist sidebar and bookmarking functionality for MS Office, C++, ICT, and Python courses.">
   <meta name="theme-color" content="#7b2ff7">
 
+  <!-- ============================================================
+       GOOGLE ANALYTICS & ADSENSE INTEGRATION
+       ============================================================ -->
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149" crossorigin="anonymous"></script>
   
-  <!-- Google Analytics -->
+  <!-- Google Tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -20,15 +23,33 @@
     gtag('config', 'G-JNFE9PSTH3');
   </script>
 
-  <!-- Google Fonts -->
+  <!-- Google Typography Standard -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- ============================================================
+       EXTERNAL MASTER STYLESHEET
+       (Uncomment the link below when you move styles into style.css)
+       ============================================================ -->
+  <!-- <link rel="stylesheet" href="style.css"> -->
+
+  <!-- ============================================================
+       START: STYLE.CSS COPY AREA
+       (Everything between here and END can be directly moved to style.css)
+       ============================================================ -->
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ------------------------------------------------------------
+       1. GLOBAL RESET & DESIGN TOKENS
+       ------------------------------------------------------------ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     
     :root {
+      /* Base Theme Colors (Light Mode) */
       --bg: #FDF6FF;
       --surface: #FFFFFF;
       --surface-2: #F4EBFF;
@@ -39,16 +60,21 @@
       --primary-hover: #6420D9;
       --accent: #FF6B9D;
       --gold: #F59E0B;
+      
+      /* Elevation, Radii & Layout Dimensions */
       --radius: 14px;
       --radius-lg: 20px;
       --radius-sm: 8px;
       --shadow: 0 4px 18px rgba(123, 47, 247, 0.08);
       --header-h: 64px;
+      
+      /* Type System */
       --font-head: 'Lora', Georgia, serif;
       --font-body: 'Inter', system-ui, -apple-system, sans-serif;
       color-scheme: light;
     }
 
+    /* Dark Mode Theme Tokens */
     :root[data-theme="dark"] {
       --bg: #15101F;
       --surface: #1F1830;
@@ -83,7 +109,9 @@
     button, a { -webkit-tap-highlight-color: transparent; }
     .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 18px; }
 
-    /* Header & Navigation */
+    /* ------------------------------------------------------------
+       2. HEADER NAVIGATION & BRAND
+       ------------------------------------------------------------ */
     header.site-header {
       position: sticky;
       top: 0;
@@ -208,7 +236,9 @@
     .icon-btn:hover { background: var(--surface-2); }
     .menu-toggle-btn { display: none; }
 
-    /* Hero */
+    /* ------------------------------------------------------------
+       3. HERO BANNER & COURSE SELECTOR CAROUSEL
+       ------------------------------------------------------------ */
     main { min-height: 60vh; }
     
     .learn-hero {
@@ -246,7 +276,7 @@
       font-size: 0.92rem;
     }
 
-    /* Course Selection Shelf (Horizontal Scroll) */
+    /* Course Selection Chips (Horizontal Carousel) */
     .course-selection-bar {
       display: flex;
       gap: 10px;
@@ -283,9 +313,9 @@
       box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 28%, transparent);
     }
 
-    /* ============================================================
-       Video Stage & Right-Side Playlist Layout
-       ============================================================ */
+    /* ------------------------------------------------------------
+       4. THEATER INTERFACE (VIDEO ON LEFT, SIDEBAR ON RIGHT)
+       ------------------------------------------------------------ */
     .player-theater-section {
       margin: 6px 0 38px;
       width: 100%;
@@ -298,10 +328,10 @@
       overflow: hidden;
       box-shadow: var(--shadow);
       display: grid;
-      grid-template-columns: 1fr 380px; /* Video on Left, Sidebar Playlist on Right */
+      grid-template-columns: 1fr 380px;
     }
 
-    /* Left Stage */
+    /* Left Stage (Video Screen & Playback Info) */
     .video-stage {
       display: flex;
       flex-direction: column;
@@ -375,7 +405,7 @@
       flex-shrink: 0;
     }
 
-    /* Bookmark Button on Stage */
+    /* Interactive Stage Bookmark Button */
     .btn-stage-bookmark {
       display: inline-flex;
       align-items: center;
@@ -467,7 +497,7 @@
       color: var(--primary);
     }
 
-    /* Scrollable Playlist Drawer */
+    /* Scrollable Lesson Items */
     .sidebar-items-scroll {
       overflow-y: auto;
       max-height: 480px;
@@ -572,9 +602,9 @@
       color: var(--gold);
     }
 
-    /* ============================================================
-       Directory & Filter Toolbar
-       ============================================================ */
+    /* ------------------------------------------------------------
+       5. DIRECTORY, FILTERS & CARDS
+       ------------------------------------------------------------ */
     .directory { margin-bottom: 50px; }
     
     .section-heading {
@@ -649,7 +679,7 @@
 
     .search:focus { border-color: var(--primary); }
 
-    /* Directory Video Cards Grid */
+    /* Video Cards Grid */
     .video-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -831,7 +861,9 @@
       font-size: 0.92rem;
     }
 
-    /* Footer */
+    /* ------------------------------------------------------------
+       6. GLOBAL FOOTER
+       ------------------------------------------------------------ */
     footer {
       border-top: 1px solid var(--border);
       padding: 24px 0;
@@ -842,9 +874,9 @@
 
     footer p + p { margin-top: 4px; }
 
-    /* ============================================================
-       Mobile Media Queries (< 920px)
-       ============================================================ */
+    /* ------------------------------------------------------------
+       7. MOBILE BREAKPOINTS (< 920px & < 540px)
+       ------------------------------------------------------------ */
     @media (max-width: 920px) {
       .header-inner {
         flex-wrap: wrap;
@@ -938,10 +970,15 @@
       *, *::before, *::after { transition: none !important; }
     }
   </style>
+  <!-- ============================================================
+       END: STYLE.CSS COPY AREA
+       ============================================================ -->
 </head>
 <body>
 
-  <!-- Site Header -->
+  <!-- ============================================================
+       HEADER NAVIGATION COMPONENT
+       ============================================================ -->
   <header class="site-header">
     <div class="wrap header-inner">
       <a href="https://bsebwala.in/" class="brand" aria-label="BSEB Portal Hub home">
@@ -969,26 +1006,32 @@
   </header>
 
   <main class="wrap">
-    <!-- Hero Banner -->
+    <!-- ============================================================
+         HERO BANNER
+         ============================================================ -->
     <section class="learn-hero">
       <span class="hero-badge" id="heroBadge">&#9889; Video Learning Hub</span>
       <h1 id="heroTitle">Computer Studies &amp; Playlists</h1>
       <p id="heroSubtitle">Watch lessons with the interactive side-playlist or bookmark your favorites for quick access.</p>
     </section>
 
-    <!-- Course Selection Chips -->
+    <!-- ============================================================
+         COURSE SELECTOR CHIPS (TOP QUICK FILTER)
+         ============================================================ -->
     <div class="course-selection-bar" id="courseSelectionBar">
-      <button class="course-chip active" onclick="switchActiveCourse('msoffice')">📊 MS Office</button>
-      <button class="course-chip" onclick="switchActiveCourse('cpp')">⚡ C++</button>
-      <button class="course-chip" onclick="switchActiveCourse('ict')">🌐 ICT &amp; Tools</button>
-      <button class="course-chip" onclick="switchActiveCourse('python')">🐍 Python</button>
+      <button class="course-chip active" onclick="switchActiveCourse('msoffice')">&#128202; MS Office</button>
+      <button class="course-chip" onclick="switchActiveCourse('cpp')">&#9889; C++</button>
+      <button class="course-chip" onclick="switchActiveCourse('ict')">&#127760; ICT &amp; Tools</button>
+      <button class="course-chip" onclick="switchActiveCourse('python')">&#128013; Python</button>
     </div>
 
-    <!-- Split Stage: Video Player on Left, Playlist on Right -->
+    <!-- ============================================================
+         THEATER PLAYER (LEFT: VIDEO PLAYER | RIGHT: ACTIVE PLAYLIST)
+         ============================================================ -->
     <section class="player-theater-section" id="playerSection" aria-label="Video theater">
       <div class="theater-container">
         
-        <!-- Left: Video Screen & Meta Bar -->
+        <!-- Left Stage: Video Frame & Controls -->
         <div class="video-stage">
           <div class="video-screen-wrapper" id="videoWrapper">
             <iframe 
@@ -1025,25 +1068,27 @@
           </div>
         </div>
 
-        <!-- Right: Course Playlist Sidebar (Shows ALL Videos in Current Playlist) -->
+        <!-- Right Stage: Course Playlist Sidebar (Shows ALL Videos in Current Course) -->
         <aside class="playlist-sidebar">
           <div class="sidebar-header" onclick="toggleMobileSidebar()">
             <div class="sidebar-header-left">
               <h3 id="sidebarCourseHeading">MS Office Course Playlist</h3>
               <span class="sidebar-stats" id="sidebarStats">Showing video tracks</span>
             </div>
-            <span class="mobile-drawer-indicator" id="sidebarIndicator">▼</span>
+            <span class="mobile-drawer-indicator" id="sidebarIndicator">&#9660;</span>
           </div>
 
           <div class="sidebar-items-scroll" id="sidebarPlaylistContainer">
-            <!-- Dynamic list of ALL videos inside the active course -->
+            <!-- Dynamic list of ALL videos belonging to active course rendered here -->
           </div>
         </aside>
 
       </div>
     </section>
 
-    <!-- Video Library Directory & Search -->
+    <!-- ============================================================
+         DIRECTORY VAULT (ALL COURSES & BOOKMARKS SEARCH)
+         ============================================================ -->
     <section class="directory">
       <div class="section-heading">
         <h2 id="directoryTitle">&#128250; Video Courses &amp; Library</h2>
@@ -1067,10 +1112,15 @@
         </div>
       </div>
       
-      <div class="video-grid" id="videoGrid" aria-live="polite"></div>
+      <div class="video-grid" id="videoGrid" aria-live="polite">
+        <!-- Rendered cards -->
+      </div>
     </section>
   </main>
 
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
   <footer>
     <div class="wrap">
       <p>Disclaimer: BSEBWala is an independent educational information portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body.</p>
@@ -1078,13 +1128,18 @@
     </div>
   </footer>
 
-  <!-- Script Engine -->
+  <!-- ============================================================
+       START: JAVASCRIPT APPLICATION CORE
+       ============================================================ -->
   <script>
     'use strict';
 
-    /* -------------------------------------------------------------
-       A. REVISED COURSES WITH ALL INDIVIDUAL LESSONS/VIDEOS
-       ------------------------------------------------------------- */
+    /* ============================================================
+       CONFIG: VIDEO & PLAYLIST DATABASE
+       (TO ADD NEW VIDEOS: Add an object inside the course's `lessons` array)
+       Template:
+       { id: 'unique-id', videoId: 'YOUTUBE_11_CHAR_ID', trackNo: 5, tag: 'Tag', title: 'Eng Title', hi_title: 'Hindi Title', desc: 'Summary', duration: 'MM:SS' }
+       ============================================================ */
     const REVISED_COURSES = {
       msoffice: {
         id: 'msoffice',
@@ -1139,16 +1194,18 @@
       }
     };
 
+    /* App Global State */
     let activeCourseKey = 'msoffice';
     let activeLesson = REVISED_COURSES.msoffice.lessons[0];
     let currentFilter = 'all';
     let currentLang = 'en';
     let bookmarkedIds = new Set();
 
+    // DOM Utility Selector
     const $ = id => document.getElementById(id);
 
     /* -------------------------------------------------------------
-       1. BOOKMARKS ENGINE
+       1. BOOKMARKS REPOSITORY (localStorage)
        ------------------------------------------------------------- */
     function loadBookmarks() {
       try {
@@ -1202,14 +1259,14 @@
     }
 
     /* -------------------------------------------------------------
-       2. ACTIVE COURSE & VIDEO STAGE CONTROLLER
+       2. STAGE & PLAYBACK CONTROLLER
        ------------------------------------------------------------- */
     function switchActiveCourse(courseKey) {
       activeCourseKey = courseKey;
       const course = REVISED_COURSES[courseKey];
-      activeLesson = course.lessons[0]; // Set to first lesson of this playlist
+      activeLesson = course.lessons[0];
 
-      // Update Course Selection Chips
+      // Update Carousel Active Status
       document.querySelectorAll('#courseSelectionBar .course-chip').forEach(chip => {
         const isActive = chip.getAttribute('onclick').includes(`'${courseKey}'`);
         chip.classList.toggle('active', isActive);
@@ -1229,7 +1286,7 @@
       $('stageTopicBadge').textContent = lesson.tag;
       $('openYouTubeAppBtn').href = `https://www.youtube.com/watch?v=${lesson.videoId}&list=${course.playlistId}`;
 
-      // Clean, Error-Free Iframe Stream
+      // Clean Iframe Embed (Cross-origin verified)
       const iframe = $('mainVideoPlayer');
       iframe.title = lesson.title;
       iframe.src = `https://www.youtube.com/embed/${lesson.videoId}?list=${course.playlistId}&rel=0&playsinline=1${shouldAutoplay ? '&autoplay=1' : ''}`;
@@ -1243,7 +1300,7 @@
     }
 
     /* -------------------------------------------------------------
-       3. RIGHT-SIDE PLAYLIST SIDEBAR (Shows ALL videos in current course)
+       3. SIDEBAR PLAYLIST (RENDER ALL LESSONS OF ACTIVE COURSE)
        ------------------------------------------------------------- */
     function renderSidebarPlaylist() {
       const container = $('sidebarPlaylistContainer');
@@ -1256,7 +1313,6 @@
       $('sidebarCourseHeading').textContent = `${courseName} Playlist`;
       $('sidebarStats').textContent = `${course.lessons.length} ${isHi ? 'वीडियो उपलब्ध हैं' : 'Lessons in Course'}`;
 
-      // Loop through ALL lessons belonging to this active playlist
       course.lessons.forEach((lesson, index) => {
         const isActive = (lesson.id === activeLesson.id);
         const isBookmarked = bookmarkedIds.has(lesson.id);
@@ -1294,7 +1350,7 @@
     }
 
     /* -------------------------------------------------------------
-       4. DIRECTORY & GRID (Filterable & Searchable)
+       4. GLOBAL DIRECTORY VAULT (BOTTOM CARDS GRID)
        ------------------------------------------------------------- */
     function getAllLessonsFlat() {
       const all = [];
@@ -1352,7 +1408,7 @@
 
         top.append(topLeft, bmBtn);
 
-        // Thumbnail Preview Box
+        // Thumbnail Preview Container
         const thumbBox = document.createElement('div');
         thumbBox.className = 'card-thumb-preview';
         thumbBox.onclick = () => {
@@ -1427,7 +1483,7 @@
     }
 
     /* -------------------------------------------------------------
-       5. LANGUAGE TOGGLE
+       5. BILINGUAL LANGUAGE ENGINE (EN / HI)
        ------------------------------------------------------------- */
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
@@ -1457,7 +1513,7 @@
     }
 
     /* -------------------------------------------------------------
-       6. THEME INITIALIZER & EVENT BINDINGS
+       6. THEME INITIALIZATION & RUNTIME BINDINGS
        ------------------------------------------------------------- */
     function initTheme() {
       const root = document.documentElement;
@@ -1480,10 +1536,14 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // 1. Initialize user preferences
       initTheme();
       loadBookmarks();
 
+      // 2. Set dynamic footer copyright
       $('copyrightYear').textContent = new Date().getFullYear();
+
+      // 3. Attach interactive handlers
       $('langToggleBtn').addEventListener('click', toggleLanguage);
       $('videoSearchInput').addEventListener('input', executeVideoSearchAndFilter);
 
@@ -1495,6 +1555,7 @@
         });
       });
 
+      // 4. Mobile hamburger toggle
       $('menuToggle').addEventListener('click', () => {
         const nav = $('mainNav');
         const open = nav.classList.toggle('open');
@@ -1503,7 +1564,7 @@
         $('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       });
 
-      // Initialize default course and populate
+      // 5. Boot default course (MS Office) & render grid
       switchActiveCourse('msoffice');
       executeVideoSearchAndFilter();
     });
