@@ -32,8 +32,8 @@
        EXTERNAL MASTER STYLESHEET
        (Uncomment the link below when you move styles into style.css)
        ============================================================ -->
- <link rel="stylesheet" href="style.css">
- 
+      <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
@@ -77,13 +77,10 @@
     </section>
 
     <!-- ============================================================
-         COURSE SELECTOR CHIPS (TOP QUICK FILTER)
+         COURSE SELECTOR CHIPS (TOP QUICK FILTER - POPULATED DYNAMICALLY)
          ============================================================ -->
     <div class="course-selection-bar" id="courseSelectionBar">
-      <button class="course-chip active" onclick="switchActiveCourse('msoffice')">&#128202; MS Office</button>
-      <button class="course-chip" onclick="switchActiveCourse('cpp')">&#9889; C++</button>
-      <button class="course-chip" onclick="switchActiveCourse('ict')">&#127760; ICT &amp; Tools</button>
-      <button class="course-chip" onclick="switchActiveCourse('python')">&#128013; Python</button>
+      <!-- Buttons are generated dynamically by JavaScript -->
     </div>
 
     <!-- ============================================================
@@ -97,8 +94,8 @@
           <div class="video-screen-wrapper" id="videoWrapper">
             <iframe 
               id="mainVideoPlayer"
-              src="https://www.youtube.com/embed/PONyUl0efrE?list=PLaNI8IHpwBHA&rel=0&playsinline=1"
-              title="MS Office Video Player"
+              src=""
+              title="Computer Science Video Player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin" 
               allowfullscreen>
@@ -111,8 +108,8 @@
                 <span class="now-tag" id="nowPlayingTag">NOW PLAYING</span>
                 <span class="category-pill" id="stageTopicBadge">MS Office</span>
               </div>
-              <h2 id="currentVideoTitle">L-01: MS Office Suite Setup &amp; Word Masterclass</h2>
-              <p id="currentVideoDesc">Explore Word document formatting, mail merge, and official report design.</p>
+              <h2 id="currentVideoTitle">Video Title</h2>
+              <p id="currentVideoDesc">Video Description</p>
             </div>
 
             <div class="player-actions-row">
@@ -121,7 +118,7 @@
                 <span id="stageBookmarkText">Bookmark</span>
               </button>
               
-              <a id="openYouTubeAppBtn" class="btn-yt-launch" href="https://www.youtube.com/watch?v=PONyUl0efrE&list=PLaNI8IHpwBHA" target="_blank" rel="noopener noreferrer">
+              <a id="openYouTubeAppBtn" class="btn-yt-launch" href="#" target="_blank" rel="noopener noreferrer">
                 <span>&#9654;</span>
                 <span id="openYouTubeLabel">YouTube</span>
               </a>
@@ -133,7 +130,7 @@
         <aside class="playlist-sidebar">
           <div class="sidebar-header" onclick="toggleMobileSidebar()">
             <div class="sidebar-header-left">
-              <h3 id="sidebarCourseHeading">MS Office Course Playlist</h3>
+              <h3 id="sidebarCourseHeading">Course Playlist</h3>
               <span class="sidebar-stats" id="sidebarStats">Showing video tracks</span>
             </div>
             <span class="mobile-drawer-indicator" id="sidebarIndicator">&#9660;</span>
@@ -159,12 +156,7 @@
       <div class="toolbar">
         <div class="tabs-wrap">
           <div class="tabs" id="filterTabs" role="group" aria-label="Filter courses">
-            <button class="tab active" type="button" data-filter="all">All Courses</button>
-            <button class="tab" type="button" data-filter="bookmarks">&#9733; Bookmarked (<span id="bookmarkCount">0</span>)</button>
-            <button class="tab" type="button" data-filter="msoffice">&#128202; MS Office</button>
-            <button class="tab" type="button" data-filter="cpp">&#9889; C++</button>
-            <button class="tab" type="button" data-filter="ict">&#127760; ICT</button>
-            <button class="tab" type="button" data-filter="python">&#128013; Python</button>
+            <!-- Filter buttons are built dynamically by JS -->
           </div>
         </div>
         
@@ -197,85 +189,150 @@
 
     /* ============================================================
        CONFIG: VIDEO & PLAYLIST DATABASE
-       (TO ADD NEW VIDEOS: Add an object inside the course's `lessons` array)
-       Template:
-       { id: 'unique-id', videoId: 'YOUTUBE_11_CHAR_ID', trackNo: 5, tag: 'Tag', title: 'Eng Title', hi_title: 'Hindi Title', desc: 'Summary', duration: 'MM:SS' }
+       (Add new categories or videos here anytime — rotation will handle it!)
        ============================================================ */
     const REVISED_COURSES = {
       msoffice: {
         id: 'msoffice',
-        name: 'MS Office Suite',
+        name: 'MS Office',
         hi_name: 'एमएस ऑफिस',
+        icon: '📊',
         playlistId: 'PLaNI8IHpwBHA',
         ytUrl: 'https://youtube.com/playlist?list=PLaNI8IHpwBHA',
         lessons: [
-          { id: 'off-1', videoId: 'PONyUl0efrE', trackNo: 1, tag: 'MS Office', title: 'L-01: Welcome to MS Office', hi_title: 'पाठ 01: MS Office में आपका स्वागत है', desc: 'Welcome to the MS Office course.', duration: '01:01' },
+          { id: 'off-1', videoId: 'PONyUl0efrE', trackNo: 1, tag: 'MS Office', title: 'L-01: Welcome to MS Office', hi_title: 'पाठ 01: MS Office में आपका स्वागत है', desc: 'Welcome to the MS Office course.', duration: '01:01' }
         ]
       },
       cpp: {
         id: 'cpp',
-        name: 'C++ Programming',
-        hi_name: 'C++ प्रोग्रामिंग',
+        name: 'C++',
+        hi_name: 'C++',
+        icon: '⚡',
         playlistId: 'PLEpk3r07sPTU',
         ytUrl: 'https://youtube.com/playlist?list=PLEpk3r07sPTU',
         lessons: [
-          { id: 'cpp-1', videoId: 'xjXoh5zkWNY', trackNo: 1, tag: 'C++', title: 'L-01: Welcome to C++', hi_title: 'पाठ 01: C++ कोर्स में आपका स्वागत है', desc: 'Welcome to the C++ course.', duration: '01:01' },       
+          { id: 'cpp-1', videoId: 'xjXoh5zkWNY', trackNo: 1, tag: 'C++', title: 'L-01: Welcome to C++', hi_title: 'पाठ 01: C++ कोर्स में आपका स्वागत है', desc: 'Welcome to the C++ course.', duration: '01:01' }
         ]
       },
       ict: {
         id: 'ict',
-        name: 'ICT & Educational Tools',
+        name: 'ICT & Tools',
         hi_name: 'आईसीटी एवं डिजिटल टूल्स',
+        icon: '🌐',
         playlistId: 'PLG20JZmgsx9M',
         ytUrl: 'https://youtube.com/playlist?list=PLG20JZmgsx9M',
         lessons: [
           { id: 'ict-1', videoId: 'PLG20JZmgsx9M', trackNo: 1, tag: 'ICT', title: 'L-01: Introduction to Computer Virus', hi_title: 'पाठ 01: कंप्यूटर वायरस का परिचय', desc: 'What a computer virus is and its type.', duration: '03:30' },
-          { id: 'ict-1', videoId: 'SmmxV2RyD_8', trackNo: 2, tag: 'ICT', title: 'L-02: AI introduction std 8', hi_title: 'पाठ 02: एआई परिचय कक्षा 8', desc: 'Artificial Inteligence, an inroduction.', duration: '08:31' },
-          { id: 'ict-1', videoId: '0sxcKcaNVQ4', trackNo: 3, tag: 'ICT', title: 'L-03: Shape Tween', hi_title: 'पाठ 03: शेप ट्वीन', desc: 'Shape tween using Macromedia Flashplayer 8', duration: '01:34' },
-          { id: 'ict-1', videoId: 'V9dnpx2XZiE', trackNo: 4, tag: 'ICT', title: 'L-04: Motion Tween', hi_title: 'पाठ 04: मोशन ट्वीन', desc: 'Motion tween using Macromedia Flashplayer 8', duration: '01:15' },
-          { id: 'ict-1', videoId: 'K5DnzMGYczY', trackNo: 5, tag: 'ICT', title: 'L-05: Std 4 Know your Computer', hi_title: 'पाठ 05: कक्षा 4 अपने कंप्यूटर को जानें', desc: 'Know your computer and its basic parts and function through Animation', duration: '21:20' },
-          { id: 'ict-1', videoId: 'DCcey1xoDUc', trackNo: 6, tag: 'ICT', title: 'L-06: Std 4 Memory, Applications and Limitations of computers', hi_title: 'पाठ 06: STD 4 मेमोरी, कंप्यूटर के एप्लीकेशन और लिमिटेशन', desc: 'Learn about memory, Application and Limitation of Computer through Animation', duration: '12:59' },
-          { id: 'ict-1', videoId: 'yeP9rE6sSsY', trackNo: 7, tag: 'ICT', title: 'L-07: Std 5 Intro to Powerpoint', hi_title: 'पाठ 07: कक्षा 5 पावरपॉइंट का परिचय', desc: 'Introduction to fundamentals of Powerpoint', duration: '08:40' },
-          { id: 'ict-1', videoId: 'iW-ufHiN-IM', trackNo: 8, tag: 'ICT', title: 'L-08: Std 6 Know your Computer', hi_title: 'पाठ 08: कक्षा 6 अपने कंप्यूटर को जानें', desc: 'Introduction to Computer System through Animation', duration: '57:15' },
-          { id: 'ict-1', videoId: 'H-s9WzELrLE', trackNo: 9, tag: 'ICT', title: 'L-09: Std 6 Operating System', hi_title: 'पाठ 09: कक्षा 6 ऑपरेटिंग सिस्टम', desc: 'Know the basics of Operating System through Animation', duration: '16:46' },
-          { id: 'ict-1', videoId: 'RNPuGZWM9nI', trackNo: 10, tag: 'ICT', title: 'L-10: Std 7 Computer Network', hi_title: 'पाठ 10: कक्षा-7, कंप्यूटर नेटवर्क', desc: 'Introduction to Computer Network through Animation', duration: '07:25' },
-          { id: 'ict-1', videoId: 'swssPJja-MQ', trackNo: 11, tag: 'ICT', title: 'L-11: How to install Adobe Photoshop 7.0', hi_title: 'पाठ 11: एडोब फोटोशॉप 7.0 कैसे इंस्टॉल करें', desc: 'Know to install Adobe photosho 7.0 on Windows PC', duration: '01:49' },
-          { id: 'ict-1', videoId: 'adNtbzDrmPo', trackNo: 12, tag: 'ICT', title: 'L-12: Introduction to Adobe Photoshop', hi_title: 'पाठ 12: एडोब फोटोशॉप का परिचय', desc: 'Introduction to Adobe Photoshop 7.0', duration: '08:01' },
-          { id: 'ict-1', videoId: 'H06_ZelSj-U', trackNo: 13, tag: 'ICT', title: 'L-13: Std 7 Introduction to MS Access', hi_title: 'पाठ 13: कक्षा-7, MS Access का परिचय', desc: 'Introduction to MS Access, An RDBMS', duration: '14:41' },
-          { id: 'ict-1', videoId: 'YYsMTDPSA5c', trackNo: 14, tag: 'ICT', title: 'L-14: Std 7 MS Excel Advance', hi_title: 'कक्षा 7 एमएस एक्सेल एडवांस', desc: 'MS Excel Advance Sorting, Filtering, Charting etc', duration: '28:22' },
-          
-
-          
+          { id: 'ict-2', videoId: 'SmmxV2RyD_8', trackNo: 2, tag: 'ICT', title: 'L-02: AI introduction std 8', hi_title: 'पाठ 02: एआई परिचय कक्षा 8', desc: 'Artificial Intelligence, an introduction.', duration: '08:31' },
+          { id: 'ict-3', videoId: '0sxcKcaNVQ4', trackNo: 3, tag: 'ICT', title: 'L-03: Shape Tween', hi_title: 'पाठ 03: शेप ट्वीन', desc: 'Shape tween using Macromedia Flashplayer 8', duration: '01:34' },
+          { id: 'ict-4', videoId: 'V9dnpx2XZiE', trackNo: 4, tag: 'ICT', title: 'L-04: Motion Tween', hi_title: 'पाठ 04: मोशन ट्वीन', desc: 'Motion tween using Macromedia Flashplayer 8', duration: '01:15' },
+          { id: 'ict-5', videoId: 'K5DnzMGYczY', trackNo: 5, tag: 'ICT', title: 'L-05: Std 4 Know your Computer', hi_title: 'पाठ 05: कक्षा 4 अपने कंप्यूटर को जानें', desc: 'Know your computer and its basic parts and function through Animation', duration: '21:20' },
+          { id: 'ict-6', videoId: 'DCcey1xoDUc', trackNo: 6, tag: 'ICT', title: 'L-06: Std 4 Memory, Applications and Limitations of computers', hi_title: 'पाठ 06: STD 4 मेमोरी, कंप्यूटर के एप्लीकेशन और लिमिटेशन', desc: 'Learn about memory, Application and Limitation of Computer through Animation', duration: '12:59' },
+          { id: 'ict-7', videoId: 'yeP9rE6sSsY', trackNo: 7, tag: 'ICT', title: 'L-07: Std 5 Intro to Powerpoint', hi_title: 'पाठ 07: कक्षा 5 पावरपॉइंट का परिचय', desc: 'Introduction to fundamentals of Powerpoint', duration: '08:40' },
+          { id: 'ict-8', videoId: 'iW-ufHiN-IM', trackNo: 8, tag: 'ICT', title: 'L-08: Std 6 Know your Computer', hi_title: 'पाठ 08: कक्षा 6 अपने कंप्यूटर को जानें', desc: 'Introduction to Computer System through Animation', duration: '57:15' },
+          { id: 'ict-9', videoId: 'H-s9WzELrLE', trackNo: 9, tag: 'ICT', title: 'L-09: Std 6 Operating System', hi_title: 'पाठ 09: कक्षा 6 ऑपरेटिंग सिस्टम', desc: 'Know the basics of Operating System through Animation', duration: '16:46' },
+          { id: 'ict-10', videoId: 'RNPuGZWM9nI', trackNo: 10, tag: 'ICT', title: 'L-10: Std 7 Computer Network', hi_title: 'पाठ 10: कक्षा-7, कंप्यूटर नेटवर्क', desc: 'Introduction to Computer Network through Animation', duration: '07:25' },
+          { id: 'ict-11', videoId: 'swssPJja-MQ', trackNo: 11, tag: 'ICT', title: 'L-11: How to install Adobe Photoshop 7.0', hi_title: 'पाठ 11: एडोब फोटोशॉप 7.0 कैसे इंस्टॉल करें', desc: 'Know to install Adobe photoshop 7.0 on Windows PC', duration: '01:49' },
+          { id: 'ict-12', videoId: 'adNtbzDrmPo', trackNo: 12, tag: 'ICT', title: 'L-12: Introduction to Adobe Photoshop', hi_title: 'पाठ 12: एडोब फोटोशॉप का परिचय', desc: 'Introduction to Adobe Photoshop 7.0', duration: '08:01' },
+          { id: 'ict-13', videoId: 'H06_ZelSj-U', trackNo: 13, tag: 'ICT', title: 'L-13: Std 7 Introduction to MS Access', hi_title: 'पाठ 13: कक्षा-7, MS Access का परिचय', desc: 'Introduction to MS Access, An RDBMS', duration: '14:41' },
+          { id: 'ict-14', videoId: 'YYsMTDPSA5c', trackNo: 14, tag: 'ICT', title: 'L-14: Std 7 MS Excel Advance', hi_title: 'कक्षा 7 एमएस एक्सेल एडवांस', desc: 'MS Excel Advance Sorting, Filtering, Charting etc', duration: '28:22' }
         ]
       },
       python: {
         id: 'python',
-        name: 'Python Programming',
-        hi_name: 'पायथन प्रोग्रामिंग',
+        name: 'Python',
+        hi_name: 'पायथन',
+        icon: '🐍',
         playlistId: 'PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
         ytUrl: 'https://youtube.com/playlist?list=PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
         lessons: [
-          { id: 'py-1', videoId: 'VoQsPUXWaLM', trackNo: 1, tag: 'Python', title: 'L-01: Introduction to Python Programming language', hi_title: 'पाठ 01: पायथन प्रोग्रामिंग भाषा का परिचय', desc: 'Introduction to Python interpreter, data types, and script execution.', duration: '07:59' },
-
-
-          
+          { id: 'py-1', videoId: 'VoQsPUXWaLM', trackNo: 1, tag: 'Python', title: 'L-01: Introduction to Python Programming language', hi_title: 'पाठ 01: पायथन प्रोग्रामिंग भाषा का परिचय', desc: 'Introduction to Python interpreter, data types, and script execution.', duration: '07:59' }
         ]
       }
     };
 
     /* App Global State */
     let activeCourseKey = 'msoffice';
-    let activeLesson = REVISED_COURSES.msoffice.lessons[0];
+    let activeLesson = null;
     let currentFilter = 'all';
     let currentLang = 'en';
     let bookmarkedIds = new Set();
 
-    // DOM Utility Selector
     const $ = id => document.getElementById(id);
 
-    /* -------------------------------------------------------------
-       1. BOOKMARKS REPOSITORY (localStorage)
-       ------------------------------------------------------------- */
+    /* ============================================================
+       1. 24-HOUR AUTO-ROTATION ENGINE
+       ============================================================ */
+    function getDailyRotatingCourseKey() {
+      const keys = Object.keys(REVISED_COURSES);
+      if (!keys.length) return 'msoffice';
+      
+      // Calculate day number since Unix Epoch (changes exactly every 24 hours at 00:00 UTC)
+      const daysSinceEpoch = Math.floor(Date.now() / 86400000);
+      const activeIndex = daysSinceEpoch % keys.length;
+      return keys[activeIndex];
+    }
+
+    /* ============================================================
+       2. DYNAMIC CHIPS GENERATOR
+       ============================================================ */
+    function buildDynamicNavBars() {
+      const topBar = $('courseSelectionBar');
+      const filterTabs = $('filterTabs');
+      topBar.replaceChildren();
+      filterTabs.replaceChildren();
+
+      // Top Chips
+      Object.keys(REVISED_COURSES).forEach(key => {
+        const course = REVISED_COURSES[key];
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `course-chip ${key === activeCourseKey ? 'active' : ''}`;
+        btn.dataset.course = key;
+        btn.innerHTML = `${course.icon || '📚'} <span>${currentLang === 'hi' && course.hi_name ? course.hi_name : course.name}</span>`;
+        btn.addEventListener('click', () => switchActiveCourse(key));
+        topBar.appendChild(btn);
+      });
+
+      // Filter Tabs for Directory
+      const allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.className = `tab ${currentFilter === 'all' ? 'active' : ''}`;
+      allBtn.dataset.filter = 'all';
+      allBtn.textContent = currentLang === 'hi' ? 'सभी कोर्स' : 'All Courses';
+      allBtn.addEventListener('click', () => handleFilterTabClick('all', allBtn));
+      filterTabs.appendChild(allBtn);
+
+      const bmBtn = document.createElement('button');
+      bmBtn.type = 'button';
+      bmBtn.className = `tab ${currentFilter === 'bookmarks' ? 'active' : ''}`;
+      bmBtn.dataset.filter = 'bookmarks';
+      bmBtn.innerHTML = `&#9733; ${currentLang === 'hi' ? 'बुकमार्क' : 'Bookmarked'} (<span id="bookmarkCount">${bookmarkedIds.size}</span>)`;
+      bmBtn.addEventListener('click', () => handleFilterTabClick('bookmarks', bmBtn));
+      filterTabs.appendChild(bmBtn);
+
+      Object.keys(REVISED_COURSES).forEach(key => {
+        const course = REVISED_COURSES[key];
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `tab ${currentFilter === key ? 'active' : ''}`;
+        btn.dataset.filter = key;
+        btn.innerHTML = `${course.icon || '📚'} ${currentLang === 'hi' && course.hi_name ? course.hi_name : course.name}`;
+        btn.addEventListener('click', () => handleFilterTabClick(key, btn));
+        filterTabs.appendChild(btn);
+      });
+    }
+
+    function handleFilterTabClick(filter, btnElement) {
+      currentFilter = filter;
+      document.querySelectorAll('#filterTabs .tab').forEach(tab => tab.classList.remove('active'));
+      btnElement.classList.add('active');
+      executeVideoSearchAndFilter();
+    }
+
+    /* ============================================================
+       3. BOOKMARKS ENGINE
+       ============================================================ */
     function loadBookmarks() {
       try {
         const saved = localStorage.getItem('bseb_video_bookmarks');
@@ -306,11 +363,14 @@
     }
 
     function toggleStageBookmark() {
-      toggleBookmark(activeLesson.id);
+      if (activeLesson) toggleBookmark(activeLesson.id);
     }
 
     function updateBookmarkUI() {
-      $('bookmarkCount').textContent = bookmarkedIds.size;
+      const countEl = $('bookmarkCount');
+      if (countEl) countEl.textContent = bookmarkedIds.size;
+      if (!activeLesson) return;
+
       const isBookmarked = bookmarkedIds.has(activeLesson.id);
       const btn = $('stageBookmarkBtn');
       const icon = $('stageBookmarkIcon');
@@ -327,18 +387,18 @@
       }
     }
 
-    /* -------------------------------------------------------------
-       2. STAGE & PLAYBACK CONTROLLER
-       ------------------------------------------------------------- */
+    /* ============================================================
+       4. ACTIVE COURSE & VIDEO STAGE CONTROLLER
+       ============================================================ */
     function switchActiveCourse(courseKey) {
+      if (!REVISED_COURSES[courseKey]) return;
       activeCourseKey = courseKey;
       const course = REVISED_COURSES[courseKey];
       activeLesson = course.lessons[0];
 
       // Update Carousel Active Status
       document.querySelectorAll('#courseSelectionBar .course-chip').forEach(chip => {
-        const isActive = chip.getAttribute('onclick').includes(`'${courseKey}'`);
-        chip.classList.toggle('active', isActive);
+        chip.classList.toggle('active', chip.dataset.course === courseKey);
       });
 
       loadLessonToStage(activeLesson, false);
@@ -346,6 +406,7 @@
     }
 
     function loadLessonToStage(lesson, shouldAutoplay = true) {
+      if (!lesson) return;
       activeLesson = lesson;
       const course = REVISED_COURSES[activeCourseKey];
       const isHi = currentLang === 'hi';
@@ -355,7 +416,6 @@
       $('stageTopicBadge').textContent = lesson.tag;
       $('openYouTubeAppBtn').href = `https://www.youtube.com/watch?v=${lesson.videoId}&list=${course.playlistId}`;
 
-      // Clean Iframe Embed (Cross-origin verified)
       const iframe = $('mainVideoPlayer');
       iframe.title = lesson.title;
       iframe.src = `https://www.youtube.com/embed/${lesson.videoId}?list=${course.playlistId}&rel=0&playsinline=1${shouldAutoplay ? '&autoplay=1' : ''}`;
@@ -368,14 +428,16 @@
       }
     }
 
-    /* -------------------------------------------------------------
-       3. SIDEBAR PLAYLIST (RENDER ALL LESSONS OF ACTIVE COURSE)
-       ------------------------------------------------------------- */
+    /* ============================================================
+       5. RIGHT-SIDE PLAYLIST SIDEBAR
+       ============================================================ */
     function renderSidebarPlaylist() {
       const container = $('sidebarPlaylistContainer');
       container.replaceChildren();
 
       const course = REVISED_COURSES[activeCourseKey];
+      if (!course) return;
+
       const isHi = currentLang === 'hi';
       const courseName = isHi && course.hi_name ? course.hi_name : course.name;
 
@@ -383,7 +445,7 @@
       $('sidebarStats').textContent = `${course.lessons.length} ${isHi ? 'वीडियो उपलब्ध हैं' : 'Lessons in Course'}`;
 
       course.lessons.forEach((lesson, index) => {
-        const isActive = (lesson.id === activeLesson.id);
+        const isActive = activeLesson && (lesson.id === activeLesson.id);
         const isBookmarked = bookmarkedIds.has(lesson.id);
         const displayTitle = isHi && lesson.hi_title ? lesson.hi_title : lesson.title;
 
@@ -418,9 +480,9 @@
       indicator.innerHTML = isOpen ? '&#9650;' : '&#9660;';
     }
 
-    /* -------------------------------------------------------------
-       4. GLOBAL DIRECTORY VAULT (BOTTOM CARDS GRID)
-       ------------------------------------------------------------- */
+    /* ============================================================
+       6. DIRECTORY VAULT (BOTTOM CARDS GRID)
+       ============================================================ */
     function getAllLessonsFlat() {
       const all = [];
       Object.keys(REVISED_COURSES).forEach(key => {
@@ -551,9 +613,9 @@
       renderVideoGrid(filtered);
     }
 
-    /* -------------------------------------------------------------
-       5. BILINGUAL LANGUAGE ENGINE (EN / HI)
-       ------------------------------------------------------------- */
+    /* ============================================================
+       7. BILINGUAL LANGUAGE ENGINE (EN / HI)
+       ============================================================ */
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
       $('langToggleBtn').textContent = currentLang === 'hi' ? 'English' : 'हिंदी';
@@ -565,25 +627,15 @@
       $('directorySubtitle').textContent = currentLang === 'hi' ? 'कोई भी अध्याय चुनें या बुकमार्क के आधार पर फ़िल्टर करें।' : 'Choose any lesson or filter by saved bookmarks.';
       $('videoSearchInput').placeholder = currentLang === 'hi' ? 'पाठ या विषय खोजें…' : 'Search lessons, topics…';
 
+      buildDynamicNavBars();
       loadLessonToStage(activeLesson, false);
       renderSidebarPlaylist();
-
-      document.querySelectorAll('#filterTabs .tab').forEach(button => {
-        const f = button.dataset.filter;
-        if (f === 'all') button.textContent = currentLang === 'hi' ? 'सभी कोर्स' : 'All Courses';
-        if (f === 'bookmarks') button.innerHTML = `&#9733; ${currentLang === 'hi' ? 'बुकमार्क' : 'Bookmarked'} (<span id="bookmarkCount">${bookmarkedIds.size}</span>)`;
-        if (f === 'msoffice') button.innerHTML = '📊 MS Office';
-        if (f === 'cpp') button.innerHTML = '⚡ C++';
-        if (f === 'ict') button.innerHTML = '🌐 ICT';
-        if (f === 'python') button.innerHTML = '🐍 Python';
-      });
-
       executeVideoSearchAndFilter();
     }
 
-    /* -------------------------------------------------------------
-       6. THEME INITIALIZATION & RUNTIME BINDINGS
-       ------------------------------------------------------------- */
+    /* ============================================================
+       8. THEME & INITIALIZATION RUNTIME
+       ============================================================ */
     function initTheme() {
       const root = document.documentElement;
       let saved = null;
@@ -605,26 +657,13 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Initialize user preferences
       initTheme();
       loadBookmarks();
 
-      // 2. Set dynamic footer copyright
       $('copyrightYear').textContent = new Date().getFullYear();
-
-      // 3. Attach interactive handlers
       $('langToggleBtn').addEventListener('click', toggleLanguage);
       $('videoSearchInput').addEventListener('input', executeVideoSearchAndFilter);
 
-      document.querySelectorAll('#filterTabs .tab').forEach(button => {
-        button.addEventListener('click', () => {
-          currentFilter = button.dataset.filter;
-          document.querySelectorAll('#filterTabs .tab').forEach(tab => tab.classList.toggle('active', tab === button));
-          executeVideoSearchAndFilter();
-        });
-      });
-
-      // 4. Mobile hamburger toggle
       $('menuToggle').addEventListener('click', () => {
         const nav = $('mainNav');
         const open = nav.classList.toggle('open');
@@ -633,8 +672,15 @@
         $('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       });
 
-      // 5. Boot default course (MS Office) & render grid
-      switchActiveCourse('msoffice');
+      // 1. Calculate today's featured rotating course (24-hour cycle)
+      const dailyCourseKey = getDailyRotatingCourseKey();
+      activeCourseKey = dailyCourseKey;
+
+      // 2. Build buttons & tabs dynamically
+      buildDynamicNavBars();
+
+      // 3. Initialize stage with today's featured playlist
+      switchActiveCourse(activeCourseKey);
       executeVideoSearchAndFilter();
     });
   </script>
