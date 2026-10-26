@@ -30,6 +30,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .lang-btn:hover {
@@ -54,21 +55,21 @@
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
-            <!-- Shared Portal Navigation Menu -->
+            <!-- Shared Portal Navigation Menu (Untranslated/Fixed) -->
             <nav class="main-nav">
-                <a href="https://bsebwala.in/" data-i18n="navHome">Home</a>
-                <a href="/aihub" class="active" data-i18n="navAihub">AIHub</a>
-                <a href="/letter" data-i18n="navLetter">Letter</a>
-                <a href="/fee" data-i18n="navFee">Fee</a>
-                <a href="/news" data-i18n="navNews">News</a>
-                <a href="/learn" data-i18n="navLearn">Videos</a>
-                <a href="/about" data-i18n="navAbout">About</a>
-                <a href="/contact" data-i18n="navContact">Contact</a>
+                <a href="https://bsebwala.in/">Home</a>
+                <a href="/aihub" class="active">AIHub</a>
+                <a href="/letter">Letter</a>
+                <a href="/fee">Fee</a>
+                <a href="/news">News</a>
+                <a href="/learn">Videos</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
             </nav>
 
             <div class="header-actions">
-                <!-- View in Hindi / Toggle Language Button -->
-                <button class="lang-btn" id="langToggle" aria-label="Switch Language">हिंदी में पढ़ें</button>
+                <!-- View in Hindi / View in English Toggle Button -->
+                <button class="lang-btn" id="langToggle" aria-label="Switch Language">हिंदी में देखें</button>
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
                 <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
             </div>
@@ -207,16 +208,8 @@
         (function languageModule() {
             const translations = {
                 en: {
-                    btnText: "हिंदी",
+                    btnText: "हिंदी में देखें",
                     docTitle: "Ultimate AI Hub Terminal — BSEBWala",
-                    navHome: "Home",
-                    navAihub: "AIHub",
-                    navLetter: "Letter",
-                    navFee: "Fee",
-                    navNews: "News",
-                    navLearn: "Videos",
-                    navAbout: "About",
-                    navContact: "Contact",
                     pageTitle: "Ultimate AI Hub",
                     pageSubtitle: "A curated directory of the world's most powerful AI models, agents, and creation engines.",
                     cat1Title: "🧠 Core Intelligence & LLMs",
@@ -278,14 +271,6 @@
                 hi: {
                     btnText: "View in English",
                     docTitle: "अल्टीमेट एआई हब टर्मिनल — BSEBWala",
-                    navHome: "होम",
-                    navAihub: "एआई हब",
-                    navLetter: "पत्र",
-                    navFee: "शुल्क",
-                    navNews: "समाचार",
-                    navLearn: "वीडियो",
-                    navAbout: "हमारे बारे में",
-                    navContact: "संपर्क करें",
                     pageTitle: "अल्टीमेट एआई हब",
                     pageSubtitle: "विश्व के सबसे शक्तिशाली AI मॉडल, एजेंट्स और क्रिएशन टूल्स की संकलित डायरेक्टरी।",
                     cat1Title: "🧠 मुख्य इंटेलिजेंस व एलएलएम (LLMs)",
