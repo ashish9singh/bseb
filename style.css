@@ -1353,7 +1353,7 @@ footer {
   --primary: #7B2FF7;
   --primary-hover: #6420D9;
   --accent: #FF6B9D;
-  --radius-lg: 20px;
+  --radius-lg: 18px;
   --radius-sm: 10px;
   --shadow: 0 4px 18px rgba(123, 47, 247, 0.08);
   --header-h: 64px;
@@ -1566,21 +1566,23 @@ header.site-header {
 }
 
 /* ============================================================
-   4. SYMMETRICAL 2-COLUMN DASHBOARD (NO EMPTY TILES)
+   4. MASONRY DASHBOARD & BALANCED 2-COLUMN TILES
    ============================================================ */
 .dashboard {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  column-count: 2;
+  column-gap: 22px;
   margin-top: 10px;
   margin-bottom: 50px;
 }
 
 .ai-section {
+  break-inside: avoid;
+  page-break-inside: avoid;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 24px 22px;
+  padding: 22px 20px;
+  margin-bottom: 22px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
@@ -1591,19 +1593,19 @@ header.site-header {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 18px;
-  padding-bottom: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Inside grid: always 2 equal columns */
+/* Exact 2-Column internal layout per card */
 .ai-links-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -1611,7 +1613,7 @@ header.site-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 13px 15px;
+  padding: 12px 14px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -1663,10 +1665,10 @@ footer {
 /* ============================================================
    6. RESPONSIVE BREAKPOINTS
    ============================================================ */
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .dashboard {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    column-count: 1;
+    column-gap: 0;
   }
 
   .header-inner {
@@ -1711,8 +1713,8 @@ footer {
   .ai-page-header { padding: 22px 0 16px; }
 
   .ai-section {
-    padding: 18px 14px;
-    margin-bottom: 12px;
+    padding: 16px 12px;
+    margin-bottom: 14px;
   }
 
   .ai-links-grid {
@@ -1735,7 +1737,6 @@ footer {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* ============================================================
    13. VIDEO LEARN SERIES (learn.html)
