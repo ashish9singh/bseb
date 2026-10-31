@@ -5,106 +5,29 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Ashish Kumar Singh | Educator, IT Architect & Creative Soul</title>
-    <meta name="description" content="I bridge the gap between traditional classroom pedagogy and modern automation, building digital solutions that give educators their time back.">
+    <title>Ashish Kumar Singh | AI Educator, Master Trainer &amp; IT Architect</title>
+    <meta name="description" content="Official portfolio of Ashish Kumar Singh: Master Trainer in Generative AI (ChatGPT, Copilot, Gemini), CBSE AI Faculty (5+ Yrs), Microsoft Elevate Educator Expert, Intel/NITI Aayog trained AI curriculum leader, and NCC 'A' Grade cadet.">
 
-    <!-- Google Fonts -->
+    <!-- Google Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Master Stylesheet -->
+    <!-- Master External Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Local Enhancements (Zero style.css changes needed) -->
-    <style>
-        @media (min-width: 768px) {
-            .hero-profile { 
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                gap: 50px !important;
-                max-width: 1050px !important;
-                margin-left: auto !important; 
-                margin-right: auto !important;
-            }
-            .hero-profile .image-wrapper { 
-                flex: 0 0 auto !important;
-                margin: 0 !important;
-            }
-            .hero-profile .hero-text { 
-                flex: 1 1 auto !important;
-                max-width: 620px !important;
-                margin: 0 !important;
-            }
-        }
-
-        /* Subtle interactive card polish */
-        .card-enhanced {
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            border: 1px solid var(--border, rgba(123, 47, 247, 0.12)) !important;
-        }
-        .card-enhanced:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 28px rgba(123, 47, 247, 0.08);
-            border-color: var(--primary, #7B2FF7) !important;
-        }
-
-        /* Feature List Modern Badges */
-        .feature-item-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 16px 20px;
-            margin-bottom: 14px;
-            border-radius: 12px;
-            background: var(--surface-2, rgba(123, 47, 247, 0.04));
-            border: 1px solid var(--border, rgba(123, 47, 247, 0.1));
-            text-align: left;
-        }
-
-        /* Metric Highlights Bar */
-        .metric-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 10px auto 50px;
-            max-width: 1050px;
-        }
-        .metric-card {
-            padding: 18px 20px;
-            background: var(--surface, #FFFFFF);
-            border-radius: 14px;
-            border: 1px solid var(--border, rgba(123, 47, 247, 0.1));
-            text-align: center;
-        }
-        .metric-number {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary, #7B2FF7);
-            font-family: var(--font-head, 'Lora', serif);
-            margin-bottom: 4px;
-        }
-        .metric-label {
-            font-size: 0.85rem;
-            color: var(--text-muted, #6B5C82);
-            font-weight: 500;
-            line-height: 1.4;
-        }
-    </style>
 </head>
 <body>
 
     <!-- Sticky Navigation Header -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="https://bsebwala.in/" class="brand">
+            <a href="https://bsebwala.in/" class="brand" aria-label="BSEB Portal Hub Home">
                 <div class="mark">BB</div>
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
-            <!-- Menu with Active About Highlight -->
-            <nav class="main-nav">
+            <!-- Navigation Links -->
+            <nav class="main-nav" id="mainNav">
                 <a href="https://bsebwala.in/">Home</a>
                 <a href="/aihub">AIHub</a>
                 <a href="/letter">Letter</a>
@@ -123,125 +46,270 @@
     </header>
 
     <main class="wrap">
-        <!-- INTRO & PROFILE -->
-        <section class="hero hero-profile" style="padding-top: 40px; padding-bottom: 40px;">
+        <!-- HERO PROFILE SECTION -->
+        <section class="hero-profile">
             <div class="image-wrapper" oncontextmenu="return false;">
                 <div class="img-protection-overlay"></div>
-                <img src="ashish.jpg" alt="Ashish Kumar Singh" class="profile-img" draggable="false" style="border: 4px solid var(--surface-2, #F4EBFF); box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
+                <img src="ashish.jpg" alt="Ashish Kumar Singh" class="profile-img" draggable="false">
             </div>
 
             <div class="hero-text">
-                <h1 style="margin-bottom: 6px;">Ashish K. Singh</h1>
-                <div class="tagline" style="font-weight: 600; letter-spacing: 0.5px; margin-bottom: 18px;">Educator • IT Architect • Creative Soul</div>
+                <div class="badge-tag-pill">AI Master Trainer &amp; Senior EdTech Faculty</div>
+                <h1>Ashish K. Singh</h1>
+                <div class="tagline">ChatGPT • Microsoft Copilot • Google Gemini Trainer | CBSE AI Faculty (5+ Yrs)</div>
                 
-                <p class="quote" style="border-left: 3px solid var(--primary, #7B2FF7); padding-left: 16px; margin: 18px 0; font-style: italic;">
-                    "To me, programming is a creative art—a delicate balance of structure, logic, and human empathy."
+                <p class="quote">
+                    "To me, programming and AI pedagogy are creative arts—a delicate balance of structural precision, human empathy, and educational upliftment."
                 </p>
                 
-                <p style="line-height: 1.7; margin-bottom: 14px;">I bridge the gap between traditional classroom pedagogy and modern automation. Backed by advanced IT degrees and specialized AI training, my mission is simple: <strong>use technology to give educators their time back.</strong></p>
+                <p>
+                    I bridge the gap between traditional classroom pedagogy and automated digital learning. Serving as a dedicated <strong>Computer Science &amp; AI Teacher for 5+ years in a renowned CBSE school</strong>, my mission centers on empowering educators and students with real-world Generative AI tools—mastering prompting, workflow automation, and ethical AI integration through <strong>ChatGPT, Microsoft Copilot, and Google Gemini</strong>.
+                </p>
                 
-                <p style="line-height: 1.7; margin: 0;">From establishing foundational school computer labs to building smartphone-based attendance and automated salary systems, I architect digital solutions that turn administrative burdens into single-click realities.</p>
+                <p>
+                    From mentoring innovators at the Intel AI Showcase Fest to building automated Google Apps Script and Python systems for student evaluation and salary processing, I architect digital solutions that give educators their valuable time back.
+                </p>
             </div>
         </section>
 
-        <!-- CREDENTIAL / METRIC STRIP -->
+        <!-- IMPACT METRIC STRIP -->
         <div class="metric-bar">
             <div class="metric-card">
-                <div class="metric-number">⚡ 1-Click</div>
-                <div class="metric-label">Automated School Forms & DCF Utilities</div>
+                <div class="metric-number">5+ Years</div>
+                <div class="metric-label">CBSE School AI &amp; CS Faculty</div>
             </div>
             <div class="metric-card">
-                <div class="metric-number">🤖 AI & EdTech</div>
-                <div class="metric-label">Google Gemini & Microsoft Certified</div>
+                <div class="metric-number">GenAI Trainer</div>
+                <div class="metric-label">ChatGPT, Copilot &amp; Gemini Specialist</div>
             </div>
             <div class="metric-card">
-                <div class="metric-number">🎖️ NCC ‘C’</div>
-                <div class="metric-label">Disciplined Leadership & MIEE Honor</div>
+                <div class="metric-number">Intel &amp; NITI</div>
+                <div class="metric-label">Curriculum Integration Trained</div>
             </div>
             <div class="metric-card">
-                <div class="metric-number">🌐 100% Free</div>
-                <div class="metric-label">Community Portal for BSEB Educators</div>
+                <div class="metric-number">MIEE / MEE</div>
+                <div class="metric-label">Microsoft Master Trainer (2020–23)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">NCC ‘A’ Grade</div>
+                <div class="metric-label">Disciplined Leadership &amp; Service</div>
             </div>
         </div>
 
-        <!-- 2x2 GRID FEATURES -->
-        <section class="grid grid-features" style="margin-bottom: 60px;">
-            <div class="card card-enhanced" style="padding: 32px; border-radius: 16px;">
-                <div style="font-size: 1.6rem; margin-bottom: 8px;">🧠</div>
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.25rem;">AI & EdTech Innovation</h3>
-                <p style="color: var(--text-muted); font-size: 0.96rem; line-height: 1.65; margin: 0;">Certified in Google Gemini, Agentic AI, and advanced Microsoft courses. My toolkit spans applied RAG Assistants and OpenCV computer vision, designing curricula that seamlessly integrate AI into everyday classrooms.</p>
+        <!-- 4-PILLAR CORE COMPETENCY GRID -->
+        <section class="grid-features">
+            <div class="card">
+                <div class="card-icon">🧠</div>
+                <h3>GenAI &amp; LLM Master Trainer</h3>
+                <p>
+                    Conducting specialized workshops for educators on <strong>ChatGPT, Microsoft Copilot, and Google Gemini</strong>. Training faculty on prompt engineering, AI lesson planning, automated question-paper formulation, and conversational tutors tailored to school curricula.
+                </p>
             </div>
             
-            <div class="card card-enhanced" style="padding: 32px; border-radius: 16px;">
-                <div style="font-size: 1.6rem; margin-bottom: 8px;">⚙️</div>
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.25rem;">The IT Architect</h3>
-                <p style="color: var(--text-muted); font-size: 0.96rem; line-height: 1.65; margin: 0;">I build robust Python and Google Apps Script solutions that reduce hours of complex administration to a single click—deploying automated workflows for exam results, salaries, and daily attendance.</p>
+            <div class="card">
+                <div class="card-icon">⚙️</div>
+                <h3>The EdTech Architect</h3>
+                <p>
+                    Architect of automated school systems using Python, Google Apps Script, and AI Studio APIs. Transforming complex administration—such as student report generation, marksheet tabulations, and e-Shikshakosh DCF utilities—into single-click workflows.
+                </p>
             </div>
 
-            <div class="card card-enhanced" style="padding: 32px; border-radius: 16px;">
-                <div style="font-size: 1.6rem; margin-bottom: 8px;">🧭</div>
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.25rem;">Disciplined Leadership</h3>
-                <p style="color: var(--text-muted); font-size: 0.96rem; line-height: 1.65; margin: 0;">Grounded in the integrity of an NCC ‘C’ Certificate, my leadership is driven by collaboration. This ethos fuels my role as a Microsoft Innovative Educator Expert (MIEE) and contributions to the Synergy educational framework.</p>
+            <div class="card">
+                <div class="card-icon">🎖️</div>
+                <h3>Disciplined Leadership</h3>
+                <p>
+                    Grounded in the values of an <strong>NCC ‘C’ Certificate with an ‘A’ Grade</strong>. This operational integrity guides my role as an Innovative Educator Master Trainer (2020–21), Microsoft Educator Trainer (2023), and institutional mentor across educational initiatives.
+                </p>
             </div>
 
-            <div class="card card-enhanced" style="padding: 32px; border-radius: 16px;">
-                <div style="font-size: 1.6rem; margin-bottom: 8px;">📷</div>
-                <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.25rem;">The Explorer & Poet</h3>
-                <p style="color: var(--text-muted); font-size: 0.96rem; line-height: 1.65; margin: 0;">I find harmony in contrasts. Between writing poetry, capturing life through <em>Ashish’s Lens</em>, and embarking on cross-country rail and motorcycle journeys, I stay grounded with a racket in hand or deep into a new memoir.</p>
+            <div class="card">
+                <div class="card-icon">🏍️</div>
+                <h3>The Explorer &amp; Poet</h3>
+                <p>
+                    Life beyond the screen thrives on balance. A passionate Hindi poet, solo motorcycle traveler, avid reader of memoirs, and photographer behind <em>Ashish’s Lens</em>, I find equal inspiration on long cross-country highways and the badminton court.
+                </p>
             </div>
         </section>
 
-        <!-- HIGHLIGHT: SIMPLY DIFFERENT -->
-        <section class="highlight-section" style="padding: 45px 30px; border-radius: 20px; text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: clamp(1.4rem, 2.8vw, 1.9rem); margin-bottom: 12px;">Lifting Others as I Grow: The “S!mply D!fferent” Portal</h2>
-            <p style="max-width: 720px; margin: 0 auto 30px; font-size: 1.05rem; line-height: 1.7; color: var(--text-muted);">
-                True technical mastery is measured by the people it uplifts. To serve the educational community, I developed this unified digital gateway for BSEB teachers and students, providing completely free access to:
-            </p>
+        <!-- SPECIALIZED AI TRAINER TOOLKIT -->
+        <section class="credentials-section" style="margin-bottom: 50px;">
+            <div class="section-head">
+                <h2>AI Trainer Specializations &amp; Tools</h2>
+                <p>Hands-on instruction and curriculum integration across premier Generative AI platforms.</p>
+            </div>
+
+            <div class="timeline-grid">
+                <div class="credential-item">
+                    <div class="cred-badge">💬</div>
+                    <div class="cred-info">
+                        <h4>ChatGPT (OpenAI) Masterclass</h4>
+                        <p>Advanced prompting, custom GPT construction, automated lesson scaffolding, and syllabus mapping for secondary educators.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">⚡</div>
+                    <div class="cred-info">
+                        <h4>Microsoft Copilot Ecosystem</h4>
+                        <p>Copilot integration with Microsoft 365 (Word, Excel, PowerPoint), collaborative classroom workflows, and safe web research.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">🌐</div>
+                    <div class="cred-info">
+                        <h4>Google Gemini &amp; AI Studio</h4>
+                        <p>Multimodal prompt engineering, research synthesis with Gemini, Google Workspace integration, and prototyping with Google AI Studio.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">🤖</div>
+                    <div class="cred-info">
+                        <h4>Agentic AI &amp; Intelligent Assistants</h4>
+                        <p>Training on autonomous agents, research workflows (Perplexity, NotebookLM), and assistive AI bots for administrative automation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACCREDITATIONS & INSTITUTIONAL MILESTONES -->
+        <section class="credentials-section">
+            <div class="section-head">
+                <h2>Accreditations, Master Training &amp; Certifications</h2>
+                <p>Rigorous professional development with national and international educational leaders.</p>
+            </div>
+
+            <div class="timeline-grid">
+                <div class="credential-item">
+                    <div class="cred-badge">🌐</div>
+                    <div class="cred-info">
+                        <h4>AI Integration in Curriculum</h4>
+                        <p>Certified by <strong>Intel, NITI Aayog, Atal Innovation Mission (AIM), and CBSE</strong> for cross-disciplinary AI teaching.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">🏆</div>
+                    <div class="cred-info">
+                        <h4>AI Showcase Fest Organizer (Oct 19, 2023)</h4>
+                        <p>Organized and guided student innovators at <strong>Radiant International School</strong> under AI for Youth, Intel, and CBSE frameworks.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">💻</div>
+                    <div class="cred-info">
+                        <h4>Microsoft Master Trainer Honors</h4>
+                        <p>Recognized as <strong>Innovative Educator Master Trainer (2020–21)</strong> and <strong>Microsoft Educator Trainer (2023)</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">📖</div>
+                    <div class="cred-info">
+                        <h4>ChatGPT &amp; AI: Classroom Collaborator</h4>
+                        <p>Specialized pedagogy course by Orient Blackswan on utilizing Generative AI as an interactive teaching assistant.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">📊</div>
+                    <div class="cred-info">
+                        <h4>Data Science &amp; EdTech Trends (2023)</h4>
+                        <p>Trained in Data Science Curriculum Exposure and Emerging Trends in Educational Technology.</p>
+                    </div>
+                </div>
+
+                <div class="credential-item">
+                    <div class="cred-badge">🛡️</div>
+                    <div class="cred-info">
+                        <h4>Digital Safety &amp; LMS Architecture</h4>
+                        <p>Certified in <em>Safety &amp; Security in Digital Space (2023)</em> and <em>LMS Teaching-Learning Process</em> by <strong>CIET, NCERT</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECHNICAL & TOOL PROFICIENCY CLUSTERS -->
+        <section class="tech-stacks-box">
+            <div class="section-head">
+                <h2>Technical &amp; Pedagogical Arsenal</h2>
+                <p>Core programming, Generative AI engines, and desktop suites I teach and build with.</p>
+            </div>
+
+            <div class="tech-cluster">
+                <span class="tech-chip">🤖 ChatGPT &amp; Custom GPTs</span>
+                <span class="tech-chip">⚡ Microsoft Copilot</span>
+                <span class="tech-chip">🌐 Google Gemini &amp; AI Studio</span>
+                <span class="tech-chip">🐍 Python Programming</span>
+                <span class="tech-chip">⚡ C &amp; C++ Systems</span>
+                <span class="tech-chip">🌐 HTML5 &amp; Modern Web</span>
+                <span class="tech-chip">📊 Advanced Excel &amp; Formulas</span>
+                <span class="tech-chip">📄 MS Word Masterclass</span>
+                <span class="tech-chip">📽️ PowerPoint Animations</span>
+                <span class="tech-chip">🐧 Linux &amp; Windows OS</span>
+                <span class="tech-chip">👁️ OpenCV Computer Vision</span>
+                <span class="tech-chip">📜 Google Apps Script Automations</span>
+                <span class="tech-chip">🎓 CIET NCERT LMS Systems</span>
+            </div>
+        </section>
+
+        <!-- HIGHLIGHT: S!MPLY D!FFERENT PORTAL -->
+        <section class="highlight-section">
+            <div class="section-head" style="margin-bottom: 20px;">
+                <h2>Lifting Others as I Grow: The “S!mply D!fferent” Initiative</h2>
+                <p>Technical knowledge finds its true value when deployed for societal upliftment and open education.</p>
+            </div>
             
-            <div style="max-width: 680px; margin: 0 auto 10px;">
+            <div class="feature-box-list">
                 <div class="feature-item-box">
                     <span style="font-size: 1.4rem;">📊</span>
                     <div>
-                        <strong style="color: var(--text);">Automated Utilities:</strong>
-                        <span style="color: var(--text-muted); display: block; font-size: 0.93rem; margin-top: 2px;">Instant e-Shikshakosh DCF generation and 1-click Bonafide Application formats.</span>
+                        <strong style="color: var(--text);">Automated Institutional Utilities:</strong>
+                        <span style="color: var(--text-muted); display: block; font-size: 0.92rem; margin-top: 2px;">
+                            Built 1-click Bonafide application tools, exam mark tabulation generators, and e-Shikshakosh DCF helpers used daily by teachers.
+                        </span>
                     </div>
                 </div>
 
                 <div class="feature-item-box">
                     <span style="font-size: 1.4rem;">🛡️</span>
                     <div>
-                        <strong style="color: var(--text);">Curated Academics:</strong>
-                        <span style="color: var(--text-muted); display: block; font-size: 0.93rem; margin-top: 2px;">Comprehensive bilingual Cyber Safety manuals and modern Computer Science syllabi.</span>
+                        <strong style="color: var(--text);">Curated Academics &amp; Cyber Safety:</strong>
+                        <span style="color: var(--text-muted); display: block; font-size: 0.92rem; margin-top: 2px;">
+                            Authored free bilingual Cyber Safety manuals and modern Computer Science syllabi to prepare school classrooms for safe digital citizenship.
+                        </span>
                     </div>
                 </div>
 
                 <div class="feature-item-box">
-                    <span style="font-size: 1.4rem;">📑</span>
+                    <span style="font-size: 1.4rem;">🤝</span>
                     <div>
-                        <strong style="color: var(--text);">Ready-to-Use Office Kits:</strong>
-                        <span style="color: var(--text-muted); display: block; font-size: 0.93rem; margin-top: 2px;">Formulated Excel workbooks for student marks tabulation and school administration.</span>
+                        <strong style="color: var(--text);">Community EdTech Support:</strong>
+                        <span style="color: var(--text-muted); display: block; font-size: 0.92rem; margin-top: 2px;">
+                            Free access to structured video curricula, classroom PPT decks, and formulas for grassroots educators across Bihar.
+                        </span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA & CONTACT -->
-        <section class="cta-box" style="padding: 45px 30px; border-radius: 20px; text-align: center; margin-bottom: 40px;">
-            <h2 style="font-size: clamp(1.3rem, 2.5vw, 1.8rem); margin-bottom: 12px;">IT Support • Digital Services • Custom Solutions</h2>
-            <p style="max-width: 650px; margin: 0 auto 28px; line-height: 1.7; color: var(--text-muted);">
-                Whether you require technical consultation, AI & EdTech workshops for your school, or bespoke automated tools to eliminate repetitive paperwork, feel free to reach out.
-            </p>
-            
-            <div style="margin-bottom: 30px;">
-                <a href="mailto:Ashishkumarsingh9@gmail.com" class="btn-primary" style="display: inline-block; padding: 14px 32px; font-weight: 600; text-decoration: none; border-radius: 999px;">
-                    ✉️ Request IT Support / Templates
-                </a>
+        <!-- CTA & CONTACT SECTION -->
+        <section class="cta-box">
+            <div class="section-head" style="margin-bottom: 20px;">
+                <h2>AI Workshops • Faculty Training • School Automation</h2>
+                <p>Available for institutional AI workshops, faculty training sessions (ChatGPT, Copilot, Gemini), and bespoke digital automation.</p>
             </div>
             
-            <div class="links-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+            <a href="mailto:Ashishkumarsingh9@gmail.com" class="btn-primary">
+                ✉️ Book an AI Training / Inquire for Workshops
+            </a>
+            
+            <div class="links-grid">
                 <a href="https://bsebwala.in/" class="link-btn link-btn-featured">🏠 BSEBwala Home</a>
-                <a href="https://ashish9singh.wordpress.com/ashishs-lens/" class="link-btn" target="_blank" rel="noopener">Ashish’s Lens</a>
-                <a href="https://www.linkedin.com/in/ashish9singh/" class="link-btn" target="_blank" rel="noopener">Connect on LinkedIn</a>
+                <a href="https://ashish9singh.wordpress.com/ashishs-lens/" class="link-btn" target="_blank" rel="noopener">📷 Ashish’s Lens (Photography)</a>
+                <a href="https://www.linkedin.com/in/ashish9singh/" class="link-btn" target="_blank" rel="noopener">💼 Connect on LinkedIn</a>
             </div>
         </section>
     </main>
@@ -249,11 +317,12 @@
     <!-- Footer -->
     <footer>
         <div class="wrap">
-            Disclaimer: BSEBWala is an independent educational informational portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body. All information provided is for educational and informational purposes only. <br>© 2026 BSEBWala. All Rights Reserved.
+            Disclaimer: BSEBWala is an independent educational informational portal and is not officially affiliated with the Bihar School Examination Board (BSEB) or any government body. All information provided is for educational purposes only. <br>
+            &copy; 2026 BSEBWala. Created with passion for educational empowerment.
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- JavaScript Interactions -->
     <script>
         // Theme Toggle Engine
         (function themeModule(){
@@ -285,7 +354,7 @@
             });
         })();
 
-        // Image Protection
+        // Right-Click & Source Code Protection
         document.addEventListener('contextmenu', event => {
             if(event.target.classList.contains('img-protection-overlay') || event.target.classList.contains('profile-img')) {
                 event.preventDefault();
@@ -297,15 +366,15 @@
             }
         });
 
-        // Mobile Menu Toggle Script
+        // Mobile Menu Toggle
         (function mobileMenu() {
             const menuBtn = document.getElementById('menuToggle');
-            const nav = document.querySelector('.main-nav');
+            const nav = document.getElementById('mainNav');
             
             if (menuBtn && nav) {
                 menuBtn.addEventListener('click', () => {
-                    nav.classList.toggle('open');
-                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
+                    const isOpen = nav.classList.toggle('open');
+                    menuBtn.innerHTML = isOpen ? '✕' : '☰';
                 });
             }
         })();
