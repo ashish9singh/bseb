@@ -1353,9 +1353,8 @@ footer {
   --primary: #7B2FF7;
   --primary-hover: #6420D9;
   --accent: #FF6B9D;
-  --radius: 14px;
   --radius-lg: 20px;
-  --radius-sm: 8px;
+  --radius-sm: 10px;
   --shadow: 0 4px 18px rgba(123, 47, 247, 0.08);
   --header-h: 64px;
   --font-head: 'Lora', Georgia, serif;
@@ -1390,6 +1389,7 @@ body {
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.55;
+  padding-bottom: 40px;
 }
 
 button, input, a { font: inherit; }
@@ -1509,6 +1509,17 @@ header.site-header {
   border-color: var(--primary);
 }
 
+[data-theme="dark"] .lang-btn {
+  background: #261D3A;
+  color: #B98CFF;
+  border-color: #382A54;
+}
+
+[data-theme="dark"] .lang-btn:hover {
+  background: #B98CFF;
+  color: #15101F;
+}
+
 .icon-btn {
   border: 1px solid var(--border);
   background: var(--surface);
@@ -1528,7 +1539,7 @@ header.site-header {
 .menu-toggle-btn { display: none; }
 
 /* ============================================================
-   3. PAGE HERO
+   3. HERO BANNER
    ============================================================ */
 .ai-page-header {
   text-align: center;
@@ -1555,24 +1566,21 @@ header.site-header {
 }
 
 /* ============================================================
-   4. ZERO-SPACE MASONRY DASHBOARD & BALANCED TILES
+   4. SYMMETRICAL 2-COLUMN DASHBOARD (NO EMPTY TILES)
    ============================================================ */
 .dashboard {
-  /* Dynamic multi-column masonry avoids trailing empty space across unequal categories */
-  column-count: 3;
-  column-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
   margin-top: 10px;
   margin-bottom: 50px;
 }
 
 .ai-section {
-  break-inside: avoid;
-  page-break-inside: avoid;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 22px 20px;
-  margin-bottom: 20px;
+  padding: 24px 22px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
@@ -1583,19 +1591,19 @@ header.site-header {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 16px;
-  padding-bottom: 8px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Strict uniform 2-column grid per category eliminates dangling single cards */
+/* Inside grid: always 2 equal columns */
 .ai-links-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 12px;
   width: 100%;
 }
 
@@ -1603,7 +1611,7 @@ header.site-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 12px 14px;
+  padding: 13px 15px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -1630,9 +1638,14 @@ header.site-header {
   background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
 }
 
-/* When a section has an odd number of links, span the last link cleanly across both columns */
-.ai-links-grid .ai-btn:last-child:nth-child(odd) {
-  grid-column: span 2;
+[data-theme="dark"] .ai-btn {
+  background: #261D3A;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] .ai-btn span {
+  color: var(--text-muted);
 }
 
 /* ============================================================
@@ -1650,14 +1663,12 @@ footer {
 /* ============================================================
    6. RESPONSIVE BREAKPOINTS
    ============================================================ */
-@media (max-width: 1024px) {
-  .dashboard {
-    column-count: 2;
-    column-gap: 16px;
-  }
-}
-
 @media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
   .header-inner {
     flex-wrap: wrap;
     padding-top: 8px;
@@ -1678,7 +1689,7 @@ footer {
     padding: 10px;
     background: var(--surface-2);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
   }
 
   .main-nav.open { display: flex; }
@@ -1695,22 +1706,16 @@ footer {
   }
 }
 
-@media (max-width: 640px) {
-  .dashboard {
-    column-count: 1;
-    column-gap: 0;
-  }
-
+@media (max-width: 500px) {
   .wrap { padding: 0 14px; }
-  .ai-page-header { padding: 24px 0 16px; }
+  .ai-page-header { padding: 22px 0 16px; }
 
   .ai-section {
     padding: 18px 14px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .ai-links-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
 
@@ -1725,12 +1730,9 @@ footer {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 330px) {
   .ai-links-grid {
     grid-template-columns: 1fr;
-  }
-  .ai-links-grid .ai-btn:last-child:nth-child(odd) {
-    grid-column: span 1;
   }
 }
 
