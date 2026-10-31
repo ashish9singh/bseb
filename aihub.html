@@ -15,8 +15,10 @@
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Language Toggle Button Styling (Matching Pill Style) -->
     <style>
+        /* ============================================================
+           PILL BUTTON LANGUAGE TOGGLE
+           ============================================================ */
         .lang-btn {
             background: var(--surface-2, #F4EBFF);
             color: var(--primary, #7B2FF7);
@@ -50,6 +52,91 @@
             background: #B98CFF;
             color: #15101F;
         }
+
+        /* ============================================================
+           SEAMLESS TILE GRID (ZERO DEAD WHITESPACE SYSTEM)
+           ============================================================ */
+        .ai-section {
+            margin-bottom: 34px;
+        }
+
+        .ai-section h2 {
+            margin-bottom: 14px;
+            font-size: 1.18rem;
+        }
+
+        .ai-links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* Every tile expands proportionally so no row ever has an empty slot */
+        .ai-btn {
+            flex: 1 1 200px;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 14px 18px;
+            background: var(--surface, #ffffff);
+            border: 1px solid var(--border, #e2e8f0);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text, #1e293b);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--shadow, 0 2px 8px rgba(0, 0, 0, 0.04));
+        }
+
+        .ai-btn span {
+            font-size: 0.78rem;
+            color: var(--text-muted, #64748b);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #7B2FF7);
+            box-shadow: 0 6px 16px rgba(123, 47, 247, 0.12);
+        }
+
+        [data-theme="dark"] .ai-btn {
+            background: var(--surface, #1F1830);
+            border-color: var(--border, #382A54);
+            color: var(--text, #F1ECFA);
+        }
+
+        [data-theme="dark"] .ai-btn span {
+            color: var(--text-muted, #B4A6CC);
+        }
+
+        /* Mobile Screens: Balanced 2-column or full-width flow */
+        @media (max-width: 640px) {
+            .ai-links-grid {
+                gap: 10px;
+            }
+
+            .ai-btn {
+                flex: 1 1 calc(50% - 10px);
+                min-width: 135px;
+                padding: 12px 14px;
+                font-size: 0.88rem;
+            }
+
+            .ai-btn span {
+                font-size: 0.72rem;
+            }
+        }
+
+        @media (max-width: 340px) {
+            .ai-btn {
+                flex: 1 1 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -75,12 +162,11 @@
             </nav>
 
             <div class="header-actions">
-                <!-- Pill Style Language Switch Button -->
+                <!-- Language Toggle Button -->
                 <button class="lang-btn" id="langToggle" aria-label="Switch Language">हिंदी में पढ़ें</button>
                 <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
                 <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
             </div>
-            
         </div>
     </header>
     
@@ -105,7 +191,7 @@
             </div>    
         </section>
 
-        <!-- Category 2: Content Writing, Grammar & Email (Added from Annexure 1) -->
+        <!-- Category 2: Content Writing, Grammar & Email -->
         <section class="ai-section">        
             <h2 data-i18n="catWritingTitle">✍️ Content Writing & Grammar</h2>        
             <div class="ai-links-grid">            
