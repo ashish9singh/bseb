@@ -1,17 +1,17 @@
 /* ==========================================================================
    BSEBWALA.IN — UNIFIED MASTER STYLESHEET
    --------------------------------------------------------------------------
-   TABLE OF CONTENTS:
-   01. Design Tokens & Color Palettes (Light & Dark Themes)
-   02. Base Reset, Typography & Layout Wrappers
-   03. Global Sticky Header, Brand, Navigation & Language Pill
-   04. Shared Hero Panels, Notice Tickers, Badges & Buttons
-   05. Portal Directory & Filterable Grid (index.html)
-   06. Academic Fee Calculator & Tables (fee.html)
-   07. Live News Feed & Summary Cards (news.html)
-   08. Educator & Master Trainer Profile (about.html)
-   09. Contact Form, Support Info & Crowdfunding Modal (contact.html)
-   10. Official Letters & Documents Repository (letter.html)
+   ARCHITECTURE & TABLE OF CONTENTS:
+   01. Design Tokens & Color Palettes (Light, Dark & System Auto-Detect)
+   02. Global Reset, Typography & Layout Containers
+   03. Sticky Site Header, Brand Identity, Main Navigation & Language Pill
+   04. Shared Hero Panels, Notice Tickers, Badges & Action Buttons
+   05. Portal Directory & Filterable Link Grid (index.html)
+   06. Academic Fee Calculator & Fee Structure Tables (fee.html)
+   07. Live Educational News Feed & Summary Cards (news.html)
+   08. Educator & Master Trainer Executive Profile (about.html)
+   09. Contact Form, Support Directory & Crowdfunding Modal (contact.html)
+   10. Official Letters & Circulars Repository (letter.html)
    11. Ultimate AI Hub Masonry Terminal (aihub.html)
    12. Video Series Theater & Course Directory (learn.html)
    13. Global Footer, Accessibility & Responsive Breakpoints
@@ -22,7 +22,7 @@
    01. DESIGN TOKENS & COLOR PALETTES
    ========================================================================== */
 :root {
-  /* Core Light Palette */
+  /* Core Light Theme Surface & Ink Tokens */
   --bg:               #FDF6FF;
   --surface:          #FFFFFF;
   --surface-2:        #F4EBFF;
@@ -31,20 +31,22 @@
   --border-focus:     #CBA6FF;
   --text:             #241A38;
   --text-muted:       #6B5C82;
+
+  /* Brand Signature Accents */
   --primary:          #7B2FF7;
   --primary-hover:    #6420D9;
   --accent:           #FF6B9D;
   --accent-soft:      #FFE1EC;
   --accent-glow:      rgba(255, 107, 157, 0.35);
 
-  /* Semantic Status Colors */
+  /* Semantic Status Indicators */
   --danger:           #E4572E;
   --success:          #10B981;
   --emerald:          #10B981;
   --emerald-bg:       rgba(16, 185, 129, 0.12);
   --gold:             #F59E0B;
 
-  /* Directory Category Accents */
+  /* Portal Directory Category Accents */
   --c-secondary:      #2E9BFF;
   --c-senior:         #21C08B;
   --c-scholarship:    #FFB020;
@@ -52,7 +54,7 @@
   --c-udise:          #7B2FF7;
   --c-docs:           #FF7A45;
 
-  /* Document Repository Tokens */
+  /* Official Letters & Documents Repository Tokens */
   --primary-color:    #7B2FF7;
   --list-bg:          #FFFFFF;
   --list-hover:       #FAF5FF;
@@ -61,7 +63,7 @@
   --cat-bg:           #F3F4F6;
   --cat-text:         #4B5563;
 
-  /* Elevation & Radii */
+  /* Border Radii & Elevation Shadows */
   --radius-sm:        8px;
   --radius:           14px;
   --radius-md:        12px;
@@ -73,13 +75,14 @@
   --shadow-md:        0 10px 28px rgba(123, 47, 247, 0.08);
   --shadow-lg:        0 20px 44px rgba(123, 47, 247, 0.14);
 
-  /* Typography & Layout */
+  /* Typography & Structural Metrics */
   --font-head:        'Lora', Georgia, serif;
   --font-body:        'Inter', system-ui, -apple-system, sans-serif;
   --header-h:         66px;
   color-scheme:       light;
 }
 
+/* Explicit Dark Theme Override */
 :root[data-theme="dark"] {
   --bg:               #120D1C;
   --surface:          #1B1429;
@@ -89,6 +92,7 @@
   --border-focus:     #533B82;
   --text:             #F3EDFC;
   --text-muted:       #B8A9D1;
+
   --primary:          #B98CFF;
   --primary-hover:    #D4BCFF;
   --accent:           #FF9EC1;
@@ -120,6 +124,7 @@
   color-scheme:       dark;
 }
 
+/* System Dark Mode Auto-Detection (When no manual toggle is saved) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
     --bg:               #120D1C;
@@ -130,6 +135,7 @@
     --border-focus:     #533B82;
     --text:             #F3EDFC;
     --text-muted:       #B8A9D1;
+
     --primary:          #B98CFF;
     --primary-hover:    #D4BCFF;
     --accent:           #FF9EC1;
@@ -164,7 +170,7 @@
 
 
 /* ==========================================================================
-   02. BASE RESET, TYPOGRAPHY & LAYOUT WRAPPERS
+   02. GLOBAL RESET, TYPOGRAPHY & LAYOUT CONTAINERS
    ========================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -185,6 +191,7 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   background-color: var(--bg);
+  /* Subtle ambient top mesh glow */
   background-image:
     radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--primary) 10%, transparent) 0%, transparent 42%),
     radial-gradient(circle at 88% 14%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 38%);
@@ -239,7 +246,7 @@ main {
 
 
 /* ==========================================================================
-   03. GLOBAL STICKY HEADER, BRAND, NAVIGATION & LANGUAGE PILL
+   03. STICKY SITE HEADER, BRAND IDENTITY, NAVIGATION & LANGUAGE PILL
    ========================================================================== */
 header.site,
 header.site-header {
@@ -261,6 +268,7 @@ header.site-header {
   gap: 16px;
 }
 
+/* Brand Logo & Wordmark */
 .brand,
 .site-brand {
   display: flex;
@@ -291,6 +299,7 @@ header.site-header {
   flex-shrink: 0;
 }
 
+/* Desktop Navigation Bar */
 .main-nav {
   display: flex;
   align-items: center;
@@ -329,6 +338,7 @@ header.site-header {
   border-radius: var(--radius-pill);
 }
 
+/* Header Action Buttons (Language Toggle, Theme Switch, Mobile Hamburger) */
 .header-actions,
 .header-right {
   display: flex;
@@ -404,7 +414,7 @@ header.site-header {
 
 
 /* ==========================================================================
-   04. SHARED HERO PANELS, NOTICE TICKERS, BADGES & BUTTONS
+   04. SHARED HERO PANELS, NOTICE TICKERS, BADGES & ACTION BUTTONS
    ========================================================================== */
 .hero {
   padding: 32px 0 18px;
@@ -429,6 +439,7 @@ header.site-header {
   font-size: 0.95rem;
 }
 
+/* Gradient-Bordered Counter Panel */
 .hero-panel {
   position: relative;
   border-radius: var(--radius-xl);
@@ -478,6 +489,7 @@ header.site-header {
   font-family: var(--font-head);
 }
 
+/* Notice Bar & Pills */
 .notice-bar {
   display: flex;
   align-items: center;
@@ -504,6 +516,7 @@ header.site-header {
   flex-shrink: 0;
 }
 
+/* Primary Pill Call-to-Action Button */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -544,7 +557,7 @@ header.site-header {
   color: #FFFFFF;
 }
 
-/* Download Banner */
+/* Download Banner Card */
 .download-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -604,7 +617,7 @@ header.site-header {
 
 
 /* ==========================================================================
-   05. PORTAL DIRECTORY & FILTERABLE GRID (index.html)
+   05. PORTAL DIRECTORY & FILTERABLE LINK GRID (index.html)
    ========================================================================== */
 .search-box {
   flex: 1;
@@ -633,6 +646,7 @@ header.site-header {
   color: var(--text-muted);
 }
 
+/* Category Filter Chips */
 .filters {
   display: flex;
   gap: 8px;
@@ -679,6 +693,7 @@ header.site-header {
 .chip[data-filter="udise"]       { --chip-color: var(--c-udise); }
 .chip[data-filter="docs"]        { --chip-color: var(--c-docs); }
 
+/* Directory Sections & Link Cards */
 .section {
   margin-top: 34px;
   opacity: 1;
@@ -837,6 +852,7 @@ header.site-header {
   display: none;
 }
 
+/* Pinned Links Bar */
 .pinned-bar {
   background: linear-gradient(120deg, var(--accent-soft), color-mix(in srgb, var(--c-scholarship) 18%, var(--accent-soft)));
   border: 1px solid var(--border);
@@ -872,7 +888,7 @@ header.site-header {
 
 
 /* ==========================================================================
-   06. ACADEMIC FEE CALCULATOR & TABLES (fee.html)
+   06. ACADEMIC FEE CALCULATOR & FEE STRUCTURE TABLES (fee.html)
    ========================================================================== */
 .category-nav {
   display: grid;
@@ -958,6 +974,7 @@ header.site-header {
   box-shadow: 0 3px 8px color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
+/* Interactive Fee Calculator Container */
 .calculator-wrapper {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1086,6 +1103,7 @@ header.site-header {
   font-size: 0.85rem;
 }
 
+/* Fee Slip Output */
 .calc-slip {
   background: var(--surface-2);
   border: 1px solid var(--border);
@@ -1194,6 +1212,7 @@ header.site-header {
   font-weight: 600;
 }
 
+/* Fee Data Tables & Filter Toolbars */
 .table-section {
   margin-bottom: 24px;
 }
@@ -1317,7 +1336,7 @@ header.site-header {
 
 .tag-chhatra {
   background: color-mix(in srgb, var(--c-scholarship) 20%, transparent);
-  color: #c47d00;
+  color: #C47D00;
 }
 
 .tag-abolished {
@@ -1326,6 +1345,7 @@ header.site-header {
   text-decoration: line-through;
 }
 
+/* Fee Guidelines & Abolished Fee Alerts */
 .rules-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1432,7 +1452,7 @@ header.site-header {
 
 
 /* ==========================================================================
-   07. LIVE NEWS FEED & SUMMARY CARDS (news.html)
+   07. LIVE EDUCATIONAL NEWS FEED & SUMMARY CARDS (news.html)
    ========================================================================== */
 .page-header {
   margin-bottom: 24px;
@@ -1696,7 +1716,7 @@ header.site-header {
 
 
 /* ==========================================================================
-   08. EDUCATOR & MASTER TRAINER PROFILE (about.html)
+   08. EDUCATOR & MASTER TRAINER EXECUTIVE PROFILE (about.html)
    ========================================================================== */
 @keyframes fadeSlideUp {
   from {
@@ -1709,7 +1729,7 @@ header.site-header {
   }
 }
 
-/* Top-Left Anchor & Top-Right Executive Intro */
+/* Desktop 2-Column Hero Stage: Left Sticky Profile Card + Right Narrative */
 .hero-stage {
   padding: 44px 0 32px;
   display: grid;
@@ -1842,6 +1862,7 @@ header.site-header {
   color: var(--text);
 }
 
+/* Right Executive Narrative Column */
 .intro-narrative-right {
   display: flex;
   flex-direction: column;
@@ -2716,7 +2737,7 @@ header.site-header {
 
 
 /* ==========================================================================
-   10. OFFICIAL LETTERS & DOCUMENTS REPOSITORY (letter.html)
+   10. OFFICIAL LETTERS & CIRCULARS REPOSITORY (letter.html)
    ========================================================================== */
 .doc-controls {
   max-width: 1100px;
@@ -3230,6 +3251,7 @@ header.site-header {
   opacity: 0.88;
 }
 
+/* Playlist Sidebar */
 .playlist-sidebar {
   display: flex;
   flex-direction: column;
@@ -3378,6 +3400,7 @@ header.site-header {
   color: var(--gold);
 }
 
+/* Video Directory & Cards */
 .directory {
   margin-bottom: 50px;
 }
@@ -3756,7 +3779,7 @@ footer p + p {
   }
 }
 
-/* --- Navigation & Theater Collapse <= 920px --- */
+/* --- Navigation, Compact Mobile Profile & Theater Collapse <= 920px --- */
 @media (max-width: 920px) {
   .header-inner {
     flex-wrap: wrap;
@@ -3805,16 +3828,90 @@ footer p + p {
     background: var(--surface);
   }
 
+  /* Compact Horizontal Mobile Profile Card (about.html) */
   .hero-stage {
     grid-template-columns: 1fr;
-    gap: 30px;
-    padding: 30px 0 20px;
+    gap: 20px;
+    padding: 20px 0 16px;
   }
 
   .profile-card-left {
     position: static;
-    max-width: 330px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    column-gap: 14px;
+    row-gap: 3px;
+    align-items: center;
+    text-align: left;
+  }
+
+  .profile-card-left .image-container {
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    grid-row: 1 / 4;
+  }
+
+  .profile-card-left .profile-img {
+    border-width: 3px;
+  }
+
+  .profile-card-left h2 {
+    font-size: 1.18rem;
+    margin-bottom: 0;
+    align-self: end;
+  }
+
+  .profile-card-left .profile-role-sub {
+    font-size: 0.72rem;
+    margin-bottom: 4px;
+  }
+
+  .profile-card-left .status-beacon {
+    justify-self: start;
+    margin-bottom: 0;
+    padding: 3px 10px;
+    font-size: 0.7rem;
+  }
+
+  .profile-card-left .quick-meta-list {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    padding-top: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .profile-card-left .meta-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 0.72rem;
+    gap: 5px;
+  }
+
+  .hero-badge-pill {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+  }
+
+  .hero-main-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.92rem;
+  }
+
+  .quote-card {
+    padding: 14px 16px;
+    font-size: 0.94rem;
   }
 
   .grid-features,
@@ -3822,6 +3919,7 @@ footer p + p {
     grid-template-columns: 1fr;
   }
 
+  /* Video Theater Mobile Stack (learn.html) */
   .theater-container {
     grid-template-columns: 1fr;
   }
@@ -4026,7 +4124,20 @@ footer p + p {
   }
 }
 
-/* --- Extra Small Mobile <= 360px --- */
+/* --- Extra Small Mobile <= 420px --- */
+@media (max-width: 420px) {
+  .profile-card-left {
+    grid-template-columns: 72px 1fr;
+    column-gap: 12px;
+    padding: 14px;
+  }
+
+  .profile-card-left .image-container {
+    width: 72px;
+    height: 72px;
+  }
+}
+
 @media (max-width: 360px) {
   .metric-bar,
   .ai-links-grid {
@@ -4034,7 +4145,7 @@ footer p + p {
   }
 }
 
-/* --- Reduced Motion Preference --- */
+/* --- Reduced Motion Accessibility Preference --- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
