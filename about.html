@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Ashish Kumar Singh — Portfolio | AI Educator, Master Trainer & EdTech Developer</title>
-    <meta name="description" content="Professional portfolio of Ashish Kumar Singh: AI Educator & Master Trainer (ChatGPT, Copilot, Gemini), Former CS/AI TGT at Radiant International School (2018–2023), Google Certified Educator L1 & L2, Microsoft Elevate Educator Expert, NCC Best Shooter, and EdTech Web Developer.">
+    <meta name="description" content="Professional portfolio of Ashish Kumar Singh: AI Educator & Master Trainer (ChatGPT, Copilot, Gemini), Google Certified Educator L1 & L2, Microsoft Elevate Educator Expert, Canva Certified Educator, Former CS/AI TGT at Radiant International School (2018–2023), NCC Best Shooter, and EdTech Web Developer.">
 
     <!-- Google Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,12 +16,13 @@
     <!-- Unified Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Portfolio Experience Timeline & Scoped Enhancements -->
+    <!-- Portfolio Experience Timeline & Verified Skills Scoped Styles -->
     <style>
         .portfolio-section {
             margin-bottom: 56px;
         }
 
+        /* Institutional Experience Timeline */
         .exp-timeline {
             display: flex;
             flex-direction: column;
@@ -115,10 +116,80 @@
             font-weight: 600;
         }
 
+        /* Verified Skills Matrix (Credly & Core Competencies) */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .skill-group-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 26px 28px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .skill-group-title {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--primary);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .verified-chip-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .v-chip {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 13px;
+            border-radius: var(--radius-pill);
+            font-size: 0.81rem;
+            font-weight: 600;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .v-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .cred-id-tag {
+            display: inline-block;
+            margin-top: 4px;
+            font-family: monospace;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            background: var(--surface-2);
+            padding: 2px 8px;
+            border-radius: 6px;
+            align-self: flex-start;
+        }
+
         @media (max-width: 820px) {
-            .exp-card {
+            .exp-card,
+            .skills-matrix {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 14px;
+            }
+
+            .exp-card {
                 padding: 22px 20px;
             }
         }
@@ -168,17 +239,17 @@
                 <h1>Ashish Kumar Singh</h1>
 
                 <div class="dev-subtitle">
-                    <span>Computer Science & AI Educator</span> • Generative AI Master Trainer & Practical Solution Builder
+                    <span>Senior Computer Science & AI Educator</span> • Generative AI Master Trainer & Practical Solution Builder
                 </div>
 
                 <p class="dev-summary">
-                    Driven by a deep curiosity to learn emerging technologies and build practical digital solutions that ease the daily lives of educators, students, and institutions. With a foundational tenure as <strong>CS/AI TGT at Radiant International School, Danapur, Patna (2018–2023)</strong> and ongoing leadership in public education, I train teachers on <strong>ChatGPT, Microsoft Copilot, and Google Gemini</strong> while developing free, high-impact EdTech portals and automation tools.
+                    Driven by a deep curiosity to master emerging technologies and build practical digital solutions that ease the daily lives of educators, students, and institutions. With a foundational tenure as <strong>CS/AI TGT at Radiant International School, Danapur, Patna (2018–2023)</strong> and ongoing leadership in public education, I train faculty on <strong>ChatGPT, Microsoft Copilot, Google Gemini, and Canva</strong> while developing free, high-impact EdTech portals and automation tools.
                 </p>
 
                 <div class="dev-hero-actions">
                     <a href="mailto:Ashishkumarsingh9@gmail.com" class="btn-primary">✉️ Book a Workshop / Project</a>
                     <a href="https://cs-bihar.ai.studio/" class="btn-outline" target="_blank" rel="noopener">🚀 Explore CS Bihar Portal</a>
-                    <a href="https://www.credly.com/users/ashishkumarsingh9/badges/credly" class="btn-outline" target="_blank" rel="noopener">🏆 Verify Badges</a>
+                    <a href="https://www.credly.com/users/ashishkumarsingh9/badges" class="btn-outline" target="_blank" rel="noopener">🏆 Credly Badges</a>
                 </div>
             </div>
         </section>
@@ -195,7 +266,7 @@
             </div>
             <div class="proof-cell">
                 <div class="proof-num">MIEE / MEEE</div>
-                <div class="proof-desc">Microsoft Elevate Educator Expert</div>
+                <div class="proof-desc">Microsoft Elevate & Canva Certified</div>
             </div>
             <div class="proof-cell">
                 <div class="proof-num">NCC ‘A’ Grade</div>
@@ -224,7 +295,7 @@
                         </p>
                         <ul class="exp-highlights">
                             <li><strong>EdTech Platform Architecture:</strong> Designed and launched <strong>CS Bihar (cs-bihar.ai.studio)</strong> for Class 9–12 Hindi-medium students and <strong>BSEB Portal Hub (bsebwala.in)</strong> for school administration.</li>
-                            <li><strong>Faculty AI Enablement:</strong> Conducting hands-on training on <strong>ChatGPT, Microsoft Copilot, and Google Gemini</strong> to simplify lesson planning, assessments, and administrative workflows.</li>
+                            <li><strong>Faculty AI & Design Enablement:</strong> Conducting hands-on training on <strong>ChatGPT, Microsoft Copilot, Google Gemini, and Canva</strong> to simplify lesson planning, visual storytelling, and administrative workflows.</li>
                         </ul>
                     </div>
                 </article>
@@ -238,11 +309,11 @@
                     <div class="exp-details">
                         <h3>Computer Science & AI Teacher (TGT)</h3>
                         <p>
-                            Delivered 5+ years of secondary Computer Science and Artificial Intelligence instruction under CBSE frameworks, integrating coding, data science, and practical lab methodologies.
+                            Delivered secondary Computer Science and Artificial Intelligence instruction under CBSE frameworks, integrating coding, data science, and practical lab methodologies.
                         </p>
                         <ul class="exp-highlights">
                             <li><strong>Organised First-Ever AI Fete:</strong> Conceptualized, organized, and mentored student innovators in the historic inaugural <strong>AI Showcase Fest (Oct 19, 2023)</strong> at Radiant International School under Intel, AI for Youth, and CBSE guidelines.</li>
-                            <li><strong>Social Media & Digital Outreach Team:</strong> Served as an active member of the school’s official social media team, curating institutional event coverage, digital campaigns, and academic highlights.</li>
+                            <li><strong>Social Media & Digital Outreach Team:</strong> Served as a core member of the school’s official social media team, managing institutional event coverage, digital campaigns, and academic highlights.</li>
                             <li><strong>Curriculum & Lab Innovation:</strong> Implemented CBSE AI curriculum modules, Python programming, and OpenCV computer vision demonstrations for school cohorts.</li>
                         </ul>
                     </div>
@@ -264,15 +335,15 @@
 
                 <ul class="pillar-list">
                     <li><strong>Generative AI Masterclasses:</strong> Practical workshops on prompt engineering, Custom GPTs, rubric generation, and classroom integration using <strong>ChatGPT, Microsoft Copilot, and Google Gemini</strong>.</li>
+                    <li><strong>Interactive Visual Pedagogy:</strong> Certified by <strong>Canva Design School</strong> in engaging students with interactive visual presentations, templates, and Canva Code.</li>
                     <li><strong>National AI Curriculum Specialist:</strong> Trained by <strong>Intel, NITI Aayog (Atal Innovation Mission), and CBSE</strong> on AI & Data Science integration in school curricula.</li>
-                    <li><strong>LMS & Digital Citizenship:</strong> Certified by <strong>CIET, NCERT</strong> in LMS-enhanced teaching-learning processes and digital safety frameworks.</li>
                 </ul>
 
                 <div class="pillar-tags">
                     <span class="p-tag">ChatGPT & Custom GPTs</span>
                     <span class="p-tag">Microsoft Copilot</span>
                     <span class="p-tag">Google Gemini</span>
-                    <span class="p-tag">NotebookLM</span>
+                    <span class="p-tag">Canva Education</span>
                     <span class="p-tag">CBSE AI Curriculum</span>
                 </div>
             </div>
@@ -300,16 +371,67 @@
                     <span class="p-tag">Google Apps Script</span>
                     <span class="p-tag">OpenCV</span>
                     <span class="p-tag">Advanced Excel</span>
-                    <span class="p-tag">Linux & Windows</span>
                 </div>
             </div>
         </section>
 
-        <!-- 5. VERIFIED CREDENTIALS & HONOURS LEDGER -->
+        <!-- 5. VERIFIED CREDLY SKILLS & TECHNICAL COMPETENCIES -->
+        <section class="portfolio-section">
+            <div class="editorial-head" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <h2>Verified Skills & Core Competencies</h2>
+                    <p>Validated skills across Google Cloud, Microsoft Education, Generative AI, and Full-Stack EdTech development.</p>
+                </div>
+                <a href="https://www.credly.com/users/ashishkumarsingh9/skills" class="doc-link-btn" target="_blank" rel="noopener">🔗 View All Verified Skills on Credly</a>
+            </div>
+
+            <div class="skills-matrix">
+                <div class="skill-group-card">
+                    <div class="skill-group-title">
+                        <span>🤖 Generative AI, Cloud & Pedagogy</span>
+                    </div>
+                    <div class="verified-chip-pool">
+                        <span class="v-chip">Generative AI</span>
+                        <span class="v-chip">Prompt Engineering</span>
+                        <span class="v-chip">Large Language Models (LLMs)</span>
+                        <span class="v-chip">Google Workspace for Education</span>
+                        <span class="v-chip">Google Cloud & Vertex AI</span>
+                        <span class="v-chip">Google AI Studio & Gemini</span>
+                        <span class="v-chip">Microsoft 365 & Copilot</span>
+                        <span class="v-chip">Canva Digital Design</span>
+                        <span class="v-chip">Curriculum Integration</span>
+                        <span class="v-chip">Instructional Design</span>
+                        <span class="v-chip">Digital Citizenship & Cyber Safety</span>
+                        <span class="v-chip">LMS Administration</span>
+                    </div>
+                </div>
+
+                <div class="skill-group-card">
+                    <div class="skill-group-title">
+                        <span>⚙️ Programming, Vision & Automation</span>
+                    </div>
+                    <div class="verified-chip-pool">
+                        <span class="v-chip">Python Programming</span>
+                        <span class="v-chip">C & C++</span>
+                        <span class="v-chip">HTML5, CSS3 & JavaScript</span>
+                        <span class="v-chip">Responsive Web Development</span>
+                        <span class="v-chip">Google Apps Script</span>
+                        <span class="v-chip">OpenCV Computer Vision</span>
+                        <span class="v-chip">Data Analysis & Visualization</span>
+                        <span class="v-chip">Advanced Microsoft Excel</span>
+                        <span class="v-chip">Workflow Automation</span>
+                        <span class="v-chip">Linux & Windows OS</span>
+                        <span class="v-chip">Technical Training & Mentorship</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. VERIFIED CREDENTIALS & HONOURS LEDGER -->
         <section class="ledger-section">
             <div class="editorial-head">
                 <h2>Certifications, Honours & Distinctions</h2>
-                <p>Official recognitions spanning educational technology, AI pedagogy, and National Cadet Corps excellence.</p>
+                <p>Official recognitions spanning educational technology, visual design, AI pedagogy, and National Cadet Corps excellence.</p>
             </div>
 
             <div class="ledger-grid">
@@ -332,15 +454,16 @@
                 </div>
 
                 <div class="ledger-item">
-                    <span class="ledger-meta">Intel • NITI Aayog (AIM) • CBSE</span>
-                    <h3>AI Curriculum Integration & Data Science</h3>
-                    <p>Certified in AI Integration in Curriculum, Data Science Exposure (2023), and Emerging Trends in Educational Technology.</p>
+                    <span class="ledger-meta">Canva Design School • Issued Nov 16, 2026[cite: 13]</span>
+                    <h3>Engage Students with Canva (Canva Certified)[cite: 13]</h3>
+                    <p>Completed certified training presented by The Canva Team on designing interactive, visually engaging learning experiences for students[cite: 13].</p>
+                    <span class="cred-id-tag">Credential ID: 1ed9ab[cite: 13]</span>
                 </div>
 
                 <div class="ledger-item">
-                    <span class="ledger-meta">CIET, NCERT • Orient Blackswan</span>
-                    <h3>LMS Pedagogy & Classroom AI Collaboration</h3>
-                    <p>Certified in LMS Teaching-Learning Processes by CIET NCERT, Digital Safety (2023), and ChatGPT as a Classroom Collaborator.</p>
+                    <span class="ledger-meta">Intel • NITI Aayog (AIM) • CBSE • CIET NCERT</span>
+                    <h3>AI Curriculum, Data Science & LMS Architecture</h3>
+                    <p>Certified in AI Curriculum Integration, Data Science Exposure (2023), CIET NCERT LMS Teaching-Learning Processes, Digital Safety, and ChatGPT Classroom Collaboration.</p>
                 </div>
 
                 <div class="ledger-item">
@@ -351,7 +474,7 @@
             </div>
         </section>
 
-        <!-- 6. FLAGSHIP EDTECH PORTAL & LIFE BEYOND CODE -->
+        <!-- 7. FLAGSHIP EDTECH PORTAL & LIFE BEYOND CODE -->
         <section class="showcase-split">
             <div class="showcase-box">
                 <span class="ledger-meta">Flagship Community EdTech Initiative</span>
