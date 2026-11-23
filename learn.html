@@ -42,13 +42,13 @@
        ============================================================ -->
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="https://bsebwala.in/" class="brand" aria-label="BSEB Portal Hub home">
+      <a href="/" class="brand" aria-label="BSEB Portal Hub home">
         <span class="mark">BB</span>
         <span class="full">BSEB Portal Hub</span>
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-        <a href="https://bsebwala.in/">Home</a>
+        <a href="/">Home</a>
         <a href="/aihub">AIHub</a>
         <a href="/letter">Letter</a>
         <a href="/fee">Fee</a>
@@ -113,7 +113,7 @@
             </div>
 
             <div class="player-actions-row">
-              <button class="btn-stage-bookmark" id="stageBookmarkBtn" onclick="toggleStageBookmark()">
+              <button class="btn-stage-bookmark" id="stageBookmarkBtn" type="button">
                 <span id="stageBookmarkIcon">&#9734;</span>
                 <span id="stageBookmarkText">Bookmark</span>
               </button>
@@ -128,7 +128,7 @@
 
         <!-- Right Stage: Course Playlist Sidebar (Shows ALL Videos in Current Course) -->
         <aside class="playlist-sidebar">
-          <div class="sidebar-header" onclick="toggleMobileSidebar()">
+          <div class="sidebar-header" id="sidebarHeaderToggle" role="button" tabindex="0" aria-expanded="false">
             <div class="sidebar-header-left">
               <h3 id="sidebarCourseHeading">Course Playlist</h3>
               <span class="sidebar-stats" id="sidebarStats">Showing video tracks</span>
@@ -258,8 +258,8 @@
         ytUrl: 'https://youtube.com/playlist?list=PLvlecwAK_9bKMuBL-t1UAcFm6sjUVzj_L',
         lessons: [
           { id: 'py-1', videoId: 'VoQsPUXWaLM', trackNo: 1, tag: 'Python', title: 'L-01: Introduction to Python Programming language', hi_title: 'पाठ 01: पायथन प्रोग्रामिंग भाषा का परिचय', desc: 'Introduction to Python interpreter, data types, and script execution.', duration: '07:59' },
-          {  id: 'py-2', videoId: 'U4Me_6uTAzU', trackNo: 2, tag: 'Python', title: 'L-02: A basic on Python Language and Install Python', hi_title: 'पाठ 02: Python भाषा की बेसिक जानकारी और Python इंस्टॉल करें', desc: 'Installing python o windows and basic intro', duration: '04:50' },
-          {  id: 'py-3', videoId: 'cUEO5rl42z0', trackNo: 3, tag: 'Python', title: 'L-03: Install Python IDE IDE Sublime Text', hi_title: 'पाठ 03: Python IDE IDE Sublime Text इंस्टॉल करें', desc: 'Introduction to sublime text and python installation', duration: '04:21' },
+          { id: 'py-2', videoId: 'U4Me_6uTAzU', trackNo: 2, tag: 'Python', title: 'L-02: Basics of Python Language and Installing Python', hi_title: 'पाठ 02: Python भाषा की बेसिक जानकारी और Python इंस्टॉल करें', desc: 'Installing Python on Windows and basic introduction', duration: '04:50' },
+          { id: 'py-3', videoId: 'cUEO5rl42z0', trackNo: 3, tag: 'Python', title: 'L-03: Install Python IDE Sublime Text', hi_title: 'पाठ 03: Python IDE Sublime Text इंस्टॉल करें', desc: 'Introduction to Sublime Text and Python installation', duration: '04:21' },
   {  id: 'py-4', videoId: 'WTJPmx1tT3k', trackNo: 4, tag: 'Python', title: 'L-04: Write Your First Programme in Python Hello World', hi_title: 'पाठ 04: Python में अपना पहला प्रोग्राम लिखें Hello World', desc: 'Learn to write first Hello World program', duration: '05:22' },
           {  id: 'py-5', videoId: 'fTDIDGXGjJg', trackNo: 5, tag: 'Python', title: 'L-05: A Basic Overview About Variables', hi_title: 'पाठ 05: वेरिएबल्स के बारे में एक बेसिक ओवरव्यू', desc: 'Variables in Python', duration: '15:02' },
           {  id: 'py-6', videoId: '2vzHj2vG2R0', trackNo: 6, tag: 'Python', title: 'L-06: What is Operators in Python', hi_title: 'पाठ 06: पायथन में ऑपरेटर्स क्या है', desc: 'Operators in Python', duration: '00:34' },
@@ -311,19 +311,19 @@
       topBar.replaceChildren();
       filterTabs.replaceChildren();
 
-      // Top Chips
       Object.keys(REVISED_COURSES).forEach(key => {
         const course = REVISED_COURSES[key];
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = `course-chip ${key === activeCourseKey ? 'active' : ''}`;
         btn.dataset.course = key;
-        btn.innerHTML = `${course.icon || '📚'} <span>${currentLang === 'hi' && course.hi_name ? course.hi_name : course.name}</span>`;
+        const label = document.createElement('span');
+        label.textContent = currentLang === 'hi' && course.hi_name ? course.hi_name : course.name;
+        btn.append(document.createTextNode((course.icon || '📚') + ' '), label);
         btn.addEventListener('click', () => switchActiveCourse(key));
         topBar.appendChild(btn);
       });
 
-      // Filter Tabs for Directory
       const allBtn = document.createElement('button');
       allBtn.type = 'button';
       allBtn.className = `tab ${currentFilter === 'all' ? 'active' : ''}`;
@@ -336,7 +336,14 @@
       bmBtn.type = 'button';
       bmBtn.className = `tab ${currentFilter === 'bookmarks' ? 'active' : ''}`;
       bmBtn.dataset.filter = 'bookmarks';
-      bmBtn.innerHTML = `&#9733; ${currentLang === 'hi' ? 'बुकमार्क' : 'Bookmarked'} (<span id="bookmarkCount">${bookmarkedIds.size}</span>)`;
+      const countSpan = document.createElement('span');
+      countSpan.id = 'bookmarkCount';
+      countSpan.textContent = String(bookmarkedIds.size);
+      bmBtn.append(
+        document.createTextNode(`★ ${currentLang === 'hi' ? 'बुकमार्क' : 'Bookmarked'} (`),
+        countSpan,
+        document.createTextNode(')')
+      );
       bmBtn.addEventListener('click', () => handleFilterTabClick('bookmarks', bmBtn));
       filterTabs.appendChild(bmBtn);
 
@@ -346,7 +353,7 @@
         btn.type = 'button';
         btn.className = `tab ${currentFilter === key ? 'active' : ''}`;
         btn.dataset.filter = key;
-        btn.innerHTML = `${course.icon || '📚'} ${currentLang === 'hi' && course.hi_name ? course.hi_name : course.name}`;
+        btn.textContent = `${course.icon || '📚'} ${currentLang === 'hi' && course.hi_name ? course.hi_name : course.name}`;
         btn.addEventListener('click', () => handleFilterTabClick(key, btn));
         filterTabs.appendChild(btn);
       });
@@ -359,14 +366,16 @@
       executeVideoSearchAndFilter();
     }
 
-    /* ============================================================
-       3. BOOKMARKS ENGINE
-       ============================================================ */
     function loadBookmarks() {
       try {
         const saved = localStorage.getItem('bseb_video_bookmarks');
-        if (saved) bookmarkedIds = new Set(JSON.parse(saved));
-      } catch (e) {
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            bookmarkedIds = new Set(parsed.filter(id => typeof id === 'string'));
+          }
+        }
+      } catch {
         bookmarkedIds = new Set();
       }
       updateBookmarkUI();
@@ -375,7 +384,9 @@
     function saveBookmarks() {
       try {
         localStorage.setItem('bseb_video_bookmarks', JSON.stringify([...bookmarkedIds]));
-      } catch (e) {}
+      } catch {
+        // Ignore storage errors
+      }
       updateBookmarkUI();
     }
 
@@ -397,7 +408,7 @@
 
     function updateBookmarkUI() {
       const countEl = $('bookmarkCount');
-      if (countEl) countEl.textContent = bookmarkedIds.size;
+      if (countEl) countEl.textContent = String(bookmarkedIds.size);
       if (!activeLesson) return;
 
       const isBookmarked = bookmarkedIds.has(activeLesson.id);
@@ -405,27 +416,19 @@
       const icon = $('stageBookmarkIcon');
       const text = $('stageBookmarkText');
 
-      if (isBookmarked) {
-        btn.classList.add('bookmarked');
-        icon.innerHTML = '&#9733;';
-        text.textContent = currentLang === 'hi' ? 'बुकमार्क किया गया' : 'Bookmarked';
-      } else {
-        btn.classList.remove('bookmarked');
-        icon.innerHTML = '&#9734;';
-        text.textContent = currentLang === 'hi' ? 'बुकमार्क करें' : 'Bookmark';
-      }
+      btn.classList.toggle('bookmarked', isBookmarked);
+      icon.textContent = isBookmarked ? '★' : '☆';
+      text.textContent = isBookmarked
+        ? (currentLang === 'hi' ? 'बुकमार्क किया गया' : 'Bookmarked')
+        : (currentLang === 'hi' ? 'बुकमार्क करें' : 'Bookmark');
     }
 
-    /* ============================================================
-       4. ACTIVE COURSE & VIDEO STAGE CONTROLLER
-       ============================================================ */
     function switchActiveCourse(courseKey) {
       if (!REVISED_COURSES[courseKey]) return;
       activeCourseKey = courseKey;
       const course = REVISED_COURSES[courseKey];
       activeLesson = course.lessons[0];
 
-      // Update Carousel Active Status
       document.querySelectorAll('#courseSelectionBar .course-chip').forEach(chip => {
         chip.classList.toggle('active', chip.dataset.course === courseKey);
       });
@@ -443,11 +446,11 @@
       $('currentVideoTitle').textContent = isHi && lesson.hi_title ? lesson.hi_title : lesson.title;
       $('currentVideoDesc').textContent = lesson.desc;
       $('stageTopicBadge').textContent = lesson.tag;
-      $('openYouTubeAppBtn').href = `https://www.youtube.com/watch?v=${lesson.videoId}&list=${course.playlistId}`;
+      $('openYouTubeAppBtn').href = `https://www.youtube.com/watch?v=${encodeURIComponent(lesson.videoId)}&list=${encodeURIComponent(course.playlistId)}`;
 
       const iframe = $('mainVideoPlayer');
       iframe.title = lesson.title;
-      iframe.src = `https://www.youtube.com/embed/${lesson.videoId}?list=${course.playlistId}&rel=0&playsinline=1${shouldAutoplay ? '&autoplay=1' : ''}`;
+      iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(lesson.videoId)}?list=${encodeURIComponent(course.playlistId)}&rel=0&playsinline=1${shouldAutoplay ? '&autoplay=1' : ''}`;
 
       updateBookmarkUI();
       renderSidebarPlaylist();
@@ -457,9 +460,6 @@
       }
     }
 
-    /* ============================================================
-       5. RIGHT-SIDE PLAYLIST SIDEBAR
-       ============================================================ */
     function renderSidebarPlaylist() {
       const container = $('sidebarPlaylistContainer');
       container.replaceChildren();
@@ -473,6 +473,7 @@
       $('sidebarCourseHeading').textContent = `${courseName} Playlist`;
       $('sidebarStats').textContent = `${course.lessons.length} ${isHi ? 'वीडियो उपलब्ध हैं' : 'Lessons in Course'}`;
 
+      const fragment = document.createDocumentFragment();
       course.lessons.forEach((lesson, index) => {
         const isActive = activeLesson && (lesson.id === activeLesson.id);
         const isBookmarked = bookmarkedIds.has(lesson.id);
@@ -480,38 +481,56 @@
 
         const row = document.createElement('div');
         row.className = `playlist-row ${isActive ? 'active' : ''}`;
-        row.onclick = () => loadLessonToStage(lesson, true);
+        row.addEventListener('click', () => loadLessonToStage(lesson, true));
 
-        row.innerHTML = `
-          <div class="row-index">${isActive ? '&#9654;' : (index + 1)}</div>
-          <div class="row-thumb">
-            <img src="https://img.youtube.com/vi/${lesson.videoId}/mqdefault.jpg" alt="${displayTitle}" loading="lazy">
-          </div>
-          <div class="row-info">
-            <span class="row-topic-pill">${lesson.tag} • ${lesson.duration}</span>
-            <div class="row-title">${displayTitle}</div>
-          </div>
-          <button type="button" class="row-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
-                  title="${isBookmarked ? 'Remove Bookmark' : 'Save Bookmark'}" 
-                  onclick="toggleBookmark('${lesson.id}', event)">
-            ${isBookmarked ? '&#9733;' : '&#9734;'}
-          </button>
-        `;
-        container.appendChild(row);
+        const idxEl = document.createElement('div');
+        idxEl.className = 'row-index';
+        idxEl.textContent = isActive ? '▶' : String(index + 1);
+
+        const thumbWrap = document.createElement('div');
+        thumbWrap.className = 'row-thumb';
+        const img = document.createElement('img');
+        img.src = `https://img.youtube.com/vi/${encodeURIComponent(lesson.videoId)}/mqdefault.jpg`;
+        img.alt = displayTitle;
+        img.loading = 'lazy';
+        img.referrerPolicy = 'no-referrer';
+        thumbWrap.appendChild(img);
+
+        const info = document.createElement('div');
+        info.className = 'row-info';
+        const topic = document.createElement('span');
+        topic.className = 'row-topic-pill';
+        topic.textContent = `${lesson.tag} • ${lesson.duration}`;
+        const titleEl = document.createElement('div');
+        titleEl.className = 'row-title';
+        titleEl.textContent = displayTitle;
+        info.append(topic, titleEl);
+
+        const bmBtn = document.createElement('button');
+        bmBtn.type = 'button';
+        bmBtn.className = `row-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`;
+        bmBtn.title = isBookmarked ? 'Remove Bookmark' : 'Save Bookmark';
+        bmBtn.setAttribute('aria-label', bmBtn.title);
+        bmBtn.textContent = isBookmarked ? '★' : '☆';
+        bmBtn.addEventListener('click', (e) => toggleBookmark(lesson.id, e));
+
+        row.append(idxEl, thumbWrap, info, bmBtn);
+        fragment.appendChild(row);
       });
+
+      container.appendChild(fragment);
     }
 
     function toggleMobileSidebar() {
       if (window.innerWidth > 920) return;
       const scrollArea = $('sidebarPlaylistContainer');
       const indicator = $('sidebarIndicator');
+      const header = $('sidebarHeaderToggle');
       const isOpen = scrollArea.classList.toggle('expanded');
-      indicator.innerHTML = isOpen ? '&#9650;' : '&#9660;';
+      indicator.textContent = isOpen ? '▲' : '▼';
+      if (header) header.setAttribute('aria-expanded', String(isOpen));
     }
 
-    /* ============================================================
-       6. DIRECTORY VAULT (BOTTOM CARDS GRID)
-       ============================================================ */
     function getAllLessonsFlat() {
       const all = [];
       Object.keys(REVISED_COURSES).forEach(key => {
@@ -529,13 +548,14 @@
       if (!items.length) {
         const empty = document.createElement('div');
         empty.className = 'empty-notice';
-        empty.textContent = currentLang === 'hi' 
-          ? (currentFilter === 'bookmarks' ? 'कोई बुकमार्क किया गया वीडियो नहीं मिला।' : 'आपकी खोज से कोई वीडियो नहीं मिला।') 
+        empty.textContent = currentLang === 'hi'
+          ? (currentFilter === 'bookmarks' ? 'कोई बुकमार्क किया गया वीडियो नहीं मिला।' : 'आपकी खोज से कोई वीडियो नहीं मिला।')
           : (currentFilter === 'bookmarks' ? 'No bookmarked lessons yet. Tap the star to save one.' : 'No lessons match your search.');
         grid.appendChild(empty);
         return;
       }
 
+      const fragment = document.createDocumentFragment();
       items.forEach(lesson => {
         const isBookmarked = bookmarkedIds.has(lesson.id);
         const displayTitle = currentLang === 'hi' && lesson.hi_title ? lesson.hi_title : lesson.title;
@@ -562,28 +582,29 @@
         const bmBtn = document.createElement('button');
         bmBtn.type = 'button';
         bmBtn.className = `card-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`;
-        bmBtn.innerHTML = isBookmarked ? '&#9733;' : '&#9734;';
+        bmBtn.textContent = isBookmarked ? '★' : '☆';
         bmBtn.title = isBookmarked ? 'Remove bookmark' : 'Bookmark this video';
-        bmBtn.onclick = (e) => toggleBookmark(lesson.id, e);
+        bmBtn.setAttribute('aria-label', bmBtn.title);
+        bmBtn.addEventListener('click', (e) => toggleBookmark(lesson.id, e));
 
         top.append(topLeft, bmBtn);
 
-        // Thumbnail Preview Container
         const thumbBox = document.createElement('div');
         thumbBox.className = 'card-thumb-preview';
-        thumbBox.onclick = () => {
+        thumbBox.addEventListener('click', () => {
           activeCourseKey = lesson.courseKey;
           loadLessonToStage(lesson, true);
-        };
-        
+        });
+
         const thumbImg = document.createElement('img');
-        thumbImg.src = `https://img.youtube.com/vi/${lesson.videoId}/mqdefault.jpg`;
+        thumbImg.src = `https://img.youtube.com/vi/${encodeURIComponent(lesson.videoId)}/mqdefault.jpg`;
         thumbImg.alt = displayTitle;
         thumbImg.loading = 'lazy';
+        thumbImg.referrerPolicy = 'no-referrer';
 
         const playOverlay = document.createElement('div');
         playOverlay.className = 'thumb-play-overlay';
-        playOverlay.innerHTML = '&#9654;';
+        playOverlay.textContent = '▶';
 
         thumbBox.append(thumbImg, playOverlay);
 
@@ -606,22 +627,24 @@
         playBtn.type = 'button';
         playBtn.className = 'btn-action btn-stream';
         playBtn.textContent = currentLang === 'hi' ? '▶ ऊपर चलाएँ' : '▶ Play on Stage';
-        playBtn.onclick = () => {
+        playBtn.addEventListener('click', () => {
           activeCourseKey = lesson.courseKey;
           loadLessonToStage(lesson, true);
-        };
+        });
 
         const link = document.createElement('a');
         link.className = 'btn-action btn-redirect';
-        link.href = `https://www.youtube.com/watch?v=${lesson.videoId}&list=${lesson.playlistId}`;
+        link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(lesson.videoId)}&list=${encodeURIComponent(lesson.playlistId)}`;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.textContent = currentLang === 'hi' ? '↗ YouTube पर' : '↗ On YouTube';
 
         actions.append(playBtn, link);
         card.append(top, thumbBox, title, desc, meta, actions);
-        grid.appendChild(card);
+        fragment.appendChild(card);
       });
+
+      grid.appendChild(fragment);
     }
 
     function executeVideoSearchAndFilter() {
@@ -642,9 +665,6 @@
       renderVideoGrid(filtered);
     }
 
-    /* ============================================================
-       7. BILINGUAL LANGUAGE ENGINE (EN / HI)
-       ============================================================ */
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
       $('langToggleBtn').textContent = currentLang === 'hi' ? 'English' : 'हिंदी';
@@ -652,7 +672,7 @@
       $('heroSubtitle').textContent = currentLang === 'hi' ? 'वीडियो देखें, दाईं ओर प्लेलिस्ट से अध्याय चुनें और पसंदीदा वीडियो बुकमार्क करें।' : 'Watch lessons with the interactive side-playlist or bookmark your favorites for quick access.';
       $('nowPlayingTag').textContent = currentLang === 'hi' ? 'अभी चल रहा है' : 'NOW PLAYING';
       $('openYouTubeLabel').textContent = currentLang === 'hi' ? 'यूट्यूब' : 'YouTube';
-      $('directoryTitle').innerHTML = currentLang === 'hi' ? '&#128250; वीडियो लाइब्रेरी एवं कोर्सेज' : '&#128250; Video Courses &amp; Library';
+      $('directoryTitle').textContent = currentLang === 'hi' ? '📺 वीडियो लाइब्रेरी एवं कोर्सेज' : '📺 Video Courses & Library';
       $('directorySubtitle').textContent = currentLang === 'hi' ? 'कोई भी अध्याय चुनें या बुकमार्क के आधार पर फ़िल्टर करें।' : 'Choose any lesson or filter by saved bookmarks.';
       $('videoSearchInput').placeholder = currentLang === 'hi' ? 'पाठ या विषय खोजें…' : 'Search lessons, topics…';
 
@@ -662,56 +682,35 @@
       executeVideoSearchAndFilter();
     }
 
-    /* ============================================================
-       8. THEME & INITIALIZATION RUNTIME
-       ============================================================ */
-    function initTheme() {
-      const root = document.documentElement;
-      let saved = null;
-      try { saved = localStorage.getItem('bseb-hub-theme'); } catch (error) {}
-      const initial = saved === 'dark' || saved === 'light' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      applyTheme(initial);
-
-      $('themeToggle').addEventListener('click', () => {
-        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-        applyTheme(next);
-        try { localStorage.setItem('bseb-hub-theme', next); } catch (error) {}
-      });
-
-      function applyTheme(theme) {
-        root.dataset.theme = theme;
-        $('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
-        $('themeToggle').setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      initTheme();
       loadBookmarks();
 
-      $('copyrightYear').textContent = new Date().getFullYear();
+      $('copyrightYear').textContent = String(new Date().getFullYear());
       $('langToggleBtn').addEventListener('click', toggleLanguage);
-      $('videoSearchInput').addEventListener('input', executeVideoSearchAndFilter);
+      $('stageBookmarkBtn').addEventListener('click', toggleStageBookmark);
 
-      $('menuToggle').addEventListener('click', () => {
-        const nav = $('mainNav');
-        const open = nav.classList.toggle('open');
-        $('menuToggle').textContent = open ? '✕' : '☰';
-        $('menuToggle').setAttribute('aria-expanded', String(open));
-        $('menuToggle').setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      });
+      const sidebarToggle = $('sidebarHeaderToggle');
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', toggleMobileSidebar);
+        sidebarToggle.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleMobileSidebar();
+          }
+        });
+      }
 
-      // 1. Calculate today's featured rotating course (24-hour cycle)
-      const dailyCourseKey = getDailyRotatingCourseKey();
-      activeCourseKey = dailyCourseKey;
+      const debouncedSearch = window.BSEBCommon
+        ? window.BSEBCommon.debounce(executeVideoSearchAndFilter, 120)
+        : executeVideoSearchAndFilter;
+      $('videoSearchInput').addEventListener('input', debouncedSearch);
 
-      // 2. Build buttons & tabs dynamically
+      activeCourseKey = getDailyRotatingCourseKey();
       buildDynamicNavBars();
-
-      // 3. Initialize stage with today's featured playlist
       switchActiveCourse(activeCourseKey);
       executeVideoSearchAndFilter();
     });
   </script>
+  <script src="/js/site-common.js" defer></script>
 </body>
 </html>

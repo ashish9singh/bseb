@@ -20,93 +20,57 @@
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Layout and Wrapping Guards -->
-    <style>
-      .news-filters {
-          display: flex !important;
-          flex-wrap: wrap !important;
-          justify-content: center !important;
-          gap: 8px !important;
-          overflow-x: visible !important;
-          padding: 10px 5px 20px !important;
-      }
-      .news-chip {
-          flex: 0 1 auto;
-          white-space: nowrap;
-      }
-      .news-card {
-          box-sizing: border-box !important;
-          width: 100% !important;
-          overflow: hidden !important;
-      }
-      .news-card h2 {
-          word-break: break-word !important;
-          overflow-wrap: break-word !important;
-          white-space: normal !important;
-      }
-      .takeaways-wrapper, .takeaways-list, .takeaways-list li {
-          word-break: break-word !important;
-          overflow-wrap: break-word !important;
-          white-space: normal !important;
-      }
-      .card-actions-row {
-          flex-wrap: wrap !important;
-          gap: 8px !important;
-      }
-    </style>
 </head>
 <body>
 
     <!-- Header Navigation with Shared Menu & Theme Toggle -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="https://bsebwala.in/" class="brand">
+            <a href="/" class="brand">
                 <div class="mark">BB</div>
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
             <!-- Shared Portal Navigation Menu -->
-            <nav class="main-nav">
-                <a href="https://bsebwala.in/">Home</a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="/">Home</a>
                 <a href="/aihub">AIHub</a>
                 <a href="/letter">Letter</a>
                 <a href="/fee">Fee</a>
-                <a href="/news" class="active">News</a>
+                <a href="/news" class="active" aria-current="page">News</a>
                 <a href="/learn">Videos</a>
                 <a href="/about">About</a>
                 <a href="/contact">Contact</a>
             </nav>
 
             <div class="header-actions">
-                <!-- Added Language Toggle Button at Top -->
-                <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">हिंदी में पढ़ें</button>
-                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+                <button class="lang-btn" id="langToggleBtn" type="button">हिंदी में पढ़ें</button>
+                <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open Menu" aria-expanded="false">☰</button>
             </div>
-            
         </div>
     </header>
 
     <main class="wrap">
         <div class="page-header">
-            <h1 id="ui-title">Live Updates & News</h1>
+            <h1 id="ui-title">Live Updates &amp; News</h1>
             <p id="ui-subtitle">The latest filtered announcements, results, and notices strictly for Bihar Board students.</p>
         </div>
 
         <!-- Categorized Quick-Filter Chips -->
         <div class="news-filters" id="categoryChips">
-            <button class="news-chip active" data-cat="all" onclick="filterCategory('all')">ALL (सभी)</button>
-            <button class="news-chip" data-cat="secondary" onclick="filterCategory('secondary')">CLASS 9/10</button>
-            <button class="news-chip" data-cat="senior" onclick="filterCategory('senior')">CLASS 11/12</button>
-            <button class="news-chip" data-cat="bed_deled" onclick="filterCategory('bed_deled')">D.El.Ed/B.Ed</button>
-            <button class="news-chip" data-cat="stet_tre" onclick="filterCategory('stet_tre')">STET/TRE</button>
-            <button class="news-chip" data-cat="teachers" onclick="filterCategory('teachers')">TEACHERS</button>
-            <button class="news-chip" data-cat="scholarship" onclick="filterCategory('scholarship')">SCHOLARSHIP</button>
+            <button class="news-chip active" type="button" data-cat="all">ALL (सभी)</button>
+            <button class="news-chip" type="button" data-cat="secondary">CLASS 9/10</button>
+            <button class="news-chip" type="button" data-cat="senior">CLASS 11/12</button>
+            <button class="news-chip" type="button" data-cat="bed_deled">D.El.Ed/B.Ed</button>
+            <button class="news-chip" type="button" data-cat="stet_tre">STET/TRE</button>
+            <button class="news-chip" type="button" data-cat="teachers">TEACHERS</button>
+            <button class="news-chip" type="button" data-cat="scholarship">SCHOLARSHIP</button>
         </div>
         
         <!-- News Cards Grid -->
@@ -127,380 +91,449 @@
         </div>
     </footer>
 
+    <script src="/js/site-common.js" defer></script>
     <script>
-        let currentLang = 'en'; 
-        let allArticles = []; 
+      document.addEventListener('DOMContentLoaded', function initNewsPage() {
+        'use strict';
+
+        let currentLang = 'en';
+        let allArticles = [];
         let currentCategory = 'all';
-        let showOlder = false; 
-        
+        let showOlder = false;
+        const translationCache = new Map();
+
         const UI = {
-            hi: {
-                title: "लाइव अपडेट और समाचार",
-                subtitle: "बिहार बोर्ड के छात्रों और शिक्षकों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।",
-                offline: "नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं।",
-                empty: "इस श्रेणी में अभी कोई समाचार उपलब्ध नहीं है।",
-                readMore: "पूरी खबर पढ़ें →",
-                btnText: "Read in English",
-                refresh: "समाचार फ़ीड स्वतः ताज़ा हुआ:",
-                loadMore: "पुराने समाचार लोड करें (+30 दिन)",
-                takeaways: "मुख्य बिंदु (Key Takeaways):",
-                shareText: "शेयर करें",
-                readTime: "30 सेकंड पठन"
-            },
-            en: {
-                title: "Live Updates & News",
-                subtitle: "The latest filtered announcements, results, and notices strictly for Bihar Board students.",
-                offline: "Displaying cached offline news due to network lag.",
-                empty: "No news found in this category.",
-                readMore: "Read Full Article →",
-                btnText: "हिंदी में पढ़ें",
-                refresh: "News feed auto-refreshed at",
-                loadMore: "Load Older News (> 30 Days)",
-                takeaways: "Key Takeaways:",
-                shareText: "Share",
-                readTime: "30 sec read"
-            }
+          hi: {
+            title: 'लाइव अपडेट और समाचार',
+            subtitle: 'बिहार बोर्ड के छात्रों और शिक्षकों के लिए नवीनतम घोषणाएं, परिणाम और सूचनाएं।',
+            offline: 'नेटवर्क समस्या के कारण कैश्ड ऑफ़लाइन समाचार प्रदर्शित किए जा रहे हैं।',
+            empty: 'इस श्रेणी में अभी कोई समाचार उपलब्ध नहीं है।',
+            readMore: 'पूरी खबर पढ़ें →',
+            btnText: 'Read in English',
+            refresh: 'समाचार फ़ीड स्वतः ताज़ा हुआ:',
+            loadMore: 'पुराने समाचार लोड करें (+30 दिन)',
+            takeaways: 'मुख्य बिंदु (Key Takeaways):',
+            shareText: 'शेयर करें',
+            readTime: '30 सेकंड पठन',
+            translating: 'अनुवाद किया जा रहा है… (Translating)',
+          },
+          en: {
+            title: 'Live Updates & News',
+            subtitle: 'The latest filtered announcements, results, and notices strictly for Bihar Board students.',
+            offline: 'Displaying cached offline news due to network lag.',
+            empty: 'No news found in this category.',
+            readMore: 'Read Full Article →',
+            btnText: 'हिंदी में पढ़ें',
+            refresh: 'News feed auto-refreshed at',
+            loadMore: 'Load Older News (> 30 Days)',
+            takeaways: 'Key Takeaways:',
+            shareText: 'Share',
+            readTime: '30 sec read',
+            translating: 'Translating…',
+          },
         };
 
         const FALLBACK_STORIES = [
-            {
-                title: "Bihar DElEd Answer Key 2026 Out @bsebdeled.com, Steps to Download Official PDF",
-                hi_title: "Bihar DElEd Answer Key 2026 आउट @bsebdeled.com, आधिकारिक PDF डाउनलोड करने के चरण",
-                summary: "The Bihar School Examination Board (BSEB) has officially released the DElEd Answer Key. Candidates can file online objections through the official portal.",
-                hi_summary: "बिहार विद्यालय परीक्षा समिति (BSEB) ने आधिकारिक तौर पर DElEd आंसर की जारी कर दी है। अभ्यर्थी आधिकारिक पोर्टल पर ऑनलाइन आपत्ति दर्ज कर सकते हैं।",
-                date: "2026-10-03T11:40:00Z", 
-                sourceName: "ADDA247",
-                hi_source: "ADDA247",
-                url: "https://bsebdeled.com"
-            }
+          {
+            title: 'Bihar DElEd Answer Key 2026 Out @bsebdeled.com, Steps to Download Official PDF',
+            hi_title: 'Bihar DElEd Answer Key 2026 आउट @bsebdeled.com, आधिकारिक PDF डाउनलोड करने के चरण',
+            summary: 'The Bihar School Examination Board (BSEB) has officially released the DElEd Answer Key. Candidates can file online objections through the official portal.',
+            hi_summary: 'बिहार विद्यालय परीक्षा समिति (BSEB) ने आधिकारिक तौर पर DElEd आंसर की जारी कर दी है। अभ्यर्थी आधिकारिक पोर्टल पर ऑनलाइन आपत्ति दर्ज कर सकते हैं।',
+            date: '2026-10-03T11:40:00Z',
+            sourceName: 'ADDA247',
+            hi_source: 'ADDA247',
+            url: 'https://bsebdeled.com',
+          },
         ];
 
-        // Theme Toggle Engine
-        (function themeModule(){
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const STORAGE_KEY = 'bseb-hub-theme';
-
-            function apply(theme){
-                if (theme === 'dark' || theme === 'light'){
-                    root.setAttribute('data-theme', theme);
-                } else {
-                    root.removeAttribute('data-theme');
-                }
-                const isDark = (root.getAttribute('data-theme') === 'dark' ||
-                    (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
-                btn.textContent = isDark ? '☀️' : '🌙';
-            }
-
-            let saved = null;
-            try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
-            apply(saved);
-
-            btn.addEventListener('click', function(){
-                const current = root.getAttribute('data-theme') ||
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                const next = current === 'dark' ? 'light' : 'dark';
-                apply(next);
-                try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
-            });
-        })();
+        function safeUrl(raw) {
+          if (window.BSEBCommon && typeof window.BSEBCommon.safeHttpUrl === 'function') {
+            return window.BSEBCommon.safeHttpUrl(raw, false);
+          }
+          try {
+            const parsed = new URL(raw);
+            return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? parsed.href : null;
+          } catch {
+            return null;
+          }
+        }
 
         function decodeHTML(html) {
-            if (!html) return "";
-            try {
-                const parser = new DOMParser();
-                let doc = parser.parseFromString(html, "text/html");
-                let text = doc.body.textContent || "";
-                if (text.includes("&")) {
-                    doc = parser.parseFromString(text, "text/html");
-                    text = doc.body.textContent || text;
-                }
-                return text.replace(/&nbsp;/gi, " ").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
-            } catch (e) {
-                return html.replace(/&nbsp;/gi, " ").trim();
+          if (!html) return '';
+          try {
+            const parser = new DOMParser();
+            let doc = parser.parseFromString(String(html), 'text/html');
+            let text = doc.body.textContent || '';
+            if (text.includes('&')) {
+              doc = parser.parseFromString(text, 'text/html');
+              text = doc.body.textContent || text;
             }
+            return text.replace(/&nbsp;/gi, ' ').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+          } catch {
+            return String(html).replace(/&nbsp;/gi, ' ').trim();
+          }
         }
 
         function cleanNewsTitle(title, sourceName) {
-            let cleaned = decodeHTML(title);
-            if (sourceName) {
-                const escapedSource = sourceName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const regex = new RegExp(`(\\s*[-–|]\\s*|\\s+)${escapedSource}$`, "i");
-                cleaned = cleaned.replace(regex, "").trim();
-            }
-            return cleaned;
+          let cleaned = decodeHTML(title);
+          if (sourceName) {
+            const escapedSource = sourceName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(\\s*[-–|]\\s*|\\s+)${escapedSource}$`, 'i');
+            cleaned = cleaned.replace(regex, '').trim();
+          }
+          return cleaned;
         }
 
         async function translateText(text) {
-            if (!text) return "";
-            try {
-                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(text)}`;
-                const res = await fetch(url);
-                const data = await res.json();
-                return data[0].map(x => x[0]).join('');
-            } catch(e) {
-                return text;
+          if (!text) return '';
+          if (translationCache.has(text)) return translationCache.get(text);
+
+          try {
+            const stored = sessionStorage.getItem('bseb_tr_' + text.slice(0, 80));
+            if (stored) {
+              translationCache.set(text, stored);
+              return stored;
             }
+          } catch {
+            // Ignore storage errors
+          }
+
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 5000);
+          try {
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(text)}`;
+            const res = await fetch(url, { signal: controller.signal });
+            if (!res.ok) return text;
+            const data = await res.json();
+            const translated = Array.isArray(data && data[0])
+              ? data[0].map((x) => (Array.isArray(x) ? x[0] : '')).join('')
+              : text;
+            translationCache.set(text, translated);
+            try {
+              sessionStorage.setItem('bseb_tr_' + text.slice(0, 80), translated);
+            } catch {
+              // Ignore quota errors
+            }
+            return translated;
+          } catch {
+            return text;
+          } finally {
+            clearTimeout(timer);
+          }
         }
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'hi' ? 'en' : 'hi';
-            document.getElementById('ui-title').innerText = UI[currentLang].title;
-            document.getElementById('ui-subtitle').innerText = UI[currentLang].subtitle;
-            const langBtn = document.getElementById('langToggleBtn');
-            if (langBtn) langBtn.innerText = UI[currentLang].btnText;
-            renderNewsUI(false); 
-        }
-
-        function escapeHTML(str) {
-            if (!str) return "";
-            return str.toString().replace(/[&<>'"]/g, tag => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-            }[tag] || tag));
+        // Batched translation (max 4 concurrent requests instead of flooding the browser/API)
+        async function translateArticlesBatched(articles, batchSize = 4) {
+          for (let i = 0; i < articles.length; i += batchSize) {
+            const batch = articles.slice(i, i + batchSize);
+            await Promise.all(
+              batch.map(async (article) => {
+                if (!article.hi_title) article.hi_title = await translateText(article.title);
+                if (!article.hi_summary) article.hi_summary = await translateText(article.summary);
+                if (!article.hi_source) article.hi_source = await translateText(article.sourceName);
+              })
+            );
+          }
         }
 
         function formatDateTime(dateInput) {
-            if (!dateInput) return currentLang === 'hi' ? "हाल ही में" : "Recent";
-            const d = new Date(dateInput);
-            if (isNaN(d.getTime())) return dateInput;
+          if (!dateInput) return currentLang === 'hi' ? 'हाल ही में' : 'Recent';
+          const d = new Date(dateInput);
+          if (isNaN(d.getTime())) return String(dateInput);
 
-            const locale = currentLang === 'hi' ? 'hi-IN' : 'en-IN';
-            
-            const dateStr = new Intl.DateTimeFormat(locale, { 
-                timeZone: 'Asia/Kolkata', 
-                day: '2-digit', 
-                month: 'short', 
-                year: 'numeric' 
-            }).format(d);
-            
-            const timeStr = new Intl.DateTimeFormat(locale, { 
-                timeZone: 'Asia/Kolkata', 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                hour12: true 
-            }).format(d).toUpperCase();
+          const locale = currentLang === 'hi' ? 'hi-IN' : 'en-IN';
+          const dateStr = new Intl.DateTimeFormat(locale, {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          }).format(d);
 
-            return `${dateStr} • ${timeStr}`;
+          const timeStr = new Intl.DateTimeFormat(locale, {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+          })
+            .format(d)
+            .toUpperCase();
+
+          return `${dateStr} • ${timeStr}`;
         }
 
         function assignCategory(title, summary) {
-            const combined = (title + " " + summary).toLowerCase();
-            if (/deled|d\.el\.ed|b\.ed|bed|डीएलएड|बीएड|d\.ed/.test(combined)) return 'bed_deled';
-            if (/stet|bpsc tre|tre 1|tre 2|tre 3|tre 4|btet|ctet|एसटीईटी|टीआरई/.test(combined)) return 'stet_tre';
-            if (/teacher|shikshak|niyojit|sakshamta|transfer|वेतन|शिक्षक|नियोजित|सक्षमता|e-shikshakosh/.test(combined)) return 'teachers';
-            if (/matric|10th|9th|class 9|class 10|कक्षा 9|कक्षा 10|माध्यमिक|मैट्रिक/.test(combined)) return 'secondary';
-            if (/inter|12th|11th|class 11|class 12|कक्षा 11|कक्षा 12|इंटर|ofss/.test(combined)) return 'senior';
-            if (/scholarship|medhasoft|pms|protsahan|nmms|kanya utthan|छात्रवृत्ति|मेधासॉफ्ट|कल्याण/.test(combined)) return 'scholarship';
-            return 'general';
+          const combined = (title + ' ' + summary).toLowerCase();
+          if (/deled|d\.el\.ed|b\.ed|bed|डीएलएड|बीएड|d\.ed/.test(combined)) return 'bed_deled';
+          if (/stet|bpsc tre|tre 1|tre 2|tre 3|tre 4|btet|ctet|एसटीईटी|टीआरई/.test(combined)) return 'stet_tre';
+          if (/teacher|shikshak|niyojit|sakshamta|transfer|वेतन|शिक्षक|नियोजित|सक्षमता|e-shikshakosh/.test(combined)) return 'teachers';
+          if (/matric|10th|9th|class 9|class 10|कक्षा 9|कक्षा 10|माध्यमिक|मैट्रिक/.test(combined)) return 'secondary';
+          if (/inter|12th|11th|class 11|class 12|कक्षा 11|कक्षा 12|इंटर|ofss/.test(combined)) return 'senior';
+          if (/scholarship|medhasoft|pms|protsahan|nmms|kanya utthan|छात्रवृत्ति|मेधासॉफ्ट|कल्याण/.test(combined)) return 'scholarship';
+          return 'general';
         }
 
         function formatBulletTakeaways(summary) {
-            if (!summary) return ['Click the link below for complete details.'];
-            const sentences = summary
-                .split(/(?<=[.!?।])\s+/)
-                .map(s => s.trim())
-                .filter(s => s.length > 12);
-
-            if (sentences.length === 0) return [summary];
-            return sentences.slice(0, 2);
+          if (!summary) return ['Click the link below for complete details.'];
+          const sentences = summary
+            .split(/(?<=[.!?।])\s+/)
+            .map((s) => s.trim())
+            .filter((s) => s.length > 12);
+          return sentences.length === 0 ? [summary] : sentences.slice(0, 2);
         }
 
         function shareArticleWhatsApp(title, takeaway, url, date) {
-            const msg = `📢 *${title}*\n\n📌 *मुख्य बिंदु:*\n• ${takeaway}\n\n📅 *तारीख:* ${date}\n🔗 *पूरा विवरण:* ${url}\n\n— via https://bsebwala.in/news.html`;
-            const waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
-            window.open(waUrl, "_blank", "noopener,noreferrer");
-        }
-
-        function filterCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.news-chip').forEach(chip => {
-                chip.classList.toggle('active', chip.dataset.cat === cat);
-            });
-            renderNewsUI(false);
+          const safeLink = safeUrl(url) || 'https://bsebwala.in/news';
+          const msg = `📢 *${title}*\n\n📌 *मुख्य बिंदु:*\n• ${takeaway}\n\n📅 *तारीख:* ${date}\n🔗 *पूरा विवरण:* ${safeLink}\n\n— via https://bsebwala.in/news`;
+          const a = document.createElement('a');
+          a.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.click();
         }
 
         function sortArticlesByDate(articles) {
-            return articles.sort((a, b) => {
-                const timeA = a.date ? new Date(a.date).getTime() : 0;
-                const timeB = b.date ? new Date(b.date).getTime() : 0;
-                return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
-            });
+          return articles.sort((a, b) => {
+            const timeA = a.date ? new Date(a.date).getTime() : 0;
+            const timeB = b.date ? new Date(b.date).getTime() : 0;
+            return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
+          });
         }
 
-        window.loadOlderNews = function() {
-            showOlder = true;
-            renderNewsUI(false);
-        };
+        function showStatusBox(message, withSpinner = false) {
+          const newsContainer = document.getElementById('news-container');
+          newsContainer.replaceChildren();
+          const box = document.createElement('div');
+          box.className = 'status-container';
+          if (withSpinner) {
+            const spinner = document.createElement('div');
+            spinner.className = 'spinner';
+            box.appendChild(spinner);
+          }
+          if (message) {
+            const h2 = document.createElement('h2');
+            h2.textContent = message;
+            box.appendChild(h2);
+          }
+          newsContainer.appendChild(box);
+        }
 
         async function renderNewsUI(isOffline = false) {
-            const now = new Date();
-            const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-            
-            let filtered = showOlder ? allArticles : allArticles.filter(a => {
+          const now = new Date();
+          const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+
+          let filtered = showOlder
+            ? allArticles
+            : allArticles.filter((a) => {
                 const d = new Date(a.date);
-                return isNaN(d.getTime()) || (now - d) <= thirtyDaysMs;
-            });
-            
-            const hasOlder = !showOlder && (allArticles.length > filtered.length);
+                return isNaN(d.getTime()) || now - d <= thirtyDaysMs;
+              });
 
-            if (currentCategory !== 'all') {
-                filtered = filtered.filter(a => a.category === currentCategory);
-            }
+          const hasOlder = !showOlder && allArticles.length > filtered.length;
+          if (currentCategory !== 'all') {
+            filtered = filtered.filter((a) => a.category === currentCategory);
+          }
 
-            await renderArticles(filtered, isOffline, hasOlder);
+          await renderArticles(filtered, isOffline, hasOlder);
         }
 
         async function renderArticles(articles, isOffline = false, hasOlder = false) {
-            const newsContainer = document.getElementById("news-container");
-            const loadMoreContainer = document.getElementById("load-more-container");
-            const updatedText = document.getElementById("last-updated-text");
+          const newsContainer = document.getElementById('news-container');
+          const loadMoreContainer = document.getElementById('load-more-container');
+          const updatedText = document.getElementById('last-updated-text');
 
-            if (!articles || articles.length === 0) {
-                newsContainer.innerHTML = `<div class="status-container"><h2>${UI[currentLang].empty}</h2></div>`;
-                loadMoreContainer.innerHTML = '';
-                return;
-            }
+          if (!articles || articles.length === 0) {
+            showStatusBox(UI[currentLang].empty, false);
+            loadMoreContainer.replaceChildren();
+            return;
+          }
 
-            if (currentLang === 'hi') {
-                newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div><h2>अनुवाद किया जा रहा है... (Translating)</h2></div>`;
-                loadMoreContainer.innerHTML = '';
-                
-                await Promise.all(articles.map(async (article) => {
-                    if (!article.hi_title) article.hi_title = await translateText(article.title);
-                    if (!article.hi_summary) article.hi_summary = await translateText(article.summary);
-                    if (!article.hi_source) article.hi_source = await translateText(article.sourceName);
-                }));
-            }
+          if (currentLang === 'hi') {
+            showStatusBox(UI.hi.translating, true);
+            loadMoreContainer.replaceChildren();
+            await translateArticlesBatched(articles, 4);
+          }
 
-            let htmlContent = "";
-            articles.forEach(article => {
-                const displayTitle = currentLang === 'hi' ? article.hi_title : article.title;
-                const displaySummary = currentLang === 'hi' ? article.hi_summary : article.summary;
-                const displaySource = currentLang === 'hi' ? article.hi_source : article.sourceName;
-                const displayDateTime = formatDateTime(article.date);
-                const bullets = formatBulletTakeaways(displaySummary);
-                const firstTakeaway = bullets[0] || displaySummary;
+          // Pure DOM creation (Zero innerHTML / inline onclick — prevents API XSS)
+          const fragment = document.createDocumentFragment();
 
-                htmlContent += `
-                    <article class="news-card">
-                        <div class="card-top-tags">
-                            <span class="source-tag">${escapeHTML(displaySource)}</span>
-                            <span class="read-time-tag">⚡ ${UI[currentLang].readTime}</span>
-                        </div>
+          articles.forEach((article) => {
+            const displayTitle = currentLang === 'hi' ? article.hi_title : article.title;
+            const displaySummary = currentLang === 'hi' ? article.hi_summary : article.summary;
+            const displaySource = currentLang === 'hi' ? article.hi_source : article.sourceName;
+            const displayDateTime = formatDateTime(article.date);
+            const bullets = formatBulletTakeaways(displaySummary);
+            const firstTakeaway = bullets[0] || displaySummary;
+            const validatedArticleUrl = safeUrl(article.url);
 
-                        <h2>${escapeHTML(displayTitle)}</h2>
+            const card = document.createElement('article');
+            card.className = 'news-card';
 
-                        <!-- Bullet Takeaways -->
-                        <div class="takeaways-wrapper">
-                            <div class="takeaways-label">📌 ${UI[currentLang].takeaways}</div>
-                            <ul class="takeaways-list">
-                                ${bullets.map(b => `<li>${escapeHTML(b)}</li>`).join('')}
-                            </ul>
-                        </div>
-                        
-                        <div class="card-meta">
-                            <span>🕒 ${displayDateTime}</span>
-                        </div>
-                        
-                        <div class="card-actions-row">
-                            <a href="${encodeURI(article.url || '#')}" class="read-more" target="_blank" rel="noopener noreferrer">
-                                ${UI[currentLang].readMore}
-                            </a>
+            const topTags = document.createElement('div');
+            topTags.className = 'card-top-tags';
 
-                            <!-- 1-Tap WhatsApp Share Button -->
-                            <button type="button" class="whatsapp-share-btn" 
-                                onclick="shareArticleWhatsApp('${escapeHTML(displayTitle.replace(/'/g, "\\'"))}', '${escapeHTML(firstTakeaway.replace(/'/g, "\\'"))}', '${encodeURI(article.url || '')}', '${displayDateTime}')">
-                                <span>🟢 ${UI[currentLang].shareText}</span>
-                            </button>
-                        </div>
-                    </article>
-                `;
+            const sourceTag = document.createElement('span');
+            sourceTag.className = 'source-tag';
+            sourceTag.textContent = displaySource || 'News';
+
+            const readTimeTag = document.createElement('span');
+            readTimeTag.className = 'read-time-tag';
+            readTimeTag.textContent = `⚡ ${UI[currentLang].readTime}`;
+
+            topTags.append(sourceTag, readTimeTag);
+
+            const heading = document.createElement('h2');
+            heading.textContent = displayTitle || 'News Update';
+
+            const takeawaysWrap = document.createElement('div');
+            takeawaysWrap.className = 'takeaways-wrapper';
+
+            const takeawaysLabel = document.createElement('div');
+            takeawaysLabel.className = 'takeaways-label';
+            takeawaysLabel.textContent = `📌 ${UI[currentLang].takeaways}`;
+
+            const ul = document.createElement('ul');
+            ul.className = 'takeaways-list';
+            bullets.forEach((b) => {
+              const li = document.createElement('li');
+              li.textContent = b;
+              ul.appendChild(li);
             });
+            takeawaysWrap.append(takeawaysLabel, ul);
 
-            newsContainer.innerHTML = htmlContent;
+            const meta = document.createElement('div');
+            meta.className = 'card-meta';
+            const metaSpan = document.createElement('span');
+            metaSpan.textContent = `🕒 ${displayDateTime}`;
+            meta.appendChild(metaSpan);
 
-            if (hasOlder) {
-                loadMoreContainer.innerHTML = `<button class="lang-btn" style="padding: 10px 24px; font-size: 1rem;" onclick="loadOlderNews()">${UI[currentLang].loadMore}</button>`;
-            } else {
-                loadMoreContainer.innerHTML = '';
+            const actionsRow = document.createElement('div');
+            actionsRow.className = 'card-actions-row';
+
+            if (validatedArticleUrl) {
+              const readLink = document.createElement('a');
+              readLink.className = 'read-more';
+              readLink.href = validatedArticleUrl;
+              readLink.target = '_blank';
+              readLink.rel = 'noopener noreferrer';
+              readLink.textContent = UI[currentLang].readMore;
+              actionsRow.appendChild(readLink);
             }
 
-            if (isOffline) {
-                updatedText.innerText = UI[currentLang].offline;
-            } else {
-                const time = new Date().toLocaleTimeString(currentLang === 'hi' ? 'hi-IN' : 'en-US');
-                updatedText.innerText = `${UI[currentLang].refresh} ${time}`;
-            }
+            const shareBtn = document.createElement('button');
+            shareBtn.type = 'button';
+            shareBtn.className = 'whatsapp-share-btn';
+            const shareSpan = document.createElement('span');
+            shareSpan.textContent = `🟢 ${UI[currentLang].shareText}`;
+            shareBtn.appendChild(shareSpan);
+            shareBtn.addEventListener('click', () => {
+              shareArticleWhatsApp(displayTitle, firstTakeaway, validatedArticleUrl, displayDateTime);
+            });
+            actionsRow.appendChild(shareBtn);
+
+            card.append(topTags, heading, takeawaysWrap, meta, actionsRow);
+            fragment.appendChild(card);
+          });
+
+          newsContainer.replaceChildren(fragment);
+
+          loadMoreContainer.replaceChildren();
+          if (hasOlder) {
+            const loadMoreBtn = document.createElement('button');
+            loadMoreBtn.type = 'button';
+            loadMoreBtn.className = 'lang-btn';
+            loadMoreBtn.style.padding = '10px 24px';
+            loadMoreBtn.style.fontSize = '1rem';
+            loadMoreBtn.textContent = UI[currentLang].loadMore;
+            loadMoreBtn.addEventListener('click', () => {
+              showOlder = true;
+              renderNewsUI(false);
+            });
+            loadMoreContainer.appendChild(loadMoreBtn);
+          }
+
+          if (isOffline) {
+            updatedText.textContent = UI[currentLang].offline;
+          } else {
+            const time = new Date().toLocaleTimeString(currentLang === 'hi' ? 'hi-IN' : 'en-US');
+            updatedText.textContent = `${UI[currentLang].refresh} ${time}`;
+          }
         }
 
         async function loadNews() {
-            const newsContainer = document.getElementById("news-container");
-            
-            if (allArticles.length === 0) {
-                newsContainer.innerHTML = `<div class="status-container"><div class="spinner"></div></div>`;
+          if (allArticles.length === 0) {
+            showStatusBox('', true);
+          }
+
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000);
+            const response = await fetch('https://bsebwala-news-api2.vercel.app/api/news', {
+              signal: controller.signal,
+            });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) throw new Error('HTTP error ' + response.status);
+            const data = await response.json();
+
+            if (data.articles && data.articles.length > 0) {
+              const parsedArticles = data.articles.map((article) => {
+                const rawSource = decodeHTML(article.source || 'News Source');
+                const rawDate = article.publishedAt || article.pubDate || article.date;
+                const titleClean = cleanNewsTitle(article.title || 'News Update', rawSource);
+                const summaryClean = decodeHTML(article.description || 'Click to read full details.');
+
+                return {
+                  title: titleClean,
+                  summary: summaryClean,
+                  sourceName: rawSource,
+                  url: safeUrl(article.url) || '',
+                  date: rawDate,
+                  category: assignCategory(titleClean, summaryClean),
+                };
+              });
+
+              allArticles = sortArticlesByDate(parsedArticles);
+              await renderNewsUI(false);
+            } else {
+              throw new Error('Empty articles array');
             }
-
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 6000);
-
-                const response = await fetch("https://bsebwala-news-api2.vercel.app/api/news", { signal: controller.signal });
-                clearTimeout(timeoutId);
-
-                if (!response.ok) throw new Error("HTTP error " + response.status);
-                const data = await response.json();
-
-                if (data.articles && data.articles.length > 0) {
-                    const parsedArticles = data.articles.map(article => {
-                        const rawSource = decodeHTML(article.source || "News Source");
-                        const rawDate = article.publishedAt || article.pubDate || article.date;
-                        const titleClean = cleanNewsTitle(article.title || "News Update", rawSource);
-                        const summaryClean = decodeHTML(article.description || "Click to read full details.");
-
-                        return {
-                            title: titleClean,
-                            summary: summaryClean,
-                            sourceName: rawSource,
-                            url: article.url || "#",
-                            date: rawDate,
-                            category: assignCategory(titleClean, summaryClean)
-                        };
-                    });
-                    
-                    allArticles = sortArticlesByDate(parsedArticles);
-                    await renderNewsUI(false);
-                } else {
-                    throw new Error("Empty articles array");
-                }
-
-            } catch (error) {
-                console.warn("API Error. Falling back to offline stories.", error);
-                allArticles = sortArticlesByDate(FALLBACK_STORIES.map(s => ({
-                    ...s,
-                    category: assignCategory(s.title, s.summary)
-                })));
-                await renderNewsUI(true);
-            }
+          } catch (error) {
+            console.warn('API Error. Falling back to offline stories.', error);
+            allArticles = sortArticlesByDate(
+              FALLBACK_STORIES.map((s) => ({
+                ...s,
+                category: assignCategory(s.title, s.summary),
+              }))
+            );
+            await renderNewsUI(true);
+          }
         }
+
+        // Bind UI listeners without inline onclick
+        const langBtn = document.getElementById('langToggleBtn');
+        if (langBtn) {
+          langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'hi' ? 'en' : 'hi';
+            document.getElementById('ui-title').textContent = UI[currentLang].title;
+            document.getElementById('ui-subtitle').textContent = UI[currentLang].subtitle;
+            langBtn.textContent = UI[currentLang].btnText;
+            renderNewsUI(false);
+          });
+        }
+
+        document.querySelectorAll('#categoryChips .news-chip').forEach((chip) => {
+          chip.addEventListener('click', () => {
+            currentCategory = chip.dataset.cat || 'all';
+            document.querySelectorAll('#categoryChips .news-chip').forEach((c) => {
+              c.classList.toggle('active', c === chip);
+            });
+            renderNewsUI(false);
+          });
+        });
 
         loadNews();
         setInterval(loadNews, 5 * 60 * 1000);
-    </script>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuBtn = document.getElementById('menuToggle');
-            const nav = document.querySelector('.main-nav');
-            
-            if (menuBtn && nav) {
-                menuBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    nav.classList.toggle('open');
-                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
-                });
-            }
-        });
+      });
     </script>
 </body>
 </html>

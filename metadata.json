@@ -1,0 +1,6 @@
+{
+  "name": "BSEB Portal Hub",
+  "description": "A fast, searchable directory of official Bihar Board (BSEB) portals, exam forms, syllabus PDFs and scholarship links.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

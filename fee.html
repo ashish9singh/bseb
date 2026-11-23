@@ -30,13 +30,13 @@
 
   <header class="site">
     <div class="wrap header-inner">
-          <a href="https://bsebwala.in/" class="brand">
+          <a href="/" class="brand">
             <div class="mark">BB</div>
             <span class="full">BSEB Portal Hub</span>
           </a>
 
       <nav class="main-nav">
-        <a href="https://bsebwala.in/">Home</a>
+        <a href="/">Home</a>
         <a href="/aihub">AIHub</a>
         <a href="/letter">Letter</a>
         <a href="/fee" class="active">Fee</a>
@@ -46,10 +46,9 @@
         <a href="/contact">Contact</a>
       </nav>
 
-            <!-- Paste this entire block right below </nav> -->
             <div class="header-actions">
-                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+                <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open Menu">☰</button>
             </div>
             
         </div>
@@ -88,21 +87,21 @@
           <p>माध्यमिक एवं उच्च माध्यमिक विद्यालयों में पुनरीक्षित शुल्क संरचना आदेश (दिनांक 21.12.2021)</p>
         </div>
       </div>
-      <a href="admission-fee-order-720-21-12-21.pdf" class="doc-link-btn" download="Bihar_Govt_School_Fee_Order_720.pdf" target="_blank" rel="noopener">
+      <a href="admission-fee-order-720-21-12-21.pdf" class="doc-link-btn" download="Bihar_Govt_School_Fee_Order_720.pdf" target="_blank" rel="noopener noreferrer">
         <span>📥 Download Official Order (PDF)</span>
       </a>
     </div>
 
     <nav class="category-nav" aria-label="Fee Sections">
-      <button class="cat-tab-btn active" data-tab="tab-admission" onclick="switchCategory('tab-admission')">
+      <button class="cat-tab-btn active" type="button" data-tab="tab-admission">
         <span>🏫 नामांकन शुल्क (Admission Fee)</span>
         <span class="cat-sub">वर्ग 9, 10, 11 एवं 12</span>
       </button>
-      <button class="cat-tab-btn" data-tab="tab-registration" onclick="switchCategory('tab-registration')">
+      <button class="cat-tab-btn" type="button" data-tab="tab-registration">
         <span>📋 पंजीयन शुल्क (Registration Fee)</span>
         <span class="cat-sub">वर्ग 9वीं एवं 11वीं</span>
       </button>
-      <button class="cat-tab-btn" data-tab="tab-examform" onclick="switchCategory('tab-examform')">
+      <button class="cat-tab-btn" type="button" data-tab="tab-examform">
         <span>✍️ परीक्षा फॉर्म शुल्क (Exam Form Fee)</span>
         <span class="cat-sub">वर्ग 10वीं एवं 12वीं</span>
       </button>
@@ -116,10 +115,10 @@
         </div>
 
         <div class="tab-selector" id="classTabs">
-          <button class="tab-btn active" data-class="9" onclick="selectClassTab('9')">कक्षा 9वीं (Admission)</button>
-          <button class="tab-btn" data-class="10" onclick="selectClassTab('10')">कक्षा 10वीं (Annual)</button>
-          <button class="tab-btn" data-class="11" onclick="selectClassTab('11')">कक्षा 11वीं (+2 1st Yr)</button>
-          <button class="tab-btn" data-class="12" onclick="selectClassTab('12')">कक्षा 12वीं (+2 2nd Yr)</button>
+          <button class="tab-btn active" type="button" data-class="9">कक्षा 9वीं (Admission)</button>
+          <button class="tab-btn" type="button" data-class="10">कक्षा 10वीं (Annual)</button>
+          <button class="tab-btn" type="button" data-class="11">कक्षा 11वीं (+2 1st Yr)</button>
+          <button class="tab-btn" type="button" data-class="12">कक्षा 12वीं (+2 2nd Yr)</button>
         </div>
 
         <div class="calc-grid">
@@ -128,14 +127,14 @@
 
             <div class="form-group" id="streamContainer" style="display: none;">
               <label for="calcStream">संकाय चुनें (Select Stream for +2):</label>
-              <select id="calcStream" class="form-select" onchange="updateCalc()">
+              <select id="calcStream" class="form-select">
                 <option value="arts_comm">कला / वाणिज्य (Arts / Commerce)</option>
                 <option value="sci_agri">विज्ञान / कृषि / व्यावसायिक (Science / Agriculture / Vocational)</option>
               </select>
             </div>
 
             <label class="check-card">
-              <input type="checkbox" id="calcScSt" onchange="updateCalc()">
+              <input type="checkbox" id="calcScSt">
               <div class="check-card-text">
                 <strong>अनुसूचित जाति / जनजाति (SC / ST Exemption)</strong>
                 कंडिका 4 के तहत शिक्षण शुल्क और विकास शुल्क 100% शून्य (माफ)।
@@ -143,7 +142,7 @@
             </label>
 
             <label class="check-card" id="sameSchoolContainer">
-              <input type="checkbox" id="calcSameSchool" onchange="updateCalc()">
+              <input type="checkbox" id="calcSameSchool">
               <div class="check-card-text" id="sameSchoolText">
                 <strong>उसी विद्यालय से 8वीं उत्तीर्ण (कक्षा 6–12 / उत्क्रमित विद्यालय)</strong>
                 उसी विद्यालय में कक्षा 9वीं में नामांकन की स्थिति में ₹50 प्रवेश शुल्क नहीं लगेगा।
@@ -189,7 +188,7 @@
       <section class="table-section">
         <div class="section-head">
           <h2>मदवार नामांकन एवं विद्यालय शुल्क तालिका (Memo 720)</h2>
-          <a href="admission-fee-order-720-21-12-21.pdf" target="_blank" rel="noopener" class="doc-link-btn">
+          <a href="admission-fee-order-720-21-12-21.pdf" target="_blank" rel="noopener noreferrer" class="doc-link-btn">
             <span>📄 Official Order PDF</span>
           </a>
         </div>
@@ -197,12 +196,12 @@
         <div class="table-toolbar">
           <div class="table-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="tableSearchInput" placeholder="मद खोजें... (e.g. प्रवेश, विद्युत, TC)" oninput="filterTable()">
+            <input type="text" id="tableSearchInput" placeholder="मद खोजें... (e.g. प्रवेश, विद्युत, TC)">
           </div>
           <div class="table-filters">
-            <button class="tbl-filter-btn active" data-fund="all" onclick="filterFund('all')">सभी कोष (All)</button>
-            <button class="tbl-filter-btn" data-fund="vikas" onclick="filterFund('vikas')">विकास कोष</button>
-            <button class="tbl-filter-btn" data-fund="chhatra" onclick="filterFund('chhatra')">छात्र कोष</button>
+            <button class="tbl-filter-btn active" type="button" data-fund="all">सभी कोष (All)</button>
+            <button class="tbl-filter-btn" type="button" data-fund="vikas">विकास कोष</button>
+            <button class="tbl-filter-btn" type="button" data-fund="chhatra">छात्र कोष</button>
           </div>
         </div>
 
@@ -337,7 +336,7 @@
 
       <div class="section-head">
         <h2>महत्वपूर्ण विभागीय निर्देश (Directives)</h2>
-        <a href="admission-fee-order-720-21-12-21.pdf" target="_blank" rel="noopener" class="doc-link-btn">
+        <a href="admission-fee-order-720-21-12-21.pdf" target="_blank" rel="noopener noreferrer" class="doc-link-btn">
           <span>📄 Circular Ref</span>
         </a>
       </div>
@@ -369,14 +368,14 @@
     <!-- TAB 2: REGISTRATION -->
     <div class="tab-content-panel" id="tab-registration">
       <div class="sub-tabs">
-        <button class="sub-tab-btn active" data-sub="sub-reg-9" onclick="switchSubTab('reg', 'sub-reg-9')">कक्षा 9वीं पंजीयन शुल्क (Class 9 Registration)</button>
-        <button class="sub-tab-btn" data-sub="sub-reg-11" onclick="switchSubTab('reg', 'sub-reg-11')">कक्षा 11वीं पंजीयन/सूचीकरण शुल्क (Class 11 Registration)</button>
+        <button class="sub-tab-btn active" type="button" data-group="reg" data-sub="sub-reg-9">कक्षा 9वीं पंजीयन शुल्क (Class 9 Registration)</button>
+        <button class="sub-tab-btn" type="button" data-group="reg" data-sub="sub-reg-11">कक्षा 11वीं पंजीयन/सूचीकरण शुल्क (Class 11 Registration)</button>
       </div>
 
       <div id="sub-reg-9" class="sub-tab-content">
         <div class="section-head">
           <h2>कक्षा 9वीं बिहार बोर्ड पंजीयन शुल्क (Class 9 Registration Fee Structure)</h2>
-          <a href="https://reg28.biharboardonline.com/" target="_blank" rel="noopener" class="doc-link-btn">
+          <a href="https://reg28.biharboardonline.com/" target="_blank" rel="noopener noreferrer" class="doc-link-btn">
             <span>📄 Official Circular (Portal)</span>
           </a>
         </div>
@@ -450,7 +449,7 @@
       <div id="sub-reg-11" class="sub-tab-content" style="display: none;">
         <div class="section-head">
           <h2>कक्षा 11वीं सूचीकरण/अनुमति शुल्क (Class 11 Registration / Permission Fee)</h2>
-          <a href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener" class="doc-link-btn">
+          <a href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener noreferrer" class="doc-link-btn">
             <span>📄 Official Notice 15 PDF</span>
           </a>
         </div>
@@ -521,14 +520,14 @@
     <!-- TAB 3: EXAM FORM -->
     <div class="tab-content-panel" id="tab-examform">
       <div class="sub-tabs">
-        <button class="sub-tab-btn active" data-sub="sub-exam-10" onclick="switchSubTab('exam', 'sub-exam-10')">कक्षा 10वीं मैट्रिक परीक्षा फॉर्म शुल्क (Matric Exam Form)</button>
-        <button class="sub-tab-btn" data-sub="sub-exam-12" onclick="switchSubTab('exam', 'sub-exam-12')">कक्षा 12वीं इंटरमीडिएट परीक्षा फॉर्म शुल्क (Inter Exam Form)</button>
+        <button class="sub-tab-btn active" type="button" data-group="exam" data-sub="sub-exam-10">कक्षा 10वीं मैट्रिक परीक्षा फॉर्म शुल्क (Matric Exam Form)</button>
+        <button class="sub-tab-btn" type="button" data-group="exam" data-sub="sub-exam-12">कक्षा 12वीं इंटरमीडिएट परीक्षा फॉर्म शुल्क (Inter Exam Form)</button>
       </div>
 
       <div id="sub-exam-10" class="sub-tab-content">
         <div class="section-head">
           <h2>कक्षा 10वीं वार्षिक माध्यमिक परीक्षा शुल्क (Class 10 Matric Exam Form Fee)</h2>
-          <a href="https://exam.biharboardonline.com/" target="_blank" rel="noopener" class="doc-link-btn">
+          <a href="https://exam.biharboardonline.com/" target="_blank" rel="noopener noreferrer" class="doc-link-btn">
             <span>📄 Official Notice 7 PDF</span>
           </a>
         </div>
@@ -612,7 +611,7 @@
       <div id="sub-exam-12" class="sub-tab-content" style="display: none;">
         <div class="section-head">
           <h2>कक्षा 12वीं इन्टरमीडिएट वार्षिक परीक्षा शुल्क (Class 12 Inter Exam Form Fee)</h2>
-          <a href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener" class="doc-link-btn">
+          <a href="https://intermediate.biharboardonline.com/" target="_blank" rel="noopener noreferrer" class="doc-link-btn">
             <span>📄 Official Notice 5 PDF</span>
           </a>
         </div>
@@ -765,248 +764,263 @@
   </footer>
   
 
+  <script src="/js/site-common.js" defer></script>
   <script>
-    (function themeModule(){
-      const root = document.documentElement;
-      const btn = document.getElementById('themeToggle');
-      const STORAGE_KEY = 'bseb-hub-theme';
+    document.addEventListener('DOMContentLoaded', function initFeePage() {
+      'use strict';
 
-      function apply(theme){
-        if (theme === 'dark' || theme === 'light'){
-          root.setAttribute('data-theme', theme);
-        } else {
-          root.removeAttribute('data-theme');
-        }
-        btn.textContent = (root.getAttribute('data-theme') === 'dark' ||
-          (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches))
-          ? '☀️' : '🌙';
+      const animFrames = new WeakMap();
+      let currentFundFilter = 'all';
+
+      function switchCategory(targetTabId) {
+        document.querySelectorAll('.cat-tab-btn').forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.tab === targetTabId);
+        });
+        document.querySelectorAll('.tab-content-panel').forEach((panel) => {
+          panel.classList.toggle('active', panel.id === targetTabId);
+        });
       }
 
-      let saved = null;
-      try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
-      apply(saved);
+      function switchSubTab(group, targetSubId) {
+        const container = group === 'reg'
+          ? document.getElementById('tab-registration')
+          : document.getElementById('tab-examform');
+        if (!container) return;
+        container.querySelectorAll('.sub-tab-btn').forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.sub === targetSubId);
+        });
+        container.querySelectorAll('.sub-tab-content').forEach((content) => {
+          content.style.display = content.id === targetSubId ? 'block' : 'none';
+        });
+      }
 
-      btn.addEventListener('click', function(){
-        const current = root.getAttribute('data-theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        const next = current === 'dark' ? 'light' : 'dark';
-        apply(next);
-        try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
-      });
-    })();
+      function selectClassTab(cls) {
+        document.querySelectorAll('#classTabs .tab-btn').forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.class === cls);
+        });
+        document.getElementById('calcClass').value = cls;
+        updateCalc();
+      }
 
-    function switchCategory(targetTabId) {
-      document.querySelectorAll('.cat-tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === targetTabId);
-      });
-      document.querySelectorAll('.tab-content-panel').forEach(panel => {
-        panel.classList.toggle('active', panel.id === targetTabId);
-      });
-    }
+      // Leak-free animation using WeakMap + requestAnimationFrame
+      function animateCount(elem, target) {
+        if (!elem) return;
+        const existingId = animFrames.get(elem);
+        if (existingId) {
+          cancelAnimationFrame(existingId);
+          animFrames.delete(elem);
+        }
 
-    function switchSubTab(group, targetSubId) {
-      const container = (group === 'reg') ? document.getElementById('tab-registration') : document.getElementById('tab-examform');
-      container.querySelectorAll('.sub-tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.sub === targetSubId);
-      });
-      container.querySelectorAll('.sub-tab-content').forEach(content => {
-        content.style.display = (content.id === targetSubId) ? 'block' : 'none';
-      });
-    }
+        const startVal = parseInt(elem.textContent.replace(/[^\d-]/g, ''), 10) || 0;
+        if (startVal === target) {
+          elem.textContent = '₹' + target;
+          return;
+        }
 
-    function selectClassTab(cls) {
-      document.querySelectorAll('#classTabs .tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.class === cls);
+        const duration = 180;
+        const startTime = performance.now();
+
+        function tick(now) {
+          const progress = Math.min(1, (now - startTime) / duration);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(startVal + (target - startVal) * eased);
+          elem.textContent = '₹' + current;
+          if (progress < 1) {
+            animFrames.set(elem, requestAnimationFrame(tick));
+          } else {
+            elem.textContent = '₹' + target;
+            animFrames.delete(elem);
+          }
+        }
+
+        animFrames.set(elem, requestAnimationFrame(tick));
+      }
+
+      function setSameSchoolCopy(container, heading, body) {
+        container.replaceChildren();
+        const strong = document.createElement('strong');
+        strong.textContent = heading;
+        container.append(strong, document.createTextNode(' ' + body));
+      }
+
+      function updateCalc() {
+        const cls = document.getElementById('calcClass').value;
+        const streamContainer = document.getElementById('streamContainer');
+        const sameSchoolContainer = document.getElementById('sameSchoolContainer');
+        const sameSchoolText = document.getElementById('sameSchoolText');
+        const sameSchoolCheckbox = document.getElementById('calcSameSchool');
+        const isScSt = document.getElementById('calcScSt').checked;
+        const stream = document.getElementById('calcStream').value;
+
+        streamContainer.style.display = (cls === '11' || cls === '12') ? 'block' : 'none';
+
+        if (cls === '9') {
+          sameSchoolContainer.style.display = 'flex';
+          setSameSchoolCopy(
+            sameSchoolText,
+            'उसी विद्यालय से 8वीं उत्तीर्ण (कक्षा 6–12 / उत्क्रमित विद्यालय)',
+            'उसी विद्यालय में कक्षा 9वीं में नामांकन की स्थिति में ₹50 प्रवेश शुल्क नहीं लगेगा।'
+          );
+        } else if (cls === '11') {
+          sameSchoolContainer.style.display = 'flex';
+          setSameSchoolCopy(
+            sameSchoolText,
+            'उसी विद्यालय से 10वीं उत्तीर्ण (Same School Student)',
+            'कंडिका 3 के अनुसार कक्षा 11वीं में नामांकन पर ₹50 प्रवेश शुल्क नहीं लगेगा।'
+          );
+        } else {
+          sameSchoolContainer.style.display = 'none';
+          sameSchoolCheckbox.checked = false;
+        }
+
+        const isSameSchool = sameSchoolCheckbox.checked;
+        const items = [];
+        let labelText = '';
+
+        if (cls === '9') {
+          labelText = 'वर्ग 9वीं (नामांकन शुल्क)';
+          items.push({ name: 'प्रवेश शुल्क (Admission Fee)', amt: 50, fund: 'vikas', waived: isSameSchool, reason: 'उसी स्कूल में नामांकन छूट' });
+          items.push({ name: 'विकास शुल्क (Development Fee)', amt: 60, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+          items.push({ name: 'विज्ञान प्रयोगशाला शुल्क', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'क्रीड़ा एवं खेल-कूद सामग्री', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'मनोरंजन व सांस्कृतिक कार्यक्रम', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 50, fund: 'chhatra', waived: false });
+          items.push({ name: 'परिचय पत्र (ID Card Fee)', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'बालचर शुल्क (Scout & Guide)', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'परीक्षा शुल्क (3 त्रैमासिक परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+        } else if (cls === '10') {
+          labelText = 'वर्ग 10वीं (सत्रारंभ शुल्क)';
+          items.push({ name: 'विकास शुल्क (Development Fee)', amt: 60, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+          items.push({ name: 'विज्ञान प्रयोगशाला शुल्क', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'क्रीड़ा एवं खेल-कूद सामग्री', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'मनोरंजन व सांस्कृतिक कार्यक्रम', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 50, fund: 'chhatra', waived: false });
+          items.push({ name: 'बालचर शुल्क (Scout & Guide)', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'परीक्षा शुल्क (3 त्रैमासिक परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+        } else if (cls === '11') {
+          const streamText = stream === 'sci_agri' ? 'विज्ञान/कृषि' : 'कला/वाणिज्य';
+          labelText = `वर्ग 11वीं (${streamText})`;
+          items.push({ name: 'प्रवेश शुल्क (Admission Fee)', amt: 50, fund: 'vikas', waived: isSameSchool, reason: 'उसी स्कूल में नामांकन छूट' });
+          const tAmt = stream === 'sci_agri' ? 240 : 180;
+          items.push({ name: `शिक्षण शुल्क (${streamText})`, amt: tAmt, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+          items.push({ name: 'विकास शुल्क (Development Fee)', amt: 200, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+          if (stream === 'sci_agri') {
+            items.push({ name: 'प्रयोगशाला शुल्क (Lab Fee)', amt: 200, fund: 'chhatra', waived: false });
+          }
+          items.push({ name: 'क्रीड़ा सामग्री शुल्क', amt: 30, fund: 'chhatra', waived: false });
+          items.push({ name: 'मनोरंजन व सांस्कृतिक शुल्क', amt: 60, fund: 'chhatra', waived: false });
+          items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 80, fund: 'chhatra', waived: false });
+          items.push({ name: 'पुस्तकालय शुल्क (Library)', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 150, fund: 'chhatra', waived: false });
+          items.push({ name: 'परिचय पत्र (ID Card Fee)', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'परीक्षा शुल्क (3 परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+        } else if (cls === '12') {
+          const streamText = stream === 'sci_agri' ? 'विज्ञान/कृषि' : 'कला/वाणिज्य';
+          labelText = `वर्ग 12वीं (${streamText})`;
+          const tAmt = stream === 'sci_agri' ? 240 : 180;
+          items.push({ name: `शिक्षण शुल्क (${streamText})`, amt: tAmt, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+          items.push({ name: 'विकास शुल्क (Development Fee)', amt: 200, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
+          if (stream === 'sci_agri') {
+            items.push({ name: 'प्रयोगशाला शुल्क (Lab Fee)', amt: 200, fund: 'chhatra', waived: false });
+          }
+          items.push({ name: 'क्रीड़ा सामग्री शुल्क', amt: 30, fund: 'chhatra', waived: false });
+          items.push({ name: 'मनोरंजन व सांस्कृतिक शुल्क', amt: 60, fund: 'chhatra', waived: false });
+          items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 80, fund: 'chhatra', waived: false });
+          items.push({ name: 'पुस्तकालय शुल्क (Library)', amt: 20, fund: 'chhatra', waived: false });
+          items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 150, fund: 'chhatra', waived: false });
+          items.push({ name: 'परीक्षा शुल्क (3 परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
+        }
+
+        let grandTotal = 0;
+        let vikasTotal = 0;
+        let chhatraTotal = 0;
+        const breakdownEl = document.getElementById('feeItemsBreakdown');
+        breakdownEl.replaceChildren();
+        const fragment = document.createDocumentFragment();
+
+        items.forEach((it) => {
+          const effective = it.waived ? 0 : it.amt;
+          grandTotal += effective;
+          if (it.fund === 'vikas') vikasTotal += effective;
+          if (it.fund === 'chhatra') chhatraTotal += effective;
+
+          const row = document.createElement('div');
+          row.className = it.waived ? 'slip-item waived' : 'slip-item';
+
+          const nameSpan = document.createElement('span');
+          nameSpan.textContent = it.name;
+          if (it.waived && it.reason) {
+            const small = document.createElement('small');
+            small.style.color = 'var(--c-senior)';
+            small.style.fontWeight = '600';
+            small.textContent = ` (${it.reason})`;
+            nameSpan.appendChild(small);
+          }
+
+          const feeSpan = document.createElement('span');
+          feeSpan.className = 'fee-n';
+          feeSpan.textContent = it.waived ? '₹0' : '₹' + it.amt;
+
+          row.append(nameSpan, feeSpan);
+          fragment.appendChild(row);
+        });
+
+        breakdownEl.appendChild(fragment);
+        animateCount(document.getElementById('totalAmountDisplay'), grandTotal);
+        animateCount(document.getElementById('vikasTotalDisplay'), vikasTotal);
+        animateCount(document.getElementById('chhatraTotalDisplay'), chhatraTotal);
+        document.getElementById('classBadgeDisplay').textContent = labelText;
+      }
+
+      function filterFund(fund) {
+        currentFundFilter = fund;
+        document.querySelectorAll('.tbl-filter-btn').forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.fund === fund);
+        });
+        filterTable();
+      }
+
+      const tableRows = Array.from(document.querySelectorAll('#masterFeeTable tbody tr'));
+      function filterTable() {
+        const q = document.getElementById('tableSearchInput').value.trim().toLowerCase();
+        tableRows.forEach((row) => {
+          const text = row.textContent.toLowerCase();
+          const matchesQuery = !q || text.includes(q);
+          const matchesFund = currentFundFilter === 'all' || row.dataset.fund === currentFundFilter;
+          row.style.display = (matchesQuery && matchesFund) ? '' : 'none';
+        });
+      }
+
+      // Bind event listeners cleanly (zero inline HTML handlers)
+      document.querySelectorAll('.cat-tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => switchCategory(btn.dataset.tab));
       });
-      document.getElementById('calcClass').value = cls;
+      document.querySelectorAll('.sub-tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => switchSubTab(btn.dataset.group, btn.dataset.sub));
+      });
+      document.querySelectorAll('#classTabs .tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => selectClassTab(btn.dataset.class));
+      });
+      document.getElementById('calcStream').addEventListener('change', updateCalc);
+      document.getElementById('calcScSt').addEventListener('change', updateCalc);
+      document.getElementById('calcSameSchool').addEventListener('change', updateCalc);
+      document.querySelectorAll('.tbl-filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => filterFund(btn.dataset.fund));
+      });
+
+      const debouncedFilter = window.BSEBCommon
+        ? window.BSEBCommon.debounce(filterTable, 120)
+        : filterTable;
+      document.getElementById('tableSearchInput').addEventListener('input', debouncedFilter);
+
       updateCalc();
-    }
-
-    function animateCount(elem, target) {
-      const current = parseInt(elem.innerText.replace('₹', '')) || 0;
-      if (current === target) {
-        elem.innerText = '₹' + target;
-        return;
-      }
-      const step = (target - current) / 10;
-      let count = current;
-      const timer = setInterval(() => {
-        count += step;
-        if ((step > 0 && count >= target) || (step < 0 && count <= target)) {
-          clearInterval(timer);
-          elem.innerText = '₹' + target;
-        } else {
-          elem.innerText = '₹' + Math.round(count);
-        }
-      }, 15);
-    }
-
-    function updateCalc() {
-      const cls = document.getElementById('calcClass').value;
-      const streamContainer = document.getElementById('streamContainer');
-      const sameSchoolContainer = document.getElementById('sameSchoolContainer');
-      const sameSchoolText = document.getElementById('sameSchoolText');
-      const isScSt = document.getElementById('calcScSt').checked;
-      const isSameSchool = document.getElementById('calcSameSchool').checked;
-      const stream = document.getElementById('calcStream').value;
-
-      if (cls === '11' || cls === '12') {
-        streamContainer.style.display = 'block';
-      } else {
-        streamContainer.style.display = 'none';
-      }
-
-      if (cls === '9') {
-        sameSchoolContainer.style.display = 'flex';
-        sameSchoolText.innerHTML = `<strong>उसी विद्यालय से 8वीं उत्तीर्ण (कक्षा 6–12 / उत्क्रमित विद्यालय)</strong>
-          उसी विद्यालय में कक्षा 9वीं में नामांकन की स्थिति में ₹50 प्रवेश शुल्क नहीं लगेगा।`;
-      } else if (cls === '11') {
-        sameSchoolContainer.style.display = 'flex';
-        sameSchoolText.innerHTML = `<strong>उसी विद्यालय से 10वीं उत्तीर्ण (Same School Student)</strong>
-          कंडिका 3 के अनुसार कक्षा 11वीं में नामांकन पर ₹50 प्रवेश शुल्क नहीं लगेगा।`;
-      } else {
-        sameSchoolContainer.style.display = 'none';
-        document.getElementById('calcSameSchool').checked = false;
-      }
-
-      let items = [];
-      let labelText = '';
-
-      if (cls === '9') {
-        labelText = 'वर्ग 9वीं (नामांकन शुल्क)';
-        items.push({ name: 'प्रवेश शुल्क (Admission Fee)', amt: 50, fund: 'vikas', waived: isSameSchool, reason: 'उसी स्कूल में नामांकन छूट' });
-        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 60, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
-        items.push({ name: 'विज्ञान प्रयोगशाला शुल्क', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'क्रीड़ा एवं खेल-कूद सामग्री', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'मनोरंजन व सांस्कृतिक कार्यक्रम', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 50, fund: 'chhatra', waived: false });
-        items.push({ name: 'परिचय पत्र (ID Card Fee)', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'बालचर शुल्क (Scout & Guide)', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'परीक्षा शुल्क (3 त्रैमासिक परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
-      } 
-      else if (cls === '10') {
-        labelText = 'वर्ग 10वीं (सत्रारंभ शुल्क)';
-        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 60, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
-        items.push({ name: 'विज्ञान प्रयोगशाला शुल्क', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'क्रीड़ा एवं खेल-कूद सामग्री', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'मनोरंजन व सांस्कृतिक कार्यक्रम', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 50, fund: 'chhatra', waived: false });
-        items.push({ name: 'बालचर शुल्क (Scout & Guide)', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'परीक्षा शुल्क (3 त्रैमासिक परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
-      } 
-      else if (cls === '11') {
-        const streamText = (stream === 'sci_agri') ? 'विज्ञान/कृषि' : 'कला/वाणिज्य';
-        labelText = `वर्ग 11वीं (${streamText})`;
-        
-        items.push({ name: 'प्रवेश शुल्क (Admission Fee)', amt: 50, fund: 'vikas', waived: isSameSchool, reason: 'उसी स्कूल में नामांकन छूट' });
-
-        const tAmt = (stream === 'sci_agri') ? 240 : 180;
-        items.push({ name: `शिक्षण शुल्क (${streamText})`, amt: tAmt, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
-        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 200, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
-
-        if (stream === 'sci_agri') {
-          items.push({ name: 'प्रयोगशाला शुल्क (Lab Fee)', amt: 200, fund: 'chhatra', waived: false });
-        }
-        items.push({ name: 'क्रीड़ा सामग्री शुल्क', amt: 30, fund: 'chhatra', waived: false });
-        items.push({ name: 'मनोरंजन व सांस्कृतिक शुल्क', amt: 60, fund: 'chhatra', waived: false });
-        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 80, fund: 'chhatra', waived: false });
-        items.push({ name: 'पुस्तकालय शुल्क (Library)', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 150, fund: 'chhatra', waived: false });
-        items.push({ name: 'परिचय पत्र (ID Card Fee)', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'परीक्षा शुल्क (3 परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
-      } 
-      else if (cls === '12') {
-        const streamText = (stream === 'sci_agri') ? 'विज्ञान/कृषि' : 'कला/वाणिज्य';
-        labelText = `वर्ग 12वीं (${streamText})`;
-
-        const tAmt = (stream === 'sci_agri') ? 240 : 180;
-        items.push({ name: `शिक्षण शुल्क (${streamText})`, amt: tAmt, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
-        items.push({ name: 'विकास शुल्क (Development Fee)', amt: 200, fund: 'vikas', waived: isScSt, reason: 'SC/ST छूट' });
-
-        if (stream === 'sci_agri') {
-          items.push({ name: 'प्रयोगशाला शुल्क (Lab Fee)', amt: 200, fund: 'chhatra', waived: false });
-        }
-        items.push({ name: 'क्रीड़ा सामग्री शुल्क', amt: 30, fund: 'chhatra', waived: false });
-        items.push({ name: 'मनोरंजन व सांस्कृतिक शुल्क', amt: 60, fund: 'chhatra', waived: false });
-        items.push({ name: 'निर्धन छात्र कोष', amt: 10, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्युत शुल्क (Electricity)', amt: 80, fund: 'chhatra', waived: false });
-        items.push({ name: 'पुस्तकालय शुल्क (Library)', amt: 20, fund: 'chhatra', waived: false });
-        items.push({ name: 'विद्यालय रख-रखाव व साफ-सफाई', amt: 150, fund: 'chhatra', waived: false });
-        items.push({ name: 'परीक्षा शुल्क (3 परीक्षाएं)', amt: 120, fund: 'chhatra', waived: false });
-      }
-
-      let grandTotal = 0;
-      let vikasTotal = 0;
-      let chhatraTotal = 0;
-      let listHtml = '';
-
-      items.forEach(it => {
-        const effective = it.waived ? 0 : it.amt;
-        grandTotal += effective;
-        if (it.fund === 'vikas') vikasTotal += effective;
-        if (it.fund === 'chhatra') chhatraTotal += effective;
-
-        listHtml += `
-          <div class="slip-item ${it.waived ? 'waived' : ''}">
-            <span>${it.name} ${it.reason ? '<small style="color:var(--c-senior);font-weight:600;">(' + it.reason + ')</small>' : ''}</span>
-            <span class="fee-n">${it.waived ? '₹0' : '₹' + it.amt}</span>
-          </div>
-        `;
-      });
-
-      animateCount(document.getElementById('totalAmountDisplay'), grandTotal);
-      animateCount(document.getElementById('vikasTotalDisplay'), vikasTotal);
-      animateCount(document.getElementById('chhatraTotalDisplay'), chhatraTotal);
-      document.getElementById('classBadgeDisplay').textContent = labelText;
-      document.getElementById('feeItemsBreakdown').innerHTML = listHtml;
-    }
-
-    let currentFundFilter = 'all';
-
-    function filterFund(fund) {
-      currentFundFilter = fund;
-      document.querySelectorAll('.tbl-filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.fund === fund);
-      });
-      filterTable();
-    }
-
-    function filterTable() {
-      const q = document.getElementById('tableSearchInput').value.trim().toLowerCase();
-      const rows = document.querySelectorAll('#masterFeeTable tbody tr');
-
-      rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        const matchesQuery = text.includes(q);
-        const matchesFund = (currentFundFilter === 'all' || row.dataset.fund === currentFundFilter);
-
-        row.style.display = (matchesQuery && matchesFund) ? '' : 'none';
-      });
-    }
-
-    updateCalc();
+    });
   </script>
-
-  <!-- Mobile Menu Toggle Script -->
-    <script>
-        (function mobileMenu() {
-            const menuBtn = document.getElementById('menuToggle');
-            const nav = document.querySelector('.main-nav');
-            
-            if (menuBtn && nav) {
-                menuBtn.addEventListener('click', () => {
-                    nav.classList.toggle('open');
-                    // Change icon to 'X' when open
-                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
-                });
-            }
-        })();
-    </script>
-  
 </body>
 </html>

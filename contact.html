@@ -32,27 +32,26 @@
     <!-- Sticky Navigation Header with Main Menu & Theme Toggle -->
     <header class="site-header">
         <div class="wrap header-inner">
-          <a href="https://bsebwala.in/" class="brand">
+          <a href="/" class="brand">
             <div class="mark">BB</div>
             <span class="full">BSEB Portal Hub</span>
           </a>
 
             <!-- Menu with Active Contact Highlight -->
-            <nav class="main-nav">
-                <a href="https://bsebwala.in/">Home</a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="/">Home</a>
                 <a href="/aihub">AIHub</a>
                 <a href="/letter">Letter</a>
                 <a href="/fee">Fee</a>
                 <a href="/news">News</a>
                 <a href="/learn">Videos</a>
                 <a href="/about">About</a>
-                <a href="/contact" class="active">Contact</a>
+                <a href="/contact" class="active" aria-current="page">Contact</a>
             </nav>
 
-            <!-- Paste this entire block right below </nav> -->
             <div class="header-actions">
-                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+                <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open Menu" aria-expanded="false">☰</button>
             </div>
             
         </div>
@@ -73,36 +72,36 @@
                     <p>Fill out the details below. Messages are recorded securely in our database.</p>
                 </div>
 
-                <form id="contactForm" class="query-form" onsubmit="handleFormSubmit(event)" novalidate>
+                <form id="contactForm" class="query-form" novalidate>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Your Name *</label>
-                            <input type="text" id="name" name="name" placeholder="e.g., Ashish Singh" required>
+                            <input type="text" id="name" name="name" maxlength="80" placeholder="e.g., Ashish Singh" required>
                             <span class="field-hint">Letters and spaces only</span>
                         </div>
                         <div class="form-group">
                             <label for="mobile">Mobile Number *</label>
-                            <input type="tel" id="mobile" name="mobile" placeholder="e.g., +91 9876543210" required>
+                            <input type="tel" id="mobile" name="mobile" maxlength="20" placeholder="e.g., +91 9876543210" required>
                             <span class="field-hint">Any country format allowed</span>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" placeholder="you@domain.com" required>
+                        <input type="email" id="email" name="email" maxlength="120" placeholder="you@domain.com" required>
                         <span class="field-hint">Strict format (username@domain.tld)</span>
                     </div>
 
                     <div class="form-group">
                         <label for="address">Address *</label>
-                        <input type="text" id="address" name="address" placeholder="e.g., Bihar, India" required>
+                        <input type="text" id="address" name="address" maxlength="180" placeholder="e.g., Bihar, India" required>
                         <span class="field-hint">At least 2 words (City, State, Country)</span>
                     </div>
 
                     <div class="form-group">
                         <label for="question">Your Question / Message *</label>
-                        <textarea id="question" name="question" placeholder="Describe your query..." required></textarea>
-                        <span class="field-hint">Minimum 4 to 6 words required</span>
+                        <textarea id="question" name="question" maxlength="1500" placeholder="Describe your query..." required></textarea>
+                        <span class="field-hint">Minimum 4 words, max 1500 characters</span>
                     </div>
 
                     <button type="submit" id="submitBtn" class="btn-submit">
@@ -140,7 +139,7 @@
                             <div class="info-icon">🔗</div>
                             <div class="info-text">
                                 <h4>LinkedIn Profile</h4>
-                                <a href="https://www.linkedin.com/in/ashish9singh/" target="_blank" rel="noopener">linkedin.com/in/ashish9singh</a>
+                                <a href="https://www.linkedin.com/in/ashish9singh/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ashish9singh</a>
                             </div>
                         </div>
                     </div>
@@ -155,20 +154,22 @@
 
                     <div class="cf-body">
                         <div class="qr-wrapper">
-                            <img src="https://bsebwala.in/qr.png" 
-                                 alt="Scan to support BSEBwala" 
-                                 onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=ashishkumarsingh9-1@oksbi&pn=Ashish%20Kumar%20Singh';">
+                            <img id="upiQrImage"
+                                 src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&amp;data=upi%3A%2F%2Fpay%3Fpa%3Dashishkumarsingh9-1%40oksbi%26pn%3DAshish%2520Kumar%2520Singh"
+                                 alt="UPI QR code to support BSEBWala"
+                                 referrerpolicy="no-referrer"
+                                 loading="lazy">
                             <span class="qr-tag">Scan with any UPI</span>
                         </div>
 
                         <div class="cf-actions">
-                            <a href="upi://pay?pa=ashishkumarsingh9-1@oksbi&pn=Ashish%20Kumar%20Singh&cu=INR" class="btn-upi-pay">
+                            <a href="upi://pay?pa=ashishkumarsingh9-1@oksbi&amp;pn=Ashish%20Kumar%20Singh&amp;cu=INR" class="btn-upi-pay">
                                 Pay via UPI App 🔗
                             </a>
 
                             <div class="upi-copy-box">
                                 <span class="upi-id" id="contactUpiId">ashishkumarsingh9-1@oksbi</span>
-                                <button type="button" class="btn-copy-upi" id="copyBtn" onclick="copyUpi()">Copy</button>
+                                <button type="button" class="btn-copy-upi" id="copyBtn">Copy</button>
                             </div>
                         </div>
                     </div>
@@ -185,193 +186,183 @@
     </div>
   </footer>
 
- 
     <!-- Success Modal -->
-    <div id="successModal" class="modal-overlay" onclick="handleBackdropClick(event)">
+    <div id="successModal" class="modal-overlay">
         <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
             <div class="modal-icon-ring">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
             </div>
             <h3 id="modalHeading" class="modal-title">Query Received!</h3>
             <p class="modal-msg">
-                Thanks for submitting your query, we will revert you soon.<br>
+                Thanks for submitting your query, we will revert to you soon.<br>
                 <strong>— Ashish</strong>
             </p>
-            <button type="button" class="btn-modal-close" onclick="closeSuccessModal()">Okay</button>
+            <button type="button" class="btn-modal-close" id="closeModalBtn">Okay</button>
         </div>
     </div>
 
+    <script src="/js/site-common.js" defer></script>
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec";
+      document.addEventListener('DOMContentLoaded', function initContactPage() {
+        'use strict';
 
-        (function themeModule(){
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const STORAGE_KEY = 'bseb-hub-theme';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4LwSdX9IZ-XIQ5-I7bZ_BnTKWAzsioaRM2n1JqMtHLQ5RcjwVnsVTROWYb55Jz9Cq/exec';
+        const COOLDOWN_MS = 15000;
+        let lastSubmitAt = 0;
 
-            function apply(theme){
-                if (theme === 'dark' || theme === 'light'){
-                    root.setAttribute('data-theme', theme);
-                } else {
-                    root.removeAttribute('data-theme');
-                }
-                const isDark = (root.getAttribute('data-theme') === 'dark' ||
-                    (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
-                btn.textContent = isDark ? '☀️' : '🌙';
-            }
+        const form = document.getElementById('contactForm');
+        const btn = document.getElementById('submitBtn');
+        const statusEl = document.getElementById('formStatus');
+        const modal = document.getElementById('successModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const copyBtn = document.getElementById('copyBtn');
 
-            let saved = null;
-            try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
-            apply(saved);
-
-            btn.addEventListener('click', function(){
-                const current = root.getAttribute('data-theme') ||
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                const next = current === 'dark' ? 'light' : 'dark';
-                apply(next);
-                try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
-            });
-        })();
+        function neutralize(value) {
+          if (window.BSEBCommon && typeof window.BSEBCommon.neutralizeSpreadsheetFormula === 'function') {
+            return window.BSEBCommon.neutralizeSpreadsheetFormula(value);
+          }
+          const str = String(value || '');
+          return /^[=+\-@\t\r]/.test(str) ? "'" + str : str;
+        }
 
         function showError(message, inputId) {
-            const status = document.getElementById("formStatus");
-            status.innerText = message;
-            status.className = "form-status error";
-            if (inputId) document.getElementById(inputId).focus();
+          statusEl.textContent = message;
+          statusEl.className = 'form-status error';
+          statusEl.style.display = 'block';
+          if (inputId) {
+            const target = document.getElementById(inputId);
+            if (target) target.focus();
+          }
         }
 
         function openSuccessModal() {
-            document.getElementById("successModal").classList.add("active");
-            document.body.style.overflow = "hidden";
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
         }
 
         function closeSuccessModal() {
-            document.getElementById("successModal").classList.remove("active");
-            document.body.style.overflow = "";
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
         }
 
-        function handleBackdropClick(e) {
-            if (e.target.id === "successModal") closeSuccessModal();
-        }
-
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") closeSuccessModal();
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeSuccessModal();
+        });
+        closeModalBtn.addEventListener('click', closeSuccessModal);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('active')) closeSuccessModal();
         });
 
-        async function handleFormSubmit(event) {
-            event.preventDefault();
-            const btn = document.getElementById("submitBtn");
-            const status = document.getElementById("formStatus");
+        form.addEventListener('submit', async function handleFormSubmit(event) {
+          event.preventDefault();
+          statusEl.className = 'form-status';
+          statusEl.style.display = 'none';
 
-            status.className = "form-status";
-            status.style.display = "none";
+          if (Date.now() - lastSubmitAt < COOLDOWN_MS) {
+            showError('Please wait a few seconds before submitting another message.');
+            return;
+          }
 
-            const name = document.getElementById("name").value.trim();
-            const mobile = document.getElementById("mobile").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const address = document.getElementById("address").value.trim();
-            const question = document.getElementById("question").value.trim();
+          const name = document.getElementById('name').value.trim();
+          const mobile = document.getElementById('mobile').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const address = document.getElementById('address').value.trim();
+          const question = document.getElementById('question').value.trim();
 
-            const namePattern = /^[A-Za-z]+(\s+[A-Za-z]+)*$/;
-            if (!namePattern.test(name)) {
-                showError("Please enter a valid name using only letters and spaces.", "name");
-                return;
-            }
+          const namePattern = /^[A-Za-z]+(\s+[A-Za-z]+)*$/;
+          if (!namePattern.test(name) || name.length > 80) {
+            showError('Please enter a valid name using only letters and spaces (max 80 characters).', 'name');
+            return;
+          }
 
-            const cleanMobile = mobile.replace(/[\s\-\(\)]/g, "");
-            const mobilePattern = /^\+?[0-9]{7,15}$/;
-            if (!mobilePattern.test(cleanMobile)) {
-                showError("Please enter a valid mobile number (7 to 15 digits).", "mobile");
-                return;
-            }
+          const cleanMobile = mobile.replace(/[\s\-()]/g, '');
+          const mobilePattern = /^\+?[0-9]{7,15}$/;
+          if (!mobilePattern.test(cleanMobile)) {
+            showError('Please enter a valid mobile number (7 to 15 digits).', 'mobile');
+            return;
+          }
 
-            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailPattern.test(email)) {
-                showError("Please enter a valid email address.", "email");
-                return;
-            }
+          const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if (!emailPattern.test(email) || email.length > 120) {
+            showError('Please enter a valid email address.', 'email');
+            return;
+          }
 
-            const addressWords = address.split(/[\s,]+/).filter(w => w.length > 0);
-            if (addressWords.length < 2) {
-                showError("Please enter a complete address with at least 2 words.", "address");
-                return;
-            }
+          const addressWords = address.split(/[\s,]+/).filter((w) => w.length > 0);
+          if (addressWords.length < 2 || address.length > 180) {
+            showError('Please enter a complete address with at least 2 words (max 180 characters).', 'address');
+            return;
+          }
 
-            const queryWords = question.split(/\s+/).filter(w => w.length > 0);
-            if (queryWords.length < 4) {
-                showError(`Your message is too short. Please write at least 4 to 6 words.`, "question");
-                return;
-            }
+          const queryWords = question.split(/\s+/).filter((w) => w.length > 0);
+          if (queryWords.length < 4 || question.length > 1500) {
+            showError('Please write at least 4 words and keep your message under 1500 characters.', 'question');
+            return;
+          }
 
-            const formData = {
-                name: name,
-                mobile: cleanMobile,
-                email: email,
-                address: address,
-                question: question
-            };
+          // Neutralize leading spreadsheet formula characters before sending to Google Sheets
+          const formData = {
+            name: neutralize(name),
+            mobile: neutralize(cleanMobile),
+            email: neutralize(email),
+            address: neutralize(address),
+            question: neutralize(question),
+          };
 
-            btn.disabled = true;
-            btn.querySelector("span").innerText = "Submitting...";
+          btn.disabled = true;
+          btn.querySelector('span').textContent = 'Submitting...';
 
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify(formData),
-                    headers: { "Content-Type": "text/plain;charset=utf-8" }
-                });
-
-                const result = await response.json();
-                if (result.result === "success") {
-                    document.getElementById("contactForm").reset();
-                    openSuccessModal();
-                } else {
-                    throw new Error(result.error || "Submission failed");
-                }
-            } catch (err) {
-                console.error("Submission error:", err);
-                showError("Something went wrong. Please try again or reach out via email directly.");
-            } finally {
-                btn.disabled = false;
-                btn.querySelector("span").innerText = "Send Message";
-            }
-        }
-
-        function copyUpi() {
-            const upi = document.getElementById("contactUpiId").innerText;
-            const btn = document.getElementById("copyBtn");
-            navigator.clipboard.writeText(upi).then(() => {
-                const prev = btn.innerText;
-                btn.innerText = "Copied!";
-                btn.style.background = "var(--success)";
-                btn.style.color = "#fff";
-                setTimeout(() => {
-                    btn.innerText = prev;
-                    btn.style.background = "var(--surface)";
-                    btn.style.color = "var(--text)";
-                }, 2000);
+          try {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 10000);
+            const response = await fetch(SCRIPT_URL, {
+              method: 'POST',
+              body: JSON.stringify(formData),
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              signal: controller.signal,
             });
-        }
-    </script>
+            clearTimeout(timer);
 
-<!-- Mobile Menu Toggle Script -->
-    <script>
-        (function mobileMenu() {
-            const menuBtn = document.getElementById('menuToggle');
-            const nav = document.querySelector('.main-nav');
-            
-            if (menuBtn && nav) {
-                menuBtn.addEventListener('click', () => {
-                    nav.classList.toggle('open');
-                    // Change icon to 'X' when open
-                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
-                });
+            const result = await response.json();
+            if (result && result.result === 'success') {
+              lastSubmitAt = Date.now();
+              form.reset();
+              openSuccessModal();
+            } else {
+              throw new Error((result && result.error) || 'Submission failed');
             }
-        })();
-    </script>
+          } catch (err) {
+            console.error('Submission error:', err);
+            showError('Something went wrong. Please try again or reach out via email directly.');
+          } finally {
+            btn.disabled = false;
+            btn.querySelector('span').textContent = 'Send Message';
+          }
+        });
 
- 
+        copyBtn.addEventListener('click', async () => {
+          const upi = document.getElementById('contactUpiId').textContent.trim();
+          try {
+            await navigator.clipboard.writeText(upi);
+            const prev = copyBtn.textContent;
+            copyBtn.textContent = 'Copied!';
+            copyBtn.style.background = 'var(--success)';
+            copyBtn.style.color = '#fff';
+            setTimeout(() => {
+              copyBtn.textContent = prev;
+              copyBtn.style.background = '';
+              copyBtn.style.color = '';
+            }, 2000);
+          } catch {
+            copyBtn.textContent = 'Copy manually';
+            setTimeout(() => {
+              copyBtn.textContent = 'Copy';
+            }, 2000);
+          }
+        });
+      });
+    </script>
 </body>
 </html>

@@ -30,15 +30,15 @@
     <!-- Header Navigation -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="https://bsebwala.in/" class="brand">
+            <a href="/" class="brand">
                 <div class="mark">BB</div>
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
-            <nav class="main-nav">
-                <a href="https://bsebwala.in/">Home</a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="/">Home</a>
                 <a href="/aihub">AIHub</a>
-                <a href="/letter" class="active">Letter</a>
+                <a href="/letter" class="active" aria-current="page">Letter</a>
                 <a href="/fee">Fee</a>
                 <a href="/news">News</a>
                 <a href="/learn">Videos</a>
@@ -47,9 +47,9 @@
             </nav>
 
             <div class="header-actions">
-                <button class="lang-btn" id="langToggle">हिंदी में देखें</button>
-                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+                <button class="lang-btn" id="langToggle" type="button">हिंदी में देखें</button>
+                <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open Menu" aria-expanded="false">☰</button>
             </div>
         </div>
     </header>
@@ -104,375 +104,431 @@
         </div>
     </footer>
 
-    <!-- Logic Engine -->
+    <script src="/js/site-common.js" defer></script>
     <script>
-        /* =========================================================================
-           1. CONFIGURATION & INSTANT CACHE ENGINE
-           ========================================================================= */
+      document.addEventListener('DOMContentLoaded', function initLettersPage() {
+        'use strict';
+
         const SHEET_ID = '1cjcqNGr7nDOP29VLc8EacRBaQx1o3ve60xZVJCMVt1M';
         const SHEET_NAME = 'Letter_DB';
         const CACHE_KEY = 'bseb_letters_cache_v2';
-        
-        // Lightweight gviz query: skips desc columns (D, E) to reduce network payload
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&tq=${encodeURIComponent('select A,B,C,F,G,H,I,J')}&_=${Date.now()}`;
 
         let documentDatabase = [];
-        let currentLang = 'en'; 
+        let currentLang = 'en';
         let currentFilter = 'all';
         let currentSort = 'sl-asc';
         let searchQuery = '';
 
-        /* =========================================================================
-           2. TRANSLATIONS
-           ========================================================================= */
         const translations = {
-            en: {
-                toggleBtn: "हिंदी में देखें",
-                lblSearch: "Search",
-                phSearch: "Title or keyword...",
-                lblCategory: "Category",
-                lblSort: "Sort By",
-                loading: "Loading documents...",
-                cats: { all: "All", circular: "Circular", order: "Order", notif: "Notification", scheme: "Scheme", other: "Other" },
-                sorts: { 
-                    slAsc: "Serial (1, 2, 3...)", 
-                    slDesc: "Serial (Reverse)", 
-                    new: "Newest First", 
-                    old: "Oldest First", 
-                    az: "Alphabetically (A-Z)", 
-                    za: "Alphabetically (Z-A)" 
-                },
-                download: "Download",
-                noResult: "No documents found matching your criteria.",
-                loadError: "Unable to load document database. Please verify sheet permissions."
+          en: {
+            toggleBtn: 'हिंदी में देखें',
+            lblSearch: 'Search',
+            phSearch: 'Title or keyword...',
+            lblCategory: 'Category',
+            lblSort: 'Sort By',
+            loading: 'Loading documents...',
+            cats: { all: 'All', circular: 'Circular', order: 'Order', notif: 'Notification', scheme: 'Scheme', other: 'Other' },
+            sorts: {
+              slAsc: 'Serial (1, 2, 3...)',
+              slDesc: 'Serial (Reverse)',
+              new: 'Newest First',
+              old: 'Oldest First',
+              az: 'Alphabetically (A-Z)',
+              za: 'Alphabetically (Z-A)',
             },
-            hi: {
-                toggleBtn: "View in English",
-                lblSearch: "खोज",
-                phSearch: "शीर्षक या लिखावट...",
-                lblCategory: "श्रेणी",
-                lblSort: "क्रम",
-                loading: "दस्तावेज़ लोड हो रहा है...",
-                cats: { all: "सभी", circular: "परिपत्र", order: "आदेश", notif: "अधिसूचना", scheme: "योजना", other: "अन्य" },
-                sorts: { 
-                    slAsc: "क्रमांक (1, 2, 3...)", 
-                    slDesc: "क्रमांक (उलटा)", 
-                    new: "नया पहले", 
-                    old: "पुराना पहले", 
-                    az: "अक्षर क्रमानुसार (A-Z)", 
-                    za: "अक्षर क्रमानुसार (Z-A)" 
-                },
-                download: "डाउनलोड",
-                noResult: "आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।",
-                loadError: "डेटाबेस लोड करने में त्रुटि। कृपया सुनिश्चित करें कि शीट लिंक साझा है।"
-            }
+            download: 'Download',
+            noResult: 'No documents found matching your criteria.',
+            loadError: 'Unable to load document database. Please verify sheet permissions.',
+          },
+          hi: {
+            toggleBtn: 'View in English',
+            lblSearch: 'खोज',
+            phSearch: 'शीर्षक या लिखावट...',
+            lblCategory: 'श्रेणी',
+            lblSort: 'क्रम',
+            loading: 'दस्तावेज़ लोड हो रहा है...',
+            cats: { all: 'सभी', circular: 'परिपत्र', order: 'आदेश', notif: 'अधिसूचना', scheme: 'योजना', other: 'अन्य' },
+            sorts: {
+              slAsc: 'क्रमांक (1, 2, 3...)',
+              slDesc: 'क्रमांक (उलटा)',
+              new: 'नया पहले',
+              old: 'पुराना पहले',
+              az: 'अक्षर क्रमानुसार (A-Z)',
+              za: 'अक्षर क्रमानुसार (Z-A)',
+            },
+            download: 'डाउनलोड',
+            noResult: 'आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।',
+            loadError: 'डेटाबेस लोड करने में त्रुटि। कृपया सुनिश्चित करें कि शीट लिंक साझा है।',
+          },
         };
 
         const els = {
-            list: document.getElementById('documentList'),
-            search: document.getElementById('searchInput'),
-            cat: document.getElementById('categoryFilter'),
-            sort: document.getElementById('sortFilter'),
-            langBtn: document.getElementById('langToggle')
+          list: document.getElementById('documentList'),
+          search: document.getElementById('searchInput'),
+          cat: document.getElementById('categoryFilter'),
+          sort: document.getElementById('sortFilter'),
+          langBtn: document.getElementById('langToggle'),
         };
 
-        /* =========================================================================
-           3. DOWNLOAD UTILITY
-           ========================================================================= */
-        function formatDirectDownloadUrl(url) {
-            if (!url) return '#';
-            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (driveMatch && driveMatch[1]) {
-                return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
-            }
-            const idParamMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-            if (url.includes('drive.google.com') && idParamMatch && idParamMatch[1]) {
-                return `https://drive.google.com/uc?export=download&id=${idParamMatch[1]}`;
-            }
-            return url;
+        function sanitizeHttpUrl(raw) {
+          if (window.BSEBCommon && typeof window.BSEBCommon.safeHttpUrl === 'function') {
+            return window.BSEBCommon.safeHttpUrl(raw, false);
+          }
+          try {
+            const parsed = new URL(raw);
+            return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? parsed.href : null;
+          } catch {
+            return null;
+          }
+        }
+
+        function sanitizeFileName(rawName) {
+          const clean = String(rawName || 'document.pdf')
+            .replace(/[/\\:*?"<>|\r\n]+/g, '_')
+            .trim();
+          return clean.slice(0, 120) || 'document.pdf';
+        }
+
+        function formatDirectDownloadUrl(rawUrl) {
+          const safe = sanitizeHttpUrl(rawUrl);
+          if (!safe) return null;
+
+          const driveMatch = safe.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+          if (driveMatch && driveMatch[1]) {
+            return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+          }
+          const idParamMatch = safe.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+          if (safe.includes('drive.google.com') && idParamMatch && idParamMatch[1]) {
+            return `https://drive.google.com/uc?export=download&id=${idParamMatch[1]}`;
+          }
+          return safe;
         }
 
         async function triggerDirectDownload(event, fileUrl, fileName) {
-            const directUrl = formatDirectDownloadUrl(fileUrl);
-            try {
-                event.preventDefault();
-                const response = await fetch(directUrl);
-                if (!response.ok) throw new Error("Fetch failed");
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-                const tempLink = document.createElement('a');
-                tempLink.href = blobUrl;
-                tempLink.download = fileName || 'document.pdf';
-                document.body.appendChild(tempLink);
-                tempLink.click();
-                document.body.removeChild(tempLink);
-                window.URL.revokeObjectURL(blobUrl);
-            } catch (err) {
-                window.open(directUrl, '_blank', 'noopener,noreferrer');
-            }
+          const directUrl = formatDirectDownloadUrl(fileUrl);
+          if (!directUrl) {
+            event.preventDefault();
+            return;
+          }
+          try {
+            event.preventDefault();
+            const response = await fetch(directUrl);
+            if (!response.ok) throw new Error('Fetch failed');
+            const blob = await response.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+            const tempLink = document.createElement('a');
+            tempLink.href = blobUrl;
+            tempLink.download = sanitizeFileName(fileName);
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(blobUrl);
+          } catch {
+            const fallback = document.createElement('a');
+            fallback.href = directUrl;
+            fallback.target = '_blank';
+            fallback.rel = 'noopener noreferrer';
+            fallback.click();
+          }
         }
 
-        /* =========================================================================
-           4. DATA PARSER & FAST SHEET FETCHER
-           ========================================================================= */
+        function createCalendarSvg() {
+          const ns = 'http://www.w3.org/2000/svg';
+          const svg = document.createElementNS(ns, 'svg');
+          svg.setAttribute('width', '14');
+          svg.setAttribute('height', '14');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('fill', 'none');
+          svg.setAttribute('stroke', 'currentColor');
+          svg.setAttribute('stroke-width', '2');
+          svg.setAttribute('stroke-linecap', 'round');
+          svg.setAttribute('stroke-linejoin', 'round');
+          svg.setAttribute('aria-hidden', 'true');
+          svg.style.color = 'var(--primary)';
+
+          const rect = document.createElementNS(ns, 'rect');
+          rect.setAttribute('x', '3');
+          rect.setAttribute('y', '4');
+          rect.setAttribute('width', '18');
+          rect.setAttribute('height', '18');
+          rect.setAttribute('rx', '2');
+          rect.setAttribute('ry', '2');
+          svg.appendChild(rect);
+
+          [
+            ['16', '2', '16', '6'],
+            ['8', '2', '8', '6'],
+            ['3', '10', '21', '10'],
+          ].forEach(([x1, y1, x2, y2]) => {
+            const line = document.createElementNS(ns, 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            svg.appendChild(line);
+          });
+
+          return svg;
+        }
+
         function parseRows(rows) {
-            return rows.map((r, index) => {
-                const c = r.c || [];
-                const getCell = (idx) => (c[idx] && c[idx].v !== null && c[idx].v !== undefined) ? String(c[idx].v).trim() : '';
-                const getFormattedCell = (idx) => (c[idx] && c[idx].f) ? c[idx].f : getCell(idx);
+          return rows
+            .map((r, index) => {
+              const c = r.c || [];
+              const getCell = (idx) => (c[idx] && c[idx].v !== null && c[idx].v !== undefined ? String(c[idx].v).trim() : '');
+              const getFormattedCell = (idx) => (c[idx] && c[idx].f ? String(c[idx].f).trim() : getCell(idx));
 
-                // Date is at query column index 5 (Column H in sheet)
-                let rawDate = getFormattedCell(5);
-                if (rawDate.startsWith("Date(") && rawDate.endsWith(")")) {
-                    const parts = rawDate.replace("Date(", "").replace(")", "").split(",");
-                    const y = parts[0];
-                    const m = String(parseInt(parts[1], 10) + 1).padStart(2, '0');
-                    const d = String(parts[2]).padStart(2, '0');
-                    rawDate = `${y}-${m}-${d}`;
-                }
+              let rawDate = getFormattedCell(5);
+              if (rawDate.startsWith('Date(') && rawDate.endsWith(')')) {
+                const parts = rawDate.replace('Date(', '').replace(')', '').split(',');
+                const y = parts[0];
+                const m = String(parseInt(parts[1], 10) + 1).padStart(2, '0');
+                const d = String(parts[2]).padStart(2, '0');
+                rawDate = `${y}-${m}-${d}`;
+              }
 
-                // Numeric sl extraction
-                let serialVal = getCell(0);
-                if (!serialVal) {
-                    serialVal = String(index + 1);
-                } else {
-                    const extractedNum = parseInt(serialVal.replace(/[^0-9]/g, ''), 10);
-                    serialVal = isNaN(extractedNum) ? String(index + 1) : String(extractedNum);
-                }
+              let serialVal = getCell(0);
+              if (!serialVal) {
+                serialVal = String(index + 1);
+              } else {
+                const extractedNum = parseInt(serialVal.replace(/[^0-9]/g, ''), 10);
+                serialVal = isNaN(extractedNum) ? String(index + 1) : String(extractedNum);
+              }
 
-                return {
-                    sl: serialVal,
-                    title: {
-                        en: getCell(1) || "Untitled Document",
-                        hi: getCell(2) || getCell(1) || "दस्तावेज़"
-                    },
-                    category: (getCell(3) || 'other').toLowerCase(),
-                    fileType: (getCell(4) || 'PDF').toUpperCase(),
-                    date: rawDate,
-                    fileName: getCell(6) || "document.pdf",
-                    fileUrl: getCell(7) || "#"
-                };
-            }).filter(doc => doc.sl !== '' || doc.title.en !== '');
+              return {
+                sl: serialVal,
+                title: {
+                  en: getCell(1) || 'Untitled Document',
+                  hi: getCell(2) || getCell(1) || 'दस्तावेज़',
+                },
+                category: (getCell(3) || 'other').toLowerCase(),
+                fileType: (getCell(4) || 'PDF').toUpperCase(),
+                date: rawDate,
+                fileName: sanitizeFileName(getCell(6) || 'document.pdf'),
+                fileUrl: sanitizeHttpUrl(getCell(7)) || '',
+              };
+            })
+            .filter((doc) => doc.sl !== '' || doc.title.en !== '');
+        }
+
+        function showStatusMessage(message, isError = false) {
+          els.list.replaceChildren();
+          const div = document.createElement('div');
+          div.className = 'no-results';
+          if (isError) div.style.color = 'var(--danger)';
+          div.textContent = message;
+          els.list.appendChild(div);
         }
 
         async function fetchSheetData() {
-            // Step 1: Instant load from localStorage cache if available
-            try {
-                const cachedData = localStorage.getItem(CACHE_KEY);
-                if (cachedData) {
-                    documentDatabase = JSON.parse(cachedData);
-                    renderDocuments(); // Paints in under 50ms
-                }
-            } catch(e){}
-
-            // Step 2: Background live sync with Google Sheets
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8-second safety fallback
-
-                const response = await fetch(SHEET_URL, { signal: controller.signal });
-                clearTimeout(timeoutId);
-
-                if (!response.ok) throw new Error("Network response failed");
-                const text = await response.text();
-                const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-                const json = JSON.parse(jsonText);
-                const rows = json.table.rows || [];
-                
-                const freshDocs = parseRows(rows);
-                if (freshDocs.length > 0) {
-                    documentDatabase = freshDocs;
-                    try { localStorage.setItem(CACHE_KEY, JSON.stringify(freshDocs)); } catch(e){}
-                    renderDocuments(); // Re-renders cleanly with updated live data
-                }
-            } catch (err) {
-                console.warn("Live sheet sync failed or timed out:", err);
-                if (documentDatabase.length === 0) {
-                    els.list.innerHTML = `<div class="no-results" style="color: var(--danger);">${translations[currentLang].loadError}</div>`;
-                }
+          try {
+            const cachedData = localStorage.getItem(CACHE_KEY);
+            if (cachedData) {
+              const parsed = JSON.parse(cachedData);
+              if (Array.isArray(parsed)) {
+                documentDatabase = parsed;
+                renderDocuments();
+              }
             }
+          } catch {
+            // Ignore cache read error
+          }
+
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            const response = await fetch(SHEET_URL, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) throw new Error('Network response failed');
+            const text = await response.text();
+            const startIdx = text.indexOf('{');
+            const endIdx = text.lastIndexOf('}');
+            if (startIdx === -1 || endIdx === -1) throw new Error('Malformed sheet response');
+            const json = JSON.parse(text.substring(startIdx, endIdx + 1));
+            const rows = (json && json.table && Array.isArray(json.table.rows)) ? json.table.rows : [];
+
+            const freshDocs = parseRows(rows);
+            if (freshDocs.length > 0) {
+              documentDatabase = freshDocs;
+              try {
+                localStorage.setItem(CACHE_KEY, JSON.stringify(freshDocs));
+              } catch {
+                // Ignore storage quota error
+              }
+              renderDocuments();
+            }
+          } catch (err) {
+            console.warn('Live sheet sync failed or timed out:', err);
+            if (documentDatabase.length === 0) {
+              showStatusMessage(translations[currentLang].loadError, true);
+            }
+          }
         }
 
-        /* =========================================================================
-           5. RENDER & SORT ENGINE
-           ========================================================================= */
         function applyTranslations() {
-            const t = translations[currentLang];
-            
-            els.langBtn.textContent = t.toggleBtn;
-            document.getElementById('lblSearch').textContent = t.lblSearch;
-            els.search.placeholder = t.phSearch;
-            document.getElementById('lblCategory').textContent = t.lblCategory;
-            document.getElementById('lblSort').textContent = t.lblSort;
+          const t = translations[currentLang];
+          els.langBtn.textContent = t.toggleBtn;
+          document.getElementById('lblSearch').textContent = t.lblSearch;
+          els.search.placeholder = t.phSearch;
+          document.getElementById('lblCategory').textContent = t.lblCategory;
+          document.getElementById('lblSort').textContent = t.lblSort;
 
-            document.getElementById('optCatAll').textContent = t.cats.all;
-            document.getElementById('optCatCircular').textContent = t.cats.circular;
-            document.getElementById('optCatOrder').textContent = t.cats.order;
-            document.getElementById('optCatNotif').textContent = t.cats.notif;
-            document.getElementById('optCatScheme').textContent = t.cats.scheme;
-            document.getElementById('optCatOther').textContent = t.cats.other;
+          document.getElementById('optCatAll').textContent = t.cats.all;
+          document.getElementById('optCatCircular').textContent = t.cats.circular;
+          document.getElementById('optCatOrder').textContent = t.cats.order;
+          document.getElementById('optCatNotif').textContent = t.cats.notif;
+          document.getElementById('optCatScheme').textContent = t.cats.scheme;
+          document.getElementById('optCatOther').textContent = t.cats.other;
 
-            document.getElementById('optSortSlAsc').textContent = t.sorts.slAsc;
-            document.getElementById('optSortSlDesc').textContent = t.sorts.slDesc;
-            document.getElementById('optSortNew').textContent = t.sorts.new;
-            document.getElementById('optSortOld').textContent = t.sorts.old;
-            document.getElementById('optSortAZ').textContent = t.sorts.az;
-            document.getElementById('optSortZA').textContent = t.sorts.za;
+          document.getElementById('optSortSlAsc').textContent = t.sorts.slAsc;
+          document.getElementById('optSortSlDesc').textContent = t.sorts.slDesc;
+          document.getElementById('optSortNew').textContent = t.sorts.new;
+          document.getElementById('optSortOld').textContent = t.sorts.old;
+          document.getElementById('optSortAZ').textContent = t.sorts.az;
+          document.getElementById('optSortZA').textContent = t.sorts.za;
         }
 
         function formatDateDisplay(dateStr) {
-            if (!dateStr) return '';
-            if (dateStr.includes('-')) {
-                const parts = dateStr.split('-');
-                if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
-            }
-            return dateStr;
+          if (!dateStr) return '';
+          if (dateStr.includes('-')) {
+            const parts = dateStr.split('-');
+            if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+          }
+          return dateStr;
+        }
+
+        function safeTimestamp(dateStr) {
+          const ts = new Date(dateStr).getTime();
+          return Number.isFinite(ts) ? ts : 0;
         }
 
         function renderDocuments() {
-            const query = searchQuery.trim().toLowerCase();
-            let filtered = documentDatabase.filter(doc => {
-                const matchCat = (currentFilter === 'all' || doc.category === currentFilter);
-                const titleStr = (doc.title[currentLang] || doc.title.en || '').toLowerCase();
-                const slStr = (doc.sl || '').toLowerCase();
-                const matchSearch = !query || titleStr.includes(query) || slStr.includes(query);
-                return matchCat && matchSearch;
-            });
+          const query = searchQuery.trim().toLowerCase();
+          const filtered = documentDatabase.filter((doc) => {
+            const matchCat = currentFilter === 'all' || doc.category === currentFilter;
+            const titleStr = (doc.title && (doc.title[currentLang] || doc.title.en) || '').toLowerCase();
+            const slStr = String(doc.sl || '').toLowerCase();
+            const matchSearch = !query || titleStr.includes(query) || slStr.includes(query);
+            return matchCat && matchSearch;
+          });
 
-            filtered.sort((a, b) => {
-                const numA = parseInt(a.sl, 10) || 0;
-                const numB = parseInt(b.sl, 10) || 0;
+          filtered.sort((a, b) => {
+            const numA = parseInt(a.sl, 10) || 0;
+            const numB = parseInt(b.sl, 10) || 0;
 
-                if (currentSort === 'sl-asc') return numA - numB;
-                if (currentSort === 'sl-desc') return numB - numA;
-                if (currentSort === 'newest') return new Date(b.date) - new Date(a.date);
-                if (currentSort === 'oldest') return new Date(a.date) - new Date(b.date);
-                
-                const titleA = a.title[currentLang] || a.title.en;
-                const titleB = b.title[currentLang] || b.title.en;
-                if (currentSort === 'az') return titleA.localeCompare(titleB);
-                if (currentSort === 'za') return titleB.localeCompare(titleA);
-                
-                return numA - numB;
-            });
+            if (currentSort === 'sl-asc') return numA - numB;
+            if (currentSort === 'sl-desc') return numB - numA;
+            if (currentSort === 'newest') return safeTimestamp(b.date) - safeTimestamp(a.date);
+            if (currentSort === 'oldest') return safeTimestamp(a.date) - safeTimestamp(b.date);
 
-            const t = translations[currentLang];
-            if (filtered.length === 0) {
-                els.list.innerHTML = `<div class="no-results">${t.noResult}</div>`;
-                return;
+            const titleA = (a.title && (a.title[currentLang] || a.title.en)) || '';
+            const titleB = (b.title && (b.title[currentLang] || b.title.en)) || '';
+            if (currentSort === 'az') return titleA.localeCompare(titleB);
+            if (currentSort === 'za') return titleB.localeCompare(titleA);
+            return numA - numB;
+          });
+
+          const t = translations[currentLang];
+          if (filtered.length === 0) {
+            showStatusMessage(t.noResult, false);
+            return;
+          }
+
+          // Pure DOM creation (Zero innerHTML / inline onclick — eliminates XSS from external sheet rows)
+          const fragment = document.createDocumentFragment();
+
+          filtered.forEach((doc) => {
+            const formattedDate = formatDateDisplay(doc.date);
+            const translatedCategory = t.cats[doc.category] || doc.category;
+            const displayTitle = (doc.title && (doc.title[currentLang] || doc.title.en)) || 'Untitled Document';
+            const directUrl = formatDirectDownloadUrl(doc.fileUrl);
+            const cleanFileName = sanitizeFileName(doc.fileName);
+
+            const row = document.createElement('div');
+            row.className = 'doc-row';
+
+            const left = document.createElement('div');
+            left.className = 'doc-info-left';
+
+            const slSpan = document.createElement('span');
+            slSpan.className = 'doc-sl';
+            slSpan.textContent = String(doc.sl || '');
+
+            const typeSpan = document.createElement('span');
+            typeSpan.className = 'doc-type-badge';
+            typeSpan.textContent = String(doc.fileType || 'PDF');
+
+            const catSpan = document.createElement('span');
+            catSpan.className = 'doc-cat-badge';
+            catSpan.textContent = String(translatedCategory || '');
+
+            const textGroup = document.createElement('div');
+            textGroup.className = 'doc-text-group';
+            const titleHeading = document.createElement('h2');
+            titleHeading.className = 'doc-title';
+            titleHeading.textContent = displayTitle;
+            textGroup.appendChild(titleHeading);
+
+            left.append(slSpan, typeSpan, catSpan, textGroup);
+
+            const right = document.createElement('div');
+            right.className = 'doc-info-right';
+
+            const dateSpan = document.createElement('span');
+            dateSpan.className = 'doc-date';
+            dateSpan.append(createCalendarSvg(), document.createTextNode(' ' + formattedDate));
+            right.appendChild(dateSpan);
+
+            if (directUrl) {
+              const dlLink = document.createElement('a');
+              dlLink.className = 'download-btn';
+              dlLink.href = directUrl;
+              dlLink.download = cleanFileName;
+              dlLink.rel = 'noopener noreferrer';
+              dlLink.textContent = t.download;
+              dlLink.addEventListener('click', (event) => {
+                triggerDirectDownload(event, doc.fileUrl, cleanFileName);
+              });
+              right.appendChild(dlLink);
             }
 
-            // High-speed batched DOM injection via DocumentFragment
-            const fragment = document.createDocumentFragment();
+            row.append(left, right);
+            fragment.appendChild(row);
+          });
 
-            filtered.forEach(doc => {
-                const formattedDate = formatDateDisplay(doc.date);
-                const translatedCategory = t.cats[doc.category] || doc.category;
-                const displayTitle = doc.title[currentLang] || doc.title.en;
-                const directUrl = formatDirectDownloadUrl(doc.fileUrl);
-
-                const row = document.createElement('div');
-                row.className = 'doc-row';
-                
-                row.innerHTML = `
-                    <div class="doc-info-left">
-                        <span class="doc-sl">${doc.sl}</span>
-                        <span class="doc-type-badge">${doc.fileType}</span>
-                        <span class="doc-cat-badge">${translatedCategory}</span>
-                        
-                        <div class="doc-text-group">
-                            <h2 class="doc-title">${displayTitle}</h2>
-                        </div>
-                    </div>
-                    
-                    <div class="doc-info-right">
-                        <span class="doc-date">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> 
-                            ${formattedDate}
-                        </span>
-                        
-                        <a href="${directUrl}" download="${doc.fileName}" class="download-btn" onclick="triggerDirectDownload(event, '${doc.fileUrl}', '${doc.fileName}')">
-                            ${t.download}
-                        </a>
-                    </div>
-                `;
-                fragment.appendChild(row);
-            });
-
-            els.list.innerHTML = '';
-            els.list.appendChild(fragment);
+          els.list.replaceChildren(fragment);
         }
 
-        /* =========================================================================
-           6. EVENT LISTENERS
-           ========================================================================= */
         els.langBtn.addEventListener('click', () => {
-            currentLang = (currentLang === 'en') ? 'hi' : 'en';
-            applyTranslations();
-            renderDocuments();
+          currentLang = currentLang === 'en' ? 'hi' : 'en';
+          applyTranslations();
+          renderDocuments();
         });
 
+        const debouncedRender = window.BSEBCommon
+          ? window.BSEBCommon.debounce(renderDocuments, 120)
+          : renderDocuments;
+
         els.search.addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            renderDocuments();
+          searchQuery = e.target.value;
+          debouncedRender();
         });
 
         els.cat.addEventListener('change', (e) => {
-            currentFilter = e.target.value;
-            renderDocuments();
+          currentFilter = e.target.value;
+          renderDocuments();
         });
 
         els.sort.addEventListener('change', (e) => {
-            currentSort = e.target.value;
-            renderDocuments();
+          currentSort = e.target.value;
+          renderDocuments();
         });
 
         applyTranslations();
         fetchSheetData();
-
-        /* =========================================================================
-           7. THEME TOGGLE & MOBILE MENU
-           ========================================================================= */
-        (function themeModule(){
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const STORAGE_KEY = 'bseb-hub-theme';
-
-            function apply(theme){
-                if (theme === 'dark' || theme === 'light'){
-                    root.setAttribute('data-theme', theme);
-                } else {
-                    root.removeAttribute('data-theme');
-                }
-                const isDark = (root.getAttribute('data-theme') === 'dark' ||
-                    (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
-                btn.textContent = isDark ? '☀️' : '🌙';
-            }
-
-            let saved = null;
-            try { saved = localStorage.getItem(STORAGE_KEY); } catch(e){}
-            apply(saved);
-
-            btn.addEventListener('click', function(){
-                const current = root.getAttribute('data-theme') ||
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                const next = (current === 'dark') ? 'light' : 'dark';
-                apply(next);
-                try { localStorage.setItem(STORAGE_KEY, next); } catch(e){}
-            });
-        })();
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuBtn = document.getElementById('menuToggle');
-            const nav = document.querySelector('.main-nav');
-            if (menuBtn && nav) {
-                menuBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    nav.classList.toggle('open');
-                    menuBtn.innerHTML = nav.classList.contains('open') ? '✕' : '☰';
-                });
-            }
-        });
+      });
     </script>
 </body>
 </html>

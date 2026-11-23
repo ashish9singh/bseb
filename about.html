@@ -15,198 +15,19 @@
 
     <!-- Unified Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Portfolio Experience Timeline & Verified Skills Scoped Styles -->
-    <style>
-        .portfolio-section {
-            margin-bottom: 56px;
-        }
-
-        /* Institutional Experience Timeline */
-        .exp-timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .exp-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            padding: 28px 30px;
-            box-shadow: var(--shadow-sm);
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 24px;
-            align-items: start;
-            transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .exp-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .exp-period {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .exp-year-badge {
-            display: inline-block;
-            align-self: flex-start;
-            background: var(--surface-2);
-            color: var(--primary);
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-            border-radius: var(--radius-pill);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-        }
-
-        .exp-org {
-            font-size: 0.86rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .exp-details h3 {
-            font-family: var(--font-body);
-            font-size: 1.12rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 8px;
-        }
-
-        .exp-details p {
-            font-size: 0.92rem;
-            color: var(--text-muted);
-            line-height: 1.65;
-            margin-bottom: 12px;
-        }
-
-        .exp-highlights {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .exp-highlights li {
-            font-size: 0.88rem;
-            color: var(--text);
-            padding-left: 18px;
-            position: relative;
-            line-height: 1.55;
-        }
-
-        .exp-highlights li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .exp-highlights strong {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* Verified Skills Matrix (Credly & Core Competencies) */
-        .skills-matrix {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .skill-group-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            padding: 26px 28px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .skill-group-title {
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--primary);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .verified-chip-pool {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .v-chip {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 6px 13px;
-            border-radius: var(--radius-pill);
-            font-size: 0.81rem;
-            font-weight: 600;
-            transition: border-color 0.15s ease, color 0.15s ease;
-        }
-
-        .v-chip:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .cred-id-tag {
-            display: inline-block;
-            margin-top: 4px;
-            font-family: monospace;
-            font-size: 0.74rem;
-            color: var(--text-muted);
-            background: var(--surface-2);
-            padding: 2px 8px;
-            border-radius: 6px;
-            align-self: flex-start;
-        }
-
-        @media (max-width: 820px) {
-            .exp-card,
-            .skills-matrix {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .exp-card {
-                padding: 22px 20px;
-            }
-        }
-    </style>
 </head>
 <body>
 
     <!-- Sticky Navigation Header -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="https://bsebwala.in/" class="brand" aria-label="BSEB Portal Hub Home">
+            <a href="/" class="brand" aria-label="BSEB Portal Hub Home">
                 <div class="mark">BB</div>
                 <span class="full">BSEB Portal Hub</span>
             </a>
 
             <nav class="main-nav" id="mainNav">
-                <a href="https://bsebwala.in/">Home</a>
+                <a href="/">Home</a>
                 <a href="/aihub">AIHub</a>
                 <a href="/letter">Letter</a>
                 <a href="/fee">Fee</a>
@@ -217,8 +38,8 @@
             </nav>
 
             <div class="header-actions">
-                <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
-                <button class="icon-btn menu-toggle-btn" id="menuToggle" aria-label="Open Menu">☰</button>
+                <button class="icon-btn" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                <button class="icon-btn menu-toggle-btn" id="menuToggle" type="button" aria-label="Open Menu">☰</button>
             </div>
         </div>
     </header>
@@ -248,8 +69,8 @@
 
                 <div class="dev-hero-actions">
                     <a href="mailto:Ashishkumarsingh9@gmail.com" class="btn-primary">✉️ Book a Workshop / Project</a>
-                    <a href="https://cs-bihar.ai.studio/" class="btn-outline" target="_blank" rel="noopener">🚀 Explore CS Bihar Portal</a>
-                    <a href="https://www.credly.com/users/ashishkumarsingh9/badges" class="btn-outline" target="_blank" rel="noopener">🏆 Credly Badges</a>
+                    <a href="https://cs-bihar.ai.studio/" class="btn-outline" target="_blank" rel="noopener noreferrer">🚀 Explore CS Bihar Portal</a>
+                    <a href="https://www.credly.com/users/ashishkumarsingh9/badges" class="btn-outline" target="_blank" rel="noopener noreferrer">🏆 Credly Badges</a>
                 </div>
             </div>
         </section>
@@ -382,7 +203,7 @@
                     <h2>Verified Skills & Core Competencies</h2>
                     <p>Validated skills across Google Cloud, Microsoft Education, Generative AI, and Full-Stack EdTech development.</p>
                 </div>
-                <a href="https://www.credly.com/users/ashishkumarsingh9/skills" class="doc-link-btn" target="_blank" rel="noopener">🔗 View All Verified Skills on Credly</a>
+                <a href="https://www.credly.com/users/ashishkumarsingh9/skills" class="doc-link-btn" target="_blank" rel="noopener noreferrer">🔗 View All Verified Skills on Credly</a>
             </div>
 
             <div class="skills-matrix">
@@ -454,10 +275,10 @@
                 </div>
 
                 <div class="ledger-item">
-                    <span class="ledger-meta">Canva Design School • Issued Nov 16, 2026[cite: 13]</span>
-                    <h3>Engage Students with Canva (Canva Certified)[cite: 13]</h3>
-                    <p>Completed certified training presented by The Canva Team on designing interactive, visually engaging learning experiences for students[cite: 13].</p>
-                    <span class="cred-id-tag">Credential ID: 1ed9ab[cite: 13]</span>
+                    <span class="ledger-meta">Canva Design School • Issued Nov 16, 2026</span>
+                    <h3>Engage Students with Canva (Canva Certified)</h3>
+                    <p>Completed certified training presented by The Canva Team on designing interactive, visually engaging learning experiences for students.</p>
+                    <span class="cred-id-tag">Credential ID: 1ed9ab</span>
                 </div>
 
                 <div class="ledger-item">
@@ -480,18 +301,18 @@
                 <span class="ledger-meta">Flagship Community EdTech Initiative</span>
                 <h3>CS Bihar — Free AI & Computer Science Portal</h3>
                 <p>
-                    True technical mastery is measured by the community it uplifts. Through <a href="https://cs-bihar.ai.studio/" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 700;">cs-bihar.ai.studio</a>, I have built a <strong>100% free EdTech portal dedicated to Class 9–12 Hindi-medium students across Bihar</strong>—enabling anytime, anywhere Computer Science & AI learning with simplified Hindi notes, coding fundamentals, Cyber Safety guides, and self-paced study modules.
+                    True technical mastery is measured by the community it uplifts. Through <a href="https://cs-bihar.ai.studio/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-weight: 700;">cs-bihar.ai.studio</a>, I have built a <strong>100% free EdTech portal dedicated to Class 9–12 Hindi-medium students across Bihar</strong>—enabling anytime, anywhere Computer Science &amp; AI learning with simplified Hindi notes, coding fundamentals, Cyber Safety guides, and self-paced study modules.
                 </p>
                 <div class="social-row">
-                    <a href="https://cs-bihar.ai.studio/" class="social-chip" target="_blank" rel="noopener" style="border-color: var(--primary); color: var(--primary);">🚀 Launch CS Bihar Portal</a>
-                    <a href="https://bsebwala.in/" class="social-chip">🏠 BSEB Portal Hub</a>
+                    <a href="https://cs-bihar.ai.studio/" class="social-chip" target="_blank" rel="noopener noreferrer" style="border-color: var(--primary); color: var(--primary);">🚀 Launch CS Bihar Portal</a>
+                    <a href="/" class="social-chip">🏠 BSEB Portal Hub</a>
                     <a href="/aihub" class="social-chip">🤖 Ultimate AI Hub</a>
                     <a href="/learn" class="social-chip">🎥 Video Tutorials</a>
                 </div>
             </div>
 
             <div class="showcase-box">
-                <span class="ledger-meta">Philosophy & Creative Life</span>
+                <span class="ledger-meta">Philosophy &amp; Creative Life</span>
                 <h3>Beyond the Terminal</h3>
                 <blockquote class="quote-minimal">
                     "To me, programming and AI pedagogy are creative arts—a balance of structural logic, human empathy, and continuous learning."
@@ -500,8 +321,8 @@
                     Away from code editors and classrooms, I write poetry, embark on solo motorcycle journeys, play badminton, and capture candid visual stories through <em>Ashish’s Lens</em>.
                 </p>
                 <div class="social-row">
-                    <a href="https://www.linkedin.com/in/ashish9singh/" class="social-chip" target="_blank" rel="noopener">💼 LinkedIn</a>
-                    <a href="https://ashish9singh.wordpress.com/ashishs-lens/" class="social-chip" target="_blank" rel="noopener">📷 Ashish’s Lens</a>
+                    <a href="https://www.linkedin.com/in/ashish9singh/" class="social-chip" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+                    <a href="https://ashish9singh.wordpress.com/ashishs-lens/" class="social-chip" target="_blank" rel="noopener noreferrer">📷 Ashish’s Lens</a>
                 </div>
             </div>
         </section>
@@ -515,50 +336,6 @@
         </div>
     </footer>
 
-    <!-- Interactive Scripts -->
-    <script>
-        // Theme Toggle
-        (function themeModule() {
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const STORAGE_KEY = 'bseb-hub-theme';
-
-            function apply(theme) {
-                if (theme === 'dark' || theme === 'light') {
-                    root.setAttribute('data-theme', theme);
-                } else {
-                    root.removeAttribute('data-theme');
-                }
-                const isDark = (root.getAttribute('data-theme') === 'dark' ||
-                    (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
-                btn.textContent = isDark ? '☀️' : '🌙';
-            }
-
-            let saved = null;
-            try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
-            apply(saved);
-
-            btn.addEventListener('click', function () {
-                const current = root.getAttribute('data-theme') ||
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                const next = current === 'dark' ? 'light' : 'dark';
-                apply(next);
-                try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
-            });
-        })();
-
-        // Mobile Menu Toggle
-        (function mobileMenu() {
-            const menuBtn = document.getElementById('menuToggle');
-            const nav = document.getElementById('mainNav');
-
-            if (menuBtn && nav) {
-                menuBtn.addEventListener('click', () => {
-                    const isOpen = nav.classList.toggle('open');
-                    menuBtn.innerHTML = isOpen ? '✕' : '☰';
-                });
-            }
-        })();
-    </script>
+    <script src="/js/site-common.js" defer></script>
 </body>
 </html>
