@@ -1,6 +1,8 @@
 /* ==========================================================================
-   BSEB ASSISTANT — FLOATING BOTTOM-RIGHT AI WIDGET FOR BSEBWALA.IN
-   Grounded site search + summarization + clickable page links (Zero innerHTML)
+   BSEB ASSISTANT — FLOATING BOTTOM-RIGHT WIDGET FOR BSEBWALA.IN
+   Supports live Gemini AI (/api/chat) when configured and instant grounded
+   bsebwala.in search (/api/search + offline local cache) on any network.
+   Zero innerHTML; all links validated before rendering.
    ========================================================================== */
 (function initBsebAssistant() {
   'use strict';
@@ -9,13 +11,16 @@
 
   const HISTORY_KEY = 'bseb-assistant-history-v1';
   const LANG_KEY = 'bseb-assistant-lang-v1';
+  const INDEX_CACHE_KEY = 'bseb-search-index-v2';
+  const INDEX_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
   const MAX_STORED_MESSAGES = 20;
 
   const COPY = {
     en: {
       fabLabel: 'BSEB Assistant',
       title: 'BSEB Assistant',
-      subtitle: 'Search exams, fees, syllabus & notes',
+      subtitleAi: 'AI Search • Exams, Fees & Notes',
+      subtitleSearch: 'Instant bsebwala.in Search',
       langSwitch: 'हिंदी',
       clearTitle: 'Clear conversation',
       closeTitle: 'Close assistant',
@@ -33,11 +38,16 @@
       internalTag: 'bsebwala.in',
       externalTag: 'Official link',
       retry: 'Try again',
+      offlineHeader: 'Offline cached search results from bsebwala.in:',
+      offlineNoMatch:
+        'No offline match found for that phrase. Try keywords like "Class 10 fee", "syllabus", "dummy admit card", or "scholarship".',
+      timeoutError: 'Slow connection timed out. Please try again.',
     },
     hi: {
       fabLabel: 'BSEB सहायक',
       title: 'BSEB Assistant',
-      subtitle: 'परीक्षा, शुल्क, सिलेबस और नोट्स खोजें',
+      subtitleAi: 'AI खोज • परीक्षा, शुल्क और नोट्स',
+      subtitleSearch: 'bsebwala.in त्वरित खोज',
       langSwitch: 'English',
       clearTitle: 'चैट साफ़ करें',
       closeTitle: 'बंद करें',
@@ -55,6 +65,10 @@
       internalTag: 'bsebwala.in',
       externalTag: 'आधिकारिक लिंक',
       retry: 'पुनः प्रयास करें',
+      offlineHeader: 'ऑफ़लाइन कैश्ड bsebwala.in खोज परिणाम:',
+      offlineNoMatch:
+        'ऑफ़लाइन कैश में सीधा मिलान नहीं मिला। कृपया "फीस", "सिलेबस", "एडमिट कार्ड" या "छात्रवृत्ति" जैसे शब्द लिखें।',
+      timeoutError: 'धीमे नेटवर्क के कारण समय समाप्त हो गया। कृपया पुनः प्रयास करें।',
     },
   };
 
@@ -64,6 +78,10 @@
     lang: 'en',
     messages: [],
     lastFailedQuery: null,
+    aiEnabled: null, // null = not checked yet, true = Gemini active, false = Instant Site Search
+    statusPromise: null,
+    offlineIndex: null,
+    indexPromise: null,
   };
 
   function safeUrl(raw) {
@@ -79,6 +97,12 @@
     } catch {
       return null;
     }
+  }
+
+  function fetchWithTimeout(url, options = {}, timeoutMs = 10000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer));
   }
 
   function loadSession() {
@@ -113,6 +137,175 @@
     } catch {
       // Ignore storage failures in private browsing
     }
+  }
+
+  function loadCachedOfflineIndex() {
+    if (Array.isArray(state.offlineIndex) && state.offlineIndex.length > 0) {
+      return state.offlineIndex;
+    }
+    try {
+      const raw = localStorage.getItem(INDEX_CACHE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
+          state.offlineIndex = parsed.items;
+          return state.offlineIndex;
+        }
+      }
+    } catch {
+      // Ignore invalid cache
+    }
+    return null;
+  }
+
+  function ensureOfflineIndexCached() {
+    if (state.indexPromise) return state.indexPromise;
+    try {
+      const raw = localStorage.getItem(INDEX_CACHE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (
+          parsed &&
+          Array.isArray(parsed.items) &&
+          parsed.items.length > 0 &&
+          Date.now() - (parsed.ts || 0) < INDEX_CACHE_TTL_MS
+        ) {
+          state.offlineIndex = parsed.items;
+          return Promise.resolve(state.offlineIndex);
+        }
+      }
+    } catch {
+      // Fall through to network fetch
+    }
+
+    state.indexPromise = fetchWithTimeout('/api/search-index.json', {}, 8000)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && Array.isArray(data.items) && data.items.length > 0) {
+          state.offlineIndex = data.items;
+          try {
+            localStorage.setItem(
+              INDEX_CACHE_KEY,
+              JSON.stringify({ ts: Date.now(), items: data.items })
+            );
+          } catch {
+            // Storage quota full — keep in memory only
+          }
+        }
+        return state.offlineIndex;
+      })
+      .catch(() => loadCachedOfflineIndex())
+      .finally(() => {
+        state.indexPromise = null;
+      });
+
+    return state.indexPromise;
+  }
+
+  function checkAssistantStatus() {
+    if (state.aiEnabled !== null) return Promise.resolve(state.aiEnabled);
+    if (state.statusPromise) return state.statusPromise;
+
+    state.statusPromise = fetchWithTimeout('/api/assistant/status', {}, 3500)
+      .then((res) => (res.ok ? res.json() : { aiEnabled: false }))
+      .then((data) => {
+        state.aiEnabled = Boolean(data && data.aiEnabled);
+        updateSubtitle();
+        return state.aiEnabled;
+      })
+      .catch(() => {
+        // Network slow or offline — default to instant/offline search without pretending AI is live
+        state.aiEnabled = false;
+        updateSubtitle();
+        return false;
+      })
+      .finally(() => {
+        state.statusPromise = null;
+      });
+
+    return state.statusPromise;
+  }
+
+  function runOfflineLocalSearch(query, lang) {
+    const items = loadCachedOfflineIndex();
+    if (!items || items.length === 0) return null;
+
+    const t = COPY[lang] || COPY.en;
+    const isHi = /[\u0900-\u097F]/.test(query) || lang === 'hi';
+    const cleanQ = String(query || '').trim().toLowerCase();
+    const tokens = cleanQ
+      .replace(/[^\p{L}\p{N}\s+-]/gu, ' ')
+      .split(/\s+/)
+      .filter((w) => w.length > 1);
+
+    const scored = [];
+    for (const item of items) {
+      const title = String(item.t || '').toLowerCase();
+      const blob = `${item.t || ''} ${item.d || ''} ${item.c || ''} ${item.k || ''}`.toLowerCase();
+      let score = 0;
+      if (cleanQ.length >= 3 && title.includes(cleanQ)) score += 12;
+      else if (cleanQ.length >= 3 && blob.includes(cleanQ)) score += 6;
+
+      for (const tok of tokens) {
+        if (title.includes(tok)) score += 5;
+        else if (blob.includes(tok)) score += 2.5;
+      }
+      if (score > 0) scored.push({ item, score });
+    }
+
+    scored.sort((a, b) => b.score - a.score);
+    const top = scored.slice(0, 6).map((s) => s.item);
+
+    if (top.length === 0) {
+      return {
+        answer: t.offlineNoMatch,
+        links: [
+          { label: 'BSEB Portal Hub — Home', url: '/', note: 'bsebwala.in', external: false },
+          { label: 'Fee Calculator & Structure', url: '/fee', note: 'Memo 720', external: false },
+        ],
+        followUps: t.starters.slice(0, 3),
+      };
+    }
+
+    const specific = top.filter((i) => i.c !== 'bsebwala.in Page');
+    const pool = specific.length > 0 ? specific.slice(0, 3) : top.slice(0, 2);
+    const lines = [t.offlineHeader];
+    for (const item of pool) {
+      const desc = String(item.d || '');
+      const shortDesc = desc.length > 190 ? desc.slice(0, 187).trimEnd() + '…' : desc;
+      lines.push(`- ${item.t}: ${shortDesc}`);
+    }
+
+    const seen = new Set();
+    const links = [];
+    for (const item of top) {
+      if (item.r && !seen.has(item.r)) {
+        seen.add(item.r);
+        links.push({
+          label: item.pt || item.t,
+          url: item.r,
+          note: item.c || 'bsebwala.in',
+          external: false,
+        });
+      }
+      if (links.length >= 4) break;
+      if (item.u && !seen.has(item.u)) {
+        seen.add(item.u);
+        links.push({
+          label: item.t,
+          url: item.u,
+          note: item.c || 'Official link',
+          external: item.u.startsWith('http://') || item.u.startsWith('https://'),
+        });
+      }
+      if (links.length >= 4) break;
+    }
+
+    return {
+      answer: lines.join('\n'),
+      links,
+      followUps: isHi ? COPY.hi.starters.slice(0, 3) : COPY.en.starters.slice(0, 3),
+    };
   }
 
   function createSvgIcon(pathD, size = 18) {
@@ -219,6 +412,11 @@
   panel.append(header, messagesEl, form);
   root.append(panel, fab);
   document.body.appendChild(root);
+
+  function updateSubtitle() {
+    const t = COPY[state.lang];
+    subtitleEl.textContent = state.aiEnabled === true ? t.subtitleAi : t.subtitleSearch;
+  }
 
   function renderTextLines(container, text) {
     const lines = String(text || '').split(/\n+/).filter((l) => l.trim().length > 0);
@@ -373,7 +571,7 @@
     const t = COPY[state.lang];
     fabText.textContent = t.fabLabel;
     titleEl.textContent = t.title;
-    subtitleEl.textContent = t.subtitle;
+    updateSubtitle();
     langBtn.textContent = t.langSwitch;
     clearBtn.title = t.clearTitle;
     clearBtn.setAttribute('aria-label', t.clearTitle);
@@ -390,6 +588,8 @@
     fab.classList.toggle('is-open', nextOpen);
     fab.setAttribute('aria-expanded', String(nextOpen));
     if (nextOpen) {
+      checkAssistantStatus();
+      ensureOfflineIndexCached();
       renderMessages();
       setTimeout(() => input.focus(), 40);
     }
@@ -399,6 +599,7 @@
     const text = String(rawText || '').trim();
     if (!text || state.loading) return;
 
+    const t = COPY[state.lang];
     state.lastFailedQuery = null;
     if (!skipUserPush) {
       state.messages.push({ role: 'user', text });
@@ -410,40 +611,87 @@
     saveSession();
     renderMessages();
 
-    const historyPayload = state.messages
-      .slice(0, -1)
-      .filter((m) => !m.isError)
-      .slice(-8)
-      .map((m) => ({ role: m.role, text: m.text }));
-
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: text,
-          lang: state.lang,
-          currentPath: window.location.pathname || '/',
-          history: historyPayload,
-        }),
-      });
+      const aiEnabled = await checkAssistantStatus();
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(data.error || 'Could not reach BSEB Assistant right now.');
+      if (aiEnabled) {
+        // Live Gemini AI mode (server-side /api/chat — errors propagate honestly, never faked)
+        const historyPayload = state.messages
+          .slice(0, -1)
+          .filter((m) => !m.isError)
+          .slice(-8)
+          .map((m) => ({ role: m.role, text: m.text }));
+
+        const res = await fetchWithTimeout(
+          '/api/chat',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: text,
+              lang: state.lang,
+              currentPath: window.location.pathname || '/',
+              history: historyPayload,
+            }),
+          },
+          12000
+        );
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const err = new Error(data.error || 'Could not reach BSEB Assistant right now.');
+          err.links = Array.isArray(data.links) ? data.links : [];
+          throw err;
+        }
+
+        state.messages.push({
+          role: 'assistant',
+          text: data.answer || '',
+          links: Array.isArray(data.links) ? data.links : [],
+          followUps: Array.isArray(data.followUps) ? data.followUps : [],
+        });
+      } else {
+        // Instant Grounded Site Search mode (/api/search, with local offline cache fallback)
+        const params = new URLSearchParams({ q: text, lang: state.lang });
+        try {
+          const res = await fetchWithTimeout(`/api/search?${params.toString()}`, {}, 8000);
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            throw new Error(data.error || 'Search temporarily unavailable.');
+          }
+
+          state.messages.push({
+            role: 'assistant',
+            text: data.answer || '',
+            links: Array.isArray(data.links) ? data.links : [],
+            followUps: Array.isArray(data.followUps) ? data.followUps : [],
+          });
+        } catch (searchErr) {
+          // If network dropped or offline on slow 2G, serve instant offline cached search
+          const offlineResult = runOfflineLocalSearch(text, state.lang);
+          if (offlineResult) {
+            state.messages.push({
+              role: 'assistant',
+              text: offlineResult.answer,
+              links: offlineResult.links,
+              followUps: offlineResult.followUps,
+            });
+          } else {
+            throw searchErr;
+          }
+        }
       }
-
-      state.messages.push({
-        role: 'assistant',
-        text: data.answer || '',
-        links: Array.isArray(data.links) ? data.links : [],
-        followUps: Array.isArray(data.followUps) ? data.followUps : [],
-      });
     } catch (err) {
       state.lastFailedQuery = text;
+      const isAbort = err && err.name === 'AbortError';
       state.messages.push({
         role: 'assistant',
-        text: err && err.message ? err.message : 'Something went wrong. Please try again.',
+        text: isAbort
+          ? t.timeoutError
+          : err && err.message
+            ? err.message
+            : 'Something went wrong. Please try again.',
+        links: err && Array.isArray(err.links) ? err.links : [],
         isError: true,
       });
     } finally {

@@ -1,5 +1,7 @@
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
+import zlib from 'zlib';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, ThinkingLevel, Type } from '@google/genai';
 import { buildSiteIndex } from './lib/site-index.js';
@@ -7,6 +9,31 @@ import { buildSiteIndex } from './lib/site-index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname);
+
+// Load local .env file if present (never overrides existing environment variables)
+(function loadLocalEnv() {
+  const envPath = path.join(ROOT_DIR, '.env');
+  if (!fs.existsSync(envPath)) return;
+  try {
+    const lines = fs.readFileSync(envPath, 'utf-8').split(/\r?\n/);
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eq = trimmed.indexOf('=');
+      if (eq <= 0) continue;
+      const key = trimmed.slice(0, eq).trim();
+      let val = trimmed.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      if (key && !(key in process.env)) {
+        process.env[key] = val;
+      }
+    }
+  } catch {
+    // Ignore unreadable .env
+  }
+})();
 
 const app = express();
 app.disable('x-powered-by');
@@ -27,6 +54,7 @@ const CSP_HEADER = [
   "img-src 'self' data: https://img.youtube.com https://api.qrserver.com https://pagead2.googlesyndication.com https://www.google-analytics.com https://googleads.g.doubleclick.net",
   "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://ep2.adtrafficquality.google",
   "connect-src 'self' https://docs.google.com https://script.google.com https://script.googleusercontent.com https://bsebwala-news-api2.vercel.app https://translate.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://pagead2.googlesyndication.com",
+  "worker-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self' https://script.google.com",
@@ -38,6 +66,61 @@ app.use((_req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  next();
+});
+
+// Lightweight Brotli/Gzip compression middleware (75-85% bandwidth reduction for slow 2G/3G networks)
+const COMPRESSIBLE_RE = /^(text\/|application\/(javascript|json|xml|xhtml\+xml)|image\/svg\+xml)/i;
+const compressedFileCache = new Map();
+
+function compressBuffer(buf, encoding) {
+  if (encoding === 'br') {
+    return zlib.brotliCompressSync(buf, {
+      params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 4 },
+    });
+  }
+  return zlib.gzipSync(buf, { level: 6 });
+}
+
+app.use((req, res, next) => {
+  const accept = String(req.headers['accept-encoding'] || '');
+  const encoding = accept.includes('br') ? 'br' : accept.includes('gzip') ? 'gzip' : null;
+  if (!encoding) return next();
+
+  const origSend = res.send.bind(res);
+  res.send = function compressedSend(body) {
+    if (res.headersSent || res.getHeader('Content-Encoding') || req.method === 'HEAD') {
+      return origSend(body);
+    }
+    const contentType = String(res.getHeader('Content-Type') || '');
+    const isJsonObj = body !== null && typeof body === 'object' && !Buffer.isBuffer(body);
+    if (!isJsonObj && contentType && !COMPRESSIBLE_RE.test(contentType)) {
+      return origSend(body);
+    }
+
+    let rawBuf;
+    if (Buffer.isBuffer(body)) {
+      rawBuf = body;
+    } else if (typeof body === 'string') {
+      rawBuf = Buffer.from(body, 'utf-8');
+    } else if (isJsonObj) {
+      if (!contentType) res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      rawBuf = Buffer.from(JSON.stringify(body), 'utf-8');
+    } else {
+      return origSend(body);
+    }
+
+    if (rawBuf.length < 512) {
+      return origSend(body);
+    }
+
+    const compressed = compressBuffer(rawBuf, encoding);
+    res.setHeader('Content-Encoding', encoding);
+    res.setHeader('Vary', 'Accept-Encoding');
+    res.setHeader('Content-Length', String(compressed.length));
+    return origSend(compressed);
+  };
+
   next();
 });
 
@@ -72,7 +155,7 @@ function checkRateLimit(clientKey) {
 
 // Gemini client helper (server-side only, reads process.env.GEMINI_API_KEY)
 function getGeminiClient() {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
   if (!apiKey || !apiKey.trim()) return null;
   return new GoogleGenAI({
     apiKey: apiKey.trim(),
@@ -82,6 +165,34 @@ function getGeminiClient() {
       },
     },
   });
+}
+
+function buildDirectoryLinks(matchedEntries, maxLinks = 4) {
+  const seen = new Set();
+  const links = [];
+  for (const match of matchedEntries) {
+    if (match.pageRoute && !seen.has(match.pageRoute) && siteIndex.isAllowedLink(match.pageRoute)) {
+      seen.add(match.pageRoute);
+      links.push({
+        label: match.pageTitle || match.title,
+        url: match.pageRoute,
+        note: match.category || 'bsebwala.in',
+        external: false,
+      });
+    }
+    if (links.length >= maxLinks) break;
+    if (match.externalUrl && !seen.has(match.externalUrl) && siteIndex.isAllowedLink(match.externalUrl)) {
+      seen.add(match.externalUrl);
+      links.push({
+        label: match.title,
+        url: match.externalUrl,
+        note: match.category || 'Official resource',
+        external: match.externalUrl.startsWith('http://') || match.externalUrl.startsWith('https://'),
+      });
+    }
+    if (links.length >= maxLinks) break;
+  }
+  return links;
 }
 
 const CHAT_RESPONSE_SCHEMA = {
@@ -143,7 +254,51 @@ async function generateWithRetry(ai, params, maxRetries = 1) {
   throw lastError;
 }
 
-// API Route: BSEB Assistant Chatbot
+// Precomputed compact search index JSON for fast / offline assistant lookups
+const CLIENT_SEARCH_INDEX_JSON = JSON.stringify({
+  version: 2,
+  total: siteIndex.totalIndexed,
+  items: siteIndex.getClientIndex(),
+});
+
+// API Route: Assistant capability status
+app.get('/api/assistant/status', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.json({
+    aiEnabled: Boolean(getGeminiClient()),
+    indexedCount: siteIndex.totalIndexed,
+  });
+});
+
+// API Route: Compact static search index for offline / 2G client caching
+app.get('/api/search-index.json', (_req, res) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+  res.send(CLIENT_SEARCH_INDEX_JSON);
+});
+
+// API Route: Fast grounded bsebwala.in Instant Search (always available, zero external latency)
+app.get('/api/search', (req, res) => {
+  const clientIp = req.ip || req.socket?.remoteAddress || 'unknown';
+  if (!checkRateLimit(clientIp)) {
+    return res.status(429).json({
+      error: 'Too many requests. Please wait a minute before searching again.',
+    });
+  }
+
+  const rawQuery = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+  if (!rawQuery || rawQuery.length > 600) {
+    return res.status(400).json({
+      error: 'Please enter a question between 1 and 600 characters.',
+    });
+  }
+
+  const lang = req.query.lang === 'hi' ? 'hi' : 'en';
+  res.setHeader('Cache-Control', 'public, max-age=60');
+  return res.json(siteIndex.buildInstantAnswer(rawQuery, lang));
+});
+
+// API Route: BSEB Assistant Chatbot (Server-side Gemini AI)
 app.post('/api/chat', async (req, res) => {
   const clientIp = req.ip || req.socket?.remoteAddress || 'unknown';
   if (!checkRateLimit(clientIp)) {
@@ -184,16 +339,20 @@ app.post('/api/chat', async (req, res) => {
       text: item.text.trim().slice(0, 500),
     }));
 
-  const ai = getGeminiClient();
-  if (!ai) {
-    return res.status(503).json({
-      error:
-        'BSEB Assistant is not configured yet. Please set GEMINI_API_KEY in Settings > Secrets.',
-    });
-  }
-
   // Search across indexed bsebwala.in pages
   const matchedEntries = siteIndex.search(rawMessage, 10);
+
+  const ai = getGeminiClient();
+  if (!ai) {
+    const fallbackLinks = buildDirectoryLinks(matchedEntries, 4);
+    return res.status(503).json({
+      error:
+        lang === 'hi'
+          ? 'लाइव AI उत्तर अभी सक्रिय नहीं हैं (सर्वर पर GEMINI_API_KEY सेट नहीं है)। नीचे bsebwala.in के संबंधित पेज लिंक दिए गए हैं:'
+          : 'Live AI answers are not active yet because GEMINI_API_KEY is not configured in Settings > Secrets. Meanwhile, here are matching pages on bsebwala.in:',
+      links: fallbackLinks,
+    });
+  }
 
   const systemInstruction = [
     'You are "BSEB Assistant", the helpful student & teacher AI assistant embedded on bsebwala.in (BSEB Portal Hub).',
@@ -346,15 +505,92 @@ app.use((req, res, next) => {
   next();
 });
 
+// Fast compressed static file handler for text assets (HTML, CSS, JS, XML)
+const STATIC_TEXT_TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+};
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  const accept = String(req.headers['accept-encoding'] || '');
+  const encoding = accept.includes('br') ? 'br' : accept.includes('gzip') ? 'gzip' : null;
+  if (!encoding) return next();
+
+  let reqPath;
+  try {
+    reqPath = decodeURIComponent(req.path);
+  } catch {
+    return next();
+  }
+
+  const candidates = reqPath === '/'
+    ? ['index.html']
+    : [reqPath.replace(/^\/+/, ''), reqPath.replace(/^\/+/, '') + '.html'];
+
+  for (const rel of candidates) {
+    const resolved = path.resolve(ROOT_DIR, rel);
+    if (!resolved.startsWith(ROOT_DIR + path.sep)) continue;
+    const ext = path.extname(resolved).toLowerCase();
+    const contentType = STATIC_TEXT_TYPES[ext];
+    if (!contentType) continue;
+
+    let stat;
+    try {
+      stat = fs.statSync(resolved);
+      if (!stat.isFile()) continue;
+    } catch {
+      continue;
+    }
+
+    const etag = `W/"${stat.size.toString(16)}-${Math.floor(stat.mtimeMs).toString(16)}-${encoding}"`;
+    if (req.headers['if-none-match'] === etag) {
+      res.setHeader('ETag', etag);
+      res.setHeader('Vary', 'Accept-Encoding');
+      return res.status(304).end();
+    }
+
+    const cacheKey = `${resolved}|${stat.mtimeMs}|${encoding}`;
+    let payload = compressedFileCache.get(cacheKey);
+    if (!payload) {
+      if (compressedFileCache.size > 80) compressedFileCache.clear();
+      const raw = fs.readFileSync(resolved);
+      payload = compressBuffer(raw, encoding);
+      compressedFileCache.set(cacheKey, payload);
+    }
+
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Encoding', encoding);
+    res.setHeader('Vary', 'Accept-Encoding');
+    res.setHeader('ETag', etag);
+    res.setHeader('Content-Length', String(payload.length));
+
+    if (ext === '.html' || path.basename(resolved) === 'sw.js') {
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    } else {
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+    }
+
+    return res.status(200).end(payload);
+  }
+
+  next();
+});
+
 app.use(
   express.static(ROOT_DIR, {
     extensions: ['html'],
     index: 'index.html',
     dotfiles: 'deny',
-    maxAge: '1h',
+    maxAge: '1d',
     setHeaders(res, filePath) {
-      if (filePath.endsWith('.html')) {
-        res.setHeader('Cache-Control', 'no-cache');
+      if (filePath.endsWith('.html') || filePath.endsWith(`${path.sep}sw.js`)) {
+        res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+      } else {
+        res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
       }
     },
   })

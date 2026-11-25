@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149" crossorigin="anonymous"></script>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-JNFE9PSTH3');
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Official Letters & Documents — BSEB Portal Hub</title>
+    <title>Official Letters &amp; Documents — BSEB Portal Hub</title>
     <meta name="description" content="Official letters, circulars, notifications, and administrative orders from the Bihar School Examination Board and Education Department.">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Non-blocking Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" data-async-font="1">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 </head>
 <body>
 
@@ -139,7 +129,8 @@
             },
             download: 'Download',
             noResult: 'No documents found matching your criteria.',
-            loadError: 'Unable to load document database. Please verify sheet permissions.',
+            loadError: 'Unable to load document database right now. Check your network and try again.',
+            retry: 'Retry',
           },
           hi: {
             toggleBtn: 'View in English',
@@ -159,7 +150,8 @@
             },
             download: 'डाउनलोड',
             noResult: 'आपकी खोज से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।',
-            loadError: 'डेटाबेस लोड करने में त्रुटि। कृपया सुनिश्चित करें कि शीट लिंक साझा है।',
+            loadError: 'डेटाबेस लोड नहीं हो सका। कृपया नेटवर्क जांचें और पुनः प्रयास करें।',
+            retry: 'पुनः प्रयास करें',
           },
         };
 
@@ -317,7 +309,22 @@
           const div = document.createElement('div');
           div.className = 'no-results';
           if (isError) div.style.color = 'var(--danger)';
-          div.textContent = message;
+
+          const p = document.createElement('p');
+          p.textContent = message;
+          div.appendChild(p);
+
+          if (isError) {
+            const retryBtn = document.createElement('button');
+            retryBtn.type = 'button';
+            retryBtn.className = 'retry-action-btn';
+            retryBtn.textContent = translations[currentLang].retry;
+            retryBtn.addEventListener('click', () => {
+              showStatusMessage(translations[currentLang].loading, false);
+              fetchSheetData();
+            });
+            div.appendChild(retryBtn);
+          }
           els.list.appendChild(div);
         }
 
@@ -336,8 +343,9 @@
           }
 
           try {
+            const slow = Boolean(window.BSEBCommon && window.BSEBCommon.isSlowNetwork && window.BSEBCommon.isSlowNetwork());
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            const timeoutId = setTimeout(() => controller.abort(), slow ? 12000 : 8000);
             const response = await fetch(SHEET_URL, { signal: controller.signal });
             clearTimeout(timeoutId);
 

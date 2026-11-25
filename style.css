@@ -4473,3 +4473,124 @@ footer p + p {
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   14. SLOW-NETWORK & RENDER PERFORMANCE OPTIMIZATIONS + VIDEO FACADE
+   ========================================================================== */
+.section,
+.ai-section,
+.ledger-section,
+.table-section,
+.portfolio-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
+}
+
+/* On 2G / Save-Data devices, skip GPU-heavy backdrop blur & decorative pulses without changing colors or layout */
+html.slow-network header.site,
+html.slow-network .site-header,
+html.slow-network .modal-overlay {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html.slow-network .pulse {
+  animation: none !important;
+}
+
+/* Click-to-Play YouTube Facade (learn.html) */
+.video-facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: #0F0A1A;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-facade-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.video-facade:hover .video-facade-poster {
+  transform: scale(1.03);
+  opacity: 0.78;
+}
+
+.video-facade-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 10, 26, 0.12) 0%, rgba(15, 10, 26, 0.58) 100%);
+  pointer-events: none;
+}
+
+.video-facade-play {
+  position: relative;
+  z-index: 2;
+  width: 68px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 0, 0, 0.92);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.video-facade:hover .video-facade-play,
+.video-facade:focus-visible .video-facade-play {
+  transform: scale(1.08);
+  background: #FF0000;
+}
+
+.video-facade-hint {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  z-index: 2;
+  background: rgba(18, 13, 28, 0.82);
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+}
+
+.retry-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--primary);
+  background: var(--surface-2);
+  color: var(--primary);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.retry-action-btn:hover {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+

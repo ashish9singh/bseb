@@ -8,32 +8,14 @@
   <meta name="description" content="Structured video library with live playlist sidebar and bookmarking functionality for MS Office, C++, ICT, and Python courses.">
   <meta name="theme-color" content="#7b2ff7">
 
-  <!-- ============================================================
-       GOOGLE ANALYTICS & ADSENSE INTEGRATION
-       ============================================================ -->
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7625973314285149" crossorigin="anonymous"></script>
-  
-  <!-- Google Tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNFE9PSTH3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-JNFE9PSTH3');
-  </script>
+  <!-- External Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 
-  <!-- Google Typography Standard -->
+  <!-- Non-blocking Google Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- ============================================================
-       EXTERNAL MASTER STYLESHEET
-       (Uncomment the link below when you move styles into style.css)
-       ============================================================ -->
-      <link rel="stylesheet" href="style.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" data-async-font="1">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 </head>
 <body>
 
@@ -92,14 +74,7 @@
         <!-- Left Stage: Video Frame & Controls -->
         <div class="video-stage">
           <div class="video-screen-wrapper" id="videoWrapper">
-            <iframe 
-              id="mainVideoPlayer"
-              src=""
-              title="Computer Science Video Player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin" 
-              allowfullscreen>
-            </iframe>
+            <!-- Lightweight Click-to-Play YouTube facade mounted by JS; real iframe loads only on click -->
           </div>
 
           <div class="player-meta-bar">
@@ -437,6 +412,61 @@
       renderSidebarPlaylist();
     }
 
+    function mountYouTubeIframe(lesson, course, autoplay = true) {
+      const wrapper = $('videoWrapper');
+      if (!wrapper || !lesson || !course) return;
+      wrapper.replaceChildren();
+
+      const iframe = document.createElement('iframe');
+      iframe.id = 'mainVideoPlayer';
+      iframe.title = lesson.title;
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(lesson.videoId)}?list=${encodeURIComponent(course.playlistId)}&rel=0&playsinline=1${autoplay ? '&autoplay=1' : ''}`;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      wrapper.appendChild(iframe);
+    }
+
+    function renderVideoFacade(lesson, course) {
+      const wrapper = $('videoWrapper');
+      if (!wrapper || !lesson || !course) return;
+      wrapper.replaceChildren();
+
+      const isHi = currentLang === 'hi';
+      const isSlow = Boolean(window.BSEBCommon && window.BSEBCommon.isSlowNetwork && window.BSEBCommon.isSlowNetwork());
+      const thumbQuality = isSlow ? 'mqdefault' : 'hqdefault';
+      const displayTitle = isHi && lesson.hi_title ? lesson.hi_title : lesson.title;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'video-facade';
+      btn.setAttribute('aria-label', `${isHi ? 'वीडियो चलाएँ' : 'Play video'}: ${displayTitle}`);
+      btn.addEventListener('click', () => mountYouTubeIframe(lesson, course, true));
+
+      const img = document.createElement('img');
+      img.className = 'video-facade-poster';
+      img.src = `https://img.youtube.com/vi/${encodeURIComponent(lesson.videoId)}/${thumbQuality}.jpg`;
+      img.alt = displayTitle;
+      img.decoding = 'async';
+      img.fetchPriority = 'high';
+      img.referrerPolicy = 'no-referrer';
+
+      const scrim = document.createElement('span');
+      scrim.className = 'video-facade-scrim';
+
+      const playBadge = document.createElement('span');
+      playBadge.className = 'video-facade-play';
+      playBadge.setAttribute('aria-hidden', 'true');
+      playBadge.textContent = '▶';
+
+      const hint = document.createElement('span');
+      hint.className = 'video-facade-hint';
+      hint.textContent = `${isHi ? 'चलाने के लिए टैप करें' : 'Tap to play'} • ${lesson.duration}`;
+
+      btn.append(img, scrim, playBadge, hint);
+      wrapper.appendChild(btn);
+    }
+
     function loadLessonToStage(lesson, shouldAutoplay = true) {
       if (!lesson) return;
       activeLesson = lesson;
@@ -448,9 +478,11 @@
       $('stageTopicBadge').textContent = lesson.tag;
       $('openYouTubeAppBtn').href = `https://www.youtube.com/watch?v=${encodeURIComponent(lesson.videoId)}&list=${encodeURIComponent(course.playlistId)}`;
 
-      const iframe = $('mainVideoPlayer');
-      iframe.title = lesson.title;
-      iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(lesson.videoId)}?list=${encodeURIComponent(course.playlistId)}&rel=0&playsinline=1${shouldAutoplay ? '&autoplay=1' : ''}`;
+      if (shouldAutoplay) {
+        mountYouTubeIframe(lesson, course, true);
+      } else {
+        renderVideoFacade(lesson, course);
+      }
 
       updateBookmarkUI();
       renderSidebarPlaylist();
@@ -493,6 +525,7 @@
         img.src = `https://img.youtube.com/vi/${encodeURIComponent(lesson.videoId)}/mqdefault.jpg`;
         img.alt = displayTitle;
         img.loading = 'lazy';
+        img.decoding = 'async';
         img.referrerPolicy = 'no-referrer';
         thumbWrap.appendChild(img);
 
@@ -600,6 +633,7 @@
         thumbImg.src = `https://img.youtube.com/vi/${encodeURIComponent(lesson.videoId)}/mqdefault.jpg`;
         thumbImg.alt = displayTitle;
         thumbImg.loading = 'lazy';
+        thumbImg.decoding = 'async';
         thumbImg.referrerPolicy = 'no-referrer';
 
         const playOverlay = document.createElement('div');
