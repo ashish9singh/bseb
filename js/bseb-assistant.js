@@ -626,7 +626,10 @@
           '/api/chat',
           {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'BSEB-Assistant',
+            },
             body: JSON.stringify({
               message: text,
               lang: state.lang,
@@ -634,7 +637,7 @@
               history: historyPayload,
             }),
           },
-          12000
+          16000
         );
 
         const data = await res.json().catch(() => ({}));

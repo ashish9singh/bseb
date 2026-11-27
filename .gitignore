@@ -1,0 +1,8 @@
+# Never commit local secrets or dependencies
+.env
+.env.local
+.env.*.local
+!.env.example
+node_modules/
+npm-debug.log*
+.DS_Store
